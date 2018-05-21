@@ -1,5 +1,7 @@
 package chinapex.com.wallet.base;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -42,6 +44,14 @@ public class BaseActivity extends AppCompatActivity {
             }
             getWindow().getDecorView().setSystemUiVisibility(View
                     .SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        }
+    }
+
+    public void startActivity(Class cls, boolean isFinish) {
+        Intent intent = new Intent(this, cls);
+        startActivity(intent);
+        if (isFinish) {
+            finish();
         }
     }
 

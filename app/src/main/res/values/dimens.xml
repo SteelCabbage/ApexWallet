@@ -6,4 +6,22 @@
     <dimen name="new_visitor_bt_height">38dp</dimen>
     <dimen name="shape_new_visitor_bt_corner">10dp</dimen>
     <dimen name="new_visitor_bt_between_space">14dp</dimen>
+    <dimen name="create_wallet_tb_height">184dp</dimen>
+    <dimen name="create_wallet_tv_width">278dp</dimen>
+    <dimen name="create_wallet_tv_height">154dp</dimen>
+    <dimen name="create_wallet_tv_margin_top">-92dp</dimen>
+    <dimen name="create_wallet_tv_padding">12dp</dimen>
+    <dimen name="create_wallet_et_margin_top">20dp</dimen>
+    <dimen name="create_wallet_tv_size">12sp</dimen>
+    <dimen name="create_wallet_rb_text_size">10sp</dimen>
+    <dimen name="create_wallet_ll_margin_top">15dp</dimen>
+    <dimen name="create_wallet_tv_margin_start">5dp</dimen>
+    <dimen name="create_wallet_bt_confirm_width">144dp</dimen>
+    <dimen name="create_wallet_bt_confirm_height">38dp</dimen>
+    <dimen name="create_wallet_bt_margin_top">10dp</dimen>
+    <dimen name="create_wallet_tv_import_margin_top">10dp</dimen>
+    <dimen name="create_wallet_et_import_size">12sp</dimen>
+    <dimen name="tb_title_size">16sp</dimen>
+    <dimen name="tb_title_padding">15dp</dimen>
+    <dimen name="main_tv_title_margin_top">30dp</dimen>
 </resources>

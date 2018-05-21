@@ -2,6 +2,7 @@
 <resources>
     <color name="colorPrimary">#4C8EFA</color>
     <color name="colorPrimaryDark">#4C8EFA</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#979797</color>
     <color name="text_color_white">#FFFFFF</color>
+    <color name="create_wallet_et_import_color">#666666</color>
 </resources>
