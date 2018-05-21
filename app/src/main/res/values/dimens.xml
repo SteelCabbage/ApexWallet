@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="new_visitor_icon_margin_top">166dp</dimen>
+    <dimen name="new_visitor_bt_margin_top">182dp</dimen>
+    <dimen name="new_visitor_bt_width">158dp</dimen>
+    <dimen name="new_visitor_bt_height">38dp</dimen>
+    <dimen name="shape_new_visitor_bt_corner">10dp</dimen>
+    <dimen name="new_visitor_bt_between_space">14dp</dimen>
+</resources>

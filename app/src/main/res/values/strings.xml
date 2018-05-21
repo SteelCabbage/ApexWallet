@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Apex</string>
+    <string name="new_visitor_create_wallet">创建钱包</string>
+    <string name="new_visitor_import_wallet">导入钱包</string>
 </resources>

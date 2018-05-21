@@ -13,17 +13,18 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <!--新用户activity-->
+        <!-- 新用户activity -->
         <activity android:name=".view.NewVisitorActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <!--主activity-->
+        <!-- 主activity -->
         <activity android:name=".view.MainActivity" />
-
+        <activity android:name=".view.CreateWalletActivity"></activity>
     </application>
 
 </manifest>
