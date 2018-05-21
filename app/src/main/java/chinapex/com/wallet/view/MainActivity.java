@@ -1,9 +1,11 @@
-package chinapex.com.wallet;
+package chinapex.com.wallet.view;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class MainActivity extends AppCompatActivity {
+import chinapex.com.wallet.R;
+import chinapex.com.wallet.base.BaseActivity;
+
+public class MainActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
