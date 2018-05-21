@@ -24,4 +24,25 @@
     <dimen name="tb_title_size">16sp</dimen>
     <dimen name="tb_title_padding">15dp</dimen>
     <dimen name="main_tv_title_margin_top">30dp</dimen>
+
+    //override BottomNavigationBar dimens
+    <dimen name="fixed_height_bottom_padding">5dp</dimen>
+    <dimen name="fragment_assets_title_margin_top">26dp</dimen>
+    <dimen name="rv_assets_margin_start">20dp</dimen>
+    <dimen name="rv_assets_margin_end">20dp</dimen>
+    <dimen name="rv_assets_margin_top">-20dp</dimen>
+    <dimen name="tv_assets_unit_size">16sp</dimen>
+    <dimen name="tv_assets_cancel_margin_end">30dp</dimen>
+    <dimen name="et_assets_search_margin_bottom">30dp</dimen>
+    <dimen name="et_assets_search_margin_start">40dp</dimen>
+    <dimen name="v_assets_rv_item">50dp</dimen>
+    <dimen name="v_assets_rv_item_margin_end">120dp</dimen>
+    <dimen name="tv_assets_rv_item_balance_margin_end">50dp</dimen>
+    <dimen name="tv_assets_rv_item_balance_margin_top">11dp</dimen>
+    <dimen name="shape_assets_rv_item_bg_corner">5dp</dimen>
+    <dimen name="tv_assets_rv_item_unit_margin_end">20dp</dimen>
+    <dimen name="tv_assets_rv_item_balance_size">20sp</dimen>
+    <dimen name="tv_assets_rv_item_wallet_name_size">16sp</dimen>
+    <dimen name="rl_assets_rv_item_height">100dp</dimen>
+    <dimen name="ll_assets_rv_item_padding">20dp</dimen>
 </resources>
