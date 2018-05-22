@@ -41,7 +41,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/create_wallet_et_margin_top"
-        android:ems="10"
+        android:ems="12"
+        android:textSize="@dimen/et_create_wallet_font_size"
         android:hint="@string/create_wallet_et_name" />
 
     <EditText
@@ -49,7 +50,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/create_wallet_et_margin_top"
-        android:ems="10"
+        android:ems="12"
+        android:textSize="@dimen/et_create_wallet_font_size"
         android:hint="@string/create_wallet_et_pwd" />
 
     <EditText
@@ -57,7 +59,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/create_wallet_et_margin_top"
-        android:ems="10"
+        android:ems="12"
+        android:textSize="@dimen/et_create_wallet_font_size"
         android:hint="@string/create_wallet_et_repeat_pwd" />
 
     <LinearLayout

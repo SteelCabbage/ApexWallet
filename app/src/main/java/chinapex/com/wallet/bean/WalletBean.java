@@ -1,6 +1,9 @@
 package chinapex.com.wallet.bean;
 
-public class WalletBean {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class WalletBean implements Parcelable {
 
     private String mWalletName;
     private String mWalletAddr;
@@ -42,4 +45,35 @@ public class WalletBean {
                 '}';
     }
 
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.mWalletName);
+        dest.writeString(this.mWalletAddr);
+        dest.writeValue(this.mBalance);
+    }
+
+    protected WalletBean(Parcel in) {
+        this.mWalletName = in.readString();
+        this.mWalletAddr = in.readString();
+        this.mBalance = (Double) in.readValue(Double.class.getClassLoader());
+    }
+
+    public static final Parcelable.Creator<WalletBean> CREATOR = new Parcelable
+            .Creator<WalletBean>() {
+        @Override
+        public WalletBean createFromParcel(Parcel source) {
+            return new WalletBean(source);
+        }
+
+        @Override
+        public WalletBean[] newArray(int size) {
+            return new WalletBean[size];
+        }
+    };
 }

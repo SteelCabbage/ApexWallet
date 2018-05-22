@@ -24,7 +24,9 @@
 
         <!-- 主activity -->
         <activity android:name=".view.MainActivity" />
-        <activity android:name=".view.CreateWalletActivity"></activity>
+        <activity android:name=".view.CreateWalletActivity" />
+        <activity android:name=".view.WalletDetailActivity" />
+        <activity android:name=".view.TransferActivity"></activity>
     </application>
 
 </manifest>

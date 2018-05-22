@@ -5,8 +5,10 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.View;
 
 import java.lang.reflect.Field;
@@ -52,6 +54,21 @@ public class BaseActivity extends AppCompatActivity {
         startActivity(intent);
         if (isFinish) {
             finish();
+        }
+    }
+
+    public void startActivityParcelable(Class cls, boolean isFinish, String parcelableKey,
+                                        Parcelable parcelable) {
+        if (null == parcelable || TextUtils.isEmpty(parcelableKey)) {
+            CpLog.e(TAG, "parcelable or parcelableKey is null!");
+            return;
+        }
+
+        Intent intent = new Intent(this, cls);
+        intent.putExtra(parcelableKey, parcelable);
+        startActivity(intent);
+        if (isFinish) {
+            this.finish();
         }
     }
 

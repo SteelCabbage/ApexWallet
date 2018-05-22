@@ -20,4 +20,17 @@
     <string name="assets_rv_item_wallet_addr">钱包地址</string>
     <string name="tv_assets_rv_item_balance">50</string>
     <string name="tv_assets_rv_item_unit">cpx</string>
+    <string name="wallet_detail_name">钱包名称</string>
+    <string name="tv_wallet_detail_addr">钱包地址钱包地址钱包地址钱包地址</string>
+    <string name="bt_wallet_detail_tx_transfer">转账</string>
+    <string name="bt_wallet_detail_tx_gathering">收款</string>
+    <string name="tb_title_transfer">转账</string>
+    <string name="tv_transfer_from_content">From</string>
+    <string name="tv_transfer_from_wallet_name">付款方钱包名称</string>
+    <string name="tv_transfer_from_wallet_addr">钱包地址</string>
+    <string name="tv_transfer_to_wallet_name">收款方钱包名称</string>
+    <string name="tv_transfer_to_content">To</string>
+    <string name="tv_transfer_to_wallet_addr">钱包地址</string>
+    <string name="bt_transfer_send">发送</string>
+    <string name="et_transfer_amount">交易金额</string>
 </resources>
