@@ -1,8 +1,12 @@
 package chinapex.com.wallet.view;
 
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
@@ -19,6 +23,9 @@ public class NewVisitorActivity extends BaseActivity implements View.OnClickList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //设置透明导航键
+        setNavigationBarColorTransparent();
         setContentView(R.layout.activity_new_visitor);
 
         initView();
@@ -43,6 +50,16 @@ public class NewVisitorActivity extends BaseActivity implements View.OnClickList
             case R.id.bt_new_visitor_import_wallet:
                 break;
         }
+    }
+
+    private void setNavigationBarColorTransparent() {
+        Window window = getWindow();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            window.setNavigationBarColor(Color.TRANSPARENT);
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+        }
+
     }
 
     private void testScreen() {
