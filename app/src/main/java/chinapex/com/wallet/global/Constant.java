@@ -20,8 +20,10 @@ public class Constant {
     //create wallet
     public static final String SP_WALLET_KEYSTORE = "spWalletKeystore";
 
-    //wallet Detail
-    public static final String PARCELABLE_WALLET_BEAN = "parcelableWalletBean";
+    //wallet detail transfer
+    public static final String PARCELABLE_WALLET_BEAN_TRANSFER = "parcelableWalletBeanTransfer";
+    //wallet detail gathering
+    public static final String PARCELABLE_WALLET_BEAN_GATHERING = "parcelableWalletBeanGathering";
 
     //asset name
     public static final String ASSETS_NEO =
@@ -31,5 +33,8 @@ public class Constant {
 
     //txids
     public static final String SP_TX_ID = "spTxId";
+
+    //wallet title
+    public static final String WALLET_NAME = "Wallet ";
 
 }

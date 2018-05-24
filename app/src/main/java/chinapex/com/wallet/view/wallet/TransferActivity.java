@@ -1,4 +1,4 @@
-package chinapex.com.wallet.view;
+package chinapex.com.wallet.view.wallet;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -78,8 +77,12 @@ public class TransferActivity extends BaseActivity implements View.OnClickListen
             return;
         }
 
-        mWalletBean = (WalletBean) intent.getParcelableExtra(Constant.PARCELABLE_WALLET_BEAN);
-        CpLog.i(TAG, "walletBean:" + mWalletBean.toString());
+        mWalletBean = (WalletBean) intent.getParcelableExtra(Constant
+                .PARCELABLE_WALLET_BEAN_TRANSFER);
+        if (null == mWalletBean) {
+            CpLog.e(TAG, "mWalletBean is null!");
+            return;
+        }
 
         mTv_transfer_from_wallet_name.setText(mWalletBean.getWalletName());
         mTv_transfer_from_wallet_addr.setText(mWalletBean.getWalletAddr());
@@ -275,7 +278,7 @@ public class TransferActivity extends BaseActivity implements View.OnClickListen
                                                             CpLog.i(TAG, "txID:" + txID);
                                                             SharedPreferencesUtils.putParam
                                                                     (TransferActivity.this, Constant
-                                                                    .SP_TX_ID, txID);
+                                                                            .SP_TX_ID, txID);
 
                                                             finish();
 

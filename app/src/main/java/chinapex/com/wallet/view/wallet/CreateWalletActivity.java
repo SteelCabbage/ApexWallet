@@ -1,14 +1,13 @@
-package chinapex.com.wallet.view;
+package chinapex.com.wallet.view.wallet;
 
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
-import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -21,6 +20,7 @@ import chinapex.com.wallet.global.Constant;
 import chinapex.com.wallet.utils.CpLog;
 import chinapex.com.wallet.utils.GsonUtils;
 import chinapex.com.wallet.utils.SharedPreferencesUtils;
+import chinapex.com.wallet.view.MainActivity;
 import neomobile.Neomobile;
 import neomobile.Wallet;
 
@@ -38,6 +38,7 @@ public class CreateWalletActivity extends BaseActivity implements View.OnClickLi
     private TextInputLayout mTl_create_wallet_name;
     private TextInputLayout mTl_create_wallet_pwd;
     private TextInputLayout mTl_create_wallet_repeat_pwd;
+    private TextView mTv_create_wallet_privacy_have_read;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +54,8 @@ public class CreateWalletActivity extends BaseActivity implements View.OnClickLi
         mEt_create_wallet_repeat_pwd = (EditText) findViewById(R.id.et_create_wallet_repeat_pwd);
         mBt_create_wallet_confirm = (Button) findViewById(R.id.bt_create_wallet_confirm);
         mIb_create_wallet_privacy_point = findViewById(R.id.ib_create_wallet_privacy_point);
+        mTv_create_wallet_privacy_have_read = (TextView) findViewById(R.id
+                .tv_create_wallet_privacy_have_read);
         mTl_create_wallet_name = (TextInputLayout) findViewById(R.id.tl_create_wallet_name);
         mTl_create_wallet_pwd = (TextInputLayout) findViewById(R.id.tl_create_wallet_pwd);
         mTl_create_wallet_repeat_pwd = (TextInputLayout) findViewById(R.id
@@ -60,6 +63,7 @@ public class CreateWalletActivity extends BaseActivity implements View.OnClickLi
 
         mBt_create_wallet_confirm.setOnClickListener(this);
         mIb_create_wallet_privacy_point.setOnClickListener(this);
+        mTv_create_wallet_privacy_have_read.setOnClickListener(this);
 
         mEt_create_wallet_name.addTextChangedListener(new MyTextWatcher(mEt_create_wallet_name) {
             @Override
@@ -125,6 +129,7 @@ public class CreateWalletActivity extends BaseActivity implements View.OnClickLi
                 newNeoAddr(mEt_create_wallet_pwd.getText().toString().trim());
                 startActivity(MainActivity.class, true);
                 break;
+            case R.id.tv_create_wallet_privacy_have_read:
             case R.id.ib_create_wallet_privacy_point:
                 if (mIsSelectedPrivacy) {
                     mIsSelectedPrivacy = false;

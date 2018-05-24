@@ -1,4 +1,4 @@
-package chinapex.com.wallet.view;
+package chinapex.com.wallet.view.wallet;
 
 import android.support.design.widget.TextInputLayout;
 import android.text.Editable;
