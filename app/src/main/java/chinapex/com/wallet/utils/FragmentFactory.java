@@ -32,6 +32,29 @@ public class FragmentFactory {
                 }
                 baseFragment = sMeFragment;
                 break;
+            case 3:
+                //home page reserved
+                break;
+            case 4:
+                //home page reserved
+                break;
+            case 5:
+                //home page reserved
+                break;
+            case 6:
+                //home page reserved
+                break;
+
+            //backup page
+            case 7:
+
+                break;
+            case 8:
+
+                break;
+            case 9:
+
+                break;
         }
         return baseFragment;
     }

@@ -18,4 +18,11 @@
         <item>扫一扫</item>
         <item>创建钱包</item>
     </string-array>
+
+    <!--备份钱包-->
+    <string-array name="backup_item_title">
+        <item>备份钱包</item>
+        <item>抄写助记词</item>
+        <item>确认助记词</item>
+    </string-array>
 </resources>

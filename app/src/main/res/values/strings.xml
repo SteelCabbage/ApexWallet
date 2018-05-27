@@ -43,4 +43,5 @@
     <string name="tv_gathering_wallet_name">Wallet 0x2334</string>
     <string name="tv_gathering_wallet_addr">0x2334dwq212…342023</string>
     <string name="bt_gathering_copy_addr">复制收款地址</string>
+    <string name="tb_title_backup">备份钱包</string>
 </resources>
