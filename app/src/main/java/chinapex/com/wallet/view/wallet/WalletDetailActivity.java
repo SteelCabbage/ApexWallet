@@ -135,7 +135,7 @@ public class WalletDetailActivity extends BaseActivity implements View.OnClickLi
                 break;
             case 1:
                 CpLog.i(TAG, "创建钱包");
-                startActivity(CreateWalletActivity.class, false);
+                startActivity(CreateWalletActivity.class, false, TAG);
                 break;
             default:
                 break;

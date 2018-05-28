@@ -19,6 +19,12 @@ public class Constant {
 
     //create wallet
     public static final String SP_WALLET_KEYSTORE = "spWalletKeystore";
+    public static final String WHERE_FROM_ACTIVITY = "whereFromActivity";
+    public static final String WHERE_FROM_NEW_VISITOR_ACTIVITY = "NewVisitorActivity";
+    public static final String WHERE_FROM_WALLET_DETAIL_ACTIVITY = "WalletDetailActivity";
+
+    //backup wallet
+    public static final String BACKUP_MNEMONIC = "backupMnemonic";
 
     //wallet detail transfer
     public static final String PARCELABLE_WALLET_BEAN_TRANSFER = "parcelableWalletBeanTransfer";

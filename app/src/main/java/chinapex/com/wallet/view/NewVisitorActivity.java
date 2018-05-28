@@ -47,7 +47,7 @@ public class NewVisitorActivity extends BaseActivity implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_new_visitor_create_wallet:
-                startActivity(CreateWalletActivity.class, true);
+                startActivity(CreateWalletActivity.class, true, TAG);
                 break;
             case R.id.bt_new_visitor_import_wallet:
                 break;

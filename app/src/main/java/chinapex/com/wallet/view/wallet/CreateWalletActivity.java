@@ -1,5 +1,6 @@
 package chinapex.com.wallet.view.wallet;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.text.TextUtils;
@@ -20,7 +21,6 @@ import chinapex.com.wallet.global.Constant;
 import chinapex.com.wallet.utils.CpLog;
 import chinapex.com.wallet.utils.GsonUtils;
 import chinapex.com.wallet.utils.SharedPreferencesUtils;
-import chinapex.com.wallet.view.MainActivity;
 import neomobile.Neomobile;
 import neomobile.Wallet;
 
@@ -39,6 +39,8 @@ public class CreateWalletActivity extends BaseActivity implements View.OnClickLi
     private TextInputLayout mTl_create_wallet_pwd;
     private TextInputLayout mTl_create_wallet_repeat_pwd;
     private TextView mTv_create_wallet_privacy_have_read;
+    public static CreateWalletActivity sCreateWalletActivity;
+    private String mWhereFromActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +48,8 @@ public class CreateWalletActivity extends BaseActivity implements View.OnClickLi
         setContentView(R.layout.activity_create_wallet);
 
         initView();
+        sCreateWalletActivity = this;
+        initData();
     }
 
     private void initView() {
@@ -112,6 +116,16 @@ public class CreateWalletActivity extends BaseActivity implements View.OnClickLi
         });
     }
 
+    private void initData() {
+        Intent intent = getIntent();
+        if (null == intent) {
+            CpLog.e(TAG, "intent is null!");
+            return;
+        }
+
+        mWhereFromActivity = intent.getStringExtra(Constant.WHERE_FROM_ACTIVITY);
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -127,7 +141,17 @@ public class CreateWalletActivity extends BaseActivity implements View.OnClickLi
                     return;
                 }
                 newNeoAddr(mEt_create_wallet_pwd.getText().toString().trim());
-                startActivity(MainActivity.class, true);
+
+                //助记词
+                String mnemonicEnUs = null;
+                try {
+                    mnemonicEnUs = mWalletNew.mnemonic("en_US");
+                    CpLog.i(TAG, "mnemonicEnUs:" + mnemonicEnUs);
+                } catch (Exception e) {
+                    CpLog.e(TAG, "mnemonicEnUs exception:" + e.getMessage());
+                }
+                startActivityBundle(BackupWalletActivity.class, false, Constant.BACKUP_MNEMONIC,
+                        mnemonicEnUs, mWhereFromActivity);
                 break;
             case R.id.tv_create_wallet_privacy_have_read:
             case R.id.ib_create_wallet_privacy_point:
@@ -230,5 +254,4 @@ public class CreateWalletActivity extends BaseActivity implements View.OnClickLi
         editText.setFocusableInTouchMode(true);
         editText.requestFocus();
     }
-
 }
