@@ -165,9 +165,11 @@ public class ConfirmMnemonicFragment extends BaseFragment implements View.OnClic
     @Override
     public void onItemClick(int position) {
         MnemonicState mnemonicState = mMnemonicStatesClick.get(position);
-        if (!mMnemonicStatesShow.contains(mnemonicState)) {
+        if (mnemonicState.isSelected()) {
             mMnemonicStatesShow.add(mnemonicState);
-            mBackupShowMnemonicAdapter.notifyDataSetChanged();
+        } else {
+            mMnemonicStatesShow.remove(mnemonicState);
         }
+        mBackupShowMnemonicAdapter.notifyDataSetChanged();
     }
 }
