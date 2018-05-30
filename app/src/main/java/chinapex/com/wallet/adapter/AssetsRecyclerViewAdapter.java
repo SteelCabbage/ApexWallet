@@ -65,7 +65,7 @@ public class AssetsRecyclerViewAdapter extends RecyclerView.Adapter<AssetsRecycl
     @NonNull
     @Override
     public AssetsAdapterHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_item,
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_assets_item,
                 parent, false);
         AssetsAdapterHolder holder = new AssetsAdapterHolder(view);
         view.setOnClickListener(this);

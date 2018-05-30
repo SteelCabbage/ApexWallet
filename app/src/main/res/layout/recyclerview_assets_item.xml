@@ -24,7 +24,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/assets_rv_item_wallet_name"
                 android:textSize="@dimen/tv_assets_rv_item_wallet_name_size"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:textColor="@color/tv_gathering_wallet_name"/>
 
             <TextView
                 android:id="@+id/tv_assets_rv_item_wallet_addr"
@@ -32,6 +33,7 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:maxEms="6"
+                android:textColor="@android:color/black"
                 android:singleLine="true"
                 android:text="@string/assets_rv_item_wallet_addr" />
 
@@ -44,7 +46,7 @@
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginEnd="@dimen/v_assets_rv_item_margin_end"
-            android:background="@color/colorAccent" />
+            android:background="@color/recyclerview_separator_view" />
 
         <TextView
             android:id="@+id/tv_assets_rv_item_balance"
