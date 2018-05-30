@@ -30,7 +30,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="34dp"
         android:background="@color/color_privacy_gray"
-        android:scaleType="center" />
+        android:scaleType="fitCenter" />
 
     <View
         android:layout_width="match_parent"

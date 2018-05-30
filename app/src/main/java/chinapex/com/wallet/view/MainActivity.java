@@ -14,6 +14,11 @@ import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import chinapex.com.wallet.R;
 import chinapex.com.wallet.base.BaseActivity;
 import chinapex.com.wallet.base.BaseFragment;
+import chinapex.com.wallet.executor.TaskController;
+import chinapex.com.wallet.executor.runnable.GetUtxos;
+import chinapex.com.wallet.net.INetCallback;
+import chinapex.com.wallet.net.OkHttpClientManager;
+import chinapex.com.wallet.utils.CpLog;
 import chinapex.com.wallet.utils.FragmentFactory;
 
 public class MainActivity extends BaseActivity implements BottomNavigationBar
@@ -35,6 +40,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar
         initToolBar();
         initBottomNavigationBar();
         initFragment();
+
     }
 
     private void initData() {
@@ -117,37 +123,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar
 
     @Override
     public void onTabReselected(int position) {
+
     }
-
-
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.main,menu);
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean onPrepareOptionsMenu(Menu menu) {
-//        MenuBuilder builder = (MenuBuilder) menu;
-//        builder.setOptionalIconsVisible(true);
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        switch (item.getItemId()) {
-//            case R.id.menu_add_friend:
-//                break;
-//            case R.id.menu_scan:
-//                break;
-//            case R.id.menu_about:
-//                break;
-//            case android.R.id.home:
-//                finish();
-//                break;
-//
-//        }
-//        return true;
-//    }
 
 }

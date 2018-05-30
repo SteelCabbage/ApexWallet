@@ -14,6 +14,7 @@ public class Constant {
     public static final int NET_BODY_NULL = 0;
     public static final String HOSTNAME_VERIFIER = "40.125.171.0";
     public static final String URL_CLI = "http://40.125.171.0:20332";
+    public static final String URL_UTXOS = "http://40.125.171.0:8083/utxos/";
 
     //assets
     public static final String WALLET_BEAN = "walletBean";

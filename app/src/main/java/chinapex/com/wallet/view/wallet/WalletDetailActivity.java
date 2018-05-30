@@ -11,6 +11,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.zxing.activity.CaptureActivity;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -131,7 +133,7 @@ public class WalletDetailActivity extends BaseActivity implements View.OnClickLi
         switch (position) {
             case 0:
                 CpLog.i(TAG, "扫一扫");
-
+                startActivity(new Intent(WalletDetailActivity.this, CaptureActivity.class));
                 break;
             case 1:
                 CpLog.i(TAG, "创建钱包");
