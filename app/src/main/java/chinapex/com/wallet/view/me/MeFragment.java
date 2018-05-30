@@ -1,6 +1,7 @@
 package chinapex.com.wallet.view.me;
 
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -37,7 +38,7 @@ public class MeFragment extends BaseFragment implements MeRecyclerViewAdapter
     private static final String TAG = MeFragment.class.getSimpleName();
     private RecyclerView mRv_me;
     private MeRecyclerViewAdapter mMeRecyclerViewAdapter;
-    private List<TransactionRecord> mTransactionRecords;
+    private List<WalletBean> mWalletBeans;
     private SwipeRefreshLayout mSl_me;
     private TextView mTv_me_wallet_balance;
 
@@ -63,10 +64,9 @@ public class MeFragment extends BaseFragment implements MeRecyclerViewAdapter
         mTv_me_wallet_balance = view.findViewById(R.id.tv_me_wallet_balance);
 
         mRv_me.setLayoutManager(new LinearLayoutManager(ApexWalletApplication.getInstance(),
-                LinearLayoutManager.VERTICAL,
-                false));
-        mTransactionRecords = getData();
-        mMeRecyclerViewAdapter = new MeRecyclerViewAdapter(mTransactionRecords);
+                LinearLayoutManager.VERTICAL, false));
+        mWalletBeans = getWalletBeans();
+        mMeRecyclerViewAdapter = new MeRecyclerViewAdapter(mWalletBeans);
         mMeRecyclerViewAdapter.setOnItemClickListener(this);
 
         int space = 20;
@@ -80,16 +80,6 @@ public class MeFragment extends BaseFragment implements MeRecyclerViewAdapter
 
     }
 
-    private List<TransactionRecord> getData() {
-        ArrayList<TransactionRecord> transactionRecords = new ArrayList<>();
-        String txID = (String) SharedPreferencesUtils.getParam(ApexWalletApplication.getInstance
-                (), Constant.SP_TX_ID, "");
-        TransactionRecord transactionRecord = new TransactionRecord();
-        transactionRecord.setTxid(txID);
-        transactionRecords.add(transactionRecord);
-        return transactionRecords;
-    }
-
     @Override
     public void onItemClick(int position) {
 
@@ -97,16 +87,20 @@ public class MeFragment extends BaseFragment implements MeRecyclerViewAdapter
 
     @Override
     public void onRefresh() {
-        List<TransactionRecord> transactionRecords = getData();
-        mTransactionRecords.get(0).setTxid(transactionRecords.get(0).getTxid());
-        MeFragment.this.getActivity().runOnUiThread(new Runnable() {
+        // TODO: 2018/5/30 0030
+        new Thread(new Runnable() {
             @Override
             public void run() {
-                mSl_me.setRefreshing(false);
-                mMeRecyclerViewAdapter.notifyDataSetChanged();
-                setBalanceSum();
+                SystemClock.sleep(2000);
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        mSl_me.setRefreshing(false);
+                    }
+                });
+
             }
-        });
+        }).start();
     }
 
     private void setBalanceSum() {
@@ -142,6 +136,7 @@ public class MeFragment extends BaseFragment implements MeRecyclerViewAdapter
             walletBean.setWalletName(walletKeyStore.getWalletName());
             walletBean.setWalletAddr(walletKeyStore.getWalletAddr());
             walletBean.setBalance(0.0);
+            walletBean.setBackup(false);
             walletBeans.add(walletBean);
         }
 

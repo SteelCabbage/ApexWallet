@@ -55,4 +55,5 @@
     <string name="tv_confirm_mnemonic">确定你的钱包助记词</string>
     <string name="tv_confirm_mnemonic_content">请按顺序点击助记词，以确认你的备份助记词正确。</string>
     <string name="bt_confirm_mnemonic_confirm">确定</string>
+    <string name="tv_me_item_backup">请备份</string>
 </resources>

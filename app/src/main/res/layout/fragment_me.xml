@@ -60,8 +60,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/bt_me_transactions"
                 android:background="@null"
+                android:text="@string/bt_me_transactions"
                 android:textColor="@android:color/white" />
 
         </LinearLayout>
@@ -71,12 +71,15 @@
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/sl_me"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginEnd="@dimen/rv_assets_margin_start"
+        android:layout_marginStart="@dimen/rv_assets_margin_end"
+        android:layout_marginTop="10dp">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_me"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent" />
 
     </android.support.v4.widget.SwipeRefreshLayout>
 

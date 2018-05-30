@@ -8,6 +8,7 @@ public class WalletBean implements Parcelable {
     private String mWalletName;
     private String mWalletAddr;
     private Double mBalance;
+    private boolean isBackup;
 
     public WalletBean() {
     }
@@ -32,17 +33,16 @@ public class WalletBean implements Parcelable {
         return mBalance;
     }
 
-    public void setBalance(double balance) {
+    public void setBalance(Double balance) {
         mBalance = balance;
     }
 
-    @Override
-    public String toString() {
-        return "WalletBean{" +
-                "mWalletName='" + mWalletName + '\'' +
-                ", mWalletAddr='" + mWalletAddr + '\'' +
-                ", mBalance='" + mBalance + '\'' +
-                '}';
+    public boolean isBackup() {
+        return isBackup;
+    }
+
+    public void setBackup(boolean backup) {
+        isBackup = backup;
     }
 
 
@@ -56,16 +56,17 @@ public class WalletBean implements Parcelable {
         dest.writeString(this.mWalletName);
         dest.writeString(this.mWalletAddr);
         dest.writeValue(this.mBalance);
+        dest.writeByte(this.isBackup ? (byte) 1 : (byte) 0);
     }
 
     protected WalletBean(Parcel in) {
         this.mWalletName = in.readString();
         this.mWalletAddr = in.readString();
         this.mBalance = (Double) in.readValue(Double.class.getClassLoader());
+        this.isBackup = in.readByte() != 0;
     }
 
-    public static final Parcelable.Creator<WalletBean> CREATOR = new Parcelable
-            .Creator<WalletBean>() {
+    public static final Creator<WalletBean> CREATOR = new Creator<WalletBean>() {
         @Override
         public WalletBean createFromParcel(Parcel source) {
             return new WalletBean(source);
