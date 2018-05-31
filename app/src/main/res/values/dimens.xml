@@ -31,8 +31,8 @@
 
 
     <dimen name="fragment_assets_title_margin_top">25dp</dimen>
-    <dimen name="rv_assets_margin_start">20dp</dimen>
-    <dimen name="rv_assets_margin_end">20dp</dimen>
+    <dimen name="rv_assets_margin_start">10dp</dimen>
+    <dimen name="rv_assets_margin_end">10dp</dimen>
     <dimen name="rv_assets_margin_top">-18dp</dimen>
     <dimen name="tv_assets_unit_size">16sp</dimen>
     <dimen name="tv_assets_cancel_margin_end">30dp</dimen>

@@ -1,5 +1,6 @@
 package chinapex.com.wallet.view.me;
 
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.annotation.Nullable;
@@ -10,6 +11,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -25,15 +27,17 @@ import chinapex.com.wallet.bean.WalletKeyStore;
 import chinapex.com.wallet.global.ApexWalletApplication;
 import chinapex.com.wallet.global.Constant;
 import chinapex.com.wallet.utils.CpLog;
+import chinapex.com.wallet.utils.FragmentFactory;
 import chinapex.com.wallet.utils.GsonUtils;
 import chinapex.com.wallet.utils.SharedPreferencesUtils;
+import chinapex.com.wallet.view.wallet.BackupWalletActivity;
 
 /**
  * Created by SteelCabbage on 2018/5/21 0021.
  */
 
 public class MeFragment extends BaseFragment implements MeRecyclerViewAdapter
-        .OnItemClickListener, SwipeRefreshLayout.OnRefreshListener {
+        .OnItemClickListener, SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
 
     private static final String TAG = MeFragment.class.getSimpleName();
     private RecyclerView mRv_me;
@@ -41,6 +45,8 @@ public class MeFragment extends BaseFragment implements MeRecyclerViewAdapter
     private List<WalletBean> mWalletBeans;
     private SwipeRefreshLayout mSl_me;
     private TextView mTv_me_wallet_balance;
+    private Button mBt_me_manage_wallet;
+    private Button mBt_me_transaction_record;
 
     @Nullable
     @Override
@@ -62,6 +68,8 @@ public class MeFragment extends BaseFragment implements MeRecyclerViewAdapter
         mRv_me = view.findViewById(R.id.rv_me);
         mSl_me = view.findViewById(R.id.sl_me);
         mTv_me_wallet_balance = view.findViewById(R.id.tv_me_wallet_balance);
+        mBt_me_manage_wallet = view.findViewById(R.id.bt_me_manage_wallet);
+        mBt_me_transaction_record = view.findViewById(R.id.bt_me_transaction_record);
 
         mRv_me.setLayoutManager(new LinearLayoutManager(ApexWalletApplication.getInstance(),
                 LinearLayoutManager.VERTICAL, false));
@@ -78,6 +86,8 @@ public class MeFragment extends BaseFragment implements MeRecyclerViewAdapter
                 .colorPrimary));
         mSl_me.setOnRefreshListener(this);
 
+        mBt_me_manage_wallet.setOnClickListener(this);
+        mBt_me_transaction_record.setOnClickListener(this);
     }
 
     @Override
@@ -141,5 +151,43 @@ public class MeFragment extends BaseFragment implements MeRecyclerViewAdapter
         }
 
         return walletBeans;
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            //点击管理钱包
+            case R.id.bt_me_manage_wallet:
+                toMeManagerDetailFragment();
+                break;
+            //点击交易记录
+            case R.id.bt_me_transaction_record:
+                toMeTransactionRecordFragment();
+                break;
+        }
+    }
+
+    private void toMeManagerDetailFragment() {
+        FragmentTransaction fragmentTransaction = getActivity().getFragmentManager()
+                .beginTransaction();
+        BaseFragment fragment = FragmentFactory.getFragment(10);
+        if (!fragment.isAdded()) {
+            fragmentTransaction.add(R.id.fl_main, fragment, "" + 10);
+            fragmentTransaction.addToBackStack(null);
+        }
+        fragmentTransaction.show(fragment).hide(FragmentFactory.getFragment(2)).commit();
+
+    }
+
+    private void toMeTransactionRecordFragment() {
+        FragmentTransaction fragmentTransaction = getActivity().getFragmentManager()
+                .beginTransaction();
+        BaseFragment fragment = FragmentFactory.getFragment(11);
+        if (!fragment.isAdded()) {
+            fragmentTransaction.add(R.id.fl_main, fragment, "" + 11);
+            fragmentTransaction.addToBackStack(null);
+        }
+        fragmentTransaction.show(fragment).hide(FragmentFactory.getFragment(2)).commit();
+
     }
 }
