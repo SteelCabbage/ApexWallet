@@ -29,7 +29,6 @@ import chinapex.com.wallet.net.OkHttpClientManager;
 import chinapex.com.wallet.utils.CpLog;
 import chinapex.com.wallet.utils.GsonUtils;
 import chinapex.com.wallet.utils.SharedPreferencesUtils;
-import chinapex.com.wallet.view.wallet.WalletDetailActivity;
 
 /**
  * Created by SteelCabbage on 2018/5/21 0021.

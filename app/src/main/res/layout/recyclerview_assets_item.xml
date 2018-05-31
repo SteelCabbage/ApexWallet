@@ -23,19 +23,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/assets_rv_item_wallet_name"
+                android:textColor="@color/tv_gathering_wallet_name"
                 android:textSize="@dimen/tv_assets_rv_item_wallet_name_size"
-                android:textStyle="bold"
-                android:textColor="@color/tv_gathering_wallet_name"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tv_assets_rv_item_wallet_addr"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:maxEms="6"
-                android:textColor="@android:color/black"
+                android:ellipsize="middle"
+                android:ems="6"
                 android:singleLine="true"
-                android:text="@string/assets_rv_item_wallet_addr" />
+                android:text="@string/assets_rv_item_wallet_addr"
+                android:textColor="@android:color/black" />
 
         </LinearLayout>
 

@@ -15,8 +15,8 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:layout_centerVertical="true"
+            android:orientation="vertical"
             android:padding="20dp">
 
             <LinearLayout
@@ -52,8 +52,8 @@
                 android:id="@+id/tv_me_rv_item_wallet_addr"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:maxEms="6"
+                android:ellipsize="middle"
+                android:ems="6"
                 android:singleLine="true"
                 android:text="@string/assets_rv_item_wallet_addr"
                 android:textColor="@android:color/black" />

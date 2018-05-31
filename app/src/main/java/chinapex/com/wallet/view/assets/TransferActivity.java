@@ -1,4 +1,4 @@
-package chinapex.com.wallet.view.wallet;
+package chinapex.com.wallet.view.assets;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,19 +8,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import chinapex.com.wallet.R;
 import chinapex.com.wallet.base.BaseActivity;
 import chinapex.com.wallet.bean.WalletBean;
 import chinapex.com.wallet.bean.WalletKeyStore;
-import chinapex.com.wallet.bean.request.RequestGetBlock;
-import chinapex.com.wallet.bean.request.RequestGetRawTransaction;
-import chinapex.com.wallet.bean.request.RequestSendRawTransaction;
 import chinapex.com.wallet.bean.request.RequestUtxo;
-import chinapex.com.wallet.bean.response.ResponseGetBlock;
-import chinapex.com.wallet.bean.response.ResponseGetRawTransaction;
 import chinapex.com.wallet.bean.response.ResponseGetUtxos;
 import chinapex.com.wallet.bean.response.ResponseSendRawTransaction;
 import chinapex.com.wallet.executor.TaskController;
@@ -28,7 +22,6 @@ import chinapex.com.wallet.executor.runnable.GetUtxos;
 import chinapex.com.wallet.executor.runnable.SendRawTransaction;
 import chinapex.com.wallet.global.Constant;
 import chinapex.com.wallet.net.INetCallback;
-import chinapex.com.wallet.net.OkHttpClientManager;
 import chinapex.com.wallet.utils.CpLog;
 import chinapex.com.wallet.utils.GsonUtils;
 import chinapex.com.wallet.utils.SharedPreferencesUtils;

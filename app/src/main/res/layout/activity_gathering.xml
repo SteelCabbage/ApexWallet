@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="chinapex.com.wallet.view.wallet.GatheringActivity">
+    tools:context="chinapex.com.wallet.view.assets.GatheringActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/tb_gathering"

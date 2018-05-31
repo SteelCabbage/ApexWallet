@@ -1,4 +1,4 @@
-package chinapex.com.wallet.view.wallet;
+package chinapex.com.wallet.view.assets;
 
 import android.content.Intent;
 import android.graphics.Bitmap;

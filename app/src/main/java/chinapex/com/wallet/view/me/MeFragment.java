@@ -1,6 +1,7 @@
 package chinapex.com.wallet.view.me;
 
 import android.app.FragmentTransaction;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.annotation.Nullable;
@@ -21,7 +22,6 @@ import chinapex.com.wallet.R;
 import chinapex.com.wallet.adapter.MeRecyclerViewAdapter;
 import chinapex.com.wallet.adapter.SpacesItemDecoration;
 import chinapex.com.wallet.base.BaseFragment;
-import chinapex.com.wallet.bean.TransactionRecord;
 import chinapex.com.wallet.bean.WalletBean;
 import chinapex.com.wallet.bean.WalletKeyStore;
 import chinapex.com.wallet.global.ApexWalletApplication;
@@ -30,7 +30,6 @@ import chinapex.com.wallet.utils.CpLog;
 import chinapex.com.wallet.utils.FragmentFactory;
 import chinapex.com.wallet.utils.GsonUtils;
 import chinapex.com.wallet.utils.SharedPreferencesUtils;
-import chinapex.com.wallet.view.wallet.BackupWalletActivity;
 
 /**
  * Created by SteelCabbage on 2018/5/21 0021.
@@ -47,6 +46,8 @@ public class MeFragment extends BaseFragment implements MeRecyclerViewAdapter
     private TextView mTv_me_wallet_balance;
     private Button mBt_me_manage_wallet;
     private Button mBt_me_transaction_record;
+    private boolean mIsTransactionRecordState;
+    private WalletBean mCurrentClickedWalletBean;
 
     @Nullable
     @Override
@@ -73,7 +74,7 @@ public class MeFragment extends BaseFragment implements MeRecyclerViewAdapter
 
         mRv_me.setLayoutManager(new LinearLayoutManager(ApexWalletApplication.getInstance(),
                 LinearLayoutManager.VERTICAL, false));
-        mWalletBeans = getWalletBeans();
+        mWalletBeans = initWalletBeans();
         mMeRecyclerViewAdapter = new MeRecyclerViewAdapter(mWalletBeans);
         mMeRecyclerViewAdapter.setOnItemClickListener(this);
 
@@ -92,6 +93,17 @@ public class MeFragment extends BaseFragment implements MeRecyclerViewAdapter
 
     @Override
     public void onItemClick(int position) {
+        mCurrentClickedWalletBean = mWalletBeans.get(position);
+        if (null == mCurrentClickedWalletBean) {
+            CpLog.e(TAG, "mCurrentClickedWalletBean is null!");
+            return;
+        }
+
+        if (mIsTransactionRecordState) {
+            toMeTransactionRecordFragment();
+        } else {
+            toMeManagerDetailFragment();
+        }
 
     }
 
@@ -114,7 +126,7 @@ public class MeFragment extends BaseFragment implements MeRecyclerViewAdapter
     }
 
     private void setBalanceSum() {
-        List<WalletBean> walletBeans = getWalletBeans();
+        List<WalletBean> walletBeans = initWalletBeans();
         double balanceSum = 0.0;
         for (WalletBean walletBean : walletBeans) {
             if (null == walletBean) {
@@ -126,7 +138,7 @@ public class MeFragment extends BaseFragment implements MeRecyclerViewAdapter
         mTv_me_wallet_balance.setText(String.valueOf(balanceSum));
     }
 
-    private List<WalletBean> getWalletBeans() {
+    private List<WalletBean> initWalletBeans() {
         String keyStores = (String) SharedPreferencesUtils.getParam(this.getActivity(), Constant
                 .SP_WALLET_KEYSTORE, "");
         if (TextUtils.isEmpty(keyStores)) {
@@ -158,11 +170,27 @@ public class MeFragment extends BaseFragment implements MeRecyclerViewAdapter
         switch (v.getId()) {
             //点击管理钱包
             case R.id.bt_me_manage_wallet:
-                toMeManagerDetailFragment();
+                mBt_me_manage_wallet.setBackgroundResource(R.drawable.shape_white_bt_bg);
+                mBt_me_manage_wallet.setTextColor(ApexWalletApplication.getInstance().getResources()
+                        .getColor(R.color.colorPrimary));
+
+                mBt_me_transaction_record.setBackgroundResource(0);
+                mBt_me_transaction_record.setTextColor(Color.WHITE);
+
+                mIsTransactionRecordState = false;
+//                toMeManagerDetailFragment();
                 break;
             //点击交易记录
             case R.id.bt_me_transaction_record:
-                toMeTransactionRecordFragment();
+                mBt_me_transaction_record.setBackgroundResource(R.drawable.shape_white_bt_bg);
+                mBt_me_transaction_record.setTextColor(ApexWalletApplication.getInstance()
+                        .getResources().getColor(R.color.colorPrimary));
+
+                mBt_me_manage_wallet.setBackgroundResource(0);
+                mBt_me_manage_wallet.setTextColor(Color.WHITE);
+
+                mIsTransactionRecordState = true;
+//                toMeTransactionRecordFragment();
                 break;
         }
     }
@@ -189,5 +217,9 @@ public class MeFragment extends BaseFragment implements MeRecyclerViewAdapter
         }
         fragmentTransaction.show(fragment).hide(FragmentFactory.getFragment(2)).commit();
 
+    }
+
+    public WalletBean getCurrentClickedWalletBean() {
+        return mCurrentClickedWalletBean;
     }
 }

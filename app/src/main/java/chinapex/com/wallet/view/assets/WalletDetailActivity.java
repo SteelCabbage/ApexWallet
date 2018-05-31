@@ -1,4 +1,4 @@
-package chinapex.com.wallet.view.wallet;
+package chinapex.com.wallet.view.assets;
 
 import android.content.Intent;
 import android.content.res.TypedArray;
@@ -23,6 +23,7 @@ import chinapex.com.wallet.bean.WalletBean;
 import chinapex.com.wallet.bean.WalletDetailMenu;
 import chinapex.com.wallet.global.Constant;
 import chinapex.com.wallet.utils.CpLog;
+import chinapex.com.wallet.view.wallet.CreateWalletActivity;
 
 public class WalletDetailActivity extends BaseActivity implements View.OnClickListener,
         DrawerLayout.DrawerListener, WalletDetailDrawerRecyclerViewAdapter.OnItemClickListener {
