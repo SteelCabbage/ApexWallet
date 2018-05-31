@@ -44,7 +44,7 @@
                     android:padding="3dp"
                     android:text="@string/tv_me_item_backup"
                     android:textColor="#B3D38D"
-                    android:textSize="12sp" />
+                    android:textSize="10sp" />
 
             </LinearLayout>
 

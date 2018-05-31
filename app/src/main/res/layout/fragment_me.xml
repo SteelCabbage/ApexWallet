@@ -7,7 +7,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/create_wallet_tb_height"
-        android:background="@drawable/shape_create_wallet_tb_bg">
+        android:background="@drawable/tb_bg">
 
         <TextView
             android:layout_width="wrap_content"
