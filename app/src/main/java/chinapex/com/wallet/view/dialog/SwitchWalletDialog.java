@@ -20,6 +20,10 @@ public class SwitchWalletDialog extends DialogFragment implements View.OnClickLi
     private static final String TAG = SwitchWalletDialog.class.getSimpleName();
     private ImageButton mIb_switch_wallet_close;
 
+    public static SwitchWalletDialog newInstance() {
+        return new SwitchWalletDialog();
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle

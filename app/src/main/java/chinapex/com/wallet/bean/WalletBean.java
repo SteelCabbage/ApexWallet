@@ -9,6 +9,8 @@ public class WalletBean implements Parcelable {
     private String mWalletAddr;
     private Double mBalance;
     private boolean isBackup;
+    private String keyStore;
+    private int backupState;
 
     public WalletBean() {
     }
@@ -45,6 +47,22 @@ public class WalletBean implements Parcelable {
         isBackup = backup;
     }
 
+    public String getKeyStore() {
+        return keyStore;
+    }
+
+    public void setKeyStore(String keyStore) {
+        this.keyStore = keyStore;
+    }
+
+    public int getBackupState() {
+        return backupState;
+    }
+
+    public void setBackupState(int backupState) {
+        this.backupState = backupState;
+    }
+
 
     @Override
     public int describeContents() {
@@ -57,6 +75,8 @@ public class WalletBean implements Parcelable {
         dest.writeString(this.mWalletAddr);
         dest.writeValue(this.mBalance);
         dest.writeByte(this.isBackup ? (byte) 1 : (byte) 0);
+        dest.writeString(this.keyStore);
+        dest.writeInt(this.backupState);
     }
 
     protected WalletBean(Parcel in) {
@@ -64,6 +84,8 @@ public class WalletBean implements Parcelable {
         this.mWalletAddr = in.readString();
         this.mBalance = (Double) in.readValue(Double.class.getClassLoader());
         this.isBackup = in.readByte() != 0;
+        this.keyStore = in.readString();
+        this.backupState = in.readInt();
     }
 
     public static final Creator<WalletBean> CREATOR = new Creator<WalletBean>() {
@@ -77,4 +99,16 @@ public class WalletBean implements Parcelable {
             return new WalletBean[size];
         }
     };
+
+    @Override
+    public String toString() {
+        return "WalletBean{" +
+                "mWalletName='" + mWalletName + '\'' +
+                ", mWalletAddr='" + mWalletAddr + '\'' +
+                ", mBalance=" + mBalance +
+                ", isBackup=" + isBackup +
+                ", keyStore='" + keyStore + '\'' +
+                ", backupState=" + backupState +
+                '}';
+    }
 }
