@@ -161,6 +161,44 @@ public class ApexWalletDbDao {
         return walletBeans;
     }
 
+    public WalletBean queryByWalletName(String tableName, String walletName) {
+        if (TextUtils.isEmpty(tableName)
+                || TextUtils.isEmpty(walletName)) {
+            CpLog.e(TAG, "queryByWalletName() -> tableName or walletName is null!");
+            return null;
+        }
+
+        ArrayList<WalletBean> walletBeans = new ArrayList<>();
+
+        SQLiteDatabase db = openDatabase();
+        Cursor cursor = db.query(tableName, null, WHERE_CLAUSE_WALLET_NAME_EQ, new
+                String[]{walletName}, null, null, null);
+        if (null != cursor) {
+            while (cursor.moveToNext()) {
+                int walletNameIndex = cursor.getColumnIndex(Constant.FIELD_WALLET_NAME);
+                int walletAddressIndex = cursor.getColumnIndex(Constant.FIELD_WALLET_ADDRESS);
+                int backupStateIndex = cursor.getColumnIndex(Constant.FIELD_BACKUP_STATE);
+                int walletKeystoreIndex = cursor.getColumnIndex(Constant.FIELD_WALLET_KEYSTORE);
+
+                String walletNameTmp = cursor.getString(walletNameIndex);
+                String walletAddress = cursor.getString(walletAddressIndex);
+                int backupState = cursor.getInt(backupStateIndex);
+                String walletKeystore = cursor.getString(walletKeystoreIndex);
+
+                WalletBean walletBean = new WalletBean();
+                walletBean.setWalletName(walletNameTmp);
+                walletBean.setWalletAddr(walletAddress);
+                walletBean.setBackupState(backupState);
+                walletBean.setKeyStore(walletKeystore);
+
+                walletBeans.add(walletBean);
+            }
+            cursor.close();
+        }
+        closeDatabase();
+        return walletBeans.get(0);
+    }
+
     public void updateBackupStateByWalletName(String tableName, String walletName, int
             backupState) {
         if (TextUtils.isEmpty(tableName) || TextUtils.isEmpty(walletName)) {

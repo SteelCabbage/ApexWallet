@@ -68,10 +68,18 @@ public class MeRecyclerViewAdapter extends RecyclerView.Adapter<MeRecyclerViewAd
         holder.walletAddr.setText(walletBean.getWalletAddr());
         holder.balance.setText(String.valueOf(walletBean.getBalance()));
 
-        if (walletBean.isBackup()) {
-            holder.isBackup.setVisibility(View.INVISIBLE);
-        } else {
-            holder.isBackup.setVisibility(View.VISIBLE);
+        int backupState = walletBean.getBackupState();
+        switch (backupState) {
+            //未备份
+            case 0:
+                holder.isBackup.setVisibility(View.VISIBLE);
+                break;
+            //已备份
+            case 1:
+                holder.isBackup.setVisibility(View.INVISIBLE);
+                break;
+            default:
+                break;
         }
 
         holder.itemView.setTag(position);

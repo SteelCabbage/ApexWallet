@@ -8,23 +8,21 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import java.util.List;
-
 import chinapex.com.wallet.R;
 import chinapex.com.wallet.base.BaseActivity;
 import chinapex.com.wallet.bean.WalletBean;
-import chinapex.com.wallet.bean.WalletKeyStore;
 import chinapex.com.wallet.bean.request.RequestUtxo;
 import chinapex.com.wallet.bean.response.ResponseGetUtxos;
 import chinapex.com.wallet.bean.response.ResponseSendRawTransaction;
 import chinapex.com.wallet.executor.TaskController;
 import chinapex.com.wallet.executor.runnable.GetUtxos;
 import chinapex.com.wallet.executor.runnable.SendRawTransaction;
+import chinapex.com.wallet.global.ApexWalletApplication;
 import chinapex.com.wallet.global.Constant;
+import chinapex.com.wallet.model.ApexWalletDbDao;
 import chinapex.com.wallet.net.INetCallback;
 import chinapex.com.wallet.utils.CpLog;
 import chinapex.com.wallet.utils.GsonUtils;
-import chinapex.com.wallet.utils.SharedPreferencesUtils;
 import neomobile.Neomobile;
 import neomobile.Tx;
 import neomobile.Wallet;
@@ -94,10 +92,6 @@ public class TransferActivity extends BaseActivity implements View.OnClickListen
                     return;
                 }
 
-//                mRequestUtxo = new RequestUtxo();
-//                mVoutBean = new RequestUtxo.VoutBean();
-//                sendTxData(mEt_transfer_tx_id.getText().toString().trim());
-
                 startTx(mWalletFrom.address());
                 break;
             default:
@@ -106,33 +100,28 @@ public class TransferActivity extends BaseActivity implements View.OnClickListen
     }
 
     private void fromKeyStore() {
-        String keyStores = (String) SharedPreferencesUtils.getParam(this, Constant
-                .SP_WALLET_KEYSTORE, "");
-
-        if (TextUtils.isEmpty(keyStores)) {
-            CpLog.e(TAG, "keyStores is null!");
+        ApexWalletDbDao apexWalletDbDao = ApexWalletDbDao.getInstance(ApexWalletApplication
+                .getInstance());
+        if (null == apexWalletDbDao) {
+            CpLog.e(TAG, "apexWalletDbDao is null！");
             return;
         }
 
-        List<WalletKeyStore> walletKeyStores = GsonUtils.json2List(keyStores);
-        if (null == walletKeyStores) {
-            CpLog.e(TAG, "jsonListObject is null!");
+        WalletBean walletBean = apexWalletDbDao.queryByWalletName(Constant.TABLE_APEX_WALLET,
+                mWalletBean.getWalletName());
+        if (null == walletBean) {
+            CpLog.e(TAG, "walletBean is null!");
             return;
         }
 
-        for (WalletKeyStore walletKeyStore : walletKeyStores) {
-            if (!mWalletBean.getWalletName().equals(walletKeyStore.getWalletName())) {
-                continue;
-            }
-
-            try {
-                mWalletFrom = Neomobile.fromKeyStore(walletKeyStore.getWalletKeyStore(),
-                        mEt_transfer_pwd.getText().toString().trim());
-                CpLog.i(TAG, "mWalletFrom address:" + mWalletFrom.address());
-            } catch (Exception e) {
-                CpLog.e(TAG, "fromKeyStore exception:" + e.getMessage());
-            }
+        try {
+            mWalletFrom = Neomobile.fromKeyStore(walletBean.getKeyStore(), mEt_transfer_pwd
+                    .getText().toString().trim());
+            CpLog.i(TAG, "mWalletFrom address:" + mWalletFrom.address());
+        } catch (Exception e) {
+            CpLog.e(TAG, "fromKeyStore exception:" + e.getMessage());
         }
+
     }
 
     private void startTx(String addressFrom) {
@@ -168,154 +157,6 @@ public class TransferActivity extends BaseActivity implements View.OnClickListen
         CpLog.i(TAG, "createAssertTx data:" + data);
         return tx;
     }
-
-//    private void sendTxData(final String txid) {
-//        final RequestGetRawTransaction requestGetRawTransaction = new RequestGetRawTransaction();
-//        requestGetRawTransaction.setJsonrpc("2.0");
-//        requestGetRawTransaction.setMethod("getrawtransaction");
-//        ArrayList<String> params = new ArrayList<>();
-//        params.add(txid);
-//        params.add("1");
-//        requestGetRawTransaction.setParams(params);
-//        requestGetRawTransaction.setId(1);
-//
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                OkHttpClientManager.getInstance().postJson(Constant.URL_CLI, GsonUtils.toJsonStr
-//                        (requestGetRawTransaction), new INetCallback() {
-//
-//
-//                    @Override
-//                    public void onSuccess(int statusCode, String msg, String result) {
-//                        CpLog.i(TAG, "getrawtransaction onSuccess");
-//                        CpLog.i(TAG, "getrawtransaction onSuccess:" + result);
-//                        ResponseGetRawTransaction responseGetRawTransaction = GsonUtils.json2Bean
-//                                (result, ResponseGetRawTransaction.class);
-//                        List<ResponseGetRawTransaction.ResultBean.VoutBean> voutBeans =
-//                                responseGetRawTransaction.getResult().getVout();
-//                        for (ResponseGetRawTransaction.ResultBean.VoutBean voutBean : voutBeans) {
-//                            if (mWalletFrom.address().equals(voutBean.getAddress()) && Constant
-//                                    .ASSETS_NEO.equals(voutBean.getAsset())) {
-//                                mVoutBean.setAddress(voutBean.getAddress());
-//                                mVoutBean.setAsset(voutBean.getAsset());
-//                                mVoutBean.setValue(voutBean.getValue());
-//                                mVoutBean.setN(voutBean.getN());
-//
-//
-//                            }
-//                        }
-//
-//                        RequestGetBlock requestGetBlock = new RequestGetBlock();
-//                        requestGetBlock.setJsonrpc("2.0");
-//                        requestGetBlock.setMethod("getblock");
-//                        ArrayList<String> arrayList = new ArrayList<>();
-//                        arrayList.add(responseGetRawTransaction.getResult().getBlockhash());
-//                        arrayList.add("1");
-//                        requestGetBlock.setParams(arrayList);
-//                        requestGetBlock.setId(1);
-//                        OkHttpClientManager.getInstance().postJson(Constant.URL_CLI, GsonUtils
-//                                .toJsonStr(requestGetBlock), new INetCallback() {
-//
-//
-//                            @Override
-//                            public void onSuccess(int statusCode, String msg, String result) {
-//                                CpLog.i(TAG, "getblock onSuccess");
-//                                CpLog.i(TAG, "getblock onSuccess:" + result);
-//
-//                                ResponseGetBlock responseGetBlock = GsonUtils.json2Bean(result,
-//                                        ResponseGetBlock.class);
-//                                int blockIndex = responseGetBlock.getResult().getIndex();
-//                                int blockTime = responseGetBlock.getResult().getTime();
-//
-//                                mRequestUtxo.setTxid(mEt_transfer_tx_id.getText().toString().trim
-//                                        ());
-//                                mRequestUtxo.setBlock(blockIndex);
-//                                mRequestUtxo.setVout(mVoutBean);
-//                                mRequestUtxo.setSpentBlock(-1);
-//                                mRequestUtxo.setSpentTime("");
-//                                mRequestUtxo.setCreateTime(blockTime + "");
-//                                mRequestUtxo.setGas("");
-//
-//                                ArrayList<RequestUtxo> requestUtxos = new ArrayList<>();
-//                                requestUtxos.add(mRequestUtxo);
-//
-//                                String utxos = GsonUtils.toJsonStr(requestUtxos);
-//                                String transfer_neo_amount = mEt_transfer_amount.getText()
-//                                        .toString().trim();
-//                                final Tx tx = createAssertTx(Constant.ASSETS_NEO, mWalletFrom
-//                                                .address(),
-//                                        mEt_transfer_to_wallet_addr.getText().toString().trim(),
-//                                        Double.valueOf(transfer_neo_amount), utxos);
-//
-//                                RequestSendRawTransaction requestSendRawTransaction = new
-//                                        RequestSendRawTransaction();
-//                                requestSendRawTransaction.setJsonrpc("2.0");
-//                                requestSendRawTransaction.setMethod("sendrawtransaction");
-//                                ArrayList<String> sendDatas = new ArrayList<>();
-//                                sendDatas.add(tx.getData());
-//                                requestSendRawTransaction.setParams(sendDatas);
-//                                requestSendRawTransaction.setId(1);
-//
-//                                OkHttpClientManager.getInstance().postJson(Constant.URL_CLI,
-//                                        GsonUtils.toJsonStr(requestSendRawTransaction), new
-//                                                INetCallback() {
-//
-//
-//                                                    @Override
-//                                                    public void onSuccess(int statusCode, String
-//                                                            msg, String
-//                                                                                  result) {
-//                                                        CpLog.i(TAG, "send onSuccess");
-//                                                        CpLog.i(TAG, "send onSuccess:" + result);
-//
-//                                                        ResponseSendRawTransaction
-//                                                                responseSendRawTransaction =
-//                                                                GsonUtils.json2Bean(result,
-//
-// ResponseSendRawTransaction.class);
-//                                                        if (responseSendRawTransaction.isResult
-// ()) {
-//                                                            CpLog.i(TAG, "broadcast success");
-//                                                            String txID = "0x" + tx.getID();
-//                                                            CpLog.i(TAG, "txID:" + txID);
-//                                                            SharedPreferencesUtils.putParam
-//                                                                    (TransferActivity.this,
-// Constant
-//                                                                            .SP_TX_ID, txID);
-//
-//                                                            finish();
-//
-//                                                        }
-//
-//                                                    }
-//
-//                                                    @Override
-//                                                    public void onFailed(int failedCode, String
-//                                                            msg) {
-//                                                        CpLog.i(TAG, "send onFailed");
-//                                                    }
-//                                                });
-//
-//                            }
-//
-//                            @Override
-//                            public void onFailed(int failedCode, String msg) {
-//                                CpLog.e(TAG, "getblock onFailed");
-//                            }
-//                        });
-//
-//
-//                    }
-//
-//                    @Override
-//                    public void onFailed(int failedCode, String msg) {
-//                        CpLog.e(TAG, "getrawtransaction onFailed");
-//                    }
-//                });
-//            }
-//        }).start();
-//    }
 
     @Override
     public void onSuccess(int statusCode, String msg, String result) {

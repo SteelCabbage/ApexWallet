@@ -26,6 +26,7 @@ import chinapex.com.wallet.bean.WalletBean;
 import chinapex.com.wallet.bean.WalletKeyStore;
 import chinapex.com.wallet.global.ApexWalletApplication;
 import chinapex.com.wallet.global.Constant;
+import chinapex.com.wallet.model.ApexWalletDbDao;
 import chinapex.com.wallet.utils.CpLog;
 import chinapex.com.wallet.utils.FragmentFactory;
 import chinapex.com.wallet.utils.GsonUtils;
@@ -125,43 +126,16 @@ public class MeFragment extends BaseFragment implements MeRecyclerViewAdapter
         }).start();
     }
 
-    private void setBalanceSum() {
-        List<WalletBean> walletBeans = initWalletBeans();
-        double balanceSum = 0.0;
-        for (WalletBean walletBean : walletBeans) {
-            if (null == walletBean) {
-                CpLog.e(TAG, "walletBean is null!");
-                continue;
-            }
-            balanceSum = balanceSum + walletBean.getBalance();
-        }
-        mTv_me_wallet_balance.setText(String.valueOf(balanceSum));
-    }
-
     private List<WalletBean> initWalletBeans() {
-        String keyStores = (String) SharedPreferencesUtils.getParam(this.getActivity(), Constant
-                .SP_WALLET_KEYSTORE, "");
-        if (TextUtils.isEmpty(keyStores)) {
-            CpLog.e(TAG, "keyStores is null!");
-            return null;
-        }
-
-        List<WalletKeyStore> walletKeyStores = GsonUtils.json2List(keyStores);
-        if (null == walletKeyStores) {
-            CpLog.e(TAG, "jsonListObject is null!");
-            return null;
-        }
-
         List<WalletBean> walletBeans = new ArrayList<>();
-        for (WalletKeyStore walletKeyStore : walletKeyStores) {
-            WalletBean walletBean = new WalletBean();
-            walletBean.setWalletName(walletKeyStore.getWalletName());
-            walletBean.setWalletAddr(walletKeyStore.getWalletAddr());
-            walletBean.setBalance(0.0);
-            walletBean.setBackup(false);
-            walletBeans.add(walletBean);
+        ApexWalletDbDao apexWalletDbDao = ApexWalletDbDao.getInstance(ApexWalletApplication
+                .getInstance());
+        if (null == apexWalletDbDao) {
+            CpLog.e(TAG, "apexWalletDbDao is null!");
+            return walletBeans;
         }
 
+        walletBeans.addAll(apexWalletDbDao.queryWalletBeans(Constant.TABLE_APEX_WALLET));
         return walletBeans;
     }
 

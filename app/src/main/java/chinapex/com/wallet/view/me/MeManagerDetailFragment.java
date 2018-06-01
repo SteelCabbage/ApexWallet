@@ -72,8 +72,17 @@ public class MeManagerDetailFragment extends BaseFragment implements View.OnClic
         mTv_me_manager_detail_bottom_wallet_name.setText(String.valueOf(Constant.WALLET_NAME +
                 currentClickedWalletBean.getWalletName()));
 
-        if (currentClickedWalletBean.isBackup()) {
-            mBt_me_manager_detail_backup.setVisibility(View.INVISIBLE);
+        int backupState = currentClickedWalletBean.getBackupState();
+        switch (backupState) {
+            //未备份
+            case 0:
+                break;
+            //已备份
+            case 1:
+                mBt_me_manager_detail_backup.setVisibility(View.INVISIBLE);
+                break;
+            default:
+                break;
         }
     }
 

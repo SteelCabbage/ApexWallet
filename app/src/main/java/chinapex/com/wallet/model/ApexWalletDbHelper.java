@@ -33,7 +33,6 @@ public class ApexWalletDbHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(Constant.SQL_CREATE_APEX_WALLET);
-        CpLog.e(TAG, Constant.SQL_CREATE_APEX_WALLET);
 
     }
 
