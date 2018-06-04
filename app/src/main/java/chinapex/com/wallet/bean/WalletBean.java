@@ -10,6 +10,7 @@ public class WalletBean implements Parcelable {
     private int backupState;
     private String keyStore;
     private Double mBalance;
+    private boolean isSelected;
 
     public WalletBean() {
     }
@@ -54,6 +55,13 @@ public class WalletBean implements Parcelable {
         mBalance = balance;
     }
 
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
+    }
 
     @Override
     public int describeContents() {
@@ -98,5 +106,23 @@ public class WalletBean implements Parcelable {
                 ", keyStore='" + keyStore + '\'' +
                 ", mBalance=" + mBalance +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        WalletBean that = (WalletBean) o;
+
+        if (!mWalletName.equals(that.mWalletName)) return false;
+        return mWalletAddr.equals(that.mWalletAddr);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = mWalletName.hashCode();
+        result = 31 * result + mWalletAddr.hashCode();
+        return result;
     }
 }
