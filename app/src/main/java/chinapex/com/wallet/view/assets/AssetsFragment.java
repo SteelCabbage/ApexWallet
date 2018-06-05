@@ -167,7 +167,12 @@ public class AssetsFragment extends BaseFragment implements AssetsRecyclerViewAd
                         @Override
                         public void onFailed(int failedCode, String msg) {
                             CpLog.e(TAG, "onFailed");
-                            mSl_assets_rv.setRefreshing(false);
+                            AssetsFragment.this.getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    mSl_assets_rv.setRefreshing(false);
+                                }
+                            });
                         }
                     });
                 }
