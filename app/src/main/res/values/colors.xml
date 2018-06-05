@@ -15,4 +15,5 @@
     <color name="tv_gathering_wallet_name">#333333</color>
     <color name="tv_copy_mnemonic_color">#666666</color>
     <color name="recyclerview_separator_view">#E5E5E5</color>
+    <color name="dialog_pwd">#030303</color>
 </resources>

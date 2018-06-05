@@ -13,6 +13,8 @@ import chinapex.com.wallet.base.BaseFragment;
 import chinapex.com.wallet.bean.WalletBean;
 import chinapex.com.wallet.global.Constant;
 import chinapex.com.wallet.utils.CpLog;
+import chinapex.com.wallet.view.dialog.InputPwdDialog;
+import chinapex.com.wallet.view.dialog.SwitchWalletDialog;
 
 /**
  * Created by SteelCabbage on 2018/5/31 0031.
@@ -76,6 +78,7 @@ public class MeManagerDetailFragment extends BaseFragment implements View.OnClic
         switch (backupState) {
             //未备份
             case 0:
+                mBt_me_manager_detail_backup.setVisibility(View.VISIBLE);
                 break;
             //已备份
             case 1:
@@ -90,11 +93,17 @@ public class MeManagerDetailFragment extends BaseFragment implements View.OnClic
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_me_manager_detail_backup:
+                showInputPwdDialog();
                 break;
             case R.id.bt_me_manager_detail_delete:
                 break;
             default:
                 break;
         }
+    }
+
+    public void showInputPwdDialog() {
+        InputPwdDialog inputPwdDialog = InputPwdDialog.newInstance();
+        inputPwdDialog.show(getFragmentManager(), "InputPwdDialog");
     }
 }
