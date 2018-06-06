@@ -2,6 +2,7 @@ package chinapex.com.wallet.view.me;
 
 import android.app.FragmentTransaction;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.annotation.Nullable;
@@ -148,11 +149,12 @@ public class MeFragment extends BaseFragment implements MeRecyclerViewAdapter
                 mBt_me_manage_wallet.setTextColor(ApexWalletApplication.getInstance().getResources()
                         .getColor(R.color.colorPrimary));
 
-                mBt_me_transaction_record.setBackgroundResource(0);
+//                mBt_me_transaction_record.setBackgroundResource(0);
+                //为适配小米4，否则button会有边框背景
+                mBt_me_transaction_record.setBackground(new ColorDrawable(0));
                 mBt_me_transaction_record.setTextColor(Color.WHITE);
 
                 mIsTransactionRecordState = false;
-//                toMeManagerDetailFragment();
                 break;
             //点击交易记录
             case R.id.bt_me_transaction_record:
@@ -160,11 +162,12 @@ public class MeFragment extends BaseFragment implements MeRecyclerViewAdapter
                 mBt_me_transaction_record.setTextColor(ApexWalletApplication.getInstance()
                         .getResources().getColor(R.color.colorPrimary));
 
-                mBt_me_manage_wallet.setBackgroundResource(0);
+//                mBt_me_manage_wallet.setBackgroundResource(0);
+                //为适配小米4，否则button会有边框背景
+                mBt_me_manage_wallet.setBackground(new ColorDrawable(0));
                 mBt_me_manage_wallet.setTextColor(Color.WHITE);
 
                 mIsTransactionRecordState = true;
-//                toMeTransactionRecordFragment();
                 break;
         }
     }
