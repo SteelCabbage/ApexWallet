@@ -1,5 +1,6 @@
 package chinapex.com.wallet.view.me;
 
+import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -25,6 +26,8 @@ import chinapex.com.wallet.adapter.SpacesItemDecoration;
 import chinapex.com.wallet.base.BaseFragment;
 import chinapex.com.wallet.bean.WalletBean;
 import chinapex.com.wallet.bean.WalletKeyStore;
+import chinapex.com.wallet.changelistener.ApexListeners;
+import chinapex.com.wallet.changelistener.onItemDeleteListener;
 import chinapex.com.wallet.global.ApexWalletApplication;
 import chinapex.com.wallet.global.Constant;
 import chinapex.com.wallet.model.ApexWalletDbDao;
@@ -32,13 +35,15 @@ import chinapex.com.wallet.utils.CpLog;
 import chinapex.com.wallet.utils.FragmentFactory;
 import chinapex.com.wallet.utils.GsonUtils;
 import chinapex.com.wallet.utils.SharedPreferencesUtils;
+import chinapex.com.wallet.view.dialog.InputPwdDialog;
 
 /**
  * Created by SteelCabbage on 2018/5/21 0021.
  */
 
 public class MeFragment extends BaseFragment implements MeRecyclerViewAdapter
-        .OnItemClickListener, SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
+        .OnItemClickListener, SwipeRefreshLayout.OnRefreshListener, View.OnClickListener,
+        onItemDeleteListener {
 
     private static final String TAG = MeFragment.class.getSimpleName();
     private RecyclerView mRv_me;
@@ -178,10 +183,11 @@ public class MeFragment extends BaseFragment implements MeRecyclerViewAdapter
         BaseFragment fragment = FragmentFactory.getFragment(10);
         if (!fragment.isAdded()) {
             fragmentTransaction.add(R.id.fl_main, fragment, "" + 10);
-            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.addToBackStack("MeManagerDetailFragment");
         }
         fragmentTransaction.show(fragment).hide(FragmentFactory.getFragment(2)).commit();
 
+        ApexListeners.getInstance().addOnItemDeleteListener(this);
     }
 
     private void toMeTransactionRecordFragment() {
@@ -190,7 +196,7 @@ public class MeFragment extends BaseFragment implements MeRecyclerViewAdapter
         BaseFragment fragment = FragmentFactory.getFragment(11);
         if (!fragment.isAdded()) {
             fragmentTransaction.add(R.id.fl_main, fragment, "" + 11);
-            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.addToBackStack("MeTransactionRecordFragment");
         }
         fragmentTransaction.show(fragment).hide(FragmentFactory.getFragment(2)).commit();
 
@@ -199,4 +205,21 @@ public class MeFragment extends BaseFragment implements MeRecyclerViewAdapter
     public WalletBean getCurrentClickedWalletBean() {
         return mCurrentClickedWalletBean;
     }
+
+    //删除钱包时回调
+    @Override
+    public void onItemDelete(WalletBean walletBean) {
+        if (null == walletBean) {
+            CpLog.e(TAG, "walletBean is null!");
+            return;
+        }
+
+        mWalletBeans.remove(walletBean);
+        mMeRecyclerViewAdapter.notifyDataSetChanged();
+
+        FragmentManager fragmentManager = getActivity().getFragmentManager();
+        fragmentManager.popBackStack("MeManagerDetailFragment", FragmentManager
+                .POP_BACK_STACK_INCLUSIVE);
+    }
+
 }

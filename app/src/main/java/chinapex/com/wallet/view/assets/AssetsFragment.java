@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,9 +18,10 @@ import chinapex.com.wallet.adapter.AssetsRecyclerViewAdapter;
 import chinapex.com.wallet.adapter.SpacesItemDecoration;
 import chinapex.com.wallet.base.BaseFragment;
 import chinapex.com.wallet.bean.WalletBean;
-import chinapex.com.wallet.bean.WalletKeyStore;
 import chinapex.com.wallet.bean.request.RequestGetAccountState;
 import chinapex.com.wallet.bean.response.ResponseGetAccountState;
+import chinapex.com.wallet.changelistener.ApexListeners;
+import chinapex.com.wallet.changelistener.onItemDeleteListener;
 import chinapex.com.wallet.global.ApexWalletApplication;
 import chinapex.com.wallet.global.Constant;
 import chinapex.com.wallet.model.ApexWalletDbDao;
@@ -29,7 +29,6 @@ import chinapex.com.wallet.net.INetCallback;
 import chinapex.com.wallet.net.OkHttpClientManager;
 import chinapex.com.wallet.utils.CpLog;
 import chinapex.com.wallet.utils.GsonUtils;
-import chinapex.com.wallet.utils.SharedPreferencesUtils;
 
 /**
  * Created by SteelCabbage on 2018/5/21 0021.
@@ -37,11 +36,11 @@ import chinapex.com.wallet.utils.SharedPreferencesUtils;
 
 public class AssetsFragment extends BaseFragment implements AssetsRecyclerViewAdapter
         .OnItemClickListener, SwipeRefreshLayout.OnRefreshListener, AssetsRecyclerViewAdapter
-        .OnItemLongClickListener {
+        .OnItemLongClickListener, onItemDeleteListener {
 
     private static final String TAG = AssetsFragment.class.getSimpleName();
     private RecyclerView mRv_assets;
-    private List<WalletBean> mMWalletBeans;
+    private List<WalletBean> mWalletBeans;
     private SwipeRefreshLayout mSl_assets_rv;
     private AssetsRecyclerViewAdapter mAssetsRecyclerViewAdapter;
     private TextView mTv_assets_balance;
@@ -60,6 +59,7 @@ public class AssetsFragment extends BaseFragment implements AssetsRecyclerViewAd
         super.onViewCreated(view, savedInstanceState);
 
         initView(view);
+        initData();
     }
 
     private void initView(View view) {
@@ -70,8 +70,8 @@ public class AssetsFragment extends BaseFragment implements AssetsRecyclerViewAd
         mRv_assets.setLayoutManager(new LinearLayoutManager(ApexWalletApplication.getInstance(),
                 LinearLayoutManager.VERTICAL,
                 false));
-        mMWalletBeans = getData();
-        mAssetsRecyclerViewAdapter = new AssetsRecyclerViewAdapter(mMWalletBeans);
+        mWalletBeans = getData();
+        mAssetsRecyclerViewAdapter = new AssetsRecyclerViewAdapter(mWalletBeans);
         mAssetsRecyclerViewAdapter.setOnItemClickListener(this);
         mAssetsRecyclerViewAdapter.setOnItemLongClickListener(this);
 
@@ -86,11 +86,15 @@ public class AssetsFragment extends BaseFragment implements AssetsRecyclerViewAd
 
     }
 
+    private void initData() {
+        ApexListeners.getInstance().addOnItemDeleteListener(this);
+    }
+
     @Override
     public void onItemClick(int position) {
         CpLog.i(TAG, "onItemClick:" + position);
         startActivityParcelable(WalletDetailActivity.class, false, Constant.WALLET_BEAN,
-                mMWalletBeans.get(position));
+                mWalletBeans.get(position));
 
     }
 
@@ -116,11 +120,22 @@ public class AssetsFragment extends BaseFragment implements AssetsRecyclerViewAd
 
     @Override
     public void onRefresh() {
-        getBalance(mMWalletBeans);
+        getBalance(mWalletBeans);
     }
 
-    private void getBalance(List<WalletBean> walletBeanList) {
-        for (final WalletBean walletBean : walletBeanList) {
+    private void getBalance(List<WalletBean> walletBeans) {
+        if (null == walletBeans || walletBeans.isEmpty()) {
+            CpLog.e(TAG, "walletBeans is null or empty!");
+            AssetsFragment.this.getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    mSl_assets_rv.setRefreshing(false);
+                }
+            });
+            return;
+        }
+
+        for (final WalletBean walletBean : walletBeans) {
 
             final RequestGetAccountState requestGetAccountState = new RequestGetAccountState();
             requestGetAccountState.setJsonrpc("2.0");
@@ -182,4 +197,14 @@ public class AssetsFragment extends BaseFragment implements AssetsRecyclerViewAd
     }
 
 
+    @Override
+    public void onItemDelete(WalletBean walletBean) {
+        if (null == walletBean) {
+            CpLog.e(TAG, "walletBean is null!");
+            return;
+        }
+
+        mWalletBeans.remove(walletBean);
+        mAssetsRecyclerViewAdapter.notifyDataSetChanged();
+    }
 }

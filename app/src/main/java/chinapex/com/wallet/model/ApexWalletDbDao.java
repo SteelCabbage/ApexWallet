@@ -35,14 +35,8 @@ public class ApexWalletDbDao {
 
     private SQLiteDatabase mDatabase;
 
-    private ReentrantLock mReentrantLock;
-
-    private Context mContext;
-
     private ApexWalletDbDao(Context context) {
-        mContext = context;
         mApexWalletDbHelper = new ApexWalletDbHelper(context);
-        mReentrantLock = new ReentrantLock();
     }
 
     public static ApexWalletDbDao getInstance(Context context) {
@@ -103,20 +97,25 @@ public class ApexWalletDbDao {
         closeDatabase();
     }
 
-    private static final String WHERE_CLAUSE_WALLET_NAME_EQ = Constant.FIELD_WALLET_NAME + " = ?";
 
-    public void deleteByWalletName(String tableName, String walletName) {
-        if (TextUtils.isEmpty(walletName)) {
-            CpLog.e(TAG, "deleteByWalletName() -> walletName is null!");
+    private static final String WHERE_CLAUSE_WALLET_NAME_EQ_AND_ADDRESS_EQ = Constant
+            .FIELD_WALLET_NAME + " = ?" + " and " + Constant.FIELD_WALLET_ADDRESS + " = ?";
+
+    public void deleteByWalletNameAndAddr(String tableName, String walletName, String
+            walletAddress) {
+        if (TextUtils.isEmpty(walletName) || TextUtils.isEmpty(walletAddress)) {
+            CpLog.e(TAG, "deleteByWalletName() -> walletName or walletAddress is null!");
             return;
         }
 
         SQLiteDatabase db = openDatabase();
         try {
             db.beginTransaction();
-            db.delete(tableName, WHERE_CLAUSE_WALLET_NAME_EQ, new String[]{walletName});
+            db.delete(tableName, WHERE_CLAUSE_WALLET_NAME_EQ_AND_ADDRESS_EQ, new
+                    String[]{walletName, walletAddress});
             db.setTransactionSuccessful();
-            CpLog.i(TAG, "deleteByWalletName() -> delete " + walletName + " ok!");
+            CpLog.i(TAG, "deleteByWalletName() -> delete " + walletName + ":" + walletAddress + "" +
+                    " ok!");
         } catch (Exception e) {
             CpLog.e(TAG, "deleteByWalletName exception:" + e.getMessage());
         } finally {
@@ -160,6 +159,8 @@ public class ApexWalletDbDao {
         closeDatabase();
         return walletBeans;
     }
+
+    private static final String WHERE_CLAUSE_WALLET_NAME_EQ = Constant.FIELD_WALLET_NAME + " = ?";
 
     public WalletBean queryByWalletName(String tableName, String walletName) {
         if (TextUtils.isEmpty(tableName)

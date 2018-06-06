@@ -29,6 +29,8 @@ public class MeManagerDetailFragment extends BaseFragment implements View.OnClic
     private TextView mTv_me_manager_detail_bottom_wallet_name;
     private Button mBt_me_manager_detail_backup;
     private Button mBt_me_manager_detail_delete;
+    private WalletBean mCurrentClickedWalletBean;
+
 
     @Nullable
     @Override
@@ -60,21 +62,21 @@ public class MeManagerDetailFragment extends BaseFragment implements View.OnClic
     private void initData() {
         MeFragment meFragment = (MeFragment) getActivity().getFragmentManager().findFragmentByTag
                 (2 + "");
-        WalletBean currentClickedWalletBean = meFragment.getCurrentClickedWalletBean();
-        if (null == currentClickedWalletBean) {
+        mCurrentClickedWalletBean = meFragment.getCurrentClickedWalletBean();
+        if (null == mCurrentClickedWalletBean) {
             CpLog.e(TAG, "currentClickedWalletBean is null!");
             return;
         }
 
         mTv_me_manager_detail_title.setText(String.valueOf(Constant.WALLET_NAME +
-                currentClickedWalletBean.getWalletName()));
-        mTv_me_manager_detail_balance.setText(String.valueOf(currentClickedWalletBean.getBalance
+                mCurrentClickedWalletBean.getWalletName()));
+        mTv_me_manager_detail_balance.setText(String.valueOf(mCurrentClickedWalletBean.getBalance
                 ()));
-        mTv_me_manager_detail_address.setText(currentClickedWalletBean.getWalletAddr());
+        mTv_me_manager_detail_address.setText(mCurrentClickedWalletBean.getWalletAddr());
         mTv_me_manager_detail_bottom_wallet_name.setText(String.valueOf(Constant.WALLET_NAME +
-                currentClickedWalletBean.getWalletName()));
+                mCurrentClickedWalletBean.getWalletName()));
 
-        int backupState = currentClickedWalletBean.getBackupState();
+        int backupState = mCurrentClickedWalletBean.getBackupState();
         switch (backupState) {
             //未备份
             case 0:
@@ -93,9 +95,10 @@ public class MeManagerDetailFragment extends BaseFragment implements View.OnClic
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_me_manager_detail_backup:
-                showInputPwdDialog();
+
                 break;
             case R.id.bt_me_manager_detail_delete:
+                showInputPwdDialog();
                 break;
             default:
                 break;
@@ -104,6 +107,8 @@ public class MeManagerDetailFragment extends BaseFragment implements View.OnClic
 
     public void showInputPwdDialog() {
         InputPwdDialog inputPwdDialog = InputPwdDialog.newInstance();
+        inputPwdDialog.setCurrentWalletBean(mCurrentClickedWalletBean);
         inputPwdDialog.show(getFragmentManager(), "InputPwdDialog");
     }
+
 }

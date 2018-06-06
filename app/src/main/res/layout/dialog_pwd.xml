@@ -31,7 +31,7 @@
             android:textSize="12sp" />
 
         <EditText
-            android:id="@+id/et_dialog_pwd"
+            android:id="@+id/et_dialog_pwd_del"
             android:layout_width="211dp"
             android:layout_height="22dp"
             android:layout_gravity="center_horizontal"
@@ -47,18 +47,18 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_alignTop="@+id/ll_dialog_pwd"
+        android:layout_alignTop="@+id/ll_dialog_pwd_del"
         android:background="@color/view_separator" />
 
     <LinearLayout
-        android:id="@+id/ll_dialog_pwd"
+        android:id="@+id/ll_dialog_pwd_del"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/bt_dialog_pwd_cancel"
+            android:id="@+id/bt_dialog_pwd_del_cancel"
             android:layout_width="0dp"
             android:layout_height="39dp"
             android:layout_weight="1"
@@ -73,7 +73,7 @@
             android:background="@color/view_separator" />
 
         <Button
-            android:id="@+id/bt_dialog_pwd_confirm"
+            android:id="@+id/bt_dialog_pwd_del_confirm"
             android:layout_width="0dp"
             android:layout_height="39dp"
             android:layout_weight="1"
