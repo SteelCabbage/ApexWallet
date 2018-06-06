@@ -85,15 +85,13 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/create_wallet_ll_margin_top"
-        android:gravity="center_vertical"
+        android:gravity="center"
         android:orientation="horizontal">
 
         <ImageButton
             android:id="@+id/ib_create_wallet_privacy_point"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:layout_marginStart="45dp"
             android:background="@null"
             android:src="@drawable/selector_privacy_point" />
 

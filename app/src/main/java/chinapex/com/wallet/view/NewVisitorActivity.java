@@ -37,10 +37,8 @@ public class NewVisitorActivity extends BaseActivity implements View.OnClickList
 
         initView();
 
-
         //output screen info
         logScreenInfo();
-//        testDb();
     }
 
     private void initView() {

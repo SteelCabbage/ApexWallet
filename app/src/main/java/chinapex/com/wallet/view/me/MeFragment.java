@@ -14,7 +14,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +45,6 @@ public class MeFragment extends BaseFragment implements MeRecyclerViewAdapter
     private MeRecyclerViewAdapter mMeRecyclerViewAdapter;
     private List<WalletBean> mWalletBeans;
     private SwipeRefreshLayout mSl_me;
-    private TextView mTv_me_wallet_balance;
     private Button mBt_me_manage_wallet;
     private Button mBt_me_transaction_record;
     private boolean mIsTransactionRecordState;
@@ -71,7 +69,6 @@ public class MeFragment extends BaseFragment implements MeRecyclerViewAdapter
     private void initView(View view) {
         mRv_me = view.findViewById(R.id.rv_me);
         mSl_me = view.findViewById(R.id.sl_me);
-        mTv_me_wallet_balance = view.findViewById(R.id.tv_me_wallet_balance);
         mBt_me_manage_wallet = view.findViewById(R.id.bt_me_manage_wallet);
         mBt_me_transaction_record = view.findViewById(R.id.bt_me_transaction_record);
 
