@@ -10,7 +10,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +24,6 @@ import chinapex.com.wallet.adapter.MeRecyclerViewAdapter;
 import chinapex.com.wallet.adapter.SpacesItemDecoration;
 import chinapex.com.wallet.base.BaseFragment;
 import chinapex.com.wallet.bean.WalletBean;
-import chinapex.com.wallet.bean.WalletKeyStore;
 import chinapex.com.wallet.changelistener.ApexListeners;
 import chinapex.com.wallet.changelistener.onItemDeleteListener;
 import chinapex.com.wallet.global.ApexWalletApplication;
@@ -33,9 +31,6 @@ import chinapex.com.wallet.global.Constant;
 import chinapex.com.wallet.model.ApexWalletDbDao;
 import chinapex.com.wallet.utils.CpLog;
 import chinapex.com.wallet.utils.FragmentFactory;
-import chinapex.com.wallet.utils.GsonUtils;
-import chinapex.com.wallet.utils.SharedPreferencesUtils;
-import chinapex.com.wallet.view.dialog.InputPwdDialog;
 
 /**
  * Created by SteelCabbage on 2018/5/21 0021.

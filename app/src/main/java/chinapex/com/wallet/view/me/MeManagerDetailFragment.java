@@ -13,8 +13,7 @@ import chinapex.com.wallet.base.BaseFragment;
 import chinapex.com.wallet.bean.WalletBean;
 import chinapex.com.wallet.global.Constant;
 import chinapex.com.wallet.utils.CpLog;
-import chinapex.com.wallet.view.dialog.InputPwdDialog;
-import chinapex.com.wallet.view.dialog.SwitchWalletDialog;
+import chinapex.com.wallet.view.dialog.InputPwdDelDialog;
 
 /**
  * Created by SteelCabbage on 2018/5/31 0031.
@@ -106,9 +105,9 @@ public class MeManagerDetailFragment extends BaseFragment implements View.OnClic
     }
 
     public void showInputPwdDialog() {
-        InputPwdDialog inputPwdDialog = InputPwdDialog.newInstance();
-        inputPwdDialog.setCurrentWalletBean(mCurrentClickedWalletBean);
-        inputPwdDialog.show(getFragmentManager(), "InputPwdDialog");
+        InputPwdDelDialog inputPwdDelDialog = InputPwdDelDialog.newInstance();
+        inputPwdDelDialog.setCurrentWalletBean(mCurrentClickedWalletBean);
+        inputPwdDelDialog.show(getFragmentManager(), "InputPwdDelDialog");
     }
 
 }

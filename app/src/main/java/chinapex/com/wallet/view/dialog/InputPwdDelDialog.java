@@ -27,16 +27,16 @@ import neomobile.Wallet;
  * Created by SteelCabbage on 2018/5/31 0031.
  */
 
-public class InputPwdDialog extends DialogFragment implements View.OnClickListener {
+public class InputPwdDelDialog extends DialogFragment implements View.OnClickListener {
 
-    private static final String TAG = InputPwdDialog.class.getSimpleName();
+    private static final String TAG = InputPwdDelDialog.class.getSimpleName();
     private WalletBean mCurrentWalletBean;
     private Button mBt_dialog_pwd_del_cancel;
     private Button mBt_dialog_pwd_del_confirm;
     private EditText mEt_dialog_pwd_del;
 
-    public static InputPwdDialog newInstance() {
-        return new InputPwdDialog();
+    public static InputPwdDelDialog newInstance() {
+        return new InputPwdDelDialog();
     }
 
     public void setCurrentWalletBean(WalletBean currentWalletBean) {
