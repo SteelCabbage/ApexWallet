@@ -25,7 +25,8 @@ import chinapex.com.wallet.adapter.SpacesItemDecoration;
 import chinapex.com.wallet.base.BaseFragment;
 import chinapex.com.wallet.bean.WalletBean;
 import chinapex.com.wallet.changelistener.ApexListeners;
-import chinapex.com.wallet.changelistener.onItemDeleteListener;
+import chinapex.com.wallet.changelistener.OnItemAddListener;
+import chinapex.com.wallet.changelistener.OnItemDeleteListener;
 import chinapex.com.wallet.global.ApexWalletApplication;
 import chinapex.com.wallet.global.Constant;
 import chinapex.com.wallet.model.ApexWalletDbDao;
@@ -38,7 +39,7 @@ import chinapex.com.wallet.utils.FragmentFactory;
 
 public class MeFragment extends BaseFragment implements MeRecyclerViewAdapter
         .OnItemClickListener, SwipeRefreshLayout.OnRefreshListener, View.OnClickListener,
-        onItemDeleteListener {
+        OnItemDeleteListener, OnItemAddListener {
 
     private static final String TAG = MeFragment.class.getSimpleName();
     private RecyclerView mRv_me;
@@ -64,7 +65,7 @@ public class MeFragment extends BaseFragment implements MeRecyclerViewAdapter
         super.onViewCreated(view, savedInstanceState);
 
         initView(view);
-
+        initData();
     }
 
     private void initView(View view) {
@@ -91,6 +92,11 @@ public class MeFragment extends BaseFragment implements MeRecyclerViewAdapter
 
         mBt_me_manage_wallet.setOnClickListener(this);
         mBt_me_transaction_record.setOnClickListener(this);
+    }
+
+    private void initData() {
+        ApexListeners.getInstance().addOnItemDeleteListener(this);
+        ApexListeners.getInstance().addOnItemAddListener(this);
     }
 
     @Override
@@ -181,8 +187,6 @@ public class MeFragment extends BaseFragment implements MeRecyclerViewAdapter
             fragmentTransaction.addToBackStack("MeManagerDetailFragment");
         }
         fragmentTransaction.show(fragment).hide(FragmentFactory.getFragment(2)).commit();
-
-        ApexListeners.getInstance().addOnItemDeleteListener(this);
     }
 
     private void toMeTransactionRecordFragment() {
@@ -205,7 +209,7 @@ public class MeFragment extends BaseFragment implements MeRecyclerViewAdapter
     @Override
     public void onItemDelete(WalletBean walletBean) {
         if (null == walletBean) {
-            CpLog.e(TAG, "walletBean is null!");
+            CpLog.e(TAG, "onItemDelete() -> walletBean is null!");
             return;
         }
 
@@ -217,4 +221,20 @@ public class MeFragment extends BaseFragment implements MeRecyclerViewAdapter
                 .POP_BACK_STACK_INCLUSIVE);
     }
 
+    //新增钱包时回调
+    @Override
+    public void onItemAdd(WalletBean walletBean) {
+        if (null == walletBean) {
+            CpLog.e(TAG, "onItemAdd() -> walletBean is null!");
+            return;
+        }
+
+        mWalletBeans.add(walletBean);
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mMeRecyclerViewAdapter.notifyDataSetChanged();
+            }
+        });
+    }
 }

@@ -21,7 +21,8 @@ import chinapex.com.wallet.bean.WalletBean;
 import chinapex.com.wallet.bean.request.RequestGetAccountState;
 import chinapex.com.wallet.bean.response.ResponseGetAccountState;
 import chinapex.com.wallet.changelistener.ApexListeners;
-import chinapex.com.wallet.changelistener.onItemDeleteListener;
+import chinapex.com.wallet.changelistener.OnItemAddListener;
+import chinapex.com.wallet.changelistener.OnItemDeleteListener;
 import chinapex.com.wallet.global.ApexWalletApplication;
 import chinapex.com.wallet.global.Constant;
 import chinapex.com.wallet.model.ApexWalletDbDao;
@@ -36,7 +37,7 @@ import chinapex.com.wallet.utils.GsonUtils;
 
 public class AssetsFragment extends BaseFragment implements AssetsRecyclerViewAdapter
         .OnItemClickListener, SwipeRefreshLayout.OnRefreshListener, AssetsRecyclerViewAdapter
-        .OnItemLongClickListener, onItemDeleteListener {
+        .OnItemLongClickListener, OnItemDeleteListener, OnItemAddListener {
 
     private static final String TAG = AssetsFragment.class.getSimpleName();
     private RecyclerView mRv_assets;
@@ -88,6 +89,7 @@ public class AssetsFragment extends BaseFragment implements AssetsRecyclerViewAd
 
     private void initData() {
         ApexListeners.getInstance().addOnItemDeleteListener(this);
+        ApexListeners.getInstance().addOnItemAddListener(this);
     }
 
     @Override
@@ -200,11 +202,27 @@ public class AssetsFragment extends BaseFragment implements AssetsRecyclerViewAd
     @Override
     public void onItemDelete(WalletBean walletBean) {
         if (null == walletBean) {
-            CpLog.e(TAG, "walletBean is null!");
+            CpLog.e(TAG, "onItemDelete() -> walletBean is null!");
             return;
         }
 
         mWalletBeans.remove(walletBean);
         mAssetsRecyclerViewAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onItemAdd(WalletBean walletBean) {
+        if (null == walletBean) {
+            CpLog.e(TAG, "onItemAdd() -> walletBean is null!");
+            return;
+        }
+
+        mWalletBeans.add(walletBean);
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mAssetsRecyclerViewAdapter.notifyDataSetChanged();
+            }
+        });
     }
 }

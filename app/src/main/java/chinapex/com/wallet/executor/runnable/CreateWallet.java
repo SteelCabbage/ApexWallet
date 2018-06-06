@@ -4,6 +4,7 @@ package chinapex.com.wallet.executor.runnable;
 import android.text.TextUtils;
 
 import chinapex.com.wallet.bean.WalletBean;
+import chinapex.com.wallet.changelistener.ApexListeners;
 import chinapex.com.wallet.executor.callback.ICreateWalletCallback;
 import chinapex.com.wallet.global.ApexWalletApplication;
 import chinapex.com.wallet.global.Constant;
@@ -78,6 +79,7 @@ public class CreateWallet implements Runnable {
         }
 
         apexWalletDbDao.insert(Constant.TABLE_APEX_WALLET, walletBean);
+        ApexListeners.getInstance().notifyItemAdd(walletBean);
         mICreateWalletCallback.newWallet(wallet);
     }
 }

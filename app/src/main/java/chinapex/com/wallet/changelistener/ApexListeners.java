@@ -1,6 +1,7 @@
 package chinapex.com.wallet.changelistener;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import chinapex.com.wallet.bean.WalletBean;
 import chinapex.com.wallet.utils.CpLog;
@@ -13,7 +14,9 @@ public class ApexListeners {
 
     private static final String TAG = ApexListeners.class.getSimpleName();
 
-    private ArrayList<onItemDeleteListener> mOnItemDeleteListeners;
+    private List<OnItemDeleteListener> mOnItemDeleteListeners;
+
+    private List<OnItemAddListener> mOnItemAddListeners;
 
     private ApexListeners() {
 
@@ -30,6 +33,7 @@ public class ApexListeners {
 
     public void doInit() {
         mOnItemDeleteListeners = new ArrayList<>();
+        mOnItemAddListeners = new ArrayList<>();
     }
 
     public void onDestroy() {
@@ -39,17 +43,28 @@ public class ApexListeners {
         }
 
         mOnItemDeleteListeners.clear();
+        mOnItemAddListeners.clear();
         mOnItemDeleteListeners = null;
+        mOnItemAddListeners = null;
     }
 
 
-    public void addOnItemDeleteListener(onItemDeleteListener onItemDeleteListener) {
+    public void addOnItemDeleteListener(OnItemDeleteListener onItemDeleteListener) {
         if (null == mOnItemDeleteListeners || null == onItemDeleteListener) {
-            CpLog.e(TAG, "mOnItemDeleteListeners or onItemDeleteListener is null!");
+            CpLog.e(TAG, "mOnItemDeleteListeners or OnItemDeleteListener is null!");
             return;
         }
 
         mOnItemDeleteListeners.add(onItemDeleteListener);
+    }
+
+    public void addOnItemAddListener(OnItemAddListener onItemAddListener) {
+        if (null == mOnItemAddListeners || null == onItemAddListener) {
+            CpLog.e(TAG, "mOnItemAddListeners or onItemAddListener is null!");
+            return;
+        }
+
+        mOnItemAddListeners.add(onItemAddListener);
     }
 
     public void notifyItemDelete(WalletBean walletBean) {
@@ -58,13 +73,29 @@ public class ApexListeners {
             return;
         }
 
-        for (onItemDeleteListener onItemDeleteListener : mOnItemDeleteListeners) {
+        for (OnItemDeleteListener onItemDeleteListener : mOnItemDeleteListeners) {
             if (null == onItemDeleteListener) {
-                CpLog.e(TAG, "onItemDeleteListener is null!");
+                CpLog.e(TAG, "OnItemDeleteListener is null!");
                 continue;
             }
 
             onItemDeleteListener.onItemDelete(walletBean);
+        }
+    }
+
+    public void notifyItemAdd(WalletBean walletBean) {
+        if (null == mOnItemAddListeners) {
+            CpLog.e(TAG, "mOnItemAddListeners is null!");
+            return;
+        }
+
+        for (OnItemAddListener onItemAddListener : mOnItemAddListeners) {
+            if (null == onItemAddListener) {
+                CpLog.e(TAG, "onItemAddListener is null!");
+                continue;
+            }
+
+            onItemAddListener.onItemAdd(walletBean);
         }
     }
 }
