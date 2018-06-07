@@ -25,10 +25,10 @@ public class CreateWallet implements Runnable {
     private ICreateWalletCallback mICreateWalletCallback;
 
     public CreateWallet(String walletName, String pwd, ICreateWalletCallback
-            ICreateWalletCallback) {
+            iCreateWalletCallback) {
         mWalletName = walletName;
         mPwd = pwd;
-        mICreateWalletCallback = ICreateWalletCallback;
+        mICreateWalletCallback = iCreateWalletCallback;
     }
 
     @Override
@@ -67,7 +67,6 @@ public class CreateWallet implements Runnable {
         WalletBean walletBean = new WalletBean();
         walletBean.setWalletName(mWalletName);
         walletBean.setWalletAddr(wallet.address());
-        //todo: 0 or 1 待确认
         walletBean.setBackupState(0);
         walletBean.setKeyStore(toKeyStore);
 

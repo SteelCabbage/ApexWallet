@@ -11,18 +11,20 @@ import java.util.List;
 
 import chinapex.com.wallet.R;
 import chinapex.com.wallet.adapter.AssetsOverviewRecyclerViewAdapter;
-import chinapex.com.wallet.adapter.AssetsRecyclerViewAdapter;
 import chinapex.com.wallet.adapter.SpacesItemDecoration;
 import chinapex.com.wallet.base.BaseActivity;
 import chinapex.com.wallet.bean.BalanceBean;
 import chinapex.com.wallet.bean.WalletBean;
+import chinapex.com.wallet.executor.TaskController;
+import chinapex.com.wallet.executor.callback.IGetAccountStateCallback;
+import chinapex.com.wallet.executor.runnable.GetAccountState;
 import chinapex.com.wallet.global.ApexWalletApplication;
 import chinapex.com.wallet.global.Constant;
 import chinapex.com.wallet.utils.CpLog;
 import chinapex.com.wallet.utils.DensityUtil;
 
 public class AssetsOverviewActivity extends BaseActivity implements
-        AssetsOverviewRecyclerViewAdapter.OnItemClickListener {
+        AssetsOverviewRecyclerViewAdapter.OnItemClickListener, IGetAccountStateCallback {
 
     private static final String TAG = AssetsOverviewActivity.class.getSimpleName();
     private TextView mTv_assets_overview_wallet_name;
@@ -39,6 +41,7 @@ public class AssetsOverviewActivity extends BaseActivity implements
 
         initView();
         initData();
+        getAssetsBalance();
     }
 
     private void initView() {
@@ -72,6 +75,10 @@ public class AssetsOverviewActivity extends BaseActivity implements
         mTv_assets_overview_wallet_address.setText(mWalletBean.getWalletAddr());
     }
 
+    private void getAssetsBalance() {
+        TaskController.getInstance().submit(new GetAccountState(mWalletBean.getWalletAddr(), this));
+    }
+
     @Override
     public void onItemClick(int position) {
 
@@ -102,5 +109,16 @@ public class AssetsOverviewActivity extends BaseActivity implements
             balanceBeans.add(balanceBean);
         }
         return balanceBeans;
+    }
+
+    @Override
+    public void assetsBalance(List<BalanceBean> balanceBeans) {
+        if (null == balanceBeans || balanceBeans.isEmpty()) {
+            CpLog.e(TAG, "assetsBalance is null or empty!");
+            return;
+        }
+
+        mBalanceBeans.clear();
+        mBalanceBeans.addAll(balanceBeans);
     }
 }
