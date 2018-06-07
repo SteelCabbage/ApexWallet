@@ -17,16 +17,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import chinapex.com.wallet.R;
-import chinapex.com.wallet.adapter.WalletDetailDrawerRecyclerViewAdapter;
+import chinapex.com.wallet.adapter.DrawerMenuRecyclerViewAdapter;
 import chinapex.com.wallet.base.BaseActivity;
 import chinapex.com.wallet.bean.WalletBean;
-import chinapex.com.wallet.bean.WalletDetailMenu;
+import chinapex.com.wallet.bean.DrawerMenu;
 import chinapex.com.wallet.global.Constant;
 import chinapex.com.wallet.utils.CpLog;
 import chinapex.com.wallet.view.wallet.CreateWalletActivity;
 
 public class WalletDetailActivity extends BaseActivity implements View.OnClickListener,
-        DrawerLayout.DrawerListener, WalletDetailDrawerRecyclerViewAdapter.OnItemClickListener {
+        DrawerLayout.DrawerListener, DrawerMenuRecyclerViewAdapter.DrawerMenuOnItemClickListener {
 
     private static final String TAG = WalletDetailActivity.class.getSimpleName();
     private Button mBt_wallet_detail_transfer;
@@ -38,7 +38,7 @@ public class WalletDetailActivity extends BaseActivity implements View.OnClickLi
     private DrawerLayout mDl_wallet_detail;
     private TextView mTv_wallet_detail_drawer_title;
     private RecyclerView mRv_wallet_detail_drawer_menu;
-    private WalletDetailDrawerRecyclerViewAdapter mWalletDetailDrawerRecyclerViewAdapter;
+    private DrawerMenuRecyclerViewAdapter mDrawerMenuRecyclerViewAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,12 +66,11 @@ public class WalletDetailActivity extends BaseActivity implements View.OnClickLi
 
         mRv_wallet_detail_drawer_menu.setLayoutManager(new LinearLayoutManager(this,
                 LinearLayoutManager.VERTICAL, false));
-//        int space = 40;
-//        mRv_wallet_detail_drawer_menu.addItemDecoration(new SpacesItemDecoration(space));
-        mWalletDetailDrawerRecyclerViewAdapter = new WalletDetailDrawerRecyclerViewAdapter
+
+        mDrawerMenuRecyclerViewAdapter = new DrawerMenuRecyclerViewAdapter
                 (getWalletDetailMenus());
-        mWalletDetailDrawerRecyclerViewAdapter.setOnItemClickListener(this);
-        mRv_wallet_detail_drawer_menu.setAdapter(mWalletDetailDrawerRecyclerViewAdapter);
+        mDrawerMenuRecyclerViewAdapter.setDrawerMenuOnItemClickListener(this);
+        mRv_wallet_detail_drawer_menu.setAdapter(mDrawerMenuRecyclerViewAdapter);
     }
 
     private void initData() {
@@ -130,7 +129,7 @@ public class WalletDetailActivity extends BaseActivity implements View.OnClickLi
 
     //recyclerView of the drawerLayout
     @Override
-    public void onItemClick(int position) {
+    public void drawerMenuOnItemClick(int position) {
         switch (position) {
             case 0:
                 CpLog.i(TAG, "扫一扫");
@@ -145,19 +144,19 @@ public class WalletDetailActivity extends BaseActivity implements View.OnClickLi
         }
     }
 
-    private List<WalletDetailMenu> getWalletDetailMenus() {
-        ArrayList<WalletDetailMenu> walletDetailMenus = new ArrayList<>();
+    private List<DrawerMenu> getWalletDetailMenus() {
+        ArrayList<DrawerMenu> drawerMenus = new ArrayList<>();
         //drawable数组要用TypedArray获取
         TypedArray ar = getResources().obtainTypedArray(R.array.wallet_detail_drawer_icons);
         String[] menuTexts = getResources().getStringArray(R.array.wallet_detail_drawer_texts);
 
         for (int i = 0; i < ar.length(); i++) {
-            WalletDetailMenu walletDetailMenu = new WalletDetailMenu();
-            walletDetailMenu.setMenuIcon(ar.getResourceId(i, 0));
-            walletDetailMenu.setMenuText(menuTexts[i]);
-            walletDetailMenus.add(walletDetailMenu);
+            DrawerMenu drawerMenu = new DrawerMenu();
+            drawerMenu.setMenuIcon(ar.getResourceId(i, 0));
+            drawerMenu.setMenuText(menuTexts[i]);
+            drawerMenus.add(drawerMenu);
         }
         ar.recycle();
-        return walletDetailMenus;
+        return drawerMenus;
     }
 }
