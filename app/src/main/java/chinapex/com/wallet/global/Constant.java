@@ -18,6 +18,7 @@ public class Constant {
 
     //assets
     public static final String WALLET_BEAN = "walletBean";
+    public static final String BALANCE_BEAN = "balanceBean";
 
     //create wallet
     public static final String SP_WALLET_KEYSTORE = "spWalletKeystore";
@@ -36,8 +37,17 @@ public class Constant {
     //asset name
     public static final String ASSETS_NEO =
             "0xc56f33fc6ecfcd0c225c4ab356fee59390af8560be0e930faebe74a6daff7c9b";
-    public static final String ASSETS_GAS =
+    public static final String ASSETS_NEO_GAS =
             "0x602c79718b16e442de58778e148d0b1084e3b2dffd5de6b7b16cee7969282de7";
+    public static final String ASSETS_CPX = "";
+
+    public static final String MARK_NEO = "NEO";
+    public static final String MARK_NEO_GAS = "NeoGas";
+    public static final String MARK_CPX = "CPX";
+
+    public static final String UNIT_NEO = "neo";
+    public static final String UNIT_NEO_GAS = "gas";
+    public static final String UNIT_CPX = "cpx";
 
     //wallet title
     public static final String WALLET_NAME = "Wallet ";

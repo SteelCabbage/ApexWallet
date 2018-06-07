@@ -1,6 +1,5 @@
 package chinapex.com.wallet.view.assets;
 
-import android.content.Intent;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -15,16 +14,15 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
-import com.google.zxing.activity.CaptureActivity;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import chinapex.com.wallet.R;
 import chinapex.com.wallet.adapter.AssetsRecyclerViewAdapter;
-import chinapex.com.wallet.adapter.SpacesItemDecoration;
 import chinapex.com.wallet.adapter.DrawerMenuRecyclerViewAdapter;
+import chinapex.com.wallet.adapter.SpacesItemDecoration;
 import chinapex.com.wallet.base.BaseFragment;
+import chinapex.com.wallet.bean.BalanceBean;
 import chinapex.com.wallet.bean.DrawerMenu;
 import chinapex.com.wallet.bean.WalletBean;
 import chinapex.com.wallet.bean.request.RequestGetAccountState;
@@ -129,7 +127,7 @@ public class AssetsFragment extends BaseFragment implements AssetsRecyclerViewAd
     @Override
     public void onItemClick(int position) {
         CpLog.i(TAG, "onItemClick:" + position);
-        startActivityParcelable(WalletDetailActivity.class, false, Constant.WALLET_BEAN,
+        startActivityParcelable(AssetsOverviewActivity.class, false, Constant.WALLET_BEAN,
                 mWalletBeans.get(position));
     }
 

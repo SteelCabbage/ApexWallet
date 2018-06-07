@@ -16,4 +16,5 @@
     <color name="tv_copy_mnemonic_color">#666666</color>
     <color name="recyclerview_separator_view">#E5E5E5</color>
     <color name="dialog_pwd">#030303</color>
+    <color name="assets_overview_value">#5D99FA</color>
 </resources>

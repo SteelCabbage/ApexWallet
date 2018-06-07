@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/text_color_white"
     app:cardCornerRadius="@dimen/cv_assets_rv_item_bg_corner"
     app:cardElevation="2dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/rl_assets_rv_item_height"
+        android:background="@android:color/white"
         android:padding="20dp">
 
         <LinearLayout
