@@ -33,12 +33,10 @@
             android:textColor="@color/tv_gathering_title" />
 
         <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="25dp">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
             <TextView
-
                 android:id="@+id/tv_assets_overview_assets_value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

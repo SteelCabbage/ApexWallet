@@ -48,12 +48,12 @@
     <dimen name="tv_assets_rv_item_wallet_name_size">16sp</dimen>
     <dimen name="rl_assets_rv_item_height">100dp</dimen>
     <dimen name="ll_assets_rv_item_padding">20dp</dimen>
-    <dimen name="bt_wallet_detail_tx_width">140dp</dimen>
-    <dimen name="bt_wallet_detail_tx_height">45dp</dimen>
+    <dimen name="bt_wallet_detail_tx_width">144dp</dimen>
+    <dimen name="bt_wallet_detail_tx_height">39dp</dimen>
     <dimen name="rl_wallet_detail_tx_margin_top">22dp</dimen>
     <dimen name="rl_wallet_detail_tx_margin_start">34dp</dimen>
     <dimen name="rl_wallet_detail_tx_margin_end">34dp</dimen>
-    <dimen name="bt_wallet_detail_tx_font_size">18sp</dimen>
+    <dimen name="bt_wallet_detail_tx_font_size">14sp</dimen>
     <dimen name="et_create_wallet_font_size">14sp</dimen>
     <dimen name="et_assets_search_width">240dp</dimen>
     <dimen name="et_assets_search_height">30dp</dimen>

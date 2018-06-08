@@ -3,6 +3,7 @@ package chinapex.com.wallet.view.assets;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,6 +20,7 @@ import java.util.List;
 import chinapex.com.wallet.R;
 import chinapex.com.wallet.adapter.DrawerMenuRecyclerViewAdapter;
 import chinapex.com.wallet.base.BaseActivity;
+import chinapex.com.wallet.bean.BalanceBean;
 import chinapex.com.wallet.bean.WalletBean;
 import chinapex.com.wallet.bean.DrawerMenu;
 import chinapex.com.wallet.global.Constant;
@@ -33,12 +35,12 @@ public class WalletDetailActivity extends BaseActivity implements View.OnClickLi
     private Button mBt_wallet_detail_gathering;
     private TextView mTv_wallet_detail_wallet_name;
     private TextView mTv_wallet_detail_balance;
-    private TextView mTv_wallet_detail_addr;
     private WalletBean mWalletBean;
     private DrawerLayout mDl_wallet_detail;
     private TextView mTv_wallet_detail_drawer_title;
     private RecyclerView mRv_wallet_detail_drawer_menu;
     private DrawerMenuRecyclerViewAdapter mDrawerMenuRecyclerViewAdapter;
+    private BalanceBean mBalanceBean;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +56,6 @@ public class WalletDetailActivity extends BaseActivity implements View.OnClickLi
         mBt_wallet_detail_gathering = (Button) findViewById(R.id.bt_wallet_detail_gathering);
         mTv_wallet_detail_wallet_name = (TextView) findViewById(R.id.tv_wallet_detail_wallet_name);
         mTv_wallet_detail_balance = (TextView) findViewById(R.id.tv_wallet_detail_balance);
-        mTv_wallet_detail_addr = (TextView) findViewById(R.id.tv_wallet_detail_addr);
         mDl_wallet_detail = (DrawerLayout) findViewById(R.id.dl_wallet_detail);
         mTv_wallet_detail_drawer_title = (TextView) findViewById(R.id
                 .tv_wallet_detail_drawer_title);
@@ -80,11 +81,17 @@ public class WalletDetailActivity extends BaseActivity implements View.OnClickLi
             return;
         }
 
-        mWalletBean = (WalletBean) intent.getParcelableExtra(Constant.WALLET_BEAN);
-        CpLog.i(TAG, "walletBean:" + mWalletBean.toString());
+        mWalletBean = intent.getParcelableExtra(Constant.WALLET_BEAN);
+        mBalanceBean = intent.getParcelableExtra(Constant.BALANCE_BEAN);
+
+        if (null == mWalletBean || null == mBalanceBean) {
+            CpLog.e(TAG, "mWalletBean or mBalanceBean is null!");
+            return;
+        }
+
+
         mTv_wallet_detail_wallet_name.setText(mWalletBean.getWalletName());
         mTv_wallet_detail_balance.setText(String.valueOf(mWalletBean.getBalance()));
-        mTv_wallet_detail_addr.setText(mWalletBean.getWalletAddr());
 
         //设置侧滑title
         mTv_wallet_detail_drawer_title.setText(String.valueOf(Constant.WALLET_NAME + mWalletBean

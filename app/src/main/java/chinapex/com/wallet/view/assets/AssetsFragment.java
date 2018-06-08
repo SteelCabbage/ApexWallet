@@ -126,9 +126,7 @@ public class AssetsFragment extends BaseFragment implements AssetsRecyclerViewAd
 
     @Override
     public void onItemClick(int position) {
-        CpLog.i(TAG, "onItemClick:" + position);
-        startActivityParcelable(AssetsOverviewActivity.class, false, Constant.WALLET_BEAN,
-                mWalletBeans.get(position));
+        startActivityParcelable(AssetsOverviewActivity.class, false, Constant.WALLET_BEAN, mWalletBeans.get(position));
     }
 
     @Override

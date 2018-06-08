@@ -27,7 +27,9 @@ import chinapex.com.wallet.utils.CpLog;
 import neomobile.Tx;
 import neomobile.Wallet;
 
-public class TransferActivity extends BaseActivity implements View.OnClickListener, IGetUtxosCallback, ISendRawTransactionCallback, IFromKeystoreGenerateWalletCallback, ICreateAssertTxCallback {
+public class TransferActivity extends BaseActivity implements View.OnClickListener,
+        IGetUtxosCallback, ISendRawTransactionCallback, IFromKeystoreGenerateWalletCallback,
+        ICreateAssertTxCallback {
 
     private static final String TAG = TransferActivity.class.getSimpleName();
     private WalletBean mWalletBean;
@@ -84,7 +86,8 @@ public class TransferActivity extends BaseActivity implements View.OnClickListen
         switch (v.getId()) {
             case R.id.bt_transfer_send:
                 String pwd = mEt_transfer_pwd.getText().toString().trim();
-                TaskController.getInstance().submit(new FromKeystoreToWallet(mWalletBean, pwd, this));
+                TaskController.getInstance().submit(new FromKeystoreToWallet(mWalletBean, pwd,
+                        this));
                 break;
             default:
                 break;
@@ -113,7 +116,8 @@ public class TransferActivity extends BaseActivity implements View.OnClickListen
         assertTxBean.setAssetsID(Constant.ASSETS_NEO);
         assertTxBean.setAddrFrom(mWalletFrom.address());
         assertTxBean.setAddrTo(mEt_transfer_to_wallet_addr.getText().toString().trim());
-        assertTxBean.setTransferAmount(Double.valueOf(mEt_transfer_amount.getText().toString().trim()));
+        assertTxBean.setTransferAmount(Double.valueOf(mEt_transfer_amount.getText().toString()
+                .trim()));
         assertTxBean.setUtxos(utxos);
 
         TaskController.getInstance().submit(new CreateAssertTx(mWalletFrom, assertTxBean, this));
@@ -136,12 +140,18 @@ public class TransferActivity extends BaseActivity implements View.OnClickListen
     }
 
     @Override
-    public void sendTxData(Boolean isSuccess) {
-        if (isSuccess) {
-            Toast.makeText(this, "交易成功", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(this, "交易失败", Toast.LENGTH_SHORT).show();
-        }
+    public void sendTxData(final Boolean isSuccess) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (isSuccess) {
+                    Toast.makeText(TransferActivity.this, "交易成功", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(TransferActivity.this, "交易失败", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
         finish();
     }
 

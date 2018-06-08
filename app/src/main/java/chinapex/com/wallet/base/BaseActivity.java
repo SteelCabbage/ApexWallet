@@ -14,6 +14,8 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import java.lang.reflect.Field;
+import java.util.HashMap;
+import java.util.Map;
 
 import chinapex.com.wallet.global.Constant;
 import chinapex.com.wallet.utils.CpLog;
@@ -79,6 +81,29 @@ public class BaseActivity extends AppCompatActivity {
 
         Intent intent = new Intent(this, cls);
         intent.putExtra(parcelableKey, parcelable);
+        startActivity(intent);
+        if (isFinish) {
+            this.finish();
+        }
+    }
+
+    public void startActivityParcelables(Class cls, boolean isFinish, HashMap<String, Parcelable> parcelables) {
+        if (null == parcelables || parcelables.isEmpty()) {
+            CpLog.e(TAG, "parcelables is null!");
+            return;
+        }
+
+        Intent intent = new Intent(this, cls);
+
+        for (Map.Entry<String, Parcelable> parcelableEntry : parcelables.entrySet()) {
+            if (null == parcelableEntry) {
+                CpLog.e(TAG, "parcelableEntry is null!");
+                continue;
+            }
+
+            intent.putExtra(parcelableEntry.getKey(), parcelableEntry.getValue());
+        }
+
         startActivity(intent);
         if (isFinish) {
             this.finish();
