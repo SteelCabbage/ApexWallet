@@ -67,7 +67,7 @@ public class CreateWallet implements Runnable {
         WalletBean walletBean = new WalletBean();
         walletBean.setWalletName(mWalletName);
         walletBean.setWalletAddr(wallet.address());
-        walletBean.setBackupState(0);
+        walletBean.setBackupState(Constant.BACKUP_UNFINISHED);
         walletBean.setKeyStore(toKeyStore);
 
         ApexWalletDbDao apexWalletDbDao = ApexWalletDbDao.getInstance(ApexWalletApplication

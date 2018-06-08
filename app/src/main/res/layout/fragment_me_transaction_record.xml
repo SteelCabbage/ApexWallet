@@ -6,7 +6,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/create_wallet_tb_height"
+        android:layout_height="139dp"
         android:background="@drawable/tb_bg">
 
         <TextView
@@ -21,43 +21,21 @@
 
         <ImageButton
             android:id="@+id/ib_me_transaction_record_switch"
-            android:layout_width="17dp"
-            android:layout_height="17dp"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="14dp"
-            android:layout_marginTop="30dp"
-            android:background="@drawable/icon_me_transaction_record_switch" />
-
-        <TextView
-            android:id="@+id/tv_me_transaction_record_balance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="54dp"
-            android:gravity="bottom"
-            android:text="@string/fragment_assets_balance"
-            android:textColor="@android:color/white"
-            android:textSize="40sp" />
-
-        <TextView
-            android:id="@+id/tv_me_transaction_record_unit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/tv_me_transaction_record_balance"
             android:layout_alignParentEnd="true"
-            android:layout_marginEnd="80dp"
-            android:text="@string/tv_assets_unit"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/tv_assets_unit_size" />
+            android:layout_marginEnd="20dp"
+            android:layout_marginTop="35dp"
+            android:background="@null"
+            android:src="@drawable/icon_me_transaction_record_switch" />
 
         <TextView
             android:id="@+id/tv_me_transaction_record_address"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_me_transaction_record_unit"
+            android:layout_below="@+id/tv_me_transaction_record_title"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="25dp"
             android:ellipsize="middle"
             android:ems="10"
             android:singleLine="true"

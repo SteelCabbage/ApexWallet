@@ -125,8 +125,7 @@ public class MeFragment extends BaseFragment implements MeRecyclerViewAdapter
 
     private List<WalletBean> initWalletBeans() {
         List<WalletBean> walletBeans = new ArrayList<>();
-        ApexWalletDbDao apexWalletDbDao = ApexWalletDbDao.getInstance(ApexWalletApplication
-                .getInstance());
+        ApexWalletDbDao apexWalletDbDao = ApexWalletDbDao.getInstance(ApexWalletApplication.getInstance());
         if (null == apexWalletDbDao) {
             CpLog.e(TAG, "apexWalletDbDao is null!");
             return walletBeans;
@@ -139,33 +138,53 @@ public class MeFragment extends BaseFragment implements MeRecyclerViewAdapter
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            //点击管理钱包
+            // 管理钱包
             case R.id.bt_me_manage_wallet:
-                mBt_me_manage_wallet.setBackgroundResource(R.drawable.shape_white_bt_bg);
-                mBt_me_manage_wallet.setTextColor(ApexWalletApplication.getInstance().getResources()
-                        .getColor(R.color.colorPrimary));
-
-//                mBt_me_transaction_record.setBackgroundResource(0);
-                //为适配小米4，否则button会有边框背景
-                mBt_me_transaction_record.setBackground(new ColorDrawable(0));
-                mBt_me_transaction_record.setTextColor(Color.WHITE);
-
-                mIsTransactionRecordState = false;
+                manageWalletIsSelected();
                 break;
-            //点击交易记录
+            // 交易记录
             case R.id.bt_me_transaction_record:
-                mBt_me_transaction_record.setBackgroundResource(R.drawable.shape_white_bt_bg);
-                mBt_me_transaction_record.setTextColor(ApexWalletApplication.getInstance()
-                        .getResources().getColor(R.color.colorPrimary));
-
-//                mBt_me_manage_wallet.setBackgroundResource(0);
-                //为适配小米4，否则button会有边框背景
-                mBt_me_manage_wallet.setBackground(new ColorDrawable(0));
-                mBt_me_manage_wallet.setTextColor(Color.WHITE);
-
-                mIsTransactionRecordState = true;
+                transactionRecordIsSelected();
                 break;
         }
+    }
+
+    private void manageWalletIsSelected() {
+        mBt_me_manage_wallet.setBackgroundResource(R.drawable.shape_white_bt_bg);
+        mBt_me_manage_wallet.setTextColor(ApexWalletApplication.getInstance().getResources().getColor(R.color
+                .colorPrimary));
+
+//                mBt_me_transaction_record.setBackgroundResource(0);
+        // 为适配小米4，否则button会有边框背景
+        mBt_me_transaction_record.setBackground(new ColorDrawable(0));
+        mBt_me_transaction_record.setTextColor(Color.WHITE);
+
+        mIsTransactionRecordState = false;
+
+        for (WalletBean walletBean : mWalletBeans) {
+            walletBean.setSelectedTag(Constant.SELECTED_TAG_MANAGER_WALLET);
+        }
+
+        mMeRecyclerViewAdapter.notifyDataSetChanged();
+    }
+
+    private void transactionRecordIsSelected() {
+        mBt_me_transaction_record.setBackgroundResource(R.drawable.shape_white_bt_bg);
+        mBt_me_transaction_record.setTextColor(ApexWalletApplication.getInstance().getResources().getColor(R.color
+                .colorPrimary));
+
+//                mBt_me_manage_wallet.setBackgroundResource(0);
+        // 为适配小米4，否则button会有边框背景
+        mBt_me_manage_wallet.setBackground(new ColorDrawable(0));
+        mBt_me_manage_wallet.setTextColor(Color.WHITE);
+
+        mIsTransactionRecordState = true;
+
+        for (WalletBean walletBean : mWalletBeans) {
+            walletBean.setSelectedTag(Constant.SELECTED_TAG_TRANSACTION_RECORED);
+        }
+
+        mMeRecyclerViewAdapter.notifyDataSetChanged();
     }
 
     private void toMeManagerDetailFragment() {
@@ -195,7 +214,7 @@ public class MeFragment extends BaseFragment implements MeRecyclerViewAdapter
         return mCurrentClickedWalletBean;
     }
 
-    //删除钱包时回调
+    // 删除钱包时回调
     @Override
     public void onItemDelete(WalletBean walletBean) {
         if (null == walletBean) {
@@ -211,7 +230,7 @@ public class MeFragment extends BaseFragment implements MeRecyclerViewAdapter
                 .POP_BACK_STACK_INCLUSIVE);
     }
 
-    //新增钱包时回调
+    // 新增钱包时回调
     @Override
     public void onItemAdd(WalletBean walletBean) {
         if (null == walletBean) {

@@ -15,6 +15,9 @@ import android.widget.Toast;
 import chinapex.com.wallet.R;
 import chinapex.com.wallet.bean.WalletBean;
 import chinapex.com.wallet.changelistener.ApexListeners;
+import chinapex.com.wallet.executor.TaskController;
+import chinapex.com.wallet.executor.callback.IFromKeystoreGenerateWalletCallback;
+import chinapex.com.wallet.executor.runnable.FromKeystoreToWallet;
 import chinapex.com.wallet.global.ApexWalletApplication;
 import chinapex.com.wallet.global.Constant;
 import chinapex.com.wallet.model.ApexWalletDbDao;
@@ -27,7 +30,8 @@ import neomobile.Wallet;
  * Created by SteelCabbage on 2018/5/31 0031.
  */
 
-public class InputPwdDelDialog extends DialogFragment implements View.OnClickListener {
+public class InputPwdDelDialog extends DialogFragment implements View.OnClickListener,
+        IFromKeystoreGenerateWalletCallback {
 
     private static final String TAG = InputPwdDelDialog.class.getSimpleName();
     private WalletBean mCurrentWalletBean;
@@ -94,15 +98,26 @@ public class InputPwdDelDialog extends DialogFragment implements View.OnClickLis
                 dismiss();
                 break;
             case R.id.bt_dialog_pwd_del_confirm:
-                Wallet wallet = pwdIsCorrect();
-                if (null == wallet) {
-                    CpLog.e(TAG, "pwd is not match keystore");
-                    Toast.makeText(getActivity(), "密码输入有误！", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                deleteWalletByNameAndAddr();
+                String pwd = mEt_dialog_pwd_del.getText().toString().trim();
+                TaskController.getInstance().submit(new FromKeystoreToWallet(mCurrentWalletBean, pwd, this));
                 break;
         }
+    }
+
+    @Override
+    public void fromKeystoreWallet(Wallet wallet) {
+        if (null == wallet) {
+            CpLog.e(TAG, "pwd is not match keystore");
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(getActivity(), "密码输入有误！", Toast.LENGTH_SHORT).show();
+                }
+            });
+            return;
+        }
+
+        deleteWalletByNameAndAddr();
     }
 
     private void deleteWalletByNameAndAddr() {
@@ -111,34 +126,16 @@ public class InputPwdDelDialog extends DialogFragment implements View.OnClickLis
             return;
         }
 
-        ApexWalletDbDao apexWalletDbDao = ApexWalletDbDao.getInstance(ApexWalletApplication
-                .getInstance());
+        ApexWalletDbDao apexWalletDbDao = ApexWalletDbDao.getInstance(ApexWalletApplication.getInstance());
         if (null == apexWalletDbDao) {
             CpLog.e(TAG, "apexWalletDbDao is null!");
             return;
         }
 
-        apexWalletDbDao.deleteByWalletNameAndAddr(Constant.TABLE_APEX_WALLET, mCurrentWalletBean
-                .getWalletName(), mCurrentWalletBean.getWalletAddr());
+        apexWalletDbDao.deleteByWalletNameAndAddr(Constant.TABLE_APEX_WALLET, mCurrentWalletBean.getWalletName(),
+                mCurrentWalletBean.getWalletAddr());
 
         ApexListeners.getInstance().notifyItemDelete(mCurrentWalletBean);
         dismiss();
-    }
-
-    private Wallet pwdIsCorrect() {
-        if (null == mCurrentWalletBean) {
-            CpLog.e(TAG, "mCurrentWalletBean is null!");
-            return null;
-        }
-
-        Wallet wallet = null;
-        String userPwd = mEt_dialog_pwd_del.getText().toString().trim();
-        try {
-            wallet = Neomobile.fromKeyStore(mCurrentWalletBean.getKeyStore(), userPwd);
-            CpLog.i(TAG, "wallet address:" + wallet.address() + " ,user input pwd is correct!");
-        } catch (Exception e) {
-            CpLog.e(TAG, "fromKeyStore exception:" + e.getMessage());
-        }
-        return wallet;
     }
 }

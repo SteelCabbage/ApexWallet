@@ -119,6 +119,7 @@ public class ConfirmMnemonicFragment extends BaseFragment implements View.OnClic
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_confirm_mnemonic_confirm:
+                // TODO: 2018/6/8 0008 置为已备份 
                 toMainActivity();
                 break;
             default:

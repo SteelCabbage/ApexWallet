@@ -222,7 +222,7 @@ public class CreateWalletActivity extends BaseActivity implements View.OnClickLi
             return;
         }
 
-        startActivityBundle(BackupWalletActivity.class, false, Constant.BACKUP_MNEMONIC,
-                mnemonicEnUs, mWhereFromActivity);
+        startActivityBundle(BackupWalletActivity.class, false, Constant.BACKUP_MNEMONIC, mnemonicEnUs,
+                mWhereFromActivity);
     }
 }

@@ -24,7 +24,6 @@ public class MeTransactionRecordFragment extends BaseFragment implements View.On
 
     private static final String TAG = MeTransactionRecordFragment.class.getSimpleName();
     private TextView mTv_me_transaction_record_title;
-    private TextView mTv_me_transaction_record_balance;
     private TextView mTv_me_transaction_record_address;
     private ImageButton mIb_me_transaction_record_switch;
     private WalletBean mCurrentClickedWalletBean;
@@ -46,10 +45,7 @@ public class MeTransactionRecordFragment extends BaseFragment implements View.On
 
     private void initView(View view) {
         mTv_me_transaction_record_title = view.findViewById(R.id.tv_me_transaction_record_title);
-        mTv_me_transaction_record_balance = view.findViewById(R.id
-                .tv_me_transaction_record_balance);
-        mTv_me_transaction_record_address = view.findViewById(R.id
-                .tv_me_transaction_record_address);
+        mTv_me_transaction_record_address = view.findViewById(R.id.tv_me_transaction_record_address);
         mIb_me_transaction_record_switch = view.findViewById(R.id.ib_me_transaction_record_switch);
 
         mIb_me_transaction_record_switch.setOnClickListener(this);
@@ -66,9 +62,6 @@ public class MeTransactionRecordFragment extends BaseFragment implements View.On
 
         mTv_me_transaction_record_title.setText(String.valueOf(Constant.WALLET_NAME +
                 mCurrentClickedWalletBean.getWalletName()));
-        mTv_me_transaction_record_balance.setText(String.valueOf(mCurrentClickedWalletBean
-                .getBalance
-                        ()));
         mTv_me_transaction_record_address.setText(mCurrentClickedWalletBean.getWalletAddr());
     }
 
@@ -98,7 +91,7 @@ public class MeTransactionRecordFragment extends BaseFragment implements View.On
         }
 
         mCurrentClickedWalletBean = walletBean;
-        mTv_me_transaction_record_title.setText(String.valueOf(Constant.WALLET_NAME + walletBean
-                .getWalletName()));
+        mTv_me_transaction_record_title.setText(String.valueOf(Constant.WALLET_NAME + walletBean.getWalletName()));
+        mTv_me_transaction_record_address.setText(walletBean.getWalletAddr());
     }
 }

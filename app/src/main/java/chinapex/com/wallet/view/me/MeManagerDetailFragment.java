@@ -14,6 +14,7 @@ import chinapex.com.wallet.bean.WalletBean;
 import chinapex.com.wallet.global.Constant;
 import chinapex.com.wallet.utils.CpLog;
 import chinapex.com.wallet.view.dialog.InputPwdDelDialog;
+import chinapex.com.wallet.view.wallet.BackupWalletActivity;
 
 /**
  * Created by SteelCabbage on 2018/5/31 0031.
@@ -23,7 +24,6 @@ public class MeManagerDetailFragment extends BaseFragment implements View.OnClic
 
     private static final String TAG = MeManagerDetailFragment.class.getSimpleName();
     private TextView mTv_me_manager_detail_title;
-    private TextView mTv_me_manager_detail_balance;
     private TextView mTv_me_manager_detail_address;
     private TextView mTv_me_manager_detail_bottom_wallet_name;
     private Button mBt_me_manager_detail_backup;
@@ -47,7 +47,6 @@ public class MeManagerDetailFragment extends BaseFragment implements View.OnClic
 
     private void initView(View view) {
         mTv_me_manager_detail_title = view.findViewById(R.id.tv_me_manager_detail_title);
-        mTv_me_manager_detail_balance = view.findViewById(R.id.tv_me_manager_detail_balance);
         mTv_me_manager_detail_address = view.findViewById(R.id.tv_me_manager_detail_address);
         mTv_me_manager_detail_bottom_wallet_name = view.findViewById(R.id
                 .tv_me_manager_detail_bottom_wallet_name);
@@ -67,10 +66,8 @@ public class MeManagerDetailFragment extends BaseFragment implements View.OnClic
             return;
         }
 
-        mTv_me_manager_detail_title.setText(String.valueOf(Constant.WALLET_NAME +
-                mCurrentClickedWalletBean.getWalletName()));
-        mTv_me_manager_detail_balance.setText(String.valueOf(mCurrentClickedWalletBean.getBalance
-                ()));
+        mTv_me_manager_detail_title.setText(String.valueOf(Constant.WALLET_NAME + mCurrentClickedWalletBean
+                .getWalletName()));
         mTv_me_manager_detail_address.setText(mCurrentClickedWalletBean.getWalletAddr());
         mTv_me_manager_detail_bottom_wallet_name.setText(String.valueOf(Constant.WALLET_NAME +
                 mCurrentClickedWalletBean.getWalletName()));
@@ -94,7 +91,7 @@ public class MeManagerDetailFragment extends BaseFragment implements View.OnClic
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_me_manager_detail_backup:
-
+                startActivity(BackupWalletActivity.class, false);
                 break;
             case R.id.bt_me_manager_detail_delete:
                 showInputPwdDialog();
