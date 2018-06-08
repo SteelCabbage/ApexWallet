@@ -16,7 +16,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/fragment_assets_title_margin_top"
             android:text="@string/tv_me_manager_detail_title"
-            android:textColor="@color/text_color_white"
+            android:textColor="@android:color/white"
             android:textSize="@dimen/tv_me_manager_detail_title_size" />
 
         <ImageButton
@@ -37,7 +37,7 @@
             android:layout_marginBottom="54dp"
             android:gravity="bottom"
             android:text="@string/fragment_assets_balance"
-            android:textColor="@color/text_color_white"
+            android:textColor="@android:color/white"
             android:textSize="40sp" />
 
         <TextView
@@ -48,7 +48,7 @@
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="80dp"
             android:text="@string/tv_assets_unit"
-            android:textColor="@color/text_color_white"
+            android:textColor="@android:color/white"
             android:textSize="@dimen/tv_assets_unit_size" />
 
         <TextView

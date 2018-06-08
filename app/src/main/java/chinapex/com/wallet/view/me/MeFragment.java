@@ -114,20 +114,13 @@ public class MeFragment extends BaseFragment implements MeRecyclerViewAdapter
 
     @Override
     public void onRefresh() {
-        // TODO: 2018/5/30 0030
-        new Thread(new Runnable() {
+        // 预留后续刷新功能
+        getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                SystemClock.sleep(2000);
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        mSl_me.setRefreshing(false);
-                    }
-                });
-
+                mSl_me.setRefreshing(false);
             }
-        }).start();
+        });
     }
 
     private List<WalletBean> initWalletBeans() {

@@ -23,7 +23,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/fragment_assets_title_margin_top"
                 android:text="Wallet 0x2334"
-                android:textColor="@color/text_color_white"
+                android:textColor="@android:color/white"
                 android:textSize="@dimen/tb_title_size" />
 
             <TextView

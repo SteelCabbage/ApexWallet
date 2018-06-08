@@ -100,7 +100,7 @@ public class AssetsOverviewActivity extends BaseActivity implements
         HashMap<String, Parcelable> parcelables = new HashMap<>();
         parcelables.put(Constant.WALLET_BEAN, mWalletBean);
         parcelables.put(Constant.BALANCE_BEAN, balanceBean);
-        startActivityParcelables(WalletDetailActivity.class, false, parcelables);
+        startActivityParcelables(BalanceDetailActivity.class, false, parcelables);
 
     }
 

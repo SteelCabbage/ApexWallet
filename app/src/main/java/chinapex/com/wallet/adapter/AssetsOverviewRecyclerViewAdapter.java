@@ -68,14 +68,17 @@ public class AssetsOverviewRecyclerViewAdapter extends RecyclerView
             case Constant.ASSETS_NEO:
                 holder.assetsName.setText(Constant.MARK_NEO);
                 holder.assetsUnit.setText(Constant.UNIT_NEO);
+                holder.mapState.setVisibility(View.INVISIBLE);
                 break;
             case Constant.ASSETS_NEO_GAS:
                 holder.assetsName.setText(Constant.MARK_NEO_GAS);
                 holder.assetsUnit.setText(Constant.UNIT_NEO_GAS);
+                holder.mapState.setVisibility(View.INVISIBLE);
                 break;
             case Constant.ASSETS_CPX:
                 holder.assetsName.setText(Constant.MARK_CPX);
                 holder.assetsUnit.setText(Constant.UNIT_CPX);
+                holder.mapState.setVisibility(View.VISIBLE);
                 break;
             default:
                 break;

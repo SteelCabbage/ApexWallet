@@ -65,7 +65,6 @@ public class MeRecyclerViewAdapter extends RecyclerView.Adapter<MeRecyclerViewAd
         holder.walletName.setText(String.valueOf(Constant.WALLET_NAME + walletBean.getWalletName
                 ()));
         holder.walletAddr.setText(walletBean.getWalletAddr());
-        holder.balance.setText(String.valueOf(walletBean.getBalance()));
 
         int backupState = walletBean.getBackupState();
         switch (backupState) {
@@ -92,7 +91,6 @@ public class MeRecyclerViewAdapter extends RecyclerView.Adapter<MeRecyclerViewAd
     class MeAdapterHolder extends RecyclerView.ViewHolder {
         TextView walletName;
         TextView walletAddr;
-        TextView balance;
         TextView isBackup;
 
 
@@ -100,7 +98,6 @@ public class MeRecyclerViewAdapter extends RecyclerView.Adapter<MeRecyclerViewAd
             super(itemView);
             walletName = itemView.findViewById(R.id.tv_me_rv_item_wallet_name);
             walletAddr = itemView.findViewById(R.id.tv_me_rv_item_wallet_addr);
-            balance = itemView.findViewById(R.id.tv_me_rv_item_balance);
             isBackup = itemView.findViewById(R.id.tv_me_rv_item_backup);
         }
     }

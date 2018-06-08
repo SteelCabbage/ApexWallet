@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/dl_wallet_detail"
+    android:id="@+id/dl_balance_detail"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -8,6 +8,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:gravity="center_horizontal"
         android:orientation="vertical">
 
         <LinearLayout
@@ -18,31 +19,23 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tv_wallet_detail_wallet_name"
+                android:id="@+id/tv_balance_detail_assets_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/fragment_assets_title_margin_top"
                 android:text="CPX"
-                android:textColor="@color/text_color_white"
+                android:textColor="@android:color/white"
                 android:textSize="@dimen/tb_title_size" />
 
             <TextView
-                android:id="@+id/tv_wallet_detail_balance"
+                android:id="@+id/tv_balance_detail_assets_value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:text="2.0032"
-                android:textColor="@color/text_color_white"
+                android:textColor="@android:color/white"
                 android:textSize="24sp" />
 
-            <TextView
-                android:id="@+id/tv_balance_detail_advance_decline"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:lines="1"
-                android:text="16.11(2.36%)"
-                android:textColor="@color/balance_detail_decline"
-                android:textSize="12sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -53,25 +46,52 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/bt_wallet_detail_transfer"
+                android:id="@+id/bt_balance_detail_transfer"
                 android:layout_width="@dimen/bt_wallet_detail_tx_width"
                 android:layout_height="@dimen/bt_wallet_detail_tx_height"
                 android:background="@drawable/shape_new_visitor_bt_bg"
                 android:text="@string/bt_wallet_detail_tx_transfer"
-                android:textColor="@color/text_color_white"
+                android:textColor="@android:color/white"
                 android:textSize="@dimen/bt_wallet_detail_tx_font_size" />
 
             <Button
-                android:id="@+id/bt_wallet_detail_gathering"
+                android:id="@+id/bt_balance_detail_gathering"
                 android:layout_width="@dimen/bt_wallet_detail_tx_width"
                 android:layout_height="@dimen/bt_wallet_detail_tx_height"
                 android:layout_marginStart="12dp"
                 android:background="@drawable/shape_new_visitor_bt_bg"
                 android:text="@string/bt_wallet_detail_tx_gathering"
-                android:textColor="@color/text_color_white"
+                android:textColor="@android:color/white"
                 android:textSize="@dimen/bt_wallet_detail_tx_font_size" />
 
         </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_balance_detail_map"
+            android:layout_width="333dp"
+            android:layout_height="32dp"
+            android:layout_marginTop="18dp"
+            android:background="@drawable/shape_assets_overview_map_def"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="11dp"
+                android:gravity="center"
+                android:text="CPX 映射" />
+
+            <ImageButton
+                android:id="@+id/ib_balance_detail_map"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="225dp"
+                android:background="@null"
+                android:src="@drawable/icon_wallet_item_arrows" />
+
+        </LinearLayout>
+
     </LinearLayout>
 
     <!--侧滑内容-->
@@ -83,7 +103,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/tv_wallet_detail_drawer_title"
+            android:id="@+id/tv_balance_detail_drawer_title"
             android:layout_width="match_parent"
             android:layout_height="82dp"
             android:background="@color/tv_wallet_detail_drawer_title"
@@ -94,7 +114,7 @@
             android:textStyle="bold" />
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_wallet_detail_drawer_menu"
+            android:id="@+id/rv_balance_detail_drawer_menu"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:divider="@null">

@@ -20,7 +20,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/fragment_assets_title_margin_top"
                 android:text="@string/tb_title_main"
-                android:textColor="@color/text_color_white"
+                android:textColor="@android:color/white"
                 android:textSize="@dimen/tb_title_size" />
 
             <ImageButton
@@ -71,7 +71,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginEnd="10dp"
                 android:text="@string/tv_assets_search_cancel"
-                android:textColor="@color/text_color_white"
+                android:textColor="@android:color/white"
                 android:textSize="16sp" />
         </RelativeLayout>
 

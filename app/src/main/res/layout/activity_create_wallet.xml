@@ -23,7 +23,7 @@
             android:layout_centerInParent="true"
             android:layout_gravity="center_horizontal"
             android:text="@string/new_visitor_create_wallet"
-            android:textColor="@color/text_color_white"
+            android:textColor="@android:color/white"
             android:textSize="@dimen/tb_title_size" />
     </android.support.v7.widget.Toolbar>
 

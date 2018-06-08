@@ -36,7 +36,7 @@
         <!-- 主activity -->
         <activity android:name=".view.MainActivity" />
         <activity android:name=".view.wallet.CreateWalletActivity" />
-        <activity android:name=".view.assets.WalletDetailActivity" />
+        <activity android:name=".view.assets.BalanceDetailActivity" />
         <activity android:name=".view.assets.TransferActivity" />
         <activity android:name=".view.assets.GatheringActivity" />
         <activity android:name=".view.wallet.BackupWalletActivity" />

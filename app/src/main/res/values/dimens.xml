@@ -45,7 +45,7 @@
     <dimen name="cv_assets_rv_item_bg_corner">5dp</dimen>
     <dimen name="tv_assets_rv_item_unit_margin_end">20dp</dimen>
     <dimen name="tv_assets_rv_item_balance_size">20sp</dimen>
-    <dimen name="tv_assets_rv_item_wallet_name_size">16sp</dimen>
+    <dimen name="tv_assets_rv_item_wallet_name_size">18sp</dimen>
     <dimen name="rl_assets_rv_item_height">100dp</dimen>
     <dimen name="ll_assets_rv_item_padding">20dp</dimen>
     <dimen name="bt_wallet_detail_tx_width">144dp</dimen>

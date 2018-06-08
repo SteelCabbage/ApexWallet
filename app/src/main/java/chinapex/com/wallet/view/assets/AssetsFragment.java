@@ -22,21 +22,15 @@ import chinapex.com.wallet.adapter.AssetsRecyclerViewAdapter;
 import chinapex.com.wallet.adapter.DrawerMenuRecyclerViewAdapter;
 import chinapex.com.wallet.adapter.SpacesItemDecoration;
 import chinapex.com.wallet.base.BaseFragment;
-import chinapex.com.wallet.bean.BalanceBean;
 import chinapex.com.wallet.bean.DrawerMenu;
 import chinapex.com.wallet.bean.WalletBean;
-import chinapex.com.wallet.bean.request.RequestGetAccountState;
-import chinapex.com.wallet.bean.response.ResponseGetAccountState;
 import chinapex.com.wallet.changelistener.ApexListeners;
 import chinapex.com.wallet.changelistener.OnItemAddListener;
 import chinapex.com.wallet.changelistener.OnItemDeleteListener;
 import chinapex.com.wallet.global.ApexWalletApplication;
 import chinapex.com.wallet.global.Constant;
 import chinapex.com.wallet.model.ApexWalletDbDao;
-import chinapex.com.wallet.net.INetCallback;
-import chinapex.com.wallet.net.OkHttpClientManager;
 import chinapex.com.wallet.utils.CpLog;
-import chinapex.com.wallet.utils.GsonUtils;
 import chinapex.com.wallet.view.wallet.CreateWalletActivity;
 
 /**
@@ -132,7 +126,7 @@ public class AssetsFragment extends BaseFragment implements AssetsRecyclerViewAd
     @Override
     public void onItemLongClick(int position) {
         CpLog.i(TAG, "长按了onItemLongClick:" + position);
-        // TODO: 2018/5/24 0024 长按左滑删除逻辑
+        // 预留长按左滑删除逻辑
     }
 
     private List<WalletBean> getData() {
@@ -151,82 +145,14 @@ public class AssetsFragment extends BaseFragment implements AssetsRecyclerViewAd
 
     @Override
     public void onRefresh() {
-        getBalance(mWalletBeans);
+        // 预留后续刷新功能
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mSl_assets_rv.setRefreshing(false);
+            }
+        });
     }
-
-    private void getBalance(List<WalletBean> walletBeans) {
-        if (null == walletBeans || walletBeans.isEmpty()) {
-            CpLog.e(TAG, "walletBeans is null or empty!");
-            AssetsFragment.this.getActivity().runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    mSl_assets_rv.setRefreshing(false);
-                }
-            });
-            return;
-        }
-
-        for (final WalletBean walletBean : walletBeans) {
-
-            final RequestGetAccountState requestGetAccountState = new RequestGetAccountState();
-            requestGetAccountState.setJsonrpc("2.0");
-            requestGetAccountState.setMethod("getaccountstate");
-            requestGetAccountState.setId(1);
-            ArrayList<String> arrayList = new ArrayList<>();
-            arrayList.add(walletBean.getWalletAddr());
-            requestGetAccountState.setParams(arrayList);
-
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    OkHttpClientManager.getInstance().postJson(Constant.URL_CLI, GsonUtils.toJsonStr
-                            (requestGetAccountState), new INetCallback() {
-                        @Override
-                        public void onSuccess(int statusCode, String msg, String result) {
-                            CpLog.i(TAG, "onSuccess");
-                            ResponseGetAccountState responseGetAccountState = GsonUtils.json2Bean
-                                    (result, ResponseGetAccountState.class);
-                            List<ResponseGetAccountState.ResultBean.BalancesBean> balances =
-                                    responseGetAccountState.getResult().getBalances();
-                            if (null == balances || balances.isEmpty()) {
-                                walletBean.setBalance(0.0);
-                            } else {
-                                for (ResponseGetAccountState.ResultBean.BalancesBean balance :
-                                        balances) {
-                                    if (Constant.ASSETS_NEO.equals(balance.getAsset())) {
-                                        String balanceValue = balance.getValue();
-                                        walletBean.setBalance(Double.valueOf(balanceValue));
-                                    }
-                                }
-                            }
-
-                            AssetsFragment.this.getActivity().runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    mSl_assets_rv.setRefreshing(false);
-                                    mAssetsRecyclerViewAdapter.notifyDataSetChanged();
-                                }
-                            });
-
-                        }
-
-                        @Override
-                        public void onFailed(int failedCode, String msg) {
-                            CpLog.e(TAG, "onFailed");
-                            AssetsFragment.this.getActivity().runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    mSl_assets_rv.setRefreshing(false);
-                                }
-                            });
-                        }
-                    });
-                }
-            }).start();
-
-        }
-    }
-
 
     @Override
     public void onItemDelete(WalletBean walletBean) {
@@ -300,6 +226,10 @@ public class AssetsFragment extends BaseFragment implements AssetsRecyclerViewAd
             case 1:
                 CpLog.i(TAG, "创建钱包");
                 startActivity(CreateWalletActivity.class, false);
+                break;
+            case 2:
+                CpLog.i(TAG, "导入钱包");
+                // TODO: 2018/6/8 0008 导入钱包
                 break;
             default:
                 break;

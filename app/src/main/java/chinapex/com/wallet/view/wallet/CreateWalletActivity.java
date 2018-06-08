@@ -1,6 +1,7 @@
 package chinapex.com.wallet.view.wallet;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.text.TextUtils;
@@ -144,20 +145,15 @@ public class CreateWalletActivity extends BaseActivity implements View.OnClickLi
             case R.id.ib_create_wallet_privacy_point:
                 if (mIsSelectedPrivacy) {
                     mIsSelectedPrivacy = false;
-                    mIb_create_wallet_privacy_point.setImageResource(R.drawable
-                            .shape_privacy_point);
-                    mBt_create_wallet_confirm.setBackgroundResource(R.drawable
-                            .shape_new_visitor_bt_bg);
-                    mBt_create_wallet_confirm.setTextColor(getResources().getColor(R.color
-                            .text_color_white));
+                    mIb_create_wallet_privacy_point.setImageResource(R.drawable.shape_privacy_point);
+                    mBt_create_wallet_confirm.setBackgroundResource(R.drawable.shape_new_visitor_bt_bg);
+                    mBt_create_wallet_confirm.setTextColor(Color.WHITE);
                     mIsAgreePrivacy = true;
                 } else {
                     mIsSelectedPrivacy = true;
-                    mIb_create_wallet_privacy_point.setImageResource(R.drawable
-                            .shape_privacy_point_def);
+                    mIb_create_wallet_privacy_point.setImageResource(R.drawable.shape_privacy_point_def);
                     mBt_create_wallet_confirm.setBackgroundResource(R.drawable.shape_gray_bt_bg);
-                    mBt_create_wallet_confirm.setTextColor(getResources().getColor(R.color
-                            .colorAccent));
+                    mBt_create_wallet_confirm.setTextColor(getResources().getColor(R.color.colorAccent));
                     mIsAgreePrivacy = false;
                 }
                 break;
@@ -222,7 +218,7 @@ public class CreateWalletActivity extends BaseActivity implements View.OnClickLi
         }
 
         if (TextUtils.isEmpty(mnemonicEnUs)) {
-            CpLog.e(TAG,"mnemonicEnUs is null！");
+            CpLog.e(TAG, "mnemonicEnUs is null！");
             return;
         }
 

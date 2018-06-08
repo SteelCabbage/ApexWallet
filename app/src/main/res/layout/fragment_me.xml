@@ -15,7 +15,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="25dp"
             android:text="@string/me_title"
-            android:textColor="@color/text_color_white"
+            android:textColor="@android:color/white"
             android:textSize="@dimen/tv_me_title_size" />
 
         <LinearLayout
