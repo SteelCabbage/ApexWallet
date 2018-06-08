@@ -12,9 +12,12 @@ public class Constant {
     public static final int NET_ERROR = -1;
     public static final int NET_SUCCESS = 1;
     public static final int NET_BODY_NULL = 0;
-    public static final String HOSTNAME_VERIFIER = "40.125.171.0";
-    public static final String URL_CLI = "http://40.125.171.0:20332";
-    public static final String URL_UTXOS = "http://40.125.171.0:8083/utxos/";
+    //    public static final String HOSTNAME_VERIFIER = "40.125.171.0";
+//    public static final String URL_CLI = "http://40.125.171.0:20332";
+//    public static final String URL_UTXOS = "http://40.125.171.0:8083/utxos/";
+    public static final String HOSTNAME_VERIFIER = "dev.chinapex.com.cn";
+    public static final String URL_CLI = "http://dev.chinapex.com.cn:10086/neo-cli/";
+    public static final String URL_UTXOS = "http://dev.chinapex.com.cn:10086/tool/utxos/";
 
     // assets
     public static final String WALLET_BEAN = "walletBean";
