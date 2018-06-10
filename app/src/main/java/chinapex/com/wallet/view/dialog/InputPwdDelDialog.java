@@ -53,11 +53,14 @@ public class InputPwdDelDialog extends DialogFragment implements View.OnClickLis
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle
             savedInstanceState) {
 
-        //去掉边框
+        // 去掉边框
         Window window = getDialog().getWindow();
         if (null != window) {
             window.setBackgroundDrawable(new ColorDrawable(0));
         }
+
+        // 点击空白区域不可取消
+        setCancelable(false);
 
         return inflater.inflate(R.layout.dialog_pwd, container, false);
     }

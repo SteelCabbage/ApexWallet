@@ -8,7 +8,6 @@ public class Constant {
     // application state value
     public static final String IS_FIRST_ENTER = "isFirstEnter";
 
-
     // net
     public static final long CONNECT_TIMEOUT = 5;
     public static final long READ_TIMEOUT = 5;
@@ -26,6 +25,11 @@ public class Constant {
     // assets
     public static final String WALLET_BEAN = "walletBean";
     public static final String BALANCE_BEAN = "balanceBean";
+
+    // me
+    public static final String ME_MANAGER_DETAIL_BUNDLE = "meManagerDetailBundle";
+    public static final String ME_SKIP_ACTIVITY_FRAGMENT_TAG = "meSkipActivityFragmentTag";
+    public static final String PARCELABLE_WALLET_BEAN_MANAGE_DETAIL = "parcelableWalletBeanManageDetail";
 
     // backup wallet
     public static final String BACKUP_MNEMONIC = "backupMnemonic";

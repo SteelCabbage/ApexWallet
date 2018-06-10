@@ -31,6 +31,7 @@ import chinapex.com.wallet.global.Constant;
 import chinapex.com.wallet.model.ApexWalletDbDao;
 import chinapex.com.wallet.utils.CpLog;
 import chinapex.com.wallet.utils.FragmentFactory;
+import chinapex.com.wallet.view.MeSkipActivity;
 
 /**
  * Created by SteelCabbage on 2018/5/21 0021.
@@ -188,30 +189,15 @@ public class MeFragment extends BaseFragment implements MeRecyclerViewAdapter
     }
 
     private void toMeManagerDetailFragment() {
-        FragmentTransaction fragmentTransaction = getActivity().getFragmentManager()
-                .beginTransaction();
-        BaseFragment fragment = FragmentFactory.getFragment(10);
-        if (!fragment.isAdded()) {
-            fragmentTransaction.add(R.id.fl_main, fragment, "" + 10);
-            fragmentTransaction.addToBackStack("MeManagerDetailFragment");
-        }
-        fragmentTransaction.show(fragment).hide(FragmentFactory.getFragment(2)).commit();
+        startActivityBundle(MeSkipActivity.class, false, Constant.ME_MANAGER_DETAIL_BUNDLE, Constant
+                        .ME_SKIP_ACTIVITY_FRAGMENT_TAG, 10 + "", Constant.PARCELABLE_WALLET_BEAN_MANAGE_DETAIL,
+                mCurrentClickedWalletBean);
     }
 
     private void toMeTransactionRecordFragment() {
-        FragmentTransaction fragmentTransaction = getActivity().getFragmentManager()
-                .beginTransaction();
-        BaseFragment fragment = FragmentFactory.getFragment(11);
-        if (!fragment.isAdded()) {
-            fragmentTransaction.add(R.id.fl_main, fragment, "" + 11);
-            fragmentTransaction.addToBackStack("MeTransactionRecordFragment");
-        }
-        fragmentTransaction.show(fragment).hide(FragmentFactory.getFragment(2)).commit();
-
-    }
-
-    public WalletBean getCurrentClickedWalletBean() {
-        return mCurrentClickedWalletBean;
+        startActivityBundle(MeSkipActivity.class, false, Constant.ME_MANAGER_DETAIL_BUNDLE, Constant
+                        .ME_SKIP_ACTIVITY_FRAGMENT_TAG, 11 + "", Constant.PARCELABLE_WALLET_BEAN_MANAGE_DETAIL,
+                mCurrentClickedWalletBean);
     }
 
     // 删除钱包时回调
@@ -223,11 +209,12 @@ public class MeFragment extends BaseFragment implements MeRecyclerViewAdapter
         }
 
         mWalletBeans.remove(walletBean);
-        mMeRecyclerViewAdapter.notifyDataSetChanged();
-
-        FragmentManager fragmentManager = getActivity().getFragmentManager();
-        fragmentManager.popBackStack("MeManagerDetailFragment", FragmentManager
-                .POP_BACK_STACK_INCLUSIVE);
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mMeRecyclerViewAdapter.notifyDataSetChanged();
+            }
+        });
     }
 
     // 新增钱包时回调

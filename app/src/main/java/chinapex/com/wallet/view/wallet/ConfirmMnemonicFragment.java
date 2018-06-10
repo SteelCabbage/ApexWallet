@@ -80,6 +80,10 @@ public class ConfirmMnemonicFragment extends BaseFragment implements View.OnClic
 
         // 设置点击的助记词
         String backupMnemonic = backupWalletActivity.getBackupMnemonic();
+        if (TextUtils.isEmpty(backupMnemonic)) {
+            CpLog.e(TAG, "backupMnemonic is null!");
+            return;
+        }
         String[] backupMnemonics = backupMnemonic.split(" ");
         mMnemonicStatesClick = new ArrayList<>();
         for (int i = 0; i < backupMnemonics.length; i++) {

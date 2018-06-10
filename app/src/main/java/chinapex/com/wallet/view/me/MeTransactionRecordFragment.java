@@ -1,5 +1,6 @@
 package chinapex.com.wallet.view.me;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import chinapex.com.wallet.base.BaseFragment;
 import chinapex.com.wallet.bean.WalletBean;
 import chinapex.com.wallet.global.Constant;
 import chinapex.com.wallet.utils.CpLog;
+import chinapex.com.wallet.view.MeSkipActivity;
 import chinapex.com.wallet.view.dialog.SwitchWalletDialog;
 
 /**
@@ -52,16 +54,15 @@ public class MeTransactionRecordFragment extends BaseFragment implements View.On
     }
 
     private void initData() {
-        MeFragment meFragment = (MeFragment) getActivity().getFragmentManager().findFragmentByTag
-                (2 + "");
-        mCurrentClickedWalletBean = meFragment.getCurrentClickedWalletBean();
+        MeSkipActivity meSkipActivity = (MeSkipActivity) getActivity();
+        mCurrentClickedWalletBean = meSkipActivity.getWalletBean();
         if (null == mCurrentClickedWalletBean) {
             CpLog.e(TAG, "currentClickedWalletBean is null!");
             return;
         }
 
-        mTv_me_transaction_record_title.setText(String.valueOf(Constant.WALLET_NAME +
-                mCurrentClickedWalletBean.getWalletName()));
+        mTv_me_transaction_record_title.setText(String.valueOf(Constant.WALLET_NAME + mCurrentClickedWalletBean
+                .getWalletName()));
         mTv_me_transaction_record_address.setText(mCurrentClickedWalletBean.getWalletAddr());
     }
 

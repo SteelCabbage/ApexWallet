@@ -1,5 +1,6 @@
 package chinapex.com.wallet.view.me;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import chinapex.com.wallet.base.BaseFragment;
 import chinapex.com.wallet.bean.WalletBean;
 import chinapex.com.wallet.global.Constant;
 import chinapex.com.wallet.utils.CpLog;
+import chinapex.com.wallet.view.MeSkipActivity;
 import chinapex.com.wallet.view.dialog.InputPwdDelDialog;
 import chinapex.com.wallet.view.wallet.BackupWalletActivity;
 
@@ -58,9 +60,8 @@ public class MeManagerDetailFragment extends BaseFragment implements View.OnClic
     }
 
     private void initData() {
-        MeFragment meFragment = (MeFragment) getActivity().getFragmentManager().findFragmentByTag
-                (2 + "");
-        mCurrentClickedWalletBean = meFragment.getCurrentClickedWalletBean();
+        MeSkipActivity meSkipActivity = (MeSkipActivity) getActivity();
+        mCurrentClickedWalletBean = meSkipActivity.getWalletBean();
         if (null == mCurrentClickedWalletBean) {
             CpLog.e(TAG, "currentClickedWalletBean is null!");
             return;
