@@ -3,6 +3,7 @@ package chinapex.com.wallet.view;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -19,6 +20,7 @@ import chinapex.com.wallet.model.ApexWalletDbDao;
 import chinapex.com.wallet.model.ApexWalletDbHelper;
 import chinapex.com.wallet.utils.CpLog;
 import chinapex.com.wallet.utils.PhoneUtils;
+import chinapex.com.wallet.utils.SharedPreferencesUtils;
 import chinapex.com.wallet.view.wallet.CreateWalletActivity;
 
 public class NewVisitorActivity extends BaseActivity implements View.OnClickListener {
@@ -31,14 +33,25 @@ public class NewVisitorActivity extends BaseActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //设置透明导航键
+        isFirstEnter();
+
+        // 设置透明导航键
         setNavigationBarColorTransparent();
         setContentView(R.layout.activity_new_visitor);
 
         initView();
 
-        //output screen info
-        logScreenInfo();
+    }
+
+    private void isFirstEnter() {
+        boolean isFirstEnter = (boolean) SharedPreferencesUtils.getParam(ApexWalletApplication.getInstance(), Constant
+                .IS_FIRST_ENTER, true);
+        if (isFirstEnter) {
+            CpLog.i(TAG, "this is first enter!");
+            SharedPreferencesUtils.putParam(ApexWalletApplication.getInstance(), Constant.IS_FIRST_ENTER, false);
+        } else {
+            startActivity(MainActivity.class, true);
+        }
     }
 
     private void initView() {
@@ -54,7 +67,7 @@ public class NewVisitorActivity extends BaseActivity implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_new_visitor_create_wallet:
-                startActivity(CreateWalletActivity.class, true, TAG);
+                startActivity(CreateWalletActivity.class, true);
                 break;
             case R.id.bt_new_visitor_import_wallet:
                 break;
@@ -69,12 +82,6 @@ public class NewVisitorActivity extends BaseActivity implements View.OnClickList
             window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         }
 
-    }
-
-    private void logScreenInfo() {
-        PhoneUtils.logDisplayMetrics(this);
-        PhoneUtils.getStatusBarHeight(this);
-        PhoneUtils.getNavigationBarHeight(this);
     }
 
 }

@@ -21,9 +21,11 @@ import chinapex.com.wallet.adapter.BackupShowMnemonicAdapter;
 import chinapex.com.wallet.adapter.SpacesItemDecoration;
 import chinapex.com.wallet.base.BaseFragment;
 import chinapex.com.wallet.bean.MnemonicState;
+import chinapex.com.wallet.global.ApexCache;
 import chinapex.com.wallet.global.ApexWalletApplication;
 import chinapex.com.wallet.global.Constant;
 import chinapex.com.wallet.utils.CpLog;
+import chinapex.com.wallet.utils.SharedPreferencesUtils;
 import chinapex.com.wallet.view.MainActivity;
 
 /**
@@ -36,7 +38,6 @@ public class ConfirmMnemonicFragment extends BaseFragment implements View.OnClic
 
     private static final String TAG = ConfirmMnemonicFragment.class.getSimpleName();
     private Button mBt_confirm_mnemonic_confirm;
-    private String mWhereFromActivity;
     private RecyclerView mRv_confirm_mnemonic_show;
     private RecyclerView mRv_confirm_mnemonic_click;
     private BackupClickMnemonicAdapter mBackupClickMnemonicAdapter;
@@ -77,10 +78,8 @@ public class ConfirmMnemonicFragment extends BaseFragment implements View.OnClic
             return;
         }
 
+        // 设置点击的助记词
         String backupMnemonic = backupWalletActivity.getBackupMnemonic();
-        mWhereFromActivity = backupWalletActivity.getWhereFromActivity();
-
-        //设置点击的助记词
         String[] backupMnemonics = backupMnemonic.split(" ");
         mMnemonicStatesClick = new ArrayList<>();
         for (int i = 0; i < backupMnemonics.length; i++) {
@@ -100,7 +99,7 @@ public class ConfirmMnemonicFragment extends BaseFragment implements View.OnClic
         mRv_confirm_mnemonic_click.addItemDecoration(new SpacesItemDecoration(spaceClick));
         mBackupClickMnemonicAdapter.setOnItemClickListener(this);
 
-        //设置展示的助记词
+        // 设置展示的助记词
         mMnemonicStatesShow = new ArrayList<>();
         mBackupShowMnemonicAdapter = new BackupShowMnemonicAdapter(mMnemonicStatesShow);
         FlexboxLayoutManager layoutManagerShow = new FlexboxLayoutManager(ApexWalletApplication
@@ -119,33 +118,17 @@ public class ConfirmMnemonicFragment extends BaseFragment implements View.OnClic
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_confirm_mnemonic_confirm:
-                // TODO: 2018/6/8 0008 置为已备份
-                toMainActivity();
-                break;
-            default:
-                break;
-        }
-    }
+                // TODO: 2018/6/10 校验助记词顺序是否正确，正确置为已备份
 
-    private void toMainActivity() {
-        if (TextUtils.isEmpty(mWhereFromActivity)) {
-            CpLog.e(TAG, "mWhereFromActivity is null!");
-            return;
-        }
-
-        switch (mWhereFromActivity) {
-            case Constant.WHERE_FROM_NEW_VISITOR_ACTIVITY:
-                CreateWalletActivity.sCreateWalletActivity.finish();
-                startActivity(MainActivity.class, true);
-                break;
-            case Constant.WHERE_FROM_WALLET_DETAIL_ACTIVITY:
-                CreateWalletActivity.sCreateWalletActivity.finish();
+                boolean startMainActivity = ApexCache.getInstance().isStartMainActivity();
+                if (startMainActivity) {
+                    startActivity(MainActivity.class, true);
+                }
                 getActivity().finish();
                 break;
             default:
                 break;
         }
-
     }
 
     //展示助记词的回调
@@ -173,4 +156,5 @@ public class ConfirmMnemonicFragment extends BaseFragment implements View.OnClic
         }
         mBackupShowMnemonicAdapter.notifyDataSetChanged();
     }
+
 }

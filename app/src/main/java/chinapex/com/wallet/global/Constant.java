@@ -5,6 +5,10 @@ package chinapex.com.wallet.global;
  */
 
 public class Constant {
+    // application state value
+    public static final String IS_FIRST_ENTER = "isFirstEnter";
+
+
     // net
     public static final long CONNECT_TIMEOUT = 5;
     public static final long READ_TIMEOUT = 5;
@@ -22,11 +26,6 @@ public class Constant {
     // assets
     public static final String WALLET_BEAN = "walletBean";
     public static final String BALANCE_BEAN = "balanceBean";
-
-    // create wallet
-    public static final String WHERE_FROM_ACTIVITY = "whereFromActivity";
-    public static final String WHERE_FROM_NEW_VISITOR_ACTIVITY = "NewVisitorActivity";
-    public static final String WHERE_FROM_WALLET_DETAIL_ACTIVITY = "BalanceDetailActivity";
 
     // backup wallet
     public static final String BACKUP_MNEMONIC = "backupMnemonic";

@@ -36,8 +36,6 @@ public class CreateWalletActivity extends BaseActivity implements View.OnClickLi
     private TextInputLayout mTl_create_wallet_pwd;
     private TextInputLayout mTl_create_wallet_repeat_pwd;
     private TextView mTv_create_wallet_privacy_have_read;
-    public static CreateWalletActivity sCreateWalletActivity;
-    private String mWhereFromActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +43,6 @@ public class CreateWalletActivity extends BaseActivity implements View.OnClickLi
         setContentView(R.layout.activity_create_wallet);
 
         initView();
-        sCreateWalletActivity = this;
         initData();
     }
 
@@ -119,8 +116,6 @@ public class CreateWalletActivity extends BaseActivity implements View.OnClickLi
             CpLog.e(TAG, "intent is null!");
             return;
         }
-
-        mWhereFromActivity = intent.getStringExtra(Constant.WHERE_FROM_ACTIVITY);
     }
 
     @Override
@@ -222,7 +217,6 @@ public class CreateWalletActivity extends BaseActivity implements View.OnClickLi
             return;
         }
 
-        startActivityBundle(BackupWalletActivity.class, false, Constant.BACKUP_MNEMONIC, mnemonicEnUs,
-                mWhereFromActivity);
+        startActivityBundle(BackupWalletActivity.class, true, Constant.BACKUP_MNEMONIC, mnemonicEnUs);
     }
 }

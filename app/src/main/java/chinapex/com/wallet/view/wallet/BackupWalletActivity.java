@@ -22,7 +22,6 @@ public class BackupWalletActivity extends BaseActivity {
     private Toolbar mTb_backup;
     private String[] mBackupTitles;
     private String mBackupMnemonic;
-    private String mWhereFromActivity;
 
 
     @Override
@@ -49,11 +48,6 @@ public class BackupWalletActivity extends BaseActivity {
         if (TextUtils.isEmpty(mBackupMnemonic)) {
             CpLog.e(TAG, "mBackupMnemonic is null!");
             return;
-        }
-
-        mWhereFromActivity = intent.getStringExtra(Constant.WHERE_FROM_ACTIVITY);
-        if (TextUtils.isEmpty(mWhereFromActivity)) {
-            CpLog.e(TAG, "mWhereFromActivity is null!");
         }
     }
 
@@ -92,7 +86,4 @@ public class BackupWalletActivity extends BaseActivity {
         return mBackupMnemonic;
     }
 
-    public String getWhereFromActivity() {
-        return mWhereFromActivity;
-    }
 }

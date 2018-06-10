@@ -159,7 +159,7 @@ public class BalanceDetailActivity extends BaseActivity implements View.OnClickL
                 break;
             case 1:
                 CpLog.i(TAG, "创建钱包");
-                startActivity(CreateWalletActivity.class, false, TAG);
+                startActivity(CreateWalletActivity.class, true);
                 break;
             default:
                 break;

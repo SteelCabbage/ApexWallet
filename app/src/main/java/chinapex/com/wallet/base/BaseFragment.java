@@ -5,13 +5,14 @@ import android.content.Intent;
 import android.os.Parcelable;
 import android.text.TextUtils;
 
+import chinapex.com.wallet.global.ApexWalletApplication;
 import chinapex.com.wallet.utils.CpLog;
 
 public class BaseFragment extends Fragment {
     private static final String TAG = BaseFragment.class.getSimpleName();
 
     public void startActivity(Class cls, boolean isFinish) {
-        Intent intent = new Intent(this.getActivity(), cls);
+        Intent intent = new Intent(ApexWalletApplication.getInstance(), cls);
         startActivity(intent);
         if (isFinish) {
             this.getActivity().finish();
@@ -25,11 +26,11 @@ public class BaseFragment extends Fragment {
             return;
         }
 
-        Intent intent = new Intent(this.getActivity(), cls);
+        Intent intent = new Intent(ApexWalletApplication.getInstance(), cls);
         intent.putExtra(parcelableKey, parcelable);
         startActivity(intent);
         if (isFinish) {
-            this.getActivity().finish();
+            getActivity().finish();
         }
     }
 }

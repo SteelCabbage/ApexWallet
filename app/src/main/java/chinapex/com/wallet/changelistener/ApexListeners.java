@@ -22,13 +22,12 @@ public class ApexListeners {
 
     }
 
-    private static class ChangeListenerControllerHolder {
-        private static final ApexListeners S_APEX_LISTENER_CONTROLLER = new
-                ApexListeners();
+    private static class ApexListenersHolder {
+        private static final ApexListeners sApexListeners = new ApexListeners();
     }
 
     public static ApexListeners getInstance() {
-        return ChangeListenerControllerHolder.S_APEX_LISTENER_CONTROLLER;
+        return ApexListenersHolder.sApexListeners;
     }
 
     public void doInit() {

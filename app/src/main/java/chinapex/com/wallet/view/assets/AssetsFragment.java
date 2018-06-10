@@ -234,18 +234,29 @@ public class AssetsFragment extends BaseFragment implements AssetsRecyclerViewAd
             default:
                 break;
         }
+        closeDrawer(mLl_assets_drawer);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ib_assets_ellipsis:
-                if (!mDl_assets.isDrawerOpen(mLl_assets_drawer)) {
-                    mDl_assets.openDrawer(mLl_assets_drawer);
-                }
+                openDrawer(mLl_assets_drawer);
                 break;
             default:
                 break;
+        }
+    }
+
+    private void openDrawer(View drawer) {
+        if (!mDl_assets.isDrawerOpen(drawer)) {
+            mDl_assets.openDrawer(drawer);
+        }
+    }
+
+    private void closeDrawer(View drawer) {
+        if (mDl_assets.isDrawerOpen(drawer)) {
+            mDl_assets.closeDrawer(drawer);
         }
     }
 }

@@ -49,6 +49,7 @@
             android:layout_height="wrap_content"
             android:ems="14"
             android:hint="@string/create_wallet_et_name"
+            android:inputType="text"
             android:textSize="@dimen/et_create_wallet_font_size" />
     </android.support.design.widget.TextInputLayout>
 

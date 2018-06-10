@@ -16,6 +16,7 @@ import chinapex.com.wallet.base.BaseActivity;
 import chinapex.com.wallet.base.BaseFragment;
 import chinapex.com.wallet.executor.TaskController;
 import chinapex.com.wallet.executor.runnable.GetUtxos;
+import chinapex.com.wallet.global.ApexCache;
 import chinapex.com.wallet.net.INetCallback;
 import chinapex.com.wallet.net.OkHttpClientManager;
 import chinapex.com.wallet.utils.CpLog;
@@ -34,6 +35,9 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // 后续备份助记词完成后不再跳转MainActivity
+        ApexCache.getInstance().setStartMainActivity(false);
 
         initData();
         initView();

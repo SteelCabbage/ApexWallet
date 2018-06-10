@@ -40,7 +40,6 @@ public class BackupFragment extends BaseFragment implements View.OnClickListener
         mBt_backup = view.findViewById(R.id.bt_backup);
 
         mBt_backup.setOnClickListener(this);
-
     }
 
 
