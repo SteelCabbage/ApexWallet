@@ -75,11 +75,12 @@
             android:layout_height="wrap_content"
             android:layout_alignEnd="@+id/ib_me_transaction_record_switch"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="2dp"
-            android:layout_marginStart="5dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="5dp"
+            android:layout_marginEnd="10dp"
             android:text="@string/tv_me_transaction_record_cancel"
             android:textColor="@android:color/white"
-            android:textSize="18sp" />
+            android:textSize="16sp" />
 
     </RelativeLayout>
 
