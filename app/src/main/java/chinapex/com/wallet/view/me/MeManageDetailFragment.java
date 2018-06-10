@@ -1,6 +1,5 @@
 package chinapex.com.wallet.view.me;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -22,9 +21,9 @@ import chinapex.com.wallet.view.wallet.BackupWalletActivity;
  * Created by SteelCabbage on 2018/5/31 0031.
  */
 
-public class MeManagerDetailFragment extends BaseFragment implements View.OnClickListener {
+public class MeManageDetailFragment extends BaseFragment implements View.OnClickListener {
 
-    private static final String TAG = MeManagerDetailFragment.class.getSimpleName();
+    private static final String TAG = MeManageDetailFragment.class.getSimpleName();
     private TextView mTv_me_manager_detail_title;
     private TextView mTv_me_manager_detail_address;
     private TextView mTv_me_manager_detail_bottom_wallet_name;
@@ -37,7 +36,7 @@ public class MeManagerDetailFragment extends BaseFragment implements View.OnClic
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle
             savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_me_manager_detail, container, false);
+        return inflater.inflate(R.layout.fragment_me_manage_detail, container, false);
     }
 
     @Override
@@ -76,11 +75,11 @@ public class MeManagerDetailFragment extends BaseFragment implements View.OnClic
         int backupState = mCurrentClickedWalletBean.getBackupState();
         switch (backupState) {
             //未备份
-            case 0:
+            case Constant.BACKUP_UNFINISHED:
                 mBt_me_manager_detail_backup.setVisibility(View.VISIBLE);
                 break;
             //已备份
-            case 1:
+            case Constant.BACKUP_FINISH:
                 mBt_me_manager_detail_backup.setVisibility(View.INVISIBLE);
                 break;
             default:

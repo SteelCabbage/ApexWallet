@@ -122,15 +122,20 @@
         android:text="@string/create_wallet_bt_confirm"
         android:textColor="@color/colorAccent" />
 
-    <EditText
-        android:id="@+id/et_create_wallet_import"
+    <Button
+        android:id="@+id/bt_create_wallet_import"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/create_wallet_tv_import_margin_top"
-        android:focusable="false"
-        android:focusableInTouchMode="false"
+        android:background="@null"
+        android:gravity="bottom|center_horizontal"
         android:text="@string/create_wallet_import"
         android:textColor="@color/create_wallet_et_import_color"
         android:textSize="@dimen/create_wallet_et_import_size" />
+
+    <View
+        android:layout_width="77dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/colorAccent" />
 
 </LinearLayout>

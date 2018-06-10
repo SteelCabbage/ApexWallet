@@ -74,4 +74,7 @@
     <string name="bt_dialog_pwd_cancel">取消</string>
     <string name="bt_dialog_pwd_confirm">确认</string>
     <string name="et_dialog_pwd_hint">Password</string>
+    <string name="tv_title_import">导入钱包</string>
+    <string name="bt_import_wallet_mnemonic">助记词</string>
+    <string name="bt_import_wallet_keystore">Keystore</string>
 </resources>

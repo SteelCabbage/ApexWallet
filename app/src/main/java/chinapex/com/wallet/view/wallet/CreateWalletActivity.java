@@ -36,6 +36,7 @@ public class CreateWalletActivity extends BaseActivity implements View.OnClickLi
     private TextInputLayout mTl_create_wallet_pwd;
     private TextInputLayout mTl_create_wallet_repeat_pwd;
     private TextView mTv_create_wallet_privacy_have_read;
+    private Button mBt_create_wallet_import;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,17 +52,17 @@ public class CreateWalletActivity extends BaseActivity implements View.OnClickLi
         mEt_create_wallet_pwd = (EditText) findViewById(R.id.et_create_wallet_pwd);
         mEt_create_wallet_repeat_pwd = (EditText) findViewById(R.id.et_create_wallet_repeat_pwd);
         mBt_create_wallet_confirm = (Button) findViewById(R.id.bt_create_wallet_confirm);
+        mBt_create_wallet_import = (Button) findViewById(R.id.bt_create_wallet_import);
         mIb_create_wallet_privacy_point = findViewById(R.id.ib_create_wallet_privacy_point);
-        mTv_create_wallet_privacy_have_read = (TextView) findViewById(R.id
-                .tv_create_wallet_privacy_have_read);
+        mTv_create_wallet_privacy_have_read = (TextView) findViewById(R.id.tv_create_wallet_privacy_have_read);
         mTl_create_wallet_name = (TextInputLayout) findViewById(R.id.tl_create_wallet_name);
         mTl_create_wallet_pwd = (TextInputLayout) findViewById(R.id.tl_create_wallet_pwd);
-        mTl_create_wallet_repeat_pwd = (TextInputLayout) findViewById(R.id
-                .tl_create_wallet_repeat_pwd);
+        mTl_create_wallet_repeat_pwd = (TextInputLayout) findViewById(R.id.tl_create_wallet_repeat_pwd);
 
         mBt_create_wallet_confirm.setOnClickListener(this);
         mIb_create_wallet_privacy_point.setOnClickListener(this);
         mTv_create_wallet_privacy_have_read.setOnClickListener(this);
+        mBt_create_wallet_import.setOnClickListener(this);
 
         mEt_create_wallet_name.addTextChangedListener(new MyTextWatcher(mEt_create_wallet_name) {
             @Override
@@ -135,6 +136,9 @@ public class CreateWalletActivity extends BaseActivity implements View.OnClickLi
                 String walletName = mEt_create_wallet_name.getText().toString().trim();
                 String walletPwd = mEt_create_wallet_pwd.getText().toString().trim();
                 TaskController.getInstance().submit(new CreateWallet(walletName, walletPwd, this));
+                break;
+            case R.id.bt_create_wallet_import:
+                startActivity(ImportWalletActivity.class, true);
                 break;
             case R.id.tv_create_wallet_privacy_have_read:
             case R.id.ib_create_wallet_privacy_point:

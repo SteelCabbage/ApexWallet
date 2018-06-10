@@ -32,6 +32,7 @@ import chinapex.com.wallet.global.Constant;
 import chinapex.com.wallet.model.ApexWalletDbDao;
 import chinapex.com.wallet.utils.CpLog;
 import chinapex.com.wallet.view.wallet.CreateWalletActivity;
+import chinapex.com.wallet.view.wallet.ImportWalletActivity;
 
 /**
  * Created by SteelCabbage on 2018/5/21 0021.
@@ -221,15 +222,15 @@ public class AssetsFragment extends BaseFragment implements AssetsRecyclerViewAd
     public void drawerMenuOnItemClick(int position) {
         switch (position) {
             case 0:
-                CpLog.i(TAG, "添加资产");
+                // 添加资产
                 break;
             case 1:
-                CpLog.i(TAG, "创建钱包");
+                // 创建钱包
                 startActivity(CreateWalletActivity.class, false);
                 break;
             case 2:
-                CpLog.i(TAG, "导入钱包");
-                // TODO: 2018/6/8 0008 导入钱包
+                // 导入钱包
+                startActivity(ImportWalletActivity.class, false);
                 break;
             default:
                 break;

@@ -190,14 +190,14 @@ public class MeFragment extends BaseFragment implements MeRecyclerViewAdapter
 
     private void toMeManagerDetailFragment() {
         startActivityBundle(MeSkipActivity.class, false, Constant.ME_MANAGER_DETAIL_BUNDLE, Constant
-                        .ME_SKIP_ACTIVITY_FRAGMENT_TAG, 10 + "", Constant.PARCELABLE_WALLET_BEAN_MANAGE_DETAIL,
-                mCurrentClickedWalletBean);
+                .ME_SKIP_ACTIVITY_FRAGMENT_TAG, Constant.FRAGMENT_TAG_ME_MANAGE_DETAIL, Constant
+                .PARCELABLE_WALLET_BEAN_MANAGE_DETAIL, mCurrentClickedWalletBean);
     }
 
     private void toMeTransactionRecordFragment() {
         startActivityBundle(MeSkipActivity.class, false, Constant.ME_MANAGER_DETAIL_BUNDLE, Constant
-                        .ME_SKIP_ACTIVITY_FRAGMENT_TAG, 11 + "", Constant.PARCELABLE_WALLET_BEAN_MANAGE_DETAIL,
-                mCurrentClickedWalletBean);
+                .ME_SKIP_ACTIVITY_FRAGMENT_TAG, Constant.FRAGMENT_TAG_ME_TRANSACTION_RECORD, Constant
+                .PARCELABLE_WALLET_BEAN_MANAGE_DETAIL, mCurrentClickedWalletBean);
     }
 
     // 删除钱包时回调

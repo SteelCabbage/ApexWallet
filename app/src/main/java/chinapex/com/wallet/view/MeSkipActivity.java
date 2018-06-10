@@ -61,7 +61,7 @@ public class MeSkipActivity extends BaseActivity implements OnItemDeleteListener
         }
 
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-        BaseFragment fragment = FragmentFactory.getFragment(Integer.valueOf(fragmentTag));
+        BaseFragment fragment = FragmentFactory.getFragment(fragmentTag);
         if (!fragment.isAdded()) {
             fragmentTransaction.add(R.id.fl_me_skip, fragment, fragmentTag);
         }

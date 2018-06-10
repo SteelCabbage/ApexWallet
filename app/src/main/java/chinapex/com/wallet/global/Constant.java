@@ -22,6 +22,15 @@ public class Constant {
     public static final String URL_CLI = "http://dev.chinapex.com.cn:10086/neo-cli/";
     public static final String URL_UTXOS = "http://dev.chinapex.com.cn:10086/tool/utxos/";
 
+    // fragmentTag
+    public static final String FRAGMENT_TAG_IMPORT_MNEMONIC = "ImportMnemonicFragment";
+    public static final String FRAGMENT_TAG_IMPORT_KEYSTORE = "ImportKeystoreFragment";
+    public static final String FRAGMENT_TAG_BACKUP = "BackupFragment";
+    public static final String FRAGMENT_TAG_COPY_MNEMONIC = "CopyMnemonicFragment";
+    public static final String FRAGMENT_TAG_CONFIRM_MNEMONIC = "ConfirmMnemonicFragment";
+    public static final String FRAGMENT_TAG_ME_MANAGE_DETAIL = "MeManageDetailFragment";
+    public static final String FRAGMENT_TAG_ME_TRANSACTION_RECORD = "MeTransactionRecordFragment";
+
     // assets
     public static final String WALLET_BEAN = "walletBean";
     public static final String BALANCE_BEAN = "balanceBean";

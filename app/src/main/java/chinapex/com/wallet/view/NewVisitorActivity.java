@@ -22,6 +22,7 @@ import chinapex.com.wallet.utils.CpLog;
 import chinapex.com.wallet.utils.PhoneUtils;
 import chinapex.com.wallet.utils.SharedPreferencesUtils;
 import chinapex.com.wallet.view.wallet.CreateWalletActivity;
+import chinapex.com.wallet.view.wallet.ImportWalletActivity;
 
 public class NewVisitorActivity extends BaseActivity implements View.OnClickListener {
 
@@ -70,6 +71,7 @@ public class NewVisitorActivity extends BaseActivity implements View.OnClickList
                 startActivity(CreateWalletActivity.class, true);
                 break;
             case R.id.bt_new_visitor_import_wallet:
+                startActivity(ImportWalletActivity.class, true);
                 break;
         }
     }

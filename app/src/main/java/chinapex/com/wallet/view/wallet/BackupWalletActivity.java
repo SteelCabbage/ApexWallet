@@ -66,13 +66,14 @@ public class BackupWalletActivity extends BaseActivity {
     private void initFragment() {
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        for (int i = 7; i < mBackupTitles.length + 7; i++) {
-            Fragment fragment = fragmentManager.findFragmentByTag(i + "");
-            if (null != fragment) {
-                fragmentTransaction.remove(fragment);
-            }
-        }
-        fragmentTransaction.add(R.id.fl_backup, FragmentFactory.getFragment(7), "7");
+//        for (int i = 7; i < mBackupTitles.length + 7; i++) {
+//            Fragment fragment = fragmentManager.findFragmentByTag(i + "");
+//            if (null != fragment) {
+//                fragmentTransaction.remove(fragment);
+//            }
+//        }
+        fragmentTransaction.add(R.id.fl_backup, FragmentFactory.getFragment(Constant.FRAGMENT_TAG_BACKUP), Constant
+                .FRAGMENT_TAG_BACKUP);
         fragmentTransaction.commit();
 
         mTv_backup_title.setText(mBackupTitles[0]);
