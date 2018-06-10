@@ -19,12 +19,12 @@ public class FragmentFactory {
     private static AssetsFragment sAssetsFragment; //1
     private static MeFragment sMeFragment; //2
 
-    private static BackupFragment sBackupFragment; //7
-    private static CopyMnemonicFragment sCopyMnemonicFragment; //8
-    private static ConfirmMnemonicFragment sConfirmMnemonicFragment; //9
+    private static BackupFragment sBackupFragment;
+    private static CopyMnemonicFragment sCopyMnemonicFragment;
+    private static ConfirmMnemonicFragment sConfirmMnemonicFragment;
 
-    private static MeManageDetailFragment sMeManageDetailFragment; //10
-    private static MeTransactionRecordFragment sMeTransactionRecordFragment; //11
+    private static MeManageDetailFragment sMeManageDetailFragment;
+    private static MeTransactionRecordFragment sMeTransactionRecordFragment;
 
     private static ImportMnemonicFragment sImportMnemonicFragment;
     private static ImportKeystoreFragment sImportKeystoreFragment;

@@ -123,14 +123,6 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar
     public void onTabUnselected(int position) {
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
         fragmentTransaction.hide(FragmentFactory.getFragment(position));
-
-        //解决在管理钱包或交易记录时，跳转发现等，出现fragment重影
-//        for (int i = 10; i < 12; i++) {
-//            BaseFragment fragment = FragmentFactory.getFragment(i);
-//            if (fragment.isVisible()) {
-//                fragmentTransaction.hide(fragment);
-//            }
-//        }
         fragmentTransaction.commit();
     }
 
