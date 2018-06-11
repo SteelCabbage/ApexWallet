@@ -31,6 +31,9 @@ public class Constant {
     public static final String FRAGMENT_TAG_ME_MANAGE_DETAIL = "MeManageDetailFragment";
     public static final String FRAGMENT_TAG_ME_TRANSACTION_RECORD = "MeTransactionRecordFragment";
 
+    // import wallet from mnemonic
+    public static final String WALLET_NAME_IMPORT_DEFAULT = "IMPORT_DEFAULT";
+
     // assets
     public static final String WALLET_BEAN = "walletBean";
     public static final String BALANCE_BEAN = "balanceBean";
@@ -38,13 +41,13 @@ public class Constant {
     // me
     public static final String ME_MANAGER_DETAIL_BUNDLE = "meManagerDetailBundle";
     public static final String ME_SKIP_ACTIVITY_FRAGMENT_TAG = "meSkipActivityFragmentTag";
-    public static final String PARCELABLE_WALLET_BEAN_MANAGE_DETAIL = "parcelableWalletBeanManageDetail";
+    public static final String PARCELABLE_WALLET_BEAN_MANAGE_DETAIL =
+            "parcelableWalletBeanManageDetail";
 
     // backup wallet
     public static final String BACKUP_MNEMONIC = "backupMnemonic";
     public static final int BACKUP_UNFINISHED = 0;
     public static final int BACKUP_FINISH = 1;
-
 
     // wallet detail transfer
     public static final String PARCELABLE_WALLET_BEAN_TRANSFER = "parcelableWalletBeanTransfer";

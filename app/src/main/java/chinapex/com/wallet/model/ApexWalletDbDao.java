@@ -196,12 +196,13 @@ public class ApexWalletDbDao {
             cursor.close();
         }
         closeDatabase();
-        return walletBeans.get(0);
+        return walletBeans.isEmpty() ? null : walletBeans.get(0);
     }
 
-    private static final String WHERE_CLAUSE_WALLET_ADDRESS_EQ = Constant.FIELD_WALLET_ADDRESS + " = ?";
+    private static final String WHERE_CLAUSE_WALLET_ADDRESS_EQ = Constant.FIELD_WALLET_ADDRESS +
+            " = ?";
 
-    public WalletBean queryByWalletNaAddress(String tableName, String walletAddress) {
+    public WalletBean queryByWalletAddress(String tableName, String walletAddress) {
         if (TextUtils.isEmpty(tableName)
                 || TextUtils.isEmpty(walletAddress)) {
             CpLog.e(TAG, "queryByWalletName() -> tableName or walletAddress is null!");
@@ -236,7 +237,7 @@ public class ApexWalletDbDao {
             cursor.close();
         }
         closeDatabase();
-        return walletBeans.get(0);
+        return walletBeans.isEmpty() ? null : walletBeans.get(0);
     }
 
     public void updateBackupStateByWalletName(String tableName, String walletName, int

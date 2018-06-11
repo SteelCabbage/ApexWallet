@@ -4,8 +4,8 @@
     <string name="new_visitor_import_wallet">导入钱包</string>
     <string name="create_wallet_security">您将在这个设备上生成一个新的加密的脱机钱包。我们建议选择一个强密码，确保您的资金安全。PS：生成一个强大安全的钱包是一个高度计算密集型的任务，可能需要几分钟。这个过程将在后台执行，期间您仍然可用您的手机，一旦我们完成了您的钱包，我们会让你知道。</string>
     <string name="create_wallet_et_name">钱包名称</string>
-    <string name="create_wallet_et_pwd">密码(不少于6个字)</string>
-    <string name="create_wallet_et_repeat_pwd">重复密码(不少于6个字)</string>
+    <string name="create_wallet_et_pwd">请设定新密码(不少于6个字)</string>
+    <string name="create_wallet_et_repeat_pwd">请确认新密码(不少于6个字)</string>
     <string name="create_wallet_rb_read">我已经仔细阅读并同意</string>
     <string name="create_wallet_tv_privacy">服务及隐私条款</string>
     <string name="create_wallet_bt_confirm">确定</string>
@@ -77,4 +77,13 @@
     <string name="tv_title_import">导入钱包</string>
     <string name="bt_import_wallet_mnemonic">助记词</string>
     <string name="bt_import_wallet_keystore">Keystore</string>
+    <string name="tv_import_wallet_notice">直接复制粘贴其他手机CPEX钱包APP的Keystore文件内容至输入框。</string>
+    <string name="export_keystore_off_line_content">请复制粘贴Keystore文件到安全、离线的地方保存。切勿保存至邮箱、记事本、网盘、聊天工具等，非常危险。</string>
+    <string name="export_keystore_off_line">离线保存</string>
+    <string name="export_keystore_no_net">请勿使用网络传输</string>
+    <string name="export_keystore_no_net_content">请勿通过网络工具传输Keystore文件，一旦被黑客获取将造成不可挽回的资产损失。建议离线设备通过二维码方式传输。</string>
+    <string name="export_keystore_strongbox">密码保险箱保存</string>
+    <string name="export_keystore_strongbox_content">如需在线保存，则建议使用安全等级更高的1Password等密码保管软件保存Keystore。</string>
+    <string name="tv_title_export_keystore">导出Keystore</string>
+    <string name="bt_copy_keystore_text">复制Keystore</string>
 </resources>
