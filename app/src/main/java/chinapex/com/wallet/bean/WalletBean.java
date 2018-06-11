@@ -112,4 +112,14 @@ public class WalletBean implements Parcelable {
         result = 31 * result + mWalletAddr.hashCode();
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "WalletBean{" +
+                "mWalletName='" + mWalletName + '\'' +
+                ", mWalletAddr='" + mWalletAddr + '\'' +
+                ", backupState=" + backupState +
+                ", keyStore='" + keyStore + '\'' +
+                '}';
+    }
 }
