@@ -83,20 +83,18 @@ public class Constant {
     public static final String FIELD_ID = "_id";
     public static final String FIELD_WALLET_NAME = "wallet_name";
     public static final String FIELD_WALLET_ADDRESS = "wallet_address";
-    public static final String FIELD_WALLET_ASSETS_ID = "assets_id";
-    public static final String FIELD_WALLET_BALANCE = "wallet_balance";
     public static final String FIELD_BACKUP_STATE = "backup_state";
     public static final String FIELD_WALLET_KEYSTORE = "wallet_keystore";
+    public static final String FIELD_WALLET_ASSETS_JSON = "wallet_assets_json";
     public static final String FIELD_CREATE_TIME = "create_time";
 
     public static final String SQL_CREATE_APEX_WALLET = "create table " + TABLE_APEX_WALLET
             + " (" + FIELD_ID + " integer primary key autoincrement, "
             + FIELD_WALLET_NAME + " text, "
             + FIELD_WALLET_ADDRESS + " text, "
-            + FIELD_WALLET_ASSETS_ID + " text, "
-            + FIELD_WALLET_BALANCE + " real, "
             + FIELD_BACKUP_STATE + " integer, "
             + FIELD_WALLET_KEYSTORE + " text, "
+            + FIELD_WALLET_ASSETS_JSON + " text, "
             + FIELD_CREATE_TIME + " integer)";
 
 }

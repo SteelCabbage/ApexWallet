@@ -68,7 +68,7 @@ public class GetAccountState implements Runnable, INetCallback {
 
         List<ResponseGetAccountState.ResultBean.BalancesBean> balances = resultBean.getBalances();
         if (null == balances || balances.isEmpty()) {
-            CpLog.e(TAG, "balances is null or empty!");
+            CpLog.w(TAG, "balances is null or empty!");
             mIGetAccountStateCallback.assetsBalance(null);
             return;
         }

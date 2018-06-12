@@ -3,6 +3,8 @@ package chinapex.com.wallet.executor.runnable;
 
 import android.text.TextUtils;
 
+import java.util.ArrayList;
+
 import chinapex.com.wallet.bean.WalletBean;
 import chinapex.com.wallet.changelistener.ApexListeners;
 import chinapex.com.wallet.executor.callback.ICreateWalletCallback;
@@ -10,6 +12,7 @@ import chinapex.com.wallet.global.ApexWalletApplication;
 import chinapex.com.wallet.global.Constant;
 import chinapex.com.wallet.model.ApexWalletDbDao;
 import chinapex.com.wallet.utils.CpLog;
+import chinapex.com.wallet.utils.GsonUtils;
 import neomobile.Neomobile;
 import neomobile.Wallet;
 
@@ -65,11 +68,16 @@ public class CreateWallet implements Runnable {
             return;
         }
 
+        ArrayList<String> assets = new ArrayList<>();
+        assets.add(Constant.ASSETS_CPX);
+        assets.add(Constant.ASSETS_NEO);
+        assets.add(Constant.ASSETS_NEO_GAS);
         WalletBean walletBean = new WalletBean();
         walletBean.setWalletName(mWalletName);
         walletBean.setWalletAddr(wallet.address());
         walletBean.setBackupState(Constant.BACKUP_UNFINISHED);
         walletBean.setKeyStore(toKeyStore);
+        walletBean.setAssetsJson(GsonUtils.toJsonStr(assets));
 
         ApexWalletDbDao apexWalletDbDao = ApexWalletDbDao.getInstance(ApexWalletApplication
                 .getInstance());

@@ -14,6 +14,8 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 import chinapex.com.wallet.R;
 import chinapex.com.wallet.base.BaseFragment;
 import chinapex.com.wallet.bean.WalletBean;
@@ -25,6 +27,7 @@ import chinapex.com.wallet.global.ApexWalletApplication;
 import chinapex.com.wallet.global.Constant;
 import chinapex.com.wallet.model.ApexWalletDbDao;
 import chinapex.com.wallet.utils.CpLog;
+import chinapex.com.wallet.utils.GsonUtils;
 import neomobile.Wallet;
 
 /**
@@ -192,11 +195,17 @@ public class ImportKeystoreFragment extends BaseFragment implements View.OnClick
         }
 
         String keystorePwd = mEt_import_wallet_keystore_pwd.getText().toString().trim();
+        ArrayList<String> assetses = new ArrayList<>();
+        assetses.add(Constant.ASSETS_CPX);
+        assetses.add(Constant.ASSETS_NEO);
+        assetses.add(Constant.ASSETS_NEO_GAS);
+
         WalletBean walletBean = new WalletBean();
         walletBean.setWalletName(Constant.WALLET_NAME_IMPORT_DEFAULT);
         walletBean.setWalletAddr(walletAddress);
         walletBean.setBackupState(Constant.BACKUP_UNFINISHED);
         walletBean.setKeyStore(keystorePwd);
+        walletBean.setAssetsJson(GsonUtils.toJsonStr(assetses));
 
         apexWalletDbDao.insert(Constant.TABLE_APEX_WALLET, walletBean);
 

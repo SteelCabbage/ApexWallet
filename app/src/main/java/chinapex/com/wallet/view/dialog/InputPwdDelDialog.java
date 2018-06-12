@@ -137,8 +137,7 @@ public class InputPwdDelDialog extends DialogFragment implements View.OnClickLis
         }
 
         apexWalletDbDao.deleteByWalletNameAndAddr(Constant.TABLE_APEX_WALLET, mCurrentWalletBean
-                        .getWalletName(),
-                mCurrentWalletBean.getWalletAddr());
+                .getWalletName(), mCurrentWalletBean.getWalletAddr());
 
         ApexListeners.getInstance().notifyItemDelete(mCurrentWalletBean);
         dismiss();

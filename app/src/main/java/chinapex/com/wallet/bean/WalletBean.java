@@ -9,6 +9,7 @@ public class WalletBean implements Parcelable {
     private String mWalletAddr;
     private int backupState;
     private String keyStore;
+    private String assetsJson;
     private boolean isSelected;
     private int selectedTag;
 
@@ -63,6 +64,14 @@ public class WalletBean implements Parcelable {
         this.selectedTag = selectedTag;
     }
 
+    public String getAssetsJson() {
+        return assetsJson;
+    }
+
+    public void setAssetsJson(String assetsJson) {
+        this.assetsJson = assetsJson;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -74,6 +83,7 @@ public class WalletBean implements Parcelable {
         dest.writeString(this.mWalletAddr);
         dest.writeInt(this.backupState);
         dest.writeString(this.keyStore);
+        dest.writeString(this.assetsJson);
     }
 
     protected WalletBean(Parcel in) {
@@ -81,6 +91,7 @@ public class WalletBean implements Parcelable {
         this.mWalletAddr = in.readString();
         this.backupState = in.readInt();
         this.keyStore = in.readString();
+        this.assetsJson = in.readString();
     }
 
     public static final Creator<WalletBean> CREATOR = new Creator<WalletBean>() {
@@ -120,6 +131,7 @@ public class WalletBean implements Parcelable {
                 ", mWalletAddr='" + mWalletAddr + '\'' +
                 ", backupState=" + backupState +
                 ", keyStore='" + keyStore + '\'' +
+                ", assetsJson='" + assetsJson + '\'' +
                 '}';
     }
 }
