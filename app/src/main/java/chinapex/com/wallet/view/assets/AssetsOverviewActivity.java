@@ -73,8 +73,6 @@ public class AssetsOverviewActivity extends BaseActivity implements
 
         mWalletBean = (WalletBean) intent.getParcelableExtra(Constant.WALLET_BEAN);
 
-        CpLog.e(TAG, "keystore:" + mWalletBean.getKeyStore());
-
         mTv_assets_overview_wallet_name.setText(String.valueOf(Constant.WALLET_NAME + mWalletBean
                 .getWalletName()));
         mTv_assets_overview_wallet_address.setText(mWalletBean.getWalletAddr());
