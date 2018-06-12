@@ -11,6 +11,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import chinapex.com.wallet.R;
 import chinapex.com.wallet.adapter.AssetsOverviewRecyclerViewAdapter;
@@ -131,7 +132,7 @@ public class AssetsOverviewActivity extends BaseActivity implements
     }
 
     @Override
-    public void assetsBalance(List<BalanceBean> balanceBeans) {
+    public void assetsBalance(Map<String, BalanceBean> balanceBeans) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -139,13 +140,20 @@ public class AssetsOverviewActivity extends BaseActivity implements
             }
         });
 
-        if (null == balanceBeans || balanceBeans.isEmpty()) {
-            CpLog.e(TAG, "balanceBeans is null or empty!");
+        if (null == mBalanceBeans || mBalanceBeans.isEmpty()) {
+            CpLog.e(TAG, "mBalanceBeans is null or empty!");
             return;
         }
 
-        if (null == mBalanceBeans || mBalanceBeans.isEmpty()) {
-            CpLog.e(TAG, "mBalanceBeans is null or empty!");
+        if (null == balanceBeans || balanceBeans.isEmpty()) {
+            CpLog.w(TAG, "the current assets is null!");
+            for (BalanceBean balanceBean0 : mBalanceBeans) {
+                if (null == balanceBean0) {
+                    CpLog.e(TAG, "balanceBean0 is null!");
+                    continue;
+                }
+                balanceBean0.setAssetsValue("0");
+            }
             return;
         }
 
@@ -155,18 +163,25 @@ public class AssetsOverviewActivity extends BaseActivity implements
                 continue;
             }
 
-            for (BalanceBean bean : balanceBeans) {
-                if (null == bean) {
-                    CpLog.e(TAG, "bean is null!");
-                    continue;
-                }
-
-                if (balanceBean.getAssetsID().equals(bean.getAssetsID())) {
-                    balanceBean.setAssetsValue(bean.getAssetsValue());
-                    break;
-                }
-
+            String assetsID = balanceBean.getAssetsID();
+            if (balanceBeans.containsKey(assetsID)) {
+                balanceBean.setAssetsValue(balanceBeans.get(assetsID).getAssetsValue());
+            } else {
+                balanceBean.setAssetsValue("0");
             }
+
+//            for (BalanceBean bean : balanceBeans) {
+//                if (null == bean) {
+//                    CpLog.e(TAG, "bean is null!");
+//                    continue;
+//                }
+//
+//                if (balanceBean.getAssetsID().equals(bean.getAssetsID())) {
+//                    balanceBean.setAssetsValue(bean.getAssetsValue());
+//                    break;
+//                }
+//
+//            }
         }
 
         runOnUiThread(new Runnable() {

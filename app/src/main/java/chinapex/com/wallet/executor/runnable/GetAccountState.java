@@ -3,6 +3,7 @@ package chinapex.com.wallet.executor.runnable;
 import android.text.TextUtils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import chinapex.com.wallet.bean.BalanceBean;
@@ -73,7 +74,8 @@ public class GetAccountState implements Runnable, INetCallback {
             return;
         }
 
-        List<BalanceBean> balanceBeans = new ArrayList<>();
+//        List<BalanceBean> balanceBeans = new ArrayList<>();
+        HashMap<String, BalanceBean> balanceBeans = new HashMap<>();
         for (ResponseGetAccountState.ResultBean.BalancesBean balance : balances) {
             if (null == balance) {
                 CpLog.e(TAG, "balance is null!");
@@ -84,7 +86,7 @@ public class GetAccountState implements Runnable, INetCallback {
             balanceBean.setMapState(0);
             balanceBean.setAssetsID(balance.getAsset());
             balanceBean.setAssetsValue(balance.getValue());
-            balanceBeans.add(balanceBean);
+            balanceBeans.put(balance.getAsset(), balanceBean);
         }
 
         mIGetAccountStateCallback.assetsBalance(balanceBeans);
