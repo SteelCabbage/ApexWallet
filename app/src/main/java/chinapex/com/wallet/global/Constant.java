@@ -18,9 +18,16 @@ public class Constant {
     //    public static final String HOSTNAME_VERIFIER = "40.125.171.0";
 //    public static final String URL_CLI = "http://40.125.171.0:20332";
 //    public static final String URL_UTXOS = "http://40.125.171.0:8083/utxos/";
-    public static final String HOSTNAME_VERIFIER = "dev.chinapex.com.cn";
-    public static final String URL_CLI = "http://dev.chinapex.com.cn:10086/neo-cli/";
-    public static final String URL_UTXOS = "http://dev.chinapex.com.cn:10086/tool/utxos/";
+
+    // neo测试网
+//    public static final String HOSTNAME_VERIFIER = "dev.chinapex.com.cn";
+//    public static final String URL_CLI = "http://dev.chinapex.com.cn:10086/neo-cli/";
+//    public static final String URL_UTXOS = "http://dev.chinapex.com.cn:10086/tool/utxos/";
+
+    // neo正式网
+    public static final String HOSTNAME_VERIFIER = "tracker.chinapex.com.cn";
+    public static final String URL_CLI = "http://tracker.chinapex.com.cn:10086/neo-cli/";
+    public static final String URL_UTXOS = "http://tracker.chinapex.com.cn:10086/tool/utxos/";
 
     // fragmentTag
     public static final String FRAGMENT_TAG_IMPORT_MNEMONIC = "ImportMnemonicFragment";

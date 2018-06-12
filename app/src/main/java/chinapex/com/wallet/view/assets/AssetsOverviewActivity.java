@@ -154,6 +154,14 @@ public class AssetsOverviewActivity extends BaseActivity implements
                 }
                 balanceBean0.setAssetsValue("0");
             }
+
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    mAssetsOverviewRecyclerViewAdapter.notifyDataSetChanged();
+                }
+            });
+
             return;
         }
 
@@ -169,19 +177,6 @@ public class AssetsOverviewActivity extends BaseActivity implements
             } else {
                 balanceBean.setAssetsValue("0");
             }
-
-//            for (BalanceBean bean : balanceBeans) {
-//                if (null == bean) {
-//                    CpLog.e(TAG, "bean is null!");
-//                    continue;
-//                }
-//
-//                if (balanceBean.getAssetsID().equals(bean.getAssetsID())) {
-//                    balanceBean.setAssetsValue(bean.getAssetsValue());
-//                    break;
-//                }
-//
-//            }
         }
 
         runOnUiThread(new Runnable() {
