@@ -66,7 +66,7 @@ public class Constant {
             "0xc56f33fc6ecfcd0c225c4ab356fee59390af8560be0e930faebe74a6daff7c9b";
     public static final String ASSETS_NEO_GAS =
             "0x602c79718b16e442de58778e148d0b1084e3b2dffd5de6b7b16cee7969282de7";
-    public static final String ASSETS_CPX = "";
+    public static final String ASSETS_CPX = "0x45d493a6f73fa5f404244a5fb8472fc014ca5885";
 
     public static final String MARK_NEO = "NEO";
     public static final String MARK_NEO_GAS = "NeoGas";

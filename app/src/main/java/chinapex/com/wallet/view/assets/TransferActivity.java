@@ -113,7 +113,7 @@ public class TransferActivity extends BaseActivity implements View.OnClickListen
         }
 
         AssertTxBean assertTxBean = new AssertTxBean();
-        assertTxBean.setAssetsID(Constant.ASSETS_NEO_GAS);
+        assertTxBean.setAssetsID(Constant.ASSETS_CPX);
         assertTxBean.setAddrFrom(mWalletFrom.address());
         assertTxBean.setAddrTo(mEt_transfer_to_wallet_addr.getText().toString().trim());
         assertTxBean.setTransferAmount(Double.valueOf(mEt_transfer_amount.getText().toString()
