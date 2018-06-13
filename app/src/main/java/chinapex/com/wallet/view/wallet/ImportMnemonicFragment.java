@@ -138,7 +138,7 @@ public class ImportMnemonicFragment extends BaseFragment implements View.OnClick
                     mBt_import_wallet_mnemonic.setBackgroundResource(R.drawable
                             .shape_import_wallet_bt_bg_def);
                     mBt_import_wallet_mnemonic.setTextColor(getResources().getColor(R.color
-                            .create_wallet_et_import_color));
+                            .c_666666));
                     mIsAgreePrivacy = false;
                 }
                 break;

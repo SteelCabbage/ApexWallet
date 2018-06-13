@@ -27,6 +27,7 @@ import chinapex.com.wallet.bean.WalletBean;
 import chinapex.com.wallet.changelistener.ApexListeners;
 import chinapex.com.wallet.changelistener.OnItemAddListener;
 import chinapex.com.wallet.changelistener.OnItemDeleteListener;
+import chinapex.com.wallet.changelistener.OnItemStateUpdateListener;
 import chinapex.com.wallet.global.ApexWalletApplication;
 import chinapex.com.wallet.global.Constant;
 import chinapex.com.wallet.model.ApexWalletDbDao;
@@ -118,6 +119,7 @@ public class AssetsFragment extends BaseFragment implements AssetsRecyclerViewAd
     private void initData() {
         ApexListeners.getInstance().addOnItemDeleteListener(this);
         ApexListeners.getInstance().addOnItemAddListener(this);
+
     }
 
     @Override
@@ -262,4 +264,5 @@ public class AssetsFragment extends BaseFragment implements AssetsRecyclerViewAd
             mDl_assets.closeDrawer(drawer);
         }
     }
+
 }

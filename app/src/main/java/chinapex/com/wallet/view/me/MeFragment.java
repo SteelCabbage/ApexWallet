@@ -1,11 +1,8 @@
 package chinapex.com.wallet.view.me;
 
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -26,11 +23,11 @@ import chinapex.com.wallet.bean.WalletBean;
 import chinapex.com.wallet.changelistener.ApexListeners;
 import chinapex.com.wallet.changelistener.OnItemAddListener;
 import chinapex.com.wallet.changelistener.OnItemDeleteListener;
+import chinapex.com.wallet.changelistener.OnItemStateUpdateListener;
 import chinapex.com.wallet.global.ApexWalletApplication;
 import chinapex.com.wallet.global.Constant;
 import chinapex.com.wallet.model.ApexWalletDbDao;
 import chinapex.com.wallet.utils.CpLog;
-import chinapex.com.wallet.utils.FragmentFactory;
 import chinapex.com.wallet.view.MeSkipActivity;
 
 /**
@@ -39,7 +36,7 @@ import chinapex.com.wallet.view.MeSkipActivity;
 
 public class MeFragment extends BaseFragment implements MeRecyclerViewAdapter
         .OnItemClickListener, SwipeRefreshLayout.OnRefreshListener, View.OnClickListener,
-        OnItemDeleteListener, OnItemAddListener {
+        OnItemDeleteListener, OnItemAddListener, OnItemStateUpdateListener {
 
     private static final String TAG = MeFragment.class.getSimpleName();
     private RecyclerView mRv_me;
@@ -95,6 +92,7 @@ public class MeFragment extends BaseFragment implements MeRecyclerViewAdapter
     private void initData() {
         ApexListeners.getInstance().addOnItemDeleteListener(this);
         ApexListeners.getInstance().addOnItemAddListener(this);
+        ApexListeners.getInstance().addOnItemStateUpdateListener(this);
     }
 
     @Override
@@ -126,7 +124,8 @@ public class MeFragment extends BaseFragment implements MeRecyclerViewAdapter
 
     private List<WalletBean> initWalletBeans() {
         List<WalletBean> walletBeans = new ArrayList<>();
-        ApexWalletDbDao apexWalletDbDao = ApexWalletDbDao.getInstance(ApexWalletApplication.getInstance());
+        ApexWalletDbDao apexWalletDbDao = ApexWalletDbDao.getInstance(ApexWalletApplication
+                .getInstance());
         if (null == apexWalletDbDao) {
             CpLog.e(TAG, "apexWalletDbDao is null!");
             return walletBeans;
@@ -152,7 +151,8 @@ public class MeFragment extends BaseFragment implements MeRecyclerViewAdapter
 
     private void manageWalletIsSelected() {
         mBt_me_manage_wallet.setBackgroundResource(R.drawable.shape_white_bt_bg);
-        mBt_me_manage_wallet.setTextColor(ApexWalletApplication.getInstance().getResources().getColor(R.color
+        mBt_me_manage_wallet.setTextColor(ApexWalletApplication.getInstance().getResources()
+                .getColor(R.color
                 .colorPrimary));
 
 //                mBt_me_transaction_record.setBackgroundResource(0);
@@ -171,7 +171,8 @@ public class MeFragment extends BaseFragment implements MeRecyclerViewAdapter
 
     private void transactionRecordIsSelected() {
         mBt_me_transaction_record.setBackgroundResource(R.drawable.shape_white_bt_bg);
-        mBt_me_transaction_record.setTextColor(ApexWalletApplication.getInstance().getResources().getColor(R.color
+        mBt_me_transaction_record.setTextColor(ApexWalletApplication.getInstance().getResources()
+                .getColor(R.color
                 .colorPrimary));
 
 //                mBt_me_manage_wallet.setBackgroundResource(0);
@@ -196,7 +197,8 @@ public class MeFragment extends BaseFragment implements MeRecyclerViewAdapter
 
     private void toMeTransactionRecordFragment() {
         startActivityBundle(MeSkipActivity.class, false, Constant.ME_MANAGER_DETAIL_BUNDLE, Constant
-                .ME_SKIP_ACTIVITY_FRAGMENT_TAG, Constant.FRAGMENT_TAG_ME_TRANSACTION_RECORD, Constant
+                .ME_SKIP_ACTIVITY_FRAGMENT_TAG, Constant.FRAGMENT_TAG_ME_TRANSACTION_RECORD,
+                Constant
                 .PARCELABLE_WALLET_BEAN_MANAGE_DETAIL, mCurrentClickedWalletBean);
     }
 
@@ -226,6 +228,32 @@ public class MeFragment extends BaseFragment implements MeRecyclerViewAdapter
         }
 
         mWalletBeans.add(walletBean);
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mMeRecyclerViewAdapter.notifyDataSetChanged();
+            }
+        });
+    }
+
+    @Override
+    public void OnItemStateUpdate(WalletBean walletBean) {
+        if (null == walletBean) {
+            CpLog.e(TAG, "walletBean is null!");
+            return;
+        }
+
+        for (WalletBean walletBeanTmp : mWalletBeans) {
+            if (null == walletBeanTmp) {
+                CpLog.e(TAG, "walletBeanTmp is null!");
+                continue;
+            }
+
+            if (walletBeanTmp.equals(walletBean)) {
+                walletBeanTmp.setBackupState(walletBean.getBackupState());
+            }
+        }
+
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {

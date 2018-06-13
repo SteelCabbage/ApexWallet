@@ -1,5 +1,6 @@
 package chinapex.com.wallet.view.me;
 
+import android.app.backup.BackupDataInput;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -15,7 +16,8 @@ import chinapex.com.wallet.bean.WalletBean;
 import chinapex.com.wallet.global.Constant;
 import chinapex.com.wallet.utils.CpLog;
 import chinapex.com.wallet.view.MeSkipActivity;
-import chinapex.com.wallet.view.dialog.InputPwdDelDialog;
+import chinapex.com.wallet.view.dialog.BackupWalletPwdDialog;
+import chinapex.com.wallet.view.dialog.DeleteWalletPwdDialog;
 import chinapex.com.wallet.view.wallet.BackupWalletActivity;
 import chinapex.com.wallet.view.wallet.ExportKeystoreActivity;
 
@@ -100,20 +102,26 @@ public class MeManageDetailFragment extends BaseFragment implements View.OnClick
                 startActivity(ExportKeystoreActivity.class, false);
                 break;
             case R.id.bt_me_manager_detail_backup:
-                startActivity(BackupWalletActivity.class, false);
+                showBackupWalletPwdDialog();
                 break;
             case R.id.bt_me_manager_detail_delete:
-                showInputPwdDialog();
+                showDeleteWalletPwdDialog();
                 break;
             default:
                 break;
         }
     }
 
-    public void showInputPwdDialog() {
-        InputPwdDelDialog inputPwdDelDialog = InputPwdDelDialog.newInstance();
-        inputPwdDelDialog.setCurrentWalletBean(mCurrentClickedWalletBean);
-        inputPwdDelDialog.show(getFragmentManager(), "InputPwdDelDialog");
+    public void showDeleteWalletPwdDialog() {
+        DeleteWalletPwdDialog deleteWalletPwdDialog = DeleteWalletPwdDialog.newInstance();
+        deleteWalletPwdDialog.setCurrentWalletBean(mCurrentClickedWalletBean);
+        deleteWalletPwdDialog.show(getFragmentManager(), "DeleteWalletPwdDialog");
+    }
+
+    public void showBackupWalletPwdDialog() {
+        BackupWalletPwdDialog backupWalletPwdDialog = BackupWalletPwdDialog.newInstance();
+        backupWalletPwdDialog.setCurrentWalletBean(mCurrentClickedWalletBean);
+        backupWalletPwdDialog.show(getFragmentManager(), "BackupWalletPwdDialog");
     }
 
 }

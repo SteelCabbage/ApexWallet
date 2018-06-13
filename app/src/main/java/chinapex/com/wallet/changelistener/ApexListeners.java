@@ -18,6 +18,8 @@ public class ApexListeners {
 
     private List<OnItemAddListener> mOnItemAddListeners;
 
+    private List<OnItemStateUpdateListener> mOnItemStateUpdateListeners;
+
     private ApexListeners() {
 
     }
@@ -33,6 +35,7 @@ public class ApexListeners {
     public void doInit() {
         mOnItemDeleteListeners = new ArrayList<>();
         mOnItemAddListeners = new ArrayList<>();
+        mOnItemStateUpdateListeners = new ArrayList<>();
     }
 
     public void onDestroy() {
@@ -43,8 +46,10 @@ public class ApexListeners {
 
         mOnItemDeleteListeners.clear();
         mOnItemAddListeners.clear();
+        mOnItemStateUpdateListeners.clear();
         mOnItemDeleteListeners = null;
         mOnItemAddListeners = null;
+        mOnItemStateUpdateListeners = null;
     }
 
 
@@ -64,6 +69,15 @@ public class ApexListeners {
         }
 
         mOnItemAddListeners.add(onItemAddListener);
+    }
+
+    public void addOnItemStateUpdateListener(OnItemStateUpdateListener onItemStateUpdateListener) {
+        if (null == mOnItemStateUpdateListeners || null == onItemStateUpdateListener) {
+            CpLog.e(TAG, "mOnItemStateUpdateListeners or onItemStateUpdateListener is null!");
+            return;
+        }
+
+        mOnItemStateUpdateListeners.add(onItemStateUpdateListener);
     }
 
     public void notifyItemDelete(WalletBean walletBean) {
@@ -95,6 +109,22 @@ public class ApexListeners {
             }
 
             onItemAddListener.onItemAdd(walletBean);
+        }
+    }
+
+    public void notifyItemStateUpdate(WalletBean walletBean) {
+        if (null == mOnItemStateUpdateListeners) {
+            CpLog.e(TAG, "mOnItemStateUpdateListeners is null!");
+            return;
+        }
+
+        for (OnItemStateUpdateListener onItemStateUpdateListener : mOnItemStateUpdateListeners) {
+            if (null == onItemStateUpdateListener) {
+                CpLog.e(TAG, "onItemStateUpdateListener is null!");
+                continue;
+            }
+
+            onItemStateUpdateListener.OnItemStateUpdate(walletBean);
         }
     }
 }

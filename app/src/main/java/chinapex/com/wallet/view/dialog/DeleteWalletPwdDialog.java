@@ -29,17 +29,17 @@ import neomobile.Wallet;
  * Created by SteelCabbage on 2018/5/31 0031.
  */
 
-public class InputPwdDelDialog extends DialogFragment implements View.OnClickListener,
+public class DeleteWalletPwdDialog extends DialogFragment implements View.OnClickListener,
         IFromKeystoreToWalletCallback {
 
-    private static final String TAG = InputPwdDelDialog.class.getSimpleName();
+    private static final String TAG = DeleteWalletPwdDialog.class.getSimpleName();
     private WalletBean mCurrentWalletBean;
     private Button mBt_dialog_pwd_del_cancel;
     private Button mBt_dialog_pwd_del_confirm;
     private EditText mEt_dialog_pwd_del;
 
-    public static InputPwdDelDialog newInstance() {
-        return new InputPwdDelDialog();
+    public static DeleteWalletPwdDialog newInstance() {
+        return new DeleteWalletPwdDialog();
     }
 
     public void setCurrentWalletBean(WalletBean currentWalletBean) {
@@ -61,7 +61,7 @@ public class InputPwdDelDialog extends DialogFragment implements View.OnClickLis
         // 点击空白区域不可取消
         setCancelable(false);
 
-        return inflater.inflate(R.layout.dialog_pwd, container, false);
+        return inflater.inflate(R.layout.dialog_delete_wallet_pwd, container, false);
     }
 
     @Override
