@@ -20,6 +20,8 @@ public class ApexListeners {
 
     private List<OnItemStateUpdateListener> mOnItemStateUpdateListeners;
 
+    private List<OnItemNameUpdateListener> mOnItemNameUpdateListeners;
+
     private ApexListeners() {
 
     }
@@ -36,6 +38,7 @@ public class ApexListeners {
         mOnItemDeleteListeners = new ArrayList<>();
         mOnItemAddListeners = new ArrayList<>();
         mOnItemStateUpdateListeners = new ArrayList<>();
+        mOnItemNameUpdateListeners = new ArrayList<>();
     }
 
     public void onDestroy() {
@@ -47,9 +50,11 @@ public class ApexListeners {
         mOnItemDeleteListeners.clear();
         mOnItemAddListeners.clear();
         mOnItemStateUpdateListeners.clear();
+        mOnItemNameUpdateListeners.clear();
         mOnItemDeleteListeners = null;
         mOnItemAddListeners = null;
         mOnItemStateUpdateListeners = null;
+        mOnItemNameUpdateListeners = null;
     }
 
 
@@ -78,6 +83,15 @@ public class ApexListeners {
         }
 
         mOnItemStateUpdateListeners.add(onItemStateUpdateListener);
+    }
+
+    public void addOnItemNameUpdateListener(OnItemNameUpdateListener onItemNameUpdateListener) {
+        if (null == mOnItemNameUpdateListeners || null == onItemNameUpdateListener) {
+            CpLog.e(TAG, "mOnItemNameUpdateListeners or onItemNameUpdateListener is null!");
+            return;
+        }
+
+        mOnItemNameUpdateListeners.add(onItemNameUpdateListener);
     }
 
     public void notifyItemDelete(WalletBean walletBean) {
@@ -125,6 +139,22 @@ public class ApexListeners {
             }
 
             onItemStateUpdateListener.OnItemStateUpdate(walletBean);
+        }
+    }
+
+    public void notifyItemNameUpdate(WalletBean walletBean) {
+        if (null == mOnItemNameUpdateListeners) {
+            CpLog.e(TAG, "mOnItemNameUpdateListeners is null!");
+            return;
+        }
+
+        for (OnItemNameUpdateListener onItemNameUpdateListener : mOnItemNameUpdateListeners) {
+            if (null == onItemNameUpdateListener) {
+                CpLog.e(TAG, "onItemNameUpdateListener is null!");
+                continue;
+            }
+
+            onItemNameUpdateListener.OnItemNameUpdate(walletBean);
         }
     }
 }

@@ -27,7 +27,7 @@ import chinapex.com.wallet.bean.WalletBean;
 import chinapex.com.wallet.changelistener.ApexListeners;
 import chinapex.com.wallet.changelistener.OnItemAddListener;
 import chinapex.com.wallet.changelistener.OnItemDeleteListener;
-import chinapex.com.wallet.changelistener.OnItemStateUpdateListener;
+import chinapex.com.wallet.changelistener.OnItemNameUpdateListener;
 import chinapex.com.wallet.global.ApexWalletApplication;
 import chinapex.com.wallet.global.Constant;
 import chinapex.com.wallet.model.ApexWalletDbDao;
@@ -44,7 +44,7 @@ public class AssetsFragment extends BaseFragment implements AssetsRecyclerViewAd
         .OnItemClickListener, SwipeRefreshLayout.OnRefreshListener, AssetsRecyclerViewAdapter
         .OnItemLongClickListener, OnItemDeleteListener, OnItemAddListener, DrawerLayout
         .DrawerListener, DrawerMenuRecyclerViewAdapter.DrawerMenuOnItemClickListener, View
-        .OnClickListener {
+        .OnClickListener, OnItemNameUpdateListener {
 
     private static final String TAG = AssetsFragment.class.getSimpleName();
     private RecyclerView mRv_assets;
@@ -119,7 +119,7 @@ public class AssetsFragment extends BaseFragment implements AssetsRecyclerViewAd
     private void initData() {
         ApexListeners.getInstance().addOnItemDeleteListener(this);
         ApexListeners.getInstance().addOnItemAddListener(this);
-
+        ApexListeners.getInstance().addOnItemNameUpdateListener(this);
     }
 
     @Override
@@ -265,4 +265,24 @@ public class AssetsFragment extends BaseFragment implements AssetsRecyclerViewAd
         }
     }
 
+    @Override
+    public void OnItemNameUpdate(WalletBean walletBean) {
+        if (null == walletBean) {
+            CpLog.e(TAG, "walletBean is null!");
+            return;
+        }
+
+        for (WalletBean walletBeanTmp : mWalletBeans) {
+            if (null == walletBeanTmp) {
+                CpLog.e(TAG, "walletBeanTmp is null!");
+                continue;
+            }
+
+            if (walletBeanTmp.equals(walletBean)) {
+                walletBeanTmp.setWalletName(walletBean.getWalletName());
+            }
+        }
+
+        mAssetsRecyclerViewAdapter.notifyDataSetChanged();
+    }
 }

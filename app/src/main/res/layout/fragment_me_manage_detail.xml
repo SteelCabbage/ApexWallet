@@ -2,6 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -19,13 +21,13 @@
             android:textColor="@android:color/white"
             android:textSize="@dimen/tv_me_manager_detail_title_size" />
 
-        <TextView
-            android:id="@+id/tv_me_manager_detail_save"
+        <Button
+            android:id="@+id/bt_me_manager_detail_save"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/tv_me_manager_detail_title"
             android:layout_alignParentEnd="true"
-            android:layout_marginEnd="20dp"
+            android:background="@null"
             android:text="@string/tv_me_manager_detail_save"
             android:textColor="@android:color/white"
             android:textSize="16sp" />
@@ -55,11 +57,14 @@
         android:textColor="@color/c_999999"
         android:textSize="14sp" />
 
-    <TextView
-        android:id="@+id/tv_me_manager_detail_bottom_wallet_name"
+    <EditText
+        android:id="@+id/et_me_manager_detail_bottom_wallet_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="29dp"
+        android:background="@null"
+        android:ems="14"
+        android:singleLine="true"
         android:text="@string/tv_me_manager_detail_bottom_wallet_name"
         android:textColor="@color/c_333333"
         android:textSize="18sp" />

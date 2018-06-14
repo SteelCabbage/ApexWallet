@@ -52,6 +52,7 @@ public class Constant {
             "parcelableWalletBeanManageDetail";
 
     // backup wallet
+    public static final String BACKUP_KEYSTORE = "backupKeystore";
     public static final String BACKUP_MNEMONIC = "backupMnemonic";
     public static final int BACKUP_UNFINISHED = 0;
     public static final int BACKUP_FINISH = 1;

@@ -194,7 +194,7 @@ public class ImportKeystoreFragment extends BaseFragment implements View.OnClick
             return;
         }
 
-        String keystorePwd = mEt_import_wallet_keystore_pwd.getText().toString().trim();
+        String keystore = mEt_import_wallet_keystore.getText().toString().trim();
         ArrayList<String> assetses = new ArrayList<>();
         assetses.add(Constant.ASSETS_CPX);
         assetses.add(Constant.ASSETS_NEO);
@@ -204,7 +204,7 @@ public class ImportKeystoreFragment extends BaseFragment implements View.OnClick
         walletBean.setWalletName(Constant.WALLET_NAME_IMPORT_DEFAULT);
         walletBean.setWalletAddr(walletAddress);
         walletBean.setBackupState(Constant.BACKUP_UNFINISHED);
-        walletBean.setKeyStore(keystorePwd);
+        walletBean.setKeyStore(keystore);
         walletBean.setAssetsJson(GsonUtils.toJsonStr(assetses));
 
         apexWalletDbDao.insert(Constant.TABLE_APEX_WALLET, walletBean);
