@@ -209,7 +209,6 @@ public class CreateWalletActivity extends BaseActivity implements View.OnClickLi
         String mnemonicEnUs = null;
         try {
             mnemonicEnUs = wallet.mnemonic("en_US");
-            CpLog.i(TAG, "mnemonicEnUs:" + mnemonicEnUs);
         } catch (Exception e) {
             CpLog.e(TAG, "mnemonicEnUs exception:" + e.getMessage());
         }

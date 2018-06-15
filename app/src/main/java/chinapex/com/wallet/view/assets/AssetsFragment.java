@@ -166,6 +166,10 @@ public class AssetsFragment extends BaseFragment implements AssetsRecyclerViewAd
             return;
         }
 
+        if (!mWalletBeans.contains(walletBean)) {
+            CpLog.e(TAG, "onItemDelete() -> this wallet not exist!");
+            return;
+        }
         mWalletBeans.remove(walletBean);
         mAssetsRecyclerViewAdapter.notifyDataSetChanged();
     }
@@ -174,6 +178,11 @@ public class AssetsFragment extends BaseFragment implements AssetsRecyclerViewAd
     public void onItemAdd(WalletBean walletBean) {
         if (null == walletBean) {
             CpLog.e(TAG, "onItemAdd() -> walletBean is null!");
+            return;
+        }
+
+        if (mWalletBeans.contains(walletBean)) {
+            CpLog.e(TAG, "onItemAdd() -> this wallet has existed!");
             return;
         }
 

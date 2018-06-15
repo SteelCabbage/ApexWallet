@@ -23,7 +23,6 @@ import chinapex.com.wallet.base.BaseFragment;
 import chinapex.com.wallet.bean.MnemonicState;
 import chinapex.com.wallet.bean.WalletBean;
 import chinapex.com.wallet.changelistener.ApexListeners;
-import chinapex.com.wallet.global.ApexCache;
 import chinapex.com.wallet.global.ApexWalletApplication;
 import chinapex.com.wallet.global.Constant;
 import chinapex.com.wallet.model.ApexWalletDbDao;
@@ -128,12 +127,7 @@ public class ConfirmMnemonicFragment extends BaseFragment implements View.OnClic
                 // TODO: 2018/6/10 校验助记词顺序是否正确，正确置为已备份
 
                 updateWalletBackupState();
-
-                boolean startMainActivity = ApexCache.getInstance().isStartMainActivity();
-                if (startMainActivity) {
-                    startActivity(MainActivity.class, true);
-                }
-                getActivity().finish();
+                isFirstEnter();
                 break;
             default:
                 break;
@@ -191,6 +185,18 @@ public class ConfirmMnemonicFragment extends BaseFragment implements View.OnClic
         walletBean.setBackupState(Constant.BACKUP_FINISH);
 
         ApexListeners.getInstance().notifyItemStateUpdate(walletBean);
+    }
+
+    private void isFirstEnter() {
+        boolean isFirstExport = (boolean) SharedPreferencesUtils.getParam(ApexWalletApplication
+                .getInstance(), Constant.IS_FIRST_ENTER_MAIN, true);
+        if (isFirstExport) {
+            SharedPreferencesUtils.putParam(ApexWalletApplication.getInstance(), Constant
+                    .IS_FIRST_ENTER_MAIN, false);
+            startActivity(MainActivity.class, true);
+        } else {
+            getActivity().finish();
+        }
     }
 
 }

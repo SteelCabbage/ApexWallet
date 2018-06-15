@@ -6,7 +6,8 @@ package chinapex.com.wallet.global;
 
 public class Constant {
     // application state value
-    public static final String IS_FIRST_ENTER = "isFirstEnter";
+    public static final String IS_FIRST_ENTER_APP = "isFirstEnterApp";
+    public static final String IS_FIRST_ENTER_MAIN = "isFirstEnterMain";
 
     // net
     public static final long CONNECT_TIMEOUT = 5;
