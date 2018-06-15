@@ -162,10 +162,10 @@ public class TransferActivity extends BaseActivity implements View.OnClickListen
             @Override
             public void run() {
                 if (isSuccess) {
-                    Toast.makeText(TransferActivity.this, "交易广播成功，请等待区块确认", Toast.LENGTH_SHORT)
+                    Toast.makeText(TransferActivity.this, "广播交易,成功!请等待区块确认", Toast.LENGTH_SHORT)
                             .show();
                 } else {
-                    Toast.makeText(TransferActivity.this, "交易广播失败！", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(TransferActivity.this, "广播交易,失败！", Toast.LENGTH_SHORT).show();
                 }
             }
         });
