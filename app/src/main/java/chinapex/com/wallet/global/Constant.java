@@ -15,19 +15,21 @@ public class Constant {
     public static final int NET_ERROR = -1;
     public static final int NET_SUCCESS = 1;
     public static final int NET_BODY_NULL = 0;
-    //    public static final String HOSTNAME_VERIFIER = "40.125.171.0";
+
+    // neo测试网ip
+//    public static final String HOSTNAME_VERIFIER = "40.125.171.0";
 //    public static final String URL_CLI = "http://40.125.171.0:20332";
 //    public static final String URL_UTXOS = "http://40.125.171.0:8083/utxos/";
 
-    // neo测试网
+    // neo测试网域名
 //    public static final String HOSTNAME_VERIFIER = "dev.chinapex.com.cn";
 //    public static final String URL_CLI = "http://dev.chinapex.com.cn:10086/neo-cli/";
 //    public static final String URL_UTXOS = "http://dev.chinapex.com.cn:10086/tool/utxos/";
 
     // neo正式网
     public static final String HOSTNAME_VERIFIER = "tracker.chinapex.com.cn";
-    public static final String URL_CLI = "http://tracker.chinapex.com.cn:10086/neo-cli/";
-    public static final String URL_UTXOS = "http://tracker.chinapex.com.cn:10086/tool/utxos/";
+    public static final String URL_CLI = "http://tracker.chinapex.com.cn:80/neo-cli/";
+    public static final String URL_UTXOS = "http://tracker.chinapex.com.cn:80/tool/utxos/";
 
     // fragmentTag
     public static final String FRAGMENT_TAG_IMPORT_MNEMONIC = "ImportMnemonicFragment";
@@ -59,6 +61,7 @@ public class Constant {
 
     // wallet detail transfer
     public static final String PARCELABLE_WALLET_BEAN_TRANSFER = "parcelableWalletBeanTransfer";
+    public static final String PARCELABLE_BALANCE_BEAN_TRANSFER = "parcelableBalanceBeanTransfer";
     // wallet detail gathering
     public static final String PARCELABLE_WALLET_BEAN_GATHERING = "parcelableWalletBeanGathering";
 

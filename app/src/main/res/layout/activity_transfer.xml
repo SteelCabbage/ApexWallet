@@ -85,8 +85,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="bottom">
+        android:gravity="bottom"
+        android:orientation="horizontal">
 
         <EditText
             android:id="@+id/et_transfer_amount"
@@ -99,6 +99,7 @@
             android:textSize="12sp" />
 
         <TextView
+            android:id="@+id/tv_transfer_unit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="cpx"
@@ -111,15 +112,6 @@
         android:layout_height="1dp"
         android:layout_marginTop="11dp"
         android:background="@color/c_DDDDDD" />
-
-
-    <EditText
-        android:id="@+id/et_transfer_pwd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/tv_transfer_from_margin_start"
-        android:layout_marginTop="5dp"
-        android:hint="请输入密码" />
 
     <Button
         android:id="@+id/bt_transfer_send"
