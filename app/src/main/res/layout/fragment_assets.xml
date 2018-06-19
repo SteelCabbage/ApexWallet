@@ -41,6 +41,8 @@
                 android:layout_marginBottom="26dp"
                 android:layout_marginStart="22dp"
                 android:background="@drawable/shape_bg_search"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -69,9 +71,9 @@
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@+id/ll_assets_search"
                 android:layout_alignParentEnd="true"
+                android:layout_marginBottom="5dp"
                 android:layout_marginEnd="10dp"
                 android:text="@string/tv_assets_search_cancel"
-                android:layout_marginBottom="5dp"
                 android:textColor="@android:color/white"
                 android:textSize="16sp" />
         </RelativeLayout>

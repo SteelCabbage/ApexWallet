@@ -2,7 +2,7 @@
 <resources>
     <!--主页底部导航-->
     <string-array name="main_bn_item_title">
-        <item>发现</item>
+        <!--<item>发现</item>-->
         <item>资产</item>
         <item>我</item>
     </string-array>
