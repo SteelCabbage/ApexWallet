@@ -22,16 +22,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <!--启动页-->
+        <!-- 启动页 -->
         <activity
             android:name=".view.BootPageActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.MyTranslucentNavigation">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
 
         <!-- 新用户 -->
@@ -75,10 +75,11 @@
         <activity
             android:name=".view.assets.GatheringActivity"
             android:screenOrientation="portrait" />
-        <!--导出Keystore-->
+        <!-- 导出Keystore -->
         <activity
             android:name=".view.wallet.ExportKeystoreActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".view.me.TransactionDetailActivity"></activity>
     </application>
 
 </manifest>

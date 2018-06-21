@@ -78,4 +78,6 @@
     <dimen name="tv_me_manager_detail_title_size">18sp</dimen>
     <dimen name="title_18sp">18sp</dimen>
     <dimen name="paratext_14sp">14sp</dimen>
+    <dimen name="detail_12sp">12sp</dimen>
+    <dimen name="title_small_16sp">16sp</dimen>
 </resources>

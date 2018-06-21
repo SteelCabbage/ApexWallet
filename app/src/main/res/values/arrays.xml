@@ -10,7 +10,7 @@
     <!--余额详情页，侧滑菜单图片-->
     <integer-array name="balance_detail_drawer_icons">
         <item>@drawable/icon_scan</item>
-        <item>@drawable/icon_wallet</item>
+        <item>@drawable/icon_create_wallet</item>
     </integer-array>
 
     <!--余额详情页，侧滑菜单文字-->
