@@ -59,8 +59,7 @@ public class GatheringActivity extends BaseActivity implements View.OnClickListe
             CpLog.e(TAG, "mWalletBean is null!");
             return;
         }
-        mTv_gathering_wallet_name.setText(String.valueOf(Constant.WALLET_NAME + mWalletBean
-                .getWalletName()));
+        mTv_gathering_wallet_name.setText(mWalletBean.getWalletName());
         mTv_gathering_wallet_addr.setText(mWalletBean.getWalletAddr());
 
         //生成二维码

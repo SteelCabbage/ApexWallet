@@ -89,7 +89,7 @@ public class TransactionRecordRecyclerViewAdapter extends RecyclerView
         // TODO: 2018/6/21 0021 logoUrl
         holder.txID.setText(transactionRecord.getTxID());
         holder.txAmount.setText(transactionRecord.getTxAmount());
-        holder.txTime.setText(PhoneUtils.getFormatTime(transactionRecord.getTime()));
+        holder.txTime.setText(PhoneUtils.getFormatTime(transactionRecord.getTxTime()));
 
         switch (transactionRecord.getTxState()) {
             case Constant.TRANSACTION_STATE_FAIL:

@@ -3,7 +3,6 @@ package chinapex.com.wallet.view.me;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -20,8 +19,12 @@ import chinapex.com.wallet.adapter.TransactionRecordRecyclerViewAdapter;
 import chinapex.com.wallet.base.BaseFragment;
 import chinapex.com.wallet.bean.TransactionRecord;
 import chinapex.com.wallet.bean.WalletBean;
+import chinapex.com.wallet.executor.TaskController;
+import chinapex.com.wallet.executor.callback.IGetTransactionHistoryCallback;
+import chinapex.com.wallet.executor.runnable.GetTransactionHistory;
 import chinapex.com.wallet.global.ApexWalletApplication;
 import chinapex.com.wallet.global.Constant;
+import chinapex.com.wallet.model.ApexWalletDbDao;
 import chinapex.com.wallet.utils.CpLog;
 import chinapex.com.wallet.view.MeSkipActivity;
 import chinapex.com.wallet.view.dialog.SwitchWalletDialog;
@@ -32,7 +35,7 @@ import chinapex.com.wallet.view.dialog.SwitchWalletDialog;
 
 public class MeTransactionRecordFragment extends BaseFragment implements View.OnClickListener,
         SwitchWalletDialog.onItemSelectedListener, SwipeRefreshLayout.OnRefreshListener,
-        TransactionRecordRecyclerViewAdapter.OnItemClickListener {
+        TransactionRecordRecyclerViewAdapter.OnItemClickListener, IGetTransactionHistoryCallback {
 
     private static final String TAG = MeTransactionRecordFragment.class.getSimpleName();
     private TextView mTv_me_transaction_record_title;
@@ -57,6 +60,9 @@ public class MeTransactionRecordFragment extends BaseFragment implements View.On
 
         initView(view);
         initData();
+
+        // test
+        testDb();
     }
 
     private void initView(View view) {
@@ -89,9 +95,7 @@ public class MeTransactionRecordFragment extends BaseFragment implements View.On
             return;
         }
 
-        mTv_me_transaction_record_title.setText(String.valueOf(Constant.WALLET_NAME +
-                mCurrentClickedWalletBean
-                        .getWalletName()));
+        mTv_me_transaction_record_title.setText(mCurrentClickedWalletBean.getWalletName());
         mTv_me_transaction_record_address.setText(mCurrentClickedWalletBean.getWalletAddr());
     }
 
@@ -121,8 +125,7 @@ public class MeTransactionRecordFragment extends BaseFragment implements View.On
         }
 
         mCurrentClickedWalletBean = walletBean;
-        mTv_me_transaction_record_title.setText(String.valueOf(Constant.WALLET_NAME + walletBean
-                .getWalletName()));
+        mTv_me_transaction_record_title.setText(walletBean.getWalletName());
         mTv_me_transaction_record_address.setText(walletBean.getWalletAddr());
     }
 
@@ -158,18 +161,90 @@ public class MeTransactionRecordFragment extends BaseFragment implements View.On
         mTransactionRecords = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             TransactionRecord transactionRecord = new TransactionRecord();
-            transactionRecord.setLogoUrl("");
+            transactionRecord.setAssetLogoUrl("");
             transactionRecord.setTxID
                     ("0xfbc12dd529a981b734e9324b3c0693d6b173b29c204922b27840749d661ca53" + i);
             transactionRecord.setTxAmount("+100000.0000000" + i);
-            transactionRecord.setTime(System.currentTimeMillis() + i + 100000);
+            transactionRecord.setTxTime(System.currentTimeMillis() + i * 10000);
             transactionRecord.setTxState(i % 3);
-            transactionRecord.setSymbol("CPX");
-            transactionRecord.setFrom("ALDbmTMY54RZnLmibH3eXfHvrZt4fLiZh" + i);
-            transactionRecord.setTo("AKJZ6oNkSLzAvStDe8SrBvd83DntY4AvT" + i);
+            transactionRecord.setAssetSymbol("CPX");
+            transactionRecord.setTxFrom("ALDbmTMY54RZnLmibH3eXfHvrZt4fLiZh" + i);
+            transactionRecord.setTxTo("AKJZ6oNkSLzAvStDe8SrBvd83DntY4AvT" + i);
             mTransactionRecords.add(transactionRecord);
         }
         return mTransactionRecords;
     }
+
+    private void testDb() {
+        TaskController.getInstance().submit(new GetTransactionHistory(0,
+                mCurrentClickedWalletBean.getWalletAddr(), this));
+    }
+
+    @Override
+    public void getTransactionHistory(List<TransactionRecord> transactionRecords) {
+        if (null == transactionRecords || transactionRecords.isEmpty()) {
+            CpLog.e(TAG, "transactionRecords is null or empty!");
+            return;
+        }
+
+        for (TransactionRecord transactionRecord : transactionRecords) {
+            if (null == transactionRecord) {
+                CpLog.e(TAG, "transactionRecord is null!");
+                continue;
+            }
+
+            CpLog.i(TAG, "transactionRecord:" + transactionRecord.toString());
+        }
+    }
+
+
+//    private void testDb() {
+//        ApexWalletDbDao apexWalletDbDao = ApexWalletDbDao.getInstance(ApexWalletApplication
+//                .getInstance());
+//        if (null == apexWalletDbDao) {
+//            CpLog.e(TAG, "apexWalletDbDao is null!");
+//            return;
+//        }
+//
+//        List<TransactionRecord> transactionRecords = new ArrayList<>();
+//        for (int i = 0; i < 5; i++) {
+//            TransactionRecord transactionRecord = new TransactionRecord();
+//            transactionRecord.setWalletAddress("ALDbmTMY54RZnLmibH3eXfHvrZt4fLiZh" + i);
+//            transactionRecord.setTxType("CPX" + i);
+//            transactionRecord.setTxID
+//                    ("0xfbc12dd529a981b734e9324b3c0693d6b173b29c204922b27840749d661ca53" + i);
+//            transactionRecord.setTxAmount("+100000.0000000" + i);
+//            transactionRecord.setTxState(i % 3);
+//            transactionRecord.setTxFrom("ALDbmTMY54RZnLmibH3eXfHvrZt4fLiZh" + i);
+//            transactionRecord.setTxTo("AKJZ6oNkSLzAvStDe8SrBvd83DntY4AvT" + i);
+//            transactionRecord.setGasConsumed("0.0" + i);
+//            transactionRecord.setAssetID("0x45d493a6f73fa5f404244a5fb8472fc014ca5885");
+//            transactionRecord.setAssetSymbol("CPX");
+//            transactionRecord.setAssetLogoUrl("");
+//            transactionRecord.setAssetDecimal(8);
+//            transactionRecord.setTxTime(System.currentTimeMillis() + i * 10000);
+//
+//            transactionRecords.add(transactionRecord);
+//
+//            apexWalletDbDao.insertTxRecord(transactionRecord);
+//        }
+//
+//        CpLog.w(TAG, "transactionRecords:" + transactionRecords.toString());
+//
+//        List<TransactionRecord> transactionRecords1 = apexWalletDbDao
+//                .queryTransactionRecordsByWalletAddress("ALDbmTMY54RZnLmibH3eXfHvrZt4fLiZh3");
+//        CpLog.i(TAG, "transactionRecords1:" + transactionRecords1.toString());
+//
+//        List<TransactionRecord> transactionRecords9 = apexWalletDbDao
+//                .queryTransactionRecordsByWalletAddress("ALDbmTMY54RZnLmibH3eXfHvrZt4fLiZh9");
+//        CpLog.i(TAG, "transactionRecords9:" + transactionRecords9.toString());
+//
+//        apexWalletDbDao.updateTxState
+//                ("0xfbc12dd529a981b734e9324b3c0693d6b173b29c204922b27840749d661ca530", 9);
+//        List<TransactionRecord> update = apexWalletDbDao
+//                .queryTransactionRecordsByWalletAddress("ALDbmTMY54RZnLmibH3eXfHvrZt4fLiZh0");
+//        CpLog.i(TAG, "update:" + update.toString());
+//
+//    }
 
 }

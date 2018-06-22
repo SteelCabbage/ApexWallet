@@ -115,8 +115,7 @@ public class BalanceDetailActivity extends BaseActivity implements View.OnClickL
         mTv_balance_detail_assets_value.setText(mBalanceBean.getAssetsValue());
 
         //设置侧滑title
-        mTv_balance_detail_drawer_title.setText(String.valueOf(Constant.WALLET_NAME + mWalletBean
-                .getWalletName()));
+        mTv_balance_detail_drawer_title.setText(mWalletBean.getWalletName());
     }
 
     @Override

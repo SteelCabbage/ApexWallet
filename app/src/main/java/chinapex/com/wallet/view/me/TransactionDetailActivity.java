@@ -55,10 +55,10 @@ public class TransactionDetailActivity extends BaseActivity {
 
         mTv_transaction_detail_amount.setText(mTransactionRecord.getTxAmount());
         mTv_transaction_detail_unit.setText(String.valueOf("转账金额 (" + mTransactionRecord
-                .getSymbol() + ")"));
-        mTv_transaction_detail_from.setText(mTransactionRecord.getFrom());
-        mTv_transaction_detail_to.setText(mTransactionRecord.getTo());
-        mTv_transaction_detail_time.setText(PhoneUtils.getFormatTime(mTransactionRecord.getTime()));
+                .getAssetSymbol() + ")"));
+        mTv_transaction_detail_from.setText(mTransactionRecord.getTxFrom());
+        mTv_transaction_detail_to.setText(mTransactionRecord.getTxTo());
+        mTv_transaction_detail_time.setText(PhoneUtils.getFormatTime(mTransactionRecord.getTxTime()));
         mTv_transaction_detail_tx_id.setText(mTransactionRecord.getTxID());
     }
 }

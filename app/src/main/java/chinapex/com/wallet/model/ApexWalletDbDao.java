@@ -11,8 +11,8 @@ import android.text.TextUtils;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.locks.ReentrantLock;
 
+import chinapex.com.wallet.bean.TransactionRecord;
 import chinapex.com.wallet.bean.WalletBean;
 import chinapex.com.wallet.global.Constant;
 import chinapex.com.wallet.utils.CpLog;
@@ -164,50 +164,6 @@ public class ApexWalletDbDao {
         return walletBeans;
     }
 
-    private static final String WHERE_CLAUSE_WALLET_NAME_EQ = Constant.FIELD_WALLET_NAME + " = ?";
-
-    public WalletBean queryByWalletName(String tableName, String walletName) {
-        if (TextUtils.isEmpty(tableName)
-                || TextUtils.isEmpty(walletName)) {
-            CpLog.e(TAG, "queryByWalletName() -> tableName or walletName is null!");
-            return null;
-        }
-
-        ArrayList<WalletBean> walletBeans = new ArrayList<>();
-
-        SQLiteDatabase db = openDatabase();
-        Cursor cursor = db.query(tableName, null, WHERE_CLAUSE_WALLET_NAME_EQ, new
-                String[]{walletName}, null, null, null);
-        if (null != cursor) {
-            while (cursor.moveToNext()) {
-                int walletNameIndex = cursor.getColumnIndex(Constant.FIELD_WALLET_NAME);
-                int walletAddressIndex = cursor.getColumnIndex(Constant.FIELD_WALLET_ADDRESS);
-                int backupStateIndex = cursor.getColumnIndex(Constant.FIELD_BACKUP_STATE);
-                int walletKeystoreIndex = cursor.getColumnIndex(Constant.FIELD_WALLET_KEYSTORE);
-                int walletAssetsJsonIndex = cursor.getColumnIndex(Constant
-                        .FIELD_WALLET_ASSETS_JSON);
-
-                String walletNameTmp = cursor.getString(walletNameIndex);
-                String walletAddress = cursor.getString(walletAddressIndex);
-                int backupState = cursor.getInt(backupStateIndex);
-                String walletKeystore = cursor.getString(walletKeystoreIndex);
-                String walletAssetsJson = cursor.getString(walletAssetsJsonIndex);
-
-                WalletBean walletBean = new WalletBean();
-                walletBean.setWalletName(walletNameTmp);
-                walletBean.setWalletAddr(walletAddress);
-                walletBean.setBackupState(backupState);
-                walletBean.setKeyStore(walletKeystore);
-                walletBean.setAssetsJson(walletAssetsJson);
-
-                walletBeans.add(walletBean);
-            }
-            cursor.close();
-        }
-        closeDatabase();
-        return walletBeans.isEmpty() ? null : walletBeans.get(0);
-    }
-
     private static final String WHERE_CLAUSE_WALLET_ADDRESS_EQ = Constant.FIELD_WALLET_ADDRESS +
             " = ?";
 
@@ -255,7 +211,7 @@ public class ApexWalletDbDao {
 
     public void updateBackupState(String tableName, String walletAddress, int backupState) {
         if (TextUtils.isEmpty(tableName) || TextUtils.isEmpty(walletAddress)) {
-            CpLog.e(TAG, "insert() -> tableName or walletAddress is null!");
+            CpLog.e(TAG, "updateBackupState() -> tableName or walletAddress is null!");
             return;
         }
 
@@ -266,9 +222,9 @@ public class ApexWalletDbDao {
         try {
             db.beginTransaction();
             db.update(tableName, contentValues, WHERE_CLAUSE_WALLET_ADDRESS_EQ, new
-                    String[]{walletAddress + ""});
+                    String[]{walletAddress});
             db.setTransactionSuccessful();
-            CpLog.i(TAG, "updateBackupState -> update" + backupState + " ok!");
+            CpLog.i(TAG, "updateBackupState -> update" + walletAddress + " backupState ok!");
         } catch (SQLException e) {
             CpLog.e(TAG, "updateBackupState exception:" + e.getMessage());
         } finally {
@@ -293,11 +249,138 @@ public class ApexWalletDbDao {
         try {
             db.beginTransaction();
             db.update(tableName, contentValues, WHERE_CLAUSE_WALLET_ADDRESS_EQ, new
-                    String[]{walletAddress + ""});
+                    String[]{walletAddress});
             db.setTransactionSuccessful();
             CpLog.i(TAG, "updateWalletName: " + walletNameNew + " is ok!");
         } catch (SQLException e) {
             CpLog.e(TAG, "updateBackupStateByWalletName exception:" + e.getMessage());
+        } finally {
+            db.endTransaction();
+        }
+        closeDatabase();
+    }
+
+    public synchronized void insertTxRecord(TransactionRecord transactionRecord) {
+        if (null == transactionRecord) {
+            CpLog.e(TAG, "insertTxRecord() -> transactionRecord is null!");
+            return;
+        }
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(Constant.FIELD_WALLET_ADDRESS, transactionRecord.getWalletAddress());
+        contentValues.put(Constant.FIELD_TX_TYPE, transactionRecord.getTxType());
+        contentValues.put(Constant.FIELD_TX_ID, transactionRecord.getTxID());
+        contentValues.put(Constant.FIELD_TX_AMOUNT, transactionRecord.getTxAmount());
+        contentValues.put(Constant.FIELD_TX_STATE, transactionRecord.getTxState());
+        contentValues.put(Constant.FIELD_TX_FROM, transactionRecord.getTxFrom());
+        contentValues.put(Constant.FIELD_TX_TO, transactionRecord.getTxTo());
+        contentValues.put(Constant.FIELD_GAS_CONSUMED, transactionRecord.getGasConsumed());
+        contentValues.put(Constant.FIELD_ASSET_ID, transactionRecord.getAssetID());
+        contentValues.put(Constant.FIELD_ASSET_SYMBOL, transactionRecord.getAssetSymbol());
+        contentValues.put(Constant.FIELD_ASSET_LOGO_URL, transactionRecord.getAssetLogoUrl());
+        contentValues.put(Constant.FIELD_ASSET_DECIMAL, transactionRecord.getAssetDecimal());
+        contentValues.put(Constant.FIELD_CREATE_TIME, transactionRecord.getTxTime());
+
+        SQLiteDatabase db = openDatabase();
+        try {
+            db.beginTransaction();
+            db.insertOrThrow(Constant.TABLE_TRANSACTION_RECORD, null, contentValues);
+            db.setTransactionSuccessful();
+            CpLog.i(TAG, "insertTxRecord() -> insert " + transactionRecord.getTxID() + " ok!");
+        } catch (SQLException e) {
+            CpLog.e(TAG, "insertTxRecord exception:" + e.getMessage());
+        } finally {
+            db.endTransaction();
+        }
+        closeDatabase();
+    }
+
+    public List<TransactionRecord> queryTransactionRecordsByWalletAddress(String walletAddress) {
+        if (TextUtils.isEmpty(walletAddress)
+                || TextUtils.isEmpty(walletAddress)) {
+            CpLog.e(TAG, "queryTransactionRecordsByWalletAddress() -> walletAddress is null!");
+            return null;
+        }
+
+        List<TransactionRecord> transactionRecords = new ArrayList<>();
+
+        SQLiteDatabase db = openDatabase();
+        Cursor cursor = db.query(Constant.TABLE_TRANSACTION_RECORD, null,
+                WHERE_CLAUSE_WALLET_ADDRESS_EQ, new String[]{walletAddress}, null, null, null);
+        if (null != cursor) {
+            while (cursor.moveToNext()) {
+                int walletAddressIndex = cursor.getColumnIndex(Constant.FIELD_WALLET_ADDRESS);
+                int txTypeIndex = cursor.getColumnIndex(Constant.FIELD_TX_TYPE);
+                int txIdIndex = cursor.getColumnIndex(Constant.FIELD_TX_ID);
+                int txAmountIndex = cursor.getColumnIndex(Constant.FIELD_TX_AMOUNT);
+                int txStateIndex = cursor.getColumnIndex(Constant.FIELD_TX_STATE);
+                int txFromIndex = cursor.getColumnIndex(Constant.FIELD_TX_FROM);
+                int txToIndex = cursor.getColumnIndex(Constant.FIELD_TX_TO);
+                int gasConsumedIndex = cursor.getColumnIndex(Constant.FIELD_GAS_CONSUMED);
+                int assetIdIndex = cursor.getColumnIndex(Constant.FIELD_ASSET_ID);
+                int assetSymbolIndex = cursor.getColumnIndex(Constant.FIELD_ASSET_SYMBOL);
+                int assetLogoUrlIndex = cursor.getColumnIndex(Constant.FIELD_ASSET_LOGO_URL);
+                int assetDecimalIndex = cursor.getColumnIndex(Constant.FIELD_ASSET_DECIMAL);
+                int createTimeIndex = cursor.getColumnIndex(Constant.FIELD_CREATE_TIME);
+
+
+                String walletAddressTmp = cursor.getString(walletAddressIndex);
+                String txType = cursor.getString(txTypeIndex);
+                String txId = cursor.getString(txIdIndex);
+                String txAmount = cursor.getString(txAmountIndex);
+                int txState = cursor.getInt(txStateIndex);
+                String txFrom = cursor.getString(txFromIndex);
+                String txTo = cursor.getString(txToIndex);
+                String gasConsumed = cursor.getString(gasConsumedIndex);
+                String assetId = cursor.getString(assetIdIndex);
+                String assetSymbol = cursor.getString(assetSymbolIndex);
+                String assetLogoUrl = cursor.getString(assetLogoUrlIndex);
+                int assetDecimal = cursor.getInt(assetDecimalIndex);
+                long createTime = cursor.getLong(createTimeIndex);
+
+                TransactionRecord transactionRecord = new TransactionRecord();
+                transactionRecord.setWalletAddress(walletAddressTmp);
+                transactionRecord.setTxType(txType);
+                transactionRecord.setTxID(txId);
+                transactionRecord.setTxAmount(txAmount);
+                transactionRecord.setTxState(txState);
+                transactionRecord.setTxFrom(txFrom);
+                transactionRecord.setTxTo(txTo);
+                transactionRecord.setGasConsumed(gasConsumed);
+                transactionRecord.setAssetID(assetId);
+                transactionRecord.setAssetSymbol(assetSymbol);
+                transactionRecord.setAssetLogoUrl(assetLogoUrl);
+                transactionRecord.setAssetDecimal(assetDecimal);
+                transactionRecord.setTxTime(createTime);
+
+                transactionRecords.add(transactionRecord);
+            }
+            cursor.close();
+        }
+        closeDatabase();
+        return transactionRecords;
+    }
+
+    private static final String WHERE_CLAUSE_TX_ID_EQ = Constant.FIELD_TX_ID + " = ?";
+
+    public void updateTxState(String txID, int txState) {
+        if (TextUtils.isEmpty(txID)) {
+            CpLog.e(TAG, "updateTxState() -> txID is null!");
+            return;
+        }
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(Constant.FIELD_TX_STATE, txState);
+
+        SQLiteDatabase db = openDatabase();
+        try {
+            db.beginTransaction();
+            db.update(Constant.TABLE_TRANSACTION_RECORD, contentValues, WHERE_CLAUSE_TX_ID_EQ,
+                    new String[]{txID});
+            db.setTransactionSuccessful();
+            CpLog.i(TAG, "updateTxState -> update: " + txID + " ok!");
+        } catch (SQLException e) {
+            CpLog.e(TAG, "updateTxState exception:" + e.getMessage());
         } finally {
             db.endTransaction();
         }

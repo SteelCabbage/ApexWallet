@@ -27,6 +27,9 @@ public class Constant {
 //    public static final String URL_CLI = "http://dev.chinapex.com.cn:10086/neo-cli/";
 //    public static final String URL_UTXOS = "http://dev.chinapex.com.cn:10086/tool/utxos/";
 
+    // 交易记录测试
+    public static final String URL_TRANSACTION_HISTORY = "http://tracker.chinapex.com.cn/tool/transaction-history/";
+
     // neo正式网
     public static final String HOSTNAME_VERIFIER = "tracker.chinapex.com.cn";
     public static final String URL_CLI = "http://tracker.chinapex.com.cn:80/neo-cli/";
@@ -42,7 +45,7 @@ public class Constant {
     public static final String FRAGMENT_TAG_ME_TRANSACTION_RECORD = "MeTransactionRecordFragment";
 
     // import wallet from mnemonic
-    public static final String WALLET_NAME_IMPORT_DEFAULT = "IMPORT_DEFAULT";
+    public static final String WALLET_NAME_IMPORT_DEFAULT = "Import_Wallet";
 
     // assets
     public static final String WALLET_BEAN = "walletBean";
@@ -61,7 +64,7 @@ public class Constant {
 
     public static final String TRANSACTION_STATE_FAIL_TEXT = "交易失败";
     public static final String TRANSACTION_STATE_SUCCESS_TEXT = "交易成功";
-    public static final String TRANSACTION_STATE_CONFIRMING_TEXT = "交易确认";
+    public static final String TRANSACTION_STATE_CONFIRMING_TEXT = "交易确认中";
 
     public static final String PARCELABLE_TRANSACTION_RECORD = "parcelableTransactionRecord";
 
@@ -101,6 +104,7 @@ public class Constant {
 
 
     // db
+    // table wallet
     public static final String TABLE_APEX_WALLET = "apex_wallet";
 
     public static final String FIELD_ID = "_id";
@@ -118,6 +122,39 @@ public class Constant {
             + FIELD_BACKUP_STATE + " integer, "
             + FIELD_WALLET_KEYSTORE + " text, "
             + FIELD_WALLET_ASSETS_JSON + " text, "
+            + FIELD_CREATE_TIME + " integer)";
+
+
+    // table transaction record
+    public static final String TABLE_TRANSACTION_RECORD = "transaction_record";
+
+    public static final String FIELD_TX_TYPE = "tx_type";
+    public static final String FIELD_TX_ID = "tx_id";
+    public static final String FIELD_TX_AMOUNT = "tx_amount";
+    public static final String FIELD_TX_STATE = "tx_state";
+    public static final String FIELD_TX_FROM = "tx_from";
+    public static final String FIELD_TX_TO = "tx_to";
+    public static final String FIELD_GAS_CONSUMED = "gas_consumed";
+    public static final String FIELD_ASSET_ID = "asset_id";
+    public static final String FIELD_ASSET_SYMBOL = "asset_symbol";
+    public static final String FIELD_ASSET_LOGO_URL = "asset_logo_url";
+    public static final String FIELD_ASSET_DECIMAL = "asset_decimal";
+
+    public static final String SQL_CREATE_TRANSACTION_RECORD = "create table " +
+            TABLE_TRANSACTION_RECORD
+            + " (" + FIELD_ID + " integer primary key autoincrement, "
+            + FIELD_WALLET_ADDRESS + " text, "
+            + FIELD_TX_TYPE + " text, "
+            + FIELD_TX_ID + " text, "
+            + FIELD_TX_AMOUNT + " text, "
+            + FIELD_TX_STATE + " integer, "
+            + FIELD_TX_FROM + " text, "
+            + FIELD_TX_TO + " text, "
+            + FIELD_GAS_CONSUMED + " text, "
+            + FIELD_ASSET_ID + " text, "
+            + FIELD_ASSET_SYMBOL + " text, "
+            + FIELD_ASSET_LOGO_URL + " text, "
+            + FIELD_ASSET_DECIMAL + " integer, "
             + FIELD_CREATE_TIME + " integer)";
 
 }

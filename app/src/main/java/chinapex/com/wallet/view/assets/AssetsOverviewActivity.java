@@ -103,8 +103,7 @@ public class AssetsOverviewActivity extends BaseActivity implements
 
         mWalletBean = (WalletBean) intent.getParcelableExtra(Constant.WALLET_BEAN);
 
-        mTv_assets_overview_wallet_name.setText(String.valueOf(Constant.WALLET_NAME + mWalletBean
-                .getWalletName()));
+        mTv_assets_overview_wallet_name.setText(mWalletBean.getWalletName());
         mTv_assets_overview_wallet_address.setText(mWalletBean.getWalletAddr());
 
         mRv_assets_overview.setLayoutManager(new LinearLayoutManager(ApexWalletApplication
