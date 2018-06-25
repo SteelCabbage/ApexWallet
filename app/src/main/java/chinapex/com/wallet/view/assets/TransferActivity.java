@@ -9,6 +9,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.math.BigDecimal;
+
 import chinapex.com.wallet.R;
 import chinapex.com.wallet.base.BaseActivity;
 import chinapex.com.wallet.bean.AssertTxBean;
@@ -104,6 +106,21 @@ public class TransferActivity extends BaseActivity implements View.OnClickListen
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_transfer_send:
+                String balance = mBalanceBean.getAssetsValue();
+                String amount = mEt_transfer_amount.getText().toString().trim();
+                try {
+                    BigDecimal balanceBigDecimal = new BigDecimal(balance);
+                    BigDecimal amountBigDecimal = new BigDecimal(amount);
+                    if (amountBigDecimal.compareTo(balanceBigDecimal) == 1) {
+                        Toast.makeText(TransferActivity.this, "余额不足！", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                } catch (NumberFormatException e) {
+                    CpLog.e(TAG, "NumberFormatException: " + e.getMessage());
+                    Toast.makeText(TransferActivity.this, "非法输入！", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 showDeleteWalletPwdDialog();
                 break;
             default:
@@ -124,8 +141,15 @@ public class TransferActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     public void getUtxos(String utxos) {
-        if (TextUtils.isEmpty(utxos)) {
-            CpLog.e(TAG, "utxos is null!");
+        if (TextUtils.isEmpty(utxos) || "[]".equals(utxos)) {
+            CpLog.e(TAG, "utxos is null or []!");
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(TransferActivity.this, "utxos is empty,余额不足！", Toast
+                            .LENGTH_SHORT).show();
+                }
+            });
             return;
         }
 
@@ -144,14 +168,21 @@ public class TransferActivity extends BaseActivity implements View.OnClickListen
     public void createAssertTx(Tx tx) {
         if (null == tx) {
             CpLog.e(TAG, "createAssertTx() -> tx is null！");
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(TransferActivity.this, "交易创建失败，请校验输入参数！", Toast.LENGTH_SHORT)
+                            .show();
+                }
+            });
             return;
         }
 
         String order = "0x" + tx.getID();
         CpLog.i(TAG, "createAssertTx order:" + order);
 
-        String data = tx.getData();
-        CpLog.i(TAG, "createAssertTx data:" + data);
+//        String data = tx.getData();
+//        CpLog.i(TAG, "createAssertTx data:" + data);
 
         TaskController.getInstance().submit(new SendRawTransaction(tx.getData(), this));
     }
@@ -162,10 +193,10 @@ public class TransferActivity extends BaseActivity implements View.OnClickListen
             @Override
             public void run() {
                 if (isSuccess) {
-                    Toast.makeText(TransferActivity.this, "广播交易,成功!请等待区块确认", Toast.LENGTH_SHORT)
+                    Toast.makeText(TransferActivity.this, "交易广播成功!请等待区块确认", Toast.LENGTH_SHORT)
                             .show();
                 } else {
-                    Toast.makeText(TransferActivity.this, "广播交易,失败！", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(TransferActivity.this, "交易广播失败！", Toast.LENGTH_SHORT).show();
                 }
             }
         });
