@@ -59,8 +59,8 @@
                     android:layout_height="match_parent"
                     android:layout_marginStart="6dp"
                     android:background="@null"
-                    android:singleLine="true"
                     android:hint="@string/et_assets_search"
+                    android:singleLine="true"
                     android:textColor="@android:color/white"
                     android:textColorHint="@android:color/white"
                     android:textSize="@dimen/paratext_14sp" />

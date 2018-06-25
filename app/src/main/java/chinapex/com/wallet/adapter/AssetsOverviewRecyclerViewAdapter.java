@@ -67,11 +67,11 @@ public class AssetsOverviewRecyclerViewAdapter extends RecyclerView
         switch (balanceBean.getAssetsID()) {
             case Constant.ASSETS_NEO:
                 holder.assetsName.setText(Constant.MARK_NEO);
-                holder.mapState.setVisibility(View.INVISIBLE);
+                holder.mapState.setVisibility(View.GONE);
                 break;
             case Constant.ASSETS_NEO_GAS:
                 holder.assetsName.setText(Constant.MARK_NEO_GAS);
-                holder.mapState.setVisibility(View.INVISIBLE);
+                holder.mapState.setVisibility(View.GONE);
                 break;
             case Constant.ASSETS_CPX:
                 holder.assetsName.setText(Constant.MARK_CPX);
