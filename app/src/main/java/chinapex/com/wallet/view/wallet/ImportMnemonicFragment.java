@@ -260,6 +260,7 @@ public class ImportMnemonicFragment extends BaseFragment implements View.OnClick
         }
 
         apexWalletDbDao.insert(Constant.TABLE_APEX_WALLET, walletBean);
+        CpLog.i(TAG, "ApexListeners.getInstance().notifyItemAdd");
         ApexListeners.getInstance().notifyItemAdd(walletBean);
 
         isFirstEnter();

@@ -193,6 +193,7 @@ public class AssetsFragment extends BaseFragment implements AssetsRecyclerViewAd
 
     @Override
     public void onItemAdd(WalletBean walletBean) {
+        CpLog.i(TAG, "onItemAdd");
         if (null == walletBean) {
             CpLog.e(TAG, "onItemAdd() -> walletBean is null!");
             return;

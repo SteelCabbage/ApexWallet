@@ -214,6 +214,11 @@ public class MeFragment extends BaseFragment implements MeRecyclerViewAdapter
             return;
         }
 
+        if (!mWalletBeans.contains(walletBean)) {
+            CpLog.e(TAG, "onItemDelete() -> this wallet not exist!");
+            return;
+        }
+
         mWalletBeans.remove(walletBean);
         getActivity().runOnUiThread(new Runnable() {
             @Override
@@ -228,6 +233,11 @@ public class MeFragment extends BaseFragment implements MeRecyclerViewAdapter
     public void onItemAdd(WalletBean walletBean) {
         if (null == walletBean) {
             CpLog.e(TAG, "onItemAdd() -> walletBean is null!");
+            return;
+        }
+
+        if (mWalletBeans.contains(walletBean)) {
+            CpLog.e(TAG, "onItemAdd() -> this wallet has existed!");
             return;
         }
 

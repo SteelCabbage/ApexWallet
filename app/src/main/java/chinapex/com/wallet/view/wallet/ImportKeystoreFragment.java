@@ -188,6 +188,7 @@ public class ImportKeystoreFragment extends BaseFragment implements View.OnClick
         walletBean.setAssetsJson(GsonUtils.toJsonStr(assetses));
 
         apexWalletDbDao.insert(Constant.TABLE_APEX_WALLET, walletBean);
+        CpLog.i(TAG, "ApexListeners.getInstance().notifyItemAdd");
         ApexListeners.getInstance().notifyItemAdd(walletBean);
 
         isFirstEnter();

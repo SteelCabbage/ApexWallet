@@ -86,6 +86,7 @@ public class CreateWallet implements Runnable {
         }
 
         apexWalletDbDao.insert(Constant.TABLE_APEX_WALLET, walletBean);
+        CpLog.i(TAG, "ApexListeners.getInstance().notifyItemAdd");
         ApexListeners.getInstance().notifyItemAdd(walletBean);
         mICreateWalletCallback.newWallet(wallet);
     }

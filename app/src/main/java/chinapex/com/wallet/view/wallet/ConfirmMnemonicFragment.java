@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.flexbox.FlexDirection;
+import com.google.android.flexbox.FlexWrap;
 import com.google.android.flexbox.FlexboxLayoutManager;
 import com.google.android.flexbox.JustifyContent;
 
@@ -29,6 +30,7 @@ import chinapex.com.wallet.global.ApexWalletApplication;
 import chinapex.com.wallet.global.Constant;
 import chinapex.com.wallet.model.ApexWalletDbDao;
 import chinapex.com.wallet.utils.CpLog;
+import chinapex.com.wallet.utils.DensityUtil;
 import chinapex.com.wallet.utils.SharedPreferencesUtils;
 import chinapex.com.wallet.view.MainActivity;
 
@@ -105,10 +107,11 @@ public class ConfirmMnemonicFragment extends BaseFragment implements View.OnClic
                 .getInstance());
         layoutManager.setFlexDirection(FlexDirection.ROW);
         layoutManager.setJustifyContent(JustifyContent.FLEX_START);
+        layoutManager.setFlexWrap(FlexWrap.WRAP);
         mRv_confirm_mnemonic_click.setLayoutManager(layoutManager);
         mRv_confirm_mnemonic_click.setAdapter(mBackupClickMnemonicAdapter);
-        int spaceClick = 10;
-        mRv_confirm_mnemonic_click.addItemDecoration(new SpacesItemDecoration(spaceClick));
+        int space = DensityUtil.dip2px(getActivity(), 5);
+        mRv_confirm_mnemonic_click.addItemDecoration(new SpacesItemDecoration(space));
         mBackupClickMnemonicAdapter.setOnItemClickListener(this);
 
         // 设置展示的助记词
@@ -120,8 +123,7 @@ public class ConfirmMnemonicFragment extends BaseFragment implements View.OnClic
         layoutManagerShow.setJustifyContent(JustifyContent.FLEX_START);
         mRv_confirm_mnemonic_show.setLayoutManager(layoutManagerShow);
         mRv_confirm_mnemonic_show.setAdapter(mBackupShowMnemonicAdapter);
-        int spaceShow = 10;
-        mRv_confirm_mnemonic_show.addItemDecoration(new SpacesItemDecoration(spaceShow));
+        mRv_confirm_mnemonic_show.addItemDecoration(new SpacesItemDecoration(space));
         mBackupShowMnemonicAdapter.setOnItemClickShowListener(this);
 
     }
