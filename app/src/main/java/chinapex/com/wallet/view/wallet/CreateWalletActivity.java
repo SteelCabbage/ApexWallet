@@ -127,7 +127,7 @@ public class CreateWalletActivity extends BaseActivity implements View.OnClickLi
                     CpLog.w(TAG, "checkInput is false!");
                     return;
                 }
-                
+
                 String walletName = mEt_create_wallet_name.getText().toString().trim();
                 String walletPwd = mEt_create_wallet_pwd.getText().toString().trim();
                 TaskController.getInstance().submit(new CreateWallet(walletName, walletPwd, this));
@@ -166,7 +166,7 @@ public class CreateWalletActivity extends BaseActivity implements View.OnClickLi
         String repeat_pwd = mEt_create_wallet_repeat_pwd.getText().toString().trim();
 
         if (TextUtils.isEmpty(wallet_name)) {
-            Toast.makeText(this, "用户名不能为空！", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "钱包名不能为空！", Toast.LENGTH_LONG).show();
             CpLog.w(TAG, "wallet_name is null!");
             return false;
         }

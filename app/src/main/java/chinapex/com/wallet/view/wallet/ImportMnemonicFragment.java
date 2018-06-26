@@ -167,7 +167,7 @@ public class ImportMnemonicFragment extends BaseFragment implements View.OnClick
         String repeat_pwd = mEt_import_wallet_repeat_pwd.getText().toString().trim();
 
         if (TextUtils.isEmpty(wallet_pwd) || TextUtils.isEmpty(repeat_pwd)) {
-            Toast.makeText(getActivity(), "不能为空！", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), "密码不能为空！", Toast.LENGTH_LONG).show();
             CpLog.w(TAG, "wallet_name or wallet_pwd or repeat_pwd is null!");
             return false;
         }
@@ -175,6 +175,12 @@ public class ImportMnemonicFragment extends BaseFragment implements View.OnClick
         if (!wallet_pwd.equals(repeat_pwd)) {
             Toast.makeText(getActivity(), "密码不一致", Toast.LENGTH_LONG).show();
             CpLog.w(TAG, "wallet_pwd and repeat_pwd is not same!");
+            return false;
+        }
+
+        if (repeat_pwd.length() < 6) {
+            Toast.makeText(getActivity(), "密码不能少于6个字！", Toast.LENGTH_LONG).show();
+            CpLog.w(TAG, "repeat_pwd.length() < 6!");
             return false;
         }
 

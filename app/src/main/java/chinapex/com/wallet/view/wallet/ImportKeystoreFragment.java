@@ -77,21 +77,6 @@ public class ImportKeystoreFragment extends BaseFragment implements View.OnClick
         mIb_import_wallet_keystore_privacy_point.setOnClickListener(this);
         mTv_import_wallet_keystore_privacy_have_read.setOnClickListener(this);
         mBt_import_wallet_keystore.setOnClickListener(this);
-
-        mEt_import_wallet_keystore_pwd.addTextChangedListener(new MyTextWatcher
-                (mEt_import_wallet_keystore_pwd) {
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s.length() < 6) {
-                    //设置错误提示信息
-                    showError(mTl_import_wallet_keystore, "密码不能少于6位");
-                } else {
-                    //关闭错误提示
-                    mTl_import_wallet_keystore.setErrorEnabled(false);
-                }
-            }
-        });
-
     }
 
     private void initData() {
@@ -152,19 +137,6 @@ public class ImportKeystoreFragment extends BaseFragment implements View.OnClick
         }
 
         return true;
-    }
-
-    private void showError(TextInputLayout textInputLayout, String error) {
-        textInputLayout.setError(error);
-        EditText editText = textInputLayout.getEditText();
-        if (null == editText) {
-            CpLog.e(TAG, "editText is null!");
-            return;
-        }
-
-        editText.setFocusable(true);
-        editText.setFocusableInTouchMode(true);
-        editText.requestFocus();
     }
 
     @Override
