@@ -85,6 +85,8 @@ public class GetAccountState implements Runnable, INetCallback {
             BalanceBean balanceBean = new BalanceBean();
             balanceBean.setMapState(0);
             balanceBean.setAssetsID(balance.getAsset());
+            balanceBean.setAssetType(Constant.ASSET_TYPE_NEP5);
+            balanceBean.setAssetDecimal(8);
             balanceBean.setAssetsValue(balance.getValue());
             balanceBeans.put(balance.getAsset(), balanceBean);
         }

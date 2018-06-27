@@ -79,7 +79,17 @@
         <activity
             android:name=".view.wallet.ExportKeystoreActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".view.me.TransactionDetailActivity"></activity>
+        <activity android:name=".view.me.TransactionDetailActivity" />
+        <!--测试Activity-->
+        <activity
+            android:name=".view.TestNep5TransferActivity"
+            android:label="testNep5">
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
+        </activity>
     </application>
 
 </manifest>

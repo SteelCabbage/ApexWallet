@@ -15,12 +15,15 @@ import chinapex.com.wallet.R;
 import chinapex.com.wallet.base.BaseActivity;
 import chinapex.com.wallet.bean.AssertTxBean;
 import chinapex.com.wallet.bean.BalanceBean;
+import chinapex.com.wallet.bean.Nep5TxBean;
 import chinapex.com.wallet.bean.WalletBean;
 import chinapex.com.wallet.executor.TaskController;
 import chinapex.com.wallet.executor.callback.ICreateAssertTxCallback;
+import chinapex.com.wallet.executor.callback.ICreateNep5TxCallback;
 import chinapex.com.wallet.executor.callback.IGetUtxosCallback;
 import chinapex.com.wallet.executor.callback.ISendRawTransactionCallback;
 import chinapex.com.wallet.executor.runnable.CreateAssertTx;
+import chinapex.com.wallet.executor.runnable.CreateNep5Tx;
 import chinapex.com.wallet.executor.runnable.GetUtxos;
 import chinapex.com.wallet.executor.runnable.SendRawTransaction;
 import chinapex.com.wallet.global.Constant;
@@ -31,7 +34,7 @@ import neomobile.Wallet;
 
 public class TransferActivity extends BaseActivity implements View.OnClickListener,
         IGetUtxosCallback, ISendRawTransactionCallback, ICreateAssertTxCallback,
-        TransferPwdDialog.OnCheckPwdListener {
+        TransferPwdDialog.OnCheckPwdListener, ICreateNep5TxCallback {
 
     private static final String TAG = TransferActivity.class.getSimpleName();
     private WalletBean mWalletBean;
@@ -113,7 +116,7 @@ public class TransferActivity extends BaseActivity implements View.OnClickListen
                     BigDecimal amountBigDecimal = new BigDecimal(amount);
                     if (amountBigDecimal.compareTo(balanceBigDecimal) == 1) {
                         Toast.makeText(TransferActivity.this, "余额不足！", Toast.LENGTH_SHORT).show();
-                        return;
+//                        return;
                     }
                 } catch (NumberFormatException e) {
                     CpLog.e(TAG, "NumberFormatException: " + e.getMessage());
@@ -141,12 +144,26 @@ public class TransferActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     public void getUtxos(String utxos) {
+        switch (mBalanceBean.getAssetType()) {
+            case Constant.ASSET_TYPE_GLOBAL:
+                startAssertTx(utxos);
+                break;
+            case Constant.ASSET_TYPE_NEP5:
+                startNep5Tx();
+                break;
+            default:
+                CpLog.w(TAG, "illegal asset");
+                break;
+        }
+    }
+
+    private void startAssertTx(String utxos) {
         if (TextUtils.isEmpty(utxos) || "[]".equals(utxos)) {
             CpLog.e(TAG, "utxos is null or []!");
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    Toast.makeText(TransferActivity.this, "utxos is empty,余额不足！", Toast
+                    Toast.makeText(TransferActivity.this, "utxos is empty！", Toast
                             .LENGTH_SHORT).show();
                 }
             });
@@ -162,6 +179,18 @@ public class TransferActivity extends BaseActivity implements View.OnClickListen
         assertTxBean.setUtxos(utxos);
 
         TaskController.getInstance().submit(new CreateAssertTx(mWalletFrom, assertTxBean, this));
+    }
+
+    private void startNep5Tx() {
+        Nep5TxBean nep5TxBean = new Nep5TxBean();
+        nep5TxBean.setAssetID(mBalanceBean.getAssetsID());
+        nep5TxBean.setAssetDecimal(mBalanceBean.getAssetDecimal());
+        nep5TxBean.setAddrFrom(mWalletFrom.address());
+        nep5TxBean.setAddrTo(mEt_transfer_to_wallet_addr.getText().toString().trim());
+        nep5TxBean.setTransferAmount(mEt_transfer_amount.getText().toString().trim());
+        nep5TxBean.setUtxos("[]");
+
+        TaskController.getInstance().submit(new CreateNep5Tx(mWalletFrom, nep5TxBean, this));
     }
 
     @Override
@@ -183,6 +212,29 @@ public class TransferActivity extends BaseActivity implements View.OnClickListen
 
 //        String data = tx.getData();
 //        CpLog.i(TAG, "createAssertTx data:" + data);
+
+        TaskController.getInstance().submit(new SendRawTransaction(tx.getData(), this));
+    }
+
+    @Override
+    public void createNep5Tx(Tx tx) {
+        if (null == tx) {
+            CpLog.e(TAG, "createNep5Tx() -> tx is null！");
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(TransferActivity.this, "交易创建失败，请校验输入参数！", Toast.LENGTH_SHORT)
+                            .show();
+                }
+            });
+            return;
+        }
+
+        String order = "0x" + tx.getID();
+        CpLog.i(TAG, "createNep5Tx order:" + order);
+
+        String data = tx.getData();
+        CpLog.i(TAG, "createNep5Tx data:" + data);
 
         TaskController.getInstance().submit(new SendRawTransaction(tx.getData(), this));
     }

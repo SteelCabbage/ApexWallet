@@ -154,6 +154,8 @@ public class AssetsOverviewActivity extends BaseActivity implements
             BalanceBean balanceBean = new BalanceBean();
             balanceBean.setMapState(0);
             balanceBean.setAssetsID(asset);
+            balanceBean.setAssetType(Constant.ASSET_TYPE_NEP5);
+            balanceBean.setAssetDecimal(8);
             balanceBean.setAssetsValue("0");
             balanceBeans.add(balanceBean);
         }

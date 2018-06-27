@@ -28,7 +28,8 @@ public class Constant {
 //    public static final String URL_UTXOS = "http://dev.chinapex.com.cn:10086/tool/utxos/";
 
     // 交易记录测试
-    public static final String URL_TRANSACTION_HISTORY = "http://tracker.chinapex.com.cn/tool/transaction-history/";
+    public static final String URL_TRANSACTION_HISTORY = "http://tracker.chinapex.com" +
+            ".cn/tool/transaction-history/";
 
     // neo正式网
     public static final String HOSTNAME_VERIFIER = "tracker.chinapex.com.cn";
@@ -80,12 +81,16 @@ public class Constant {
     // wallet detail gathering
     public static final String PARCELABLE_WALLET_BEAN_GATHERING = "parcelableWalletBeanGathering";
 
-    // asset name
+    // asset ID
     public static final String ASSETS_NEO =
             "0xc56f33fc6ecfcd0c225c4ab356fee59390af8560be0e930faebe74a6daff7c9b";
     public static final String ASSETS_NEO_GAS =
             "0x602c79718b16e442de58778e148d0b1084e3b2dffd5de6b7b16cee7969282de7";
     public static final String ASSETS_CPX = "0x45d493a6f73fa5f404244a5fb8472fc014ca5885";
+
+    // asset type
+    public static final String ASSET_TYPE_GLOBAL = "GLOBAL";
+    public static final String ASSET_TYPE_NEP5 = "NEP5";
 
     public static final String MARK_NEO = "NEO";
     public static final String MARK_NEO_GAS = "NeoGas";
