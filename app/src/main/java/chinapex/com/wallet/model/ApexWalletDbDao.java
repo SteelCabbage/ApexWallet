@@ -296,13 +296,12 @@ public class ApexWalletDbDao {
     }
 
     public List<TransactionRecord> queryTransactionRecordsByWalletAddress(String walletAddress) {
-        if (TextUtils.isEmpty(walletAddress)
-                || TextUtils.isEmpty(walletAddress)) {
-            CpLog.e(TAG, "queryTransactionRecordsByWalletAddress() -> walletAddress is null!");
-            return null;
-        }
-
         List<TransactionRecord> transactionRecords = new ArrayList<>();
+
+        if (TextUtils.isEmpty(walletAddress)) {
+            CpLog.e(TAG, "queryTransactionRecordsByWalletAddress() -> walletAddress is null!");
+            return transactionRecords;
+        }
 
         SQLiteDatabase db = openDatabase();
         Cursor cursor = db.query(Constant.TABLE_TRANSACTION_RECORD, null,
@@ -385,5 +384,27 @@ public class ApexWalletDbDao {
             db.endTransaction();
         }
         closeDatabase();
+    }
+
+    public long getRecentTransactionRecordTimeByWalletAddress(String walletAddress) {
+        long recentTransactionRecordTime = 0;
+
+        if (TextUtils.isEmpty(walletAddress)) {
+            CpLog.e(TAG, "getRecentTransactionRecordTime() -> walletAddress is null!");
+            return recentTransactionRecordTime;
+        }
+
+        SQLiteDatabase db = openDatabase();
+        Cursor cursor = db.query(Constant.TABLE_TRANSACTION_RECORD, null,
+                WHERE_CLAUSE_WALLET_ADDRESS_EQ, new String[]{walletAddress}, null, null, null);
+        if (null != cursor) {
+            while (cursor.moveToLast()) {
+                int createTimeIndex = cursor.getColumnIndex(Constant.FIELD_CREATE_TIME);
+                recentTransactionRecordTime = cursor.getLong(createTimeIndex);
+            }
+            cursor.close();
+        }
+        closeDatabase();
+        return recentTransactionRecordTime;
     }
 }

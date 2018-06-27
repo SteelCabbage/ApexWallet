@@ -42,13 +42,13 @@ public class GetTransactionHistory implements Runnable, INetCallback {
             return;
         }
 
-        /**
-         * http://tracker.chinapex.com
-         * .cn/tool/transaction-history/AQVh2pG732YvtNaxEGkQUei3YA4cvo7d2i?beginTime=0
-         */
-
-        mAddress = "AQVh2pG732YvtNaxEGkQUei3YA4cvo7d2i";
-        mTime = 0;
+//        /**
+//         * http://tracker.chinapex.com
+//         * .cn/tool/transaction-history/AQVh2pG732YvtNaxEGkQUei3YA4cvo7d2i?beginTime=0
+//         */
+//
+//        mAddress = "AQVh2pG732YvtNaxEGkQUei3YA4cvo7d2i";
+//        mTime = 0;
 
         String url = Constant.URL_TRANSACTION_HISTORY + mAddress + "?beginTime=" + mTime;
         OkHttpClientManager.getInstance().get(url, this);
@@ -96,20 +96,31 @@ public class GetTransactionHistory implements Runnable, INetCallback {
 
             TransactionRecord transactionRecord = new TransactionRecord();
             transactionRecord.setWalletAddress(mAddress);
-            transactionRecord.setTxType(resultBean.getType());
+            String resultBeanType = resultBean.getType();
+            transactionRecord.setTxType(resultBeanType);
             transactionRecord.setTxID(resultBean.getTxid());
             transactionRecord.setTxAmount(resultBean.getValue());
-            // TODO: 2018/6/22 0022 交易状态
-            transactionRecord.setTxState(1);
+            switch (resultBeanType) {
+                case Constant.ASSET_TYPE_NEP5:
+                    String vmstate = (String) resultBean.getVmstate();
+                    if (!TextUtils.isEmpty(vmstate) && !vmstate.contains("FAULT")) {
+                        transactionRecord.setTxState(Constant.TRANSACTION_STATE_SUCCESS);
+                    }
+                    transactionRecord.setTxState(Constant.TRANSACTION_STATE_FAIL);
+                    break;
+                default:
+                    transactionRecord.setTxState(Constant.TRANSACTION_STATE_SUCCESS);
+                    break;
+            }
             transactionRecord.setTxFrom(resultBean.getFrom());
             transactionRecord.setTxTo(resultBean.getTo());
-            // TODO: 2018/6/22 0022 gas花费
-            transactionRecord.setGasConsumed("0.0");
+            transactionRecord.setGasConsumed(null == resultBean.getGas_consumed() ? "0" : (String)
+                    resultBean.getGas_consumed());
             transactionRecord.setAssetID(resultBean.getAssetId());
             transactionRecord.setAssetSymbol(resultBean.getSymbol());
             transactionRecord.setAssetLogoUrl(resultBean.getImageURL());
-            // TODO: 2018/6/22 0022 资产精度
-            transactionRecord.setAssetDecimal(8);
+            transactionRecord.setAssetDecimal(null == resultBean.getDecimal() ? 0 : Integer
+                    .valueOf((String) resultBean.getDecimal()));
             transactionRecord.setTxTime(resultBean.getTime());
 
             apexWalletDbDao.insertTxRecord(transactionRecord);

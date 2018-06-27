@@ -62,10 +62,12 @@ public class Constant {
     public static final int TRANSACTION_STATE_FAIL = 0;
     public static final int TRANSACTION_STATE_SUCCESS = 1;
     public static final int TRANSACTION_STATE_CONFIRMING = 2;
+    public static final int TRANSACTION_STATE_PACKAGING = 3;
 
     public static final String TRANSACTION_STATE_FAIL_TEXT = "交易失败";
     public static final String TRANSACTION_STATE_SUCCESS_TEXT = "交易成功";
     public static final String TRANSACTION_STATE_CONFIRMING_TEXT = "交易确认中";
+    public static final String TRANSACTION_STATE_PACKAGING_TEXT = "交易打包中";
 
     public static final String PARCELABLE_TRANSACTION_RECORD = "parcelableTransactionRecord";
 

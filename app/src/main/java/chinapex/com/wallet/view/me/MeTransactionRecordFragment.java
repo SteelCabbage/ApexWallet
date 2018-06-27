@@ -60,9 +60,7 @@ public class MeTransactionRecordFragment extends BaseFragment implements View.On
 
         initView(view);
         initData();
-
-        // test
-        testDb();
+        requestTransactionRecords();
     }
 
     private void initView(View view) {
@@ -97,6 +95,22 @@ public class MeTransactionRecordFragment extends BaseFragment implements View.On
 
         mTv_me_transaction_record_title.setText(mCurrentClickedWalletBean.getWalletName());
         mTv_me_transaction_record_address.setText(mCurrentClickedWalletBean.getWalletAddr());
+    }
+
+    private void requestTransactionRecords() {
+        ApexWalletDbDao apexWalletDbDao = ApexWalletDbDao.getInstance(ApexWalletApplication
+                .getInstance());
+        if (null == apexWalletDbDao) {
+            CpLog.e(TAG, "apexWalletDbDao is null!");
+            return;
+        }
+
+        String walletAddr = mTv_me_transaction_record_address.getText().toString().trim();
+        long recentTransactionRecordTime = apexWalletDbDao
+                .getRecentTransactionRecordTimeByWalletAddress(walletAddr);
+        CpLog.i(TAG, "recentTransactionRecordTime:" + recentTransactionRecordTime);
+        TaskController.getInstance().submit(new GetTransactionHistory
+                (recentTransactionRecordTime, walletAddr, this));
     }
 
     @Override
@@ -148,36 +162,21 @@ public class MeTransactionRecordFragment extends BaseFragment implements View.On
 
     @Override
     public void onRefresh() {
-        // 预留后续刷新功能
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mSl_transaction_record.setRefreshing(false);
-            }
-        });
+        requestTransactionRecords();
     }
 
     private List<TransactionRecord> getData() {
         mTransactionRecords = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            TransactionRecord transactionRecord = new TransactionRecord();
-            transactionRecord.setAssetLogoUrl("");
-            transactionRecord.setTxID
-                    ("0xfbc12dd529a981b734e9324b3c0693d6b173b29c204922b27840749d661ca53" + i);
-            transactionRecord.setTxAmount("+100000.0000000" + i);
-            transactionRecord.setTxTime(System.currentTimeMillis() + i * 10000);
-            transactionRecord.setTxState(i % 3);
-            transactionRecord.setAssetSymbol("CPX");
-            transactionRecord.setTxFrom("ALDbmTMY54RZnLmibH3eXfHvrZt4fLiZh" + i);
-            transactionRecord.setTxTo("AKJZ6oNkSLzAvStDe8SrBvd83DntY4AvT" + i);
-            mTransactionRecords.add(transactionRecord);
+        ApexWalletDbDao apexWalletDbDao = ApexWalletDbDao.getInstance(ApexWalletApplication
+                .getInstance());
+        if (null == apexWalletDbDao) {
+            CpLog.e(TAG, "apexWalletDbDao is null!");
+            return mTransactionRecords;
         }
-        return mTransactionRecords;
-    }
 
-    private void testDb() {
-        TaskController.getInstance().submit(new GetTransactionHistory(0,
-                mCurrentClickedWalletBean.getWalletAddr(), this));
+        mTransactionRecords = apexWalletDbDao.queryTransactionRecordsByWalletAddress
+                (mTv_me_transaction_record_address.getText().toString().trim());
+        return mTransactionRecords;
     }
 
     @Override
@@ -187,13 +186,21 @@ public class MeTransactionRecordFragment extends BaseFragment implements View.On
             return;
         }
 
-        for (TransactionRecord transactionRecord : transactionRecords) {
-            if (null == transactionRecord) {
-                CpLog.e(TAG, "transactionRecord is null!");
-                continue;
+        mTransactionRecords.addAll(transactionRecords);
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mTransactionRecordRecyclerViewAdapter.notifyDataSetChanged();
             }
+        });
 
-            CpLog.i(TAG, "transactionRecord:" + transactionRecord.toString());
+        if (mSl_transaction_record.isRefreshing()) {
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    mSl_transaction_record.setRefreshing(false);
+                }
+            });
         }
     }
 
