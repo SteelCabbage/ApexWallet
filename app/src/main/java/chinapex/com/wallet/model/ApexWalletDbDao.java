@@ -398,7 +398,7 @@ public class ApexWalletDbDao {
         Cursor cursor = db.query(Constant.TABLE_TRANSACTION_RECORD, null,
                 WHERE_CLAUSE_WALLET_ADDRESS_EQ, new String[]{walletAddress}, null, null, null);
         if (null != cursor) {
-            while (cursor.moveToLast()) {
+            if (cursor.moveToLast()) {
                 int createTimeIndex = cursor.getColumnIndex(Constant.FIELD_CREATE_TIME);
                 recentTransactionRecordTime = cursor.getLong(createTimeIndex);
             }

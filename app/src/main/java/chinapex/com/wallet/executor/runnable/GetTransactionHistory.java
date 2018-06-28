@@ -105,8 +105,9 @@ public class GetTransactionHistory implements Runnable, INetCallback {
                     String vmstate = (String) resultBean.getVmstate();
                     if (!TextUtils.isEmpty(vmstate) && !vmstate.contains("FAULT")) {
                         transactionRecord.setTxState(Constant.TRANSACTION_STATE_SUCCESS);
+                    } else {
+                        transactionRecord.setTxState(Constant.TRANSACTION_STATE_FAIL);
                     }
-                    transactionRecord.setTxState(Constant.TRANSACTION_STATE_FAIL);
                     break;
                 default:
                     transactionRecord.setTxState(Constant.TRANSACTION_STATE_SUCCESS);

@@ -21,7 +21,9 @@ import chinapex.com.wallet.bean.TransactionRecord;
 import chinapex.com.wallet.bean.WalletBean;
 import chinapex.com.wallet.executor.TaskController;
 import chinapex.com.wallet.executor.callback.IGetTransactionHistoryCallback;
+import chinapex.com.wallet.executor.callback.ILoadTransacitonRecordCallback;
 import chinapex.com.wallet.executor.runnable.GetTransactionHistory;
+import chinapex.com.wallet.executor.runnable.LoadTransacitonRecord;
 import chinapex.com.wallet.global.ApexWalletApplication;
 import chinapex.com.wallet.global.Constant;
 import chinapex.com.wallet.model.ApexWalletDbDao;
@@ -35,7 +37,8 @@ import chinapex.com.wallet.view.dialog.SwitchWalletDialog;
 
 public class MeTransactionRecordFragment extends BaseFragment implements View.OnClickListener,
         SwitchWalletDialog.onItemSelectedListener, SwipeRefreshLayout.OnRefreshListener,
-        TransactionRecordRecyclerViewAdapter.OnItemClickListener, IGetTransactionHistoryCallback {
+        TransactionRecordRecyclerViewAdapter.OnItemClickListener, IGetTransactionHistoryCallback,
+        ILoadTransacitonRecordCallback {
 
     private static final String TAG = MeTransactionRecordFragment.class.getSimpleName();
     private TextView mTv_me_transaction_record_title;
@@ -60,6 +63,7 @@ public class MeTransactionRecordFragment extends BaseFragment implements View.On
 
         initView(view);
         initData();
+//        loadTransactionRecords();
         requestTransactionRecords();
     }
 
@@ -73,7 +77,7 @@ public class MeTransactionRecordFragment extends BaseFragment implements View.On
 
         mRv_transaction_record.setLayoutManager(new LinearLayoutManager(ApexWalletApplication
                 .getInstance(), LinearLayoutManager.VERTICAL, false));
-        mTransactionRecords = getData();
+        mTransactionRecords = new ArrayList<>();
         mTransactionRecordRecyclerViewAdapter = new TransactionRecordRecyclerViewAdapter
                 (mTransactionRecords);
         mTransactionRecordRecyclerViewAdapter.setOnItemClickListener(this);
@@ -97,6 +101,39 @@ public class MeTransactionRecordFragment extends BaseFragment implements View.On
         mTv_me_transaction_record_address.setText(mCurrentClickedWalletBean.getWalletAddr());
     }
 
+    private void loadTransactionRecords() {
+        String address = mTv_me_transaction_record_address.getText().toString().trim();
+        TaskController.getInstance().submit(new LoadTransacitonRecord(address, this));
+    }
+
+    @Override
+    public void loadTransacitonRecord(List<TransactionRecord> transactionRecords) {
+        if (null == transactionRecords || transactionRecords.isEmpty()) {
+            CpLog.w(TAG, "loadTransacitonRecord() -> transactionRecords is null or empty!");
+            return;
+        }
+
+        // TODO: 2018/6/28 0028 偏移量，分页加载
+        mTransactionRecords.clear();
+        mTransactionRecords.addAll(transactionRecords);
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                CpLog.i(TAG, "loadTransacitonRecord ok!");
+                mTransactionRecordRecyclerViewAdapter.notifyDataSetChanged();
+            }
+        });
+
+        if (mSl_transaction_record.isRefreshing()) {
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    mSl_transaction_record.setRefreshing(false);
+                }
+            });
+        }
+    }
+
     private void requestTransactionRecords() {
         ApexWalletDbDao apexWalletDbDao = ApexWalletDbDao.getInstance(ApexWalletApplication
                 .getInstance());
@@ -111,6 +148,16 @@ public class MeTransactionRecordFragment extends BaseFragment implements View.On
         CpLog.i(TAG, "recentTransactionRecordTime:" + recentTransactionRecordTime);
         TaskController.getInstance().submit(new GetTransactionHistory
                 (recentTransactionRecordTime, walletAddr, this));
+    }
+
+    @Override
+    public void getTransactionHistory(List<TransactionRecord> transactionRecords) {
+        if (null == transactionRecords || transactionRecords.isEmpty()) {
+            CpLog.e(TAG, "getTransactionHistory() -> transactionRecords is null or empty!");
+            return;
+        }
+
+        loadTransactionRecords();
     }
 
     @Override
@@ -162,46 +209,7 @@ public class MeTransactionRecordFragment extends BaseFragment implements View.On
 
     @Override
     public void onRefresh() {
-        requestTransactionRecords();
-    }
-
-    private List<TransactionRecord> getData() {
-        mTransactionRecords = new ArrayList<>();
-        ApexWalletDbDao apexWalletDbDao = ApexWalletDbDao.getInstance(ApexWalletApplication
-                .getInstance());
-        if (null == apexWalletDbDao) {
-            CpLog.e(TAG, "apexWalletDbDao is null!");
-            return mTransactionRecords;
-        }
-
-        mTransactionRecords = apexWalletDbDao.queryTransactionRecordsByWalletAddress
-                (mTv_me_transaction_record_address.getText().toString().trim());
-        return mTransactionRecords;
-    }
-
-    @Override
-    public void getTransactionHistory(List<TransactionRecord> transactionRecords) {
-        if (null == transactionRecords || transactionRecords.isEmpty()) {
-            CpLog.e(TAG, "transactionRecords is null or empty!");
-            return;
-        }
-
-        mTransactionRecords.addAll(transactionRecords);
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mTransactionRecordRecyclerViewAdapter.notifyDataSetChanged();
-            }
-        });
-
-        if (mSl_transaction_record.isRefreshing()) {
-            getActivity().runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    mSl_transaction_record.setRefreshing(false);
-                }
-            });
-        }
+//        requestTransactionRecords();
     }
 
 

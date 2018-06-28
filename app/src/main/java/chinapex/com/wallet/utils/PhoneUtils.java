@@ -92,7 +92,7 @@ public class PhoneUtils {
     public static String getFormatTime(long time) {
         String formatTime = null;
         try {
-            formatTime = sSimpleDateFormat.format(new Date(time));
+            formatTime = sSimpleDateFormat.format(new Date(time * 1000));
         } catch (Exception e) {
             CpLog.e(TAG, "getFormatTime exception:" + e.getMessage());
         }
