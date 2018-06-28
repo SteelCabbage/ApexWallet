@@ -90,7 +90,7 @@ public class PhoneUtils {
 
 
     public static String getFormatTime(long time) {
-        String formatTime = null;
+        String formatTime = "";
         try {
             formatTime = sSimpleDateFormat.format(new Date(time * 1000));
         } catch (Exception e) {

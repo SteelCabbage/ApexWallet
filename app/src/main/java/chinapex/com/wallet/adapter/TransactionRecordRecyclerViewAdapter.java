@@ -96,16 +96,25 @@ public class TransactionRecordRecyclerViewAdapter extends RecyclerView
                 holder.txState.setText(Constant.TRANSACTION_STATE_FAIL_TEXT);
                 holder.txState.setTextColor(ApexWalletApplication.getInstance().getResources()
                         .getColor(R.color.c_E16A67));
+                holder.txTime.setVisibility(View.VISIBLE);
                 break;
             case Constant.TRANSACTION_STATE_SUCCESS:
                 holder.txState.setText(Constant.TRANSACTION_STATE_SUCCESS_TEXT);
                 holder.txState.setTextColor(ApexWalletApplication.getInstance().getResources()
                         .getColor(R.color.c_54CA80));
+                holder.txTime.setVisibility(View.VISIBLE);
                 break;
             case Constant.TRANSACTION_STATE_CONFIRMING:
                 holder.txState.setText(Constant.TRANSACTION_STATE_CONFIRMING_TEXT);
                 holder.txState.setTextColor(ApexWalletApplication.getInstance().getResources()
                         .getColor(R.color.colorPrimary));
+                holder.txTime.setVisibility(View.VISIBLE);
+                break;
+            case Constant.TRANSACTION_STATE_PACKAGING:
+                holder.txState.setText(Constant.TRANSACTION_STATE_PACKAGING_TEXT);
+                holder.txState.setTextColor(ApexWalletApplication.getInstance().getResources()
+                        .getColor(R.color.c_F5A623));
+                holder.txTime.setVisibility(View.INVISIBLE);
                 break;
             default:
                 break;

@@ -10,23 +10,32 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.math.BigDecimal;
+import java.util.List;
+import java.util.concurrent.ScheduledFuture;
 
 import chinapex.com.wallet.R;
 import chinapex.com.wallet.base.BaseActivity;
 import chinapex.com.wallet.bean.AssertTxBean;
 import chinapex.com.wallet.bean.BalanceBean;
 import chinapex.com.wallet.bean.Nep5TxBean;
+import chinapex.com.wallet.bean.TransactionRecord;
 import chinapex.com.wallet.bean.WalletBean;
 import chinapex.com.wallet.executor.TaskController;
 import chinapex.com.wallet.executor.callback.ICreateAssertTxCallback;
 import chinapex.com.wallet.executor.callback.ICreateNep5TxCallback;
+import chinapex.com.wallet.executor.callback.IGetTransactionHistoryCallback;
 import chinapex.com.wallet.executor.callback.IGetUtxosCallback;
 import chinapex.com.wallet.executor.callback.ISendRawTransactionCallback;
+import chinapex.com.wallet.executor.callback.IUpdateTransacitonStateCallback;
 import chinapex.com.wallet.executor.runnable.CreateAssertTx;
 import chinapex.com.wallet.executor.runnable.CreateNep5Tx;
+import chinapex.com.wallet.executor.runnable.GetTransactionHistory;
 import chinapex.com.wallet.executor.runnable.GetUtxos;
 import chinapex.com.wallet.executor.runnable.SendRawTransaction;
+import chinapex.com.wallet.executor.runnable.UpdateTransacitonState;
+import chinapex.com.wallet.global.ApexWalletApplication;
 import chinapex.com.wallet.global.Constant;
+import chinapex.com.wallet.model.ApexWalletDbDao;
 import chinapex.com.wallet.utils.CpLog;
 import chinapex.com.wallet.view.dialog.TransferPwdDialog;
 import neomobile.Tx;
@@ -34,7 +43,8 @@ import neomobile.Wallet;
 
 public class TransferActivity extends BaseActivity implements View.OnClickListener,
         IGetUtxosCallback, ISendRawTransactionCallback, ICreateAssertTxCallback,
-        TransferPwdDialog.OnCheckPwdListener, ICreateNep5TxCallback {
+        TransferPwdDialog.OnCheckPwdListener, ICreateNep5TxCallback,
+        IUpdateTransacitonStateCallback, IGetTransactionHistoryCallback {
 
     private static final String TAG = TransferActivity.class.getSimpleName();
     private WalletBean mWalletBean;
@@ -46,6 +56,8 @@ public class TransferActivity extends BaseActivity implements View.OnClickListen
     private EditText mEt_transfer_amount;
     private EditText mEt_transfer_to_wallet_addr;
     private TextView mTv_transfer_unit;
+    private String mOrder;
+    private ScheduledFuture mScheduledFuture;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,6 +143,13 @@ public class TransferActivity extends BaseActivity implements View.OnClickListen
         }
     }
 
+    public void showDeleteWalletPwdDialog() {
+        TransferPwdDialog transferPwdDialog = TransferPwdDialog.newInstance();
+        transferPwdDialog.setCurrentWalletBean(mWalletBean);
+        transferPwdDialog.setOnCheckPwdListener(this);
+        transferPwdDialog.show(getFragmentManager(), "TransferPwdDialog");
+    }
+
     @Override
     public void onCheckPwd(Wallet wallet) {
         if (null == wallet) {
@@ -207,8 +226,8 @@ public class TransferActivity extends BaseActivity implements View.OnClickListen
             return;
         }
 
-        String order = "0x" + tx.getID();
-        CpLog.i(TAG, "createAssertTx order:" + order);
+        mOrder = "0x" + tx.getID();
+        CpLog.i(TAG, "createAssertTx order:" + mOrder);
 
 //        String data = tx.getData();
 //        CpLog.i(TAG, "createAssertTx data:" + data);
@@ -230,8 +249,8 @@ public class TransferActivity extends BaseActivity implements View.OnClickListen
             return;
         }
 
-        String order = "0x" + tx.getID();
-        CpLog.i(TAG, "createNep5Tx order:" + order);
+        mOrder = "0x" + tx.getID();
+        CpLog.i(TAG, "createNep5Tx order:" + mOrder);
 
         String data = tx.getData();
         CpLog.i(TAG, "createNep5Tx data:" + data);
@@ -241,6 +260,30 @@ public class TransferActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     public void sendTxData(final Boolean isSuccess) {
+        // write db
+        ApexWalletDbDao apexWalletDbDao = ApexWalletDbDao.getInstance
+                (ApexWalletApplication.getInstance());
+        if (null != apexWalletDbDao) {
+            TransactionRecord transactionRecord = new TransactionRecord();
+            transactionRecord.setTxID(mOrder);
+            transactionRecord.setTxAmount(String.valueOf("-" + mEt_transfer_amount.getText()
+                    .toString().trim()));
+            if (isSuccess) {
+                transactionRecord.setTxState(Constant.TRANSACTION_STATE_PACKAGING);
+            } else {
+                transactionRecord.setTxState(Constant.TRANSACTION_STATE_FAIL);
+            }
+            transactionRecord.setTxFrom(mWalletFrom.address());
+            transactionRecord.setTxTo(mEt_transfer_to_wallet_addr.getText().toString().trim());
+            transactionRecord.setTxTime(apexWalletDbDao
+                    .getRecentTransactionRecordTimeByWalletAddress(mWalletFrom.address()));
+            // TODO: 2018/6/28 0028 symbol logoUrl
+            transactionRecord.setAssetSymbol("");
+            transactionRecord.setAssetLogoUrl("");
+            apexWalletDbDao.insertTxRecord(transactionRecord);
+        }
+
+        // prompt the user
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -250,17 +293,44 @@ public class TransferActivity extends BaseActivity implements View.OnClickListen
                 } else {
                     Toast.makeText(TransferActivity.this, "交易广播失败！", Toast.LENGTH_SHORT).show();
                 }
+                finish();
             }
         });
 
-        finish();
+        // start polling
+        mScheduledFuture = TaskController.getInstance().schedule(new UpdateTransacitonState
+                (mOrder, this), 0, Constant.TX_POLLING_TIME);
     }
 
-    public void showDeleteWalletPwdDialog() {
-        TransferPwdDialog transferPwdDialog = TransferPwdDialog.newInstance();
-        transferPwdDialog.setCurrentWalletBean(mWalletBean);
-        transferPwdDialog.setOnCheckPwdListener(this);
-        transferPwdDialog.show(getFragmentManager(), "TransferPwdDialog");
+    @Override
+    public void updateTransacitonState(long confirmations) {
+        if (null == mScheduledFuture) {
+            CpLog.e(TAG, "mScheduledFuture is null!");
+            return;
+        }
+
+        if (Constant.TX_CONFIRM_EXCEPTION == confirmations) {
+            CpLog.e(TAG, "TX_CONFIRM_EXCEPTION");
+            mScheduledFuture.cancel(false);
+            return;
+        }
+
+        if (Constant.TX_CONFIRM_ONE == confirmations) {
+            TaskController.getInstance().submit(new GetTransactionHistory(mWalletFrom.address(),
+                    this));
+            return;
+        }
+
+        if (Constant.TX_CONFIRM_OK <= confirmations) {
+            CpLog.i(TAG, "TX_CONFIRM_OK");
+            mScheduledFuture.cancel(false);
+            // TODO: 2018/6/28 0028 修改数据库状态
+
+        }
     }
 
+    @Override
+    public void getTransactionHistory(List<TransactionRecord> transactionRecords) {
+        
+    }
 }
