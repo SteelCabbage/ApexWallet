@@ -63,7 +63,7 @@ public class MeTransactionRecordFragment extends BaseFragment implements View.On
 
         initView(view);
         initData();
-//        loadTransactionRecords();
+        loadTransactionRecords();
         requestTransactionRecords();
     }
 
@@ -135,25 +135,22 @@ public class MeTransactionRecordFragment extends BaseFragment implements View.On
     }
 
     private void requestTransactionRecords() {
-        ApexWalletDbDao apexWalletDbDao = ApexWalletDbDao.getInstance(ApexWalletApplication
-                .getInstance());
-        if (null == apexWalletDbDao) {
-            CpLog.e(TAG, "apexWalletDbDao is null!");
-            return;
-        }
-
         String walletAddr = mTv_me_transaction_record_address.getText().toString().trim();
-        long recentTransactionRecordTime = apexWalletDbDao
-                .getRecentTransactionRecordTimeByWalletAddress(walletAddr);
-        CpLog.i(TAG, "recentTransactionRecordTime:" + recentTransactionRecordTime);
-        TaskController.getInstance().submit(new GetTransactionHistory
-                (recentTransactionRecordTime, walletAddr, this));
+        TaskController.getInstance().submit(new GetTransactionHistory(walletAddr, this));
     }
 
     @Override
     public void getTransactionHistory(List<TransactionRecord> transactionRecords) {
         if (null == transactionRecords || transactionRecords.isEmpty()) {
             CpLog.e(TAG, "getTransactionHistory() -> transactionRecords is null or empty!");
+            if (mSl_transaction_record.isRefreshing()) {
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        mSl_transaction_record.setRefreshing(false);
+                    }
+                });
+            }
             return;
         }
 
@@ -209,57 +206,7 @@ public class MeTransactionRecordFragment extends BaseFragment implements View.On
 
     @Override
     public void onRefresh() {
-//        requestTransactionRecords();
+        requestTransactionRecords();
     }
-
-
-//    private void testDb() {
-//        ApexWalletDbDao apexWalletDbDao = ApexWalletDbDao.getInstance(ApexWalletApplication
-//                .getInstance());
-//        if (null == apexWalletDbDao) {
-//            CpLog.e(TAG, "apexWalletDbDao is null!");
-//            return;
-//        }
-//
-//        List<TransactionRecord> transactionRecords = new ArrayList<>();
-//        for (int i = 0; i < 5; i++) {
-//            TransactionRecord transactionRecord = new TransactionRecord();
-//            transactionRecord.setWalletAddress("ALDbmTMY54RZnLmibH3eXfHvrZt4fLiZh" + i);
-//            transactionRecord.setTxType("CPX" + i);
-//            transactionRecord.setTxID
-//                    ("0xfbc12dd529a981b734e9324b3c0693d6b173b29c204922b27840749d661ca53" + i);
-//            transactionRecord.setTxAmount("+100000.0000000" + i);
-//            transactionRecord.setTxState(i % 3);
-//            transactionRecord.setTxFrom("ALDbmTMY54RZnLmibH3eXfHvrZt4fLiZh" + i);
-//            transactionRecord.setTxTo("AKJZ6oNkSLzAvStDe8SrBvd83DntY4AvT" + i);
-//            transactionRecord.setGasConsumed("0.0" + i);
-//            transactionRecord.setAssetID("0x45d493a6f73fa5f404244a5fb8472fc014ca5885");
-//            transactionRecord.setAssetSymbol("CPX");
-//            transactionRecord.setAssetLogoUrl("");
-//            transactionRecord.setAssetDecimal(8);
-//            transactionRecord.setTxTime(System.currentTimeMillis() + i * 10000);
-//
-//            transactionRecords.add(transactionRecord);
-//
-//            apexWalletDbDao.insertTxRecord(transactionRecord);
-//        }
-//
-//        CpLog.w(TAG, "transactionRecords:" + transactionRecords.toString());
-//
-//        List<TransactionRecord> transactionRecords1 = apexWalletDbDao
-//                .queryTransactionRecordsByWalletAddress("ALDbmTMY54RZnLmibH3eXfHvrZt4fLiZh3");
-//        CpLog.i(TAG, "transactionRecords1:" + transactionRecords1.toString());
-//
-//        List<TransactionRecord> transactionRecords9 = apexWalletDbDao
-//                .queryTransactionRecordsByWalletAddress("ALDbmTMY54RZnLmibH3eXfHvrZt4fLiZh9");
-//        CpLog.i(TAG, "transactionRecords9:" + transactionRecords9.toString());
-//
-//        apexWalletDbDao.updateTxState
-//                ("0xfbc12dd529a981b734e9324b3c0693d6b173b29c204922b27840749d661ca530", 9);
-//        List<TransactionRecord> update = apexWalletDbDao
-//                .queryTransactionRecordsByWalletAddress("ALDbmTMY54RZnLmibH3eXfHvrZt4fLiZh0");
-//        CpLog.i(TAG, "update:" + update.toString());
-//
-//    }
 
 }

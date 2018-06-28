@@ -60,38 +60,75 @@ public class ApexListeners {
 
     public void addOnItemDeleteListener(OnItemDeleteListener onItemDeleteListener) {
         if (null == mOnItemDeleteListeners || null == onItemDeleteListener) {
-            CpLog.e(TAG, "mOnItemDeleteListeners or OnItemDeleteListener is null!");
+            CpLog.e(TAG, "1:mOnItemDeleteListeners or OnItemDeleteListener is null!");
             return;
         }
 
         mOnItemDeleteListeners.add(onItemDeleteListener);
     }
 
+    public void removeOnItemDeleteListener(OnItemDeleteListener onItemDeleteListener) {
+        if (null == mOnItemDeleteListeners || null == onItemDeleteListener) {
+            CpLog.e(TAG, "0:mOnItemDeleteListeners or OnItemDeleteListener is null!");
+            return;
+        }
+
+        mOnItemDeleteListeners.remove(onItemDeleteListener);
+    }
+
     public void addOnItemAddListener(OnItemAddListener onItemAddListener) {
         if (null == mOnItemAddListeners || null == onItemAddListener) {
-            CpLog.e(TAG, "mOnItemAddListeners or onItemAddListener is null!");
+            CpLog.e(TAG, "1:mOnItemAddListeners or onItemAddListener is null!");
             return;
         }
 
         mOnItemAddListeners.add(onItemAddListener);
     }
 
+    public void removeOnItemAddListener(OnItemAddListener onItemAddListener) {
+        if (null == mOnItemAddListeners || null == onItemAddListener) {
+            CpLog.e(TAG, "0:mOnItemAddListeners or onItemAddListener is null!");
+            return;
+        }
+
+        mOnItemAddListeners.remove(onItemAddListener);
+    }
+
     public void addOnItemStateUpdateListener(OnItemStateUpdateListener onItemStateUpdateListener) {
         if (null == mOnItemStateUpdateListeners || null == onItemStateUpdateListener) {
-            CpLog.e(TAG, "mOnItemStateUpdateListeners or onItemStateUpdateListener is null!");
+            CpLog.e(TAG, "1:mOnItemStateUpdateListeners or onItemStateUpdateListener is null!");
             return;
         }
 
         mOnItemStateUpdateListeners.add(onItemStateUpdateListener);
     }
 
+    public void removeOnItemStateUpdateListener(OnItemStateUpdateListener
+                                                        onItemStateUpdateListener) {
+        if (null == mOnItemStateUpdateListeners || null == onItemStateUpdateListener) {
+            CpLog.e(TAG, "0:mOnItemStateUpdateListeners or onItemStateUpdateListener is null!");
+            return;
+        }
+
+        mOnItemStateUpdateListeners.remove(onItemStateUpdateListener);
+    }
+
     public void addOnItemNameUpdateListener(OnItemNameUpdateListener onItemNameUpdateListener) {
         if (null == mOnItemNameUpdateListeners || null == onItemNameUpdateListener) {
-            CpLog.e(TAG, "mOnItemNameUpdateListeners or onItemNameUpdateListener is null!");
+            CpLog.e(TAG, "1:mOnItemNameUpdateListeners or onItemNameUpdateListener is null!");
             return;
         }
 
         mOnItemNameUpdateListeners.add(onItemNameUpdateListener);
+    }
+
+    public void removeOnItemNameUpdateListener(OnItemNameUpdateListener onItemNameUpdateListener) {
+        if (null == mOnItemNameUpdateListeners || null == onItemNameUpdateListener) {
+            CpLog.e(TAG, "0:mOnItemNameUpdateListeners or onItemNameUpdateListener is null!");
+            return;
+        }
+
+        mOnItemNameUpdateListeners.remove(onItemNameUpdateListener);
     }
 
     public void notifyItemDelete(WalletBean walletBean) {

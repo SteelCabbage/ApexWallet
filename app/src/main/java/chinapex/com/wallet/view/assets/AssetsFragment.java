@@ -363,4 +363,13 @@ public class AssetsFragment extends BaseFragment implements AssetsRecyclerViewAd
     public void afterTextChanged(Editable s) {
 
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        ApexListeners.getInstance().removeOnItemDeleteListener(this);
+        ApexListeners.getInstance().removeOnItemAddListener(this);
+        ApexListeners.getInstance().removeOnItemNameUpdateListener(this);
+    }
+
 }

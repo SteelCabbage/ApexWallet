@@ -293,4 +293,14 @@ public class MeFragment extends BaseFragment implements MeRecyclerViewAdapter
 
         mMeRecyclerViewAdapter.notifyDataSetChanged();
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        ApexListeners.getInstance().removeOnItemDeleteListener(this);
+        ApexListeners.getInstance().removeOnItemAddListener(this);
+        ApexListeners.getInstance().removeOnItemStateUpdateListener(this);
+        ApexListeners.getInstance().removeOnItemNameUpdateListener(this);
+    }
+
 }

@@ -24,13 +24,11 @@ import chinapex.com.wallet.utils.GsonUtils;
 public class GetTransactionHistory implements Runnable, INetCallback {
 
     private static final String TAG = GetTransactionHistory.class.getSimpleName();
-    private long mTime;
     private String mAddress;
     private IGetTransactionHistoryCallback mIGetTransactionHistoryCallback;
 
-    public GetTransactionHistory(long time, String address, IGetTransactionHistoryCallback
+    public GetTransactionHistory(String address, IGetTransactionHistoryCallback
             IGetTransactionHistoryCallback) {
-        mTime = time;
         mAddress = address;
         mIGetTransactionHistoryCallback = IGetTransactionHistoryCallback;
     }
@@ -42,15 +40,17 @@ public class GetTransactionHistory implements Runnable, INetCallback {
             return;
         }
 
-//        /**
-//         * http://tracker.chinapex.com
-//         * .cn/tool/transaction-history/AQVh2pG732YvtNaxEGkQUei3YA4cvo7d2i?beginTime=0
-//         */
-//
-//        mAddress = "AQVh2pG732YvtNaxEGkQUei3YA4cvo7d2i";
-//        mTime = 0;
+        ApexWalletDbDao apexWalletDbDao = ApexWalletDbDao.getInstance(ApexWalletApplication
+                .getInstance());
+        if (null == apexWalletDbDao) {
+            CpLog.e(TAG, "apexWalletDbDao is null!");
+            return;
+        }
 
-        String url = Constant.URL_TRANSACTION_HISTORY + mAddress + "?beginTime=" + mTime;
+        long recentTime = apexWalletDbDao.getRecentTransactionRecordTimeByWalletAddress(mAddress);
+        CpLog.i(TAG, "recentTransactionRecordTime:" + recentTime);
+
+        String url = Constant.URL_TRANSACTION_HISTORY + mAddress + "?beginTime=" + recentTime;
         OkHttpClientManager.getInstance().get(url, this);
     }
 
