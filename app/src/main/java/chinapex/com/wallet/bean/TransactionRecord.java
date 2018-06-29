@@ -179,6 +179,26 @@ public class TransactionRecord implements Parcelable {
     };
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        TransactionRecord that = (TransactionRecord) o;
+
+        if (!txID.equals(that.txID)) return false;
+        if (!txFrom.equals(that.txFrom)) return false;
+        return txTo.equals(that.txTo);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = txID.hashCode();
+        result = 31 * result + txFrom.hashCode();
+        result = 31 * result + txTo.hashCode();
+        return result;
+    }
+
+    @Override
     public String toString() {
         return "TransactionRecord{" +
                 "walletAddress='" + walletAddress + '\'' +

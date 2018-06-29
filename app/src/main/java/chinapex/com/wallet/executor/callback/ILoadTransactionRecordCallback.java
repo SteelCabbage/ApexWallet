@@ -9,6 +9,6 @@ import chinapex.com.wallet.bean.TransactionRecord;
  * E-Mail：liuyi_61@163.com
  */
 
-public interface ILoadTransacitonRecordCallback {
-    void loadTransacitonRecord(List<TransactionRecord> transactionRecords);
+public interface ILoadTransactionRecordCallback {
+    void loadTransactionRecord(List<TransactionRecord> transactionRecords);
 }

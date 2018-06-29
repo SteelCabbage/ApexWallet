@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,14 +20,15 @@ import chinapex.com.wallet.adapter.TransactionRecordRecyclerViewAdapter;
 import chinapex.com.wallet.base.BaseFragment;
 import chinapex.com.wallet.bean.TransactionRecord;
 import chinapex.com.wallet.bean.WalletBean;
+import chinapex.com.wallet.changelistener.ApexListeners;
+import chinapex.com.wallet.changelistener.OnTxStateUpdateListener;
 import chinapex.com.wallet.executor.TaskController;
 import chinapex.com.wallet.executor.callback.IGetTransactionHistoryCallback;
-import chinapex.com.wallet.executor.callback.ILoadTransacitonRecordCallback;
+import chinapex.com.wallet.executor.callback.ILoadTransactionRecordCallback;
 import chinapex.com.wallet.executor.runnable.GetTransactionHistory;
 import chinapex.com.wallet.executor.runnable.LoadTransacitonRecord;
 import chinapex.com.wallet.global.ApexWalletApplication;
 import chinapex.com.wallet.global.Constant;
-import chinapex.com.wallet.model.ApexWalletDbDao;
 import chinapex.com.wallet.utils.CpLog;
 import chinapex.com.wallet.view.MeSkipActivity;
 import chinapex.com.wallet.view.dialog.SwitchWalletDialog;
@@ -38,7 +40,7 @@ import chinapex.com.wallet.view.dialog.SwitchWalletDialog;
 public class MeTransactionRecordFragment extends BaseFragment implements View.OnClickListener,
         SwitchWalletDialog.onItemSelectedListener, SwipeRefreshLayout.OnRefreshListener,
         TransactionRecordRecyclerViewAdapter.OnItemClickListener, IGetTransactionHistoryCallback,
-        ILoadTransacitonRecordCallback {
+        ILoadTransactionRecordCallback, OnTxStateUpdateListener {
 
     private static final String TAG = MeTransactionRecordFragment.class.getSimpleName();
     private TextView mTv_me_transaction_record_title;
@@ -63,8 +65,8 @@ public class MeTransactionRecordFragment extends BaseFragment implements View.On
 
         initView(view);
         initData();
-        loadTransactionRecords();
-        requestTransactionRecords();
+        loadTxsFromDb();
+        incrementalUpdateTxDbFromNet();
     }
 
     private void initView(View view) {
@@ -99,27 +101,27 @@ public class MeTransactionRecordFragment extends BaseFragment implements View.On
 
         mTv_me_transaction_record_title.setText(mCurrentClickedWalletBean.getWalletName());
         mTv_me_transaction_record_address.setText(mCurrentClickedWalletBean.getWalletAddr());
+        ApexListeners.getInstance().addOnTxStateUpdateListener(this);
     }
 
-    private void loadTransactionRecords() {
+    private void loadTxsFromDb() {
         String address = mTv_me_transaction_record_address.getText().toString().trim();
         TaskController.getInstance().submit(new LoadTransacitonRecord(address, this));
     }
 
     @Override
-    public void loadTransacitonRecord(List<TransactionRecord> transactionRecords) {
+    public void loadTransactionRecord(List<TransactionRecord> transactionRecords) {
         if (null == transactionRecords || transactionRecords.isEmpty()) {
-            CpLog.w(TAG, "loadTransacitonRecord() -> transactionRecords is null or empty!");
+            CpLog.w(TAG, "loadTransactionRecord() -> transactionRecords is null or empty!");
             return;
         }
 
-        // TODO: 2018/6/28 0028 偏移量，分页加载
         mTransactionRecords.clear();
         mTransactionRecords.addAll(transactionRecords);
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                CpLog.i(TAG, "loadTransacitonRecord ok!");
+                CpLog.i(TAG, "loadTransactionRecord ok!");
                 mTransactionRecordRecyclerViewAdapter.notifyDataSetChanged();
             }
         });
@@ -134,7 +136,7 @@ public class MeTransactionRecordFragment extends BaseFragment implements View.On
         }
     }
 
-    private void requestTransactionRecords() {
+    private void incrementalUpdateTxDbFromNet() {
         String walletAddr = mTv_me_transaction_record_address.getText().toString().trim();
         TaskController.getInstance().submit(new GetTransactionHistory(walletAddr, this));
     }
@@ -142,7 +144,7 @@ public class MeTransactionRecordFragment extends BaseFragment implements View.On
     @Override
     public void getTransactionHistory(List<TransactionRecord> transactionRecords) {
         if (null == transactionRecords || transactionRecords.isEmpty()) {
-            CpLog.e(TAG, "getTransactionHistory() -> transactionRecords is null or empty!");
+            CpLog.w(TAG, "getTransactionHistory() -> transactionRecords is null or empty!");
             if (mSl_transaction_record.isRefreshing()) {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
@@ -154,7 +156,7 @@ public class MeTransactionRecordFragment extends BaseFragment implements View.On
             return;
         }
 
-        loadTransactionRecords();
+        loadTxsFromDb();
     }
 
     @Override
@@ -206,7 +208,46 @@ public class MeTransactionRecordFragment extends BaseFragment implements View.On
 
     @Override
     public void onRefresh() {
-        requestTransactionRecords();
+        incrementalUpdateTxDbFromNet();
     }
 
+    @Override
+    public void onTxStateUpdate(String txID, int state, long txTime) {
+        if (TextUtils.isEmpty(txID)) {
+            CpLog.e(TAG, "txID is null!");
+            return;
+        }
+
+        if (null == mTransactionRecords || mTransactionRecords.isEmpty()) {
+            CpLog.e(TAG, "mTransactionRecords is null or empty!");
+            return;
+        }
+
+        for (TransactionRecord transactionRecord : mTransactionRecords) {
+            if (null == transactionRecord) {
+                continue;
+            }
+
+            if (txID.equals(transactionRecord.getTxID())) {
+                transactionRecord.setTxState(state);
+                if (Constant.NO_NEED_MODIFY_TX_TIME != txTime) {
+                    transactionRecord.setTxTime(txTime);
+                }
+            }
+        }
+
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mTransactionRecordRecyclerViewAdapter.notifyDataSetChanged();
+            }
+        });
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        ApexListeners.getInstance().removeOnTxStateUpdateListener(this);
+        CpLog.w(TAG, "onDestroy");
+    }
 }

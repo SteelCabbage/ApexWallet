@@ -34,6 +34,7 @@ public class Constant {
     public static final long TX_CONFIRM_EXCEPTION = -1;
     public static final long TX_CONFIRM_ONE = 1;
     public static final long TX_CONFIRM_OK = 6;
+    public static final long NO_NEED_MODIFY_TX_TIME = -2;
 
     // neo正式网
     public static final String HOSTNAME_VERIFIER = "tracker.chinapex.com.cn";

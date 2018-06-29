@@ -7,6 +7,7 @@ import java.util.List;
 
 import chinapex.com.wallet.bean.TransactionRecord;
 import chinapex.com.wallet.bean.response.ResponseGetTransactionHistory;
+import chinapex.com.wallet.changelistener.ApexListeners;
 import chinapex.com.wallet.executor.callback.IGetTransactionHistoryCallback;
 import chinapex.com.wallet.global.ApexWalletApplication;
 import chinapex.com.wallet.global.Constant;
@@ -26,6 +27,7 @@ public class GetTransactionHistory implements Runnable, INetCallback {
     private static final String TAG = GetTransactionHistory.class.getSimpleName();
     private String mAddress;
     private IGetTransactionHistoryCallback mIGetTransactionHistoryCallback;
+    private long mRecentTime;
 
     public GetTransactionHistory(String address, IGetTransactionHistoryCallback
             IGetTransactionHistoryCallback) {
@@ -47,10 +49,9 @@ public class GetTransactionHistory implements Runnable, INetCallback {
             return;
         }
 
-        long recentTime = apexWalletDbDao.getRecentTransactionRecordTimeByWalletAddress(mAddress);
-        CpLog.i(TAG, "recentTransactionRecordTime:" + recentTime);
+        mRecentTime = apexWalletDbDao.getRecentTransactionRecordTimeByWalletAddress(mAddress);
 
-        String url = Constant.URL_TRANSACTION_HISTORY + mAddress + "?beginTime=" + recentTime;
+        String url = Constant.URL_TRANSACTION_HISTORY + mAddress + "?beginTime=" + mRecentTime;
         OkHttpClientManager.getInstance().get(url, this);
     }
 
@@ -84,6 +85,12 @@ public class GetTransactionHistory implements Runnable, INetCallback {
             CpLog.e(TAG, "apexWalletDbDao is null!");
             mIGetTransactionHistoryCallback.getTransactionHistory(null);
             return;
+        }
+
+        List<TransactionRecord> qureyTransactionRecords = apexWalletDbDao
+                .queryTxsByAddressAndTime(mAddress, mRecentTime);
+        if (mRecentTime != 0 && qureyTransactionRecords.isEmpty()) {
+            resultBeans.remove(resultBeans.size() - 1);
         }
 
         List<TransactionRecord> transactionRecords = new ArrayList<>();
@@ -124,8 +131,16 @@ public class GetTransactionHistory implements Runnable, INetCallback {
                     .valueOf((String) resultBean.getDecimal()));
             transactionRecord.setTxTime(resultBean.getTime());
 
-            apexWalletDbDao.insertTxRecord(transactionRecord);
-            transactionRecords.add(transactionRecord);
+            if (qureyTransactionRecords.contains(transactionRecord)) {
+                CpLog.i(TAG, "modify tx state confirming");
+                transactionRecord.setTxState(Constant.TRANSACTION_STATE_CONFIRMING);
+                apexWalletDbDao.updateTxRecord(transactionRecord);
+                ApexListeners.getInstance().notifyTxStateUpdate(transactionRecord.getTxID(),
+                        Constant.TRANSACTION_STATE_CONFIRMING, transactionRecord.getTxTime());
+            } else {
+                transactionRecords.add(transactionRecord);
+                apexWalletDbDao.insertTxRecord(transactionRecord);
+            }
         }
 
         mIGetTransactionHistoryCallback.getTransactionHistory(transactionRecords);

@@ -20,6 +20,7 @@ import chinapex.com.wallet.bean.BalanceBean;
 import chinapex.com.wallet.bean.Nep5TxBean;
 import chinapex.com.wallet.bean.TransactionRecord;
 import chinapex.com.wallet.bean.WalletBean;
+import chinapex.com.wallet.changelistener.ApexListeners;
 import chinapex.com.wallet.executor.TaskController;
 import chinapex.com.wallet.executor.callback.ICreateAssertTxCallback;
 import chinapex.com.wallet.executor.callback.ICreateNep5TxCallback;
@@ -263,33 +264,45 @@ public class TransferActivity extends BaseActivity implements View.OnClickListen
         // write db
         ApexWalletDbDao apexWalletDbDao = ApexWalletDbDao.getInstance
                 (ApexWalletApplication.getInstance());
-        if (null != apexWalletDbDao) {
-            TransactionRecord transactionRecord = new TransactionRecord();
-            transactionRecord.setTxID(mOrder);
-            transactionRecord.setTxAmount(String.valueOf("-" + mEt_transfer_amount.getText()
-                    .toString().trim()));
-            if (isSuccess) {
-                transactionRecord.setTxState(Constant.TRANSACTION_STATE_PACKAGING);
-            } else {
-                transactionRecord.setTxState(Constant.TRANSACTION_STATE_FAIL);
-            }
-            transactionRecord.setTxFrom(mWalletFrom.address());
-            transactionRecord.setTxTo(mEt_transfer_to_wallet_addr.getText().toString().trim());
-            transactionRecord.setTxTime(apexWalletDbDao
-                    .getRecentTransactionRecordTimeByWalletAddress(mWalletFrom.address()));
-            // TODO: 2018/6/28 0028 symbol logoUrl
-            transactionRecord.setAssetSymbol("");
-            transactionRecord.setAssetLogoUrl("");
-            apexWalletDbDao.insertTxRecord(transactionRecord);
+        if (null == apexWalletDbDao) {
+            CpLog.e(TAG, "apexWalletDbDao is null!");
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(TransferActivity.this, "数据库异常！", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+            });
+            return;
         }
+
+        TransactionRecord transactionRecord = new TransactionRecord();
+        transactionRecord.setWalletAddress(mWalletFrom.address());
+        transactionRecord.setTxID(mOrder);
+        transactionRecord.setTxAmount(String.valueOf("-" + mEt_transfer_amount.getText()
+                .toString().trim()));
+        if (isSuccess) {
+            transactionRecord.setTxState(Constant.TRANSACTION_STATE_PACKAGING);
+        } else {
+            transactionRecord.setTxState(Constant.TRANSACTION_STATE_FAIL);
+        }
+        transactionRecord.setTxFrom(mWalletFrom.address());
+        transactionRecord.setTxTo(mEt_transfer_to_wallet_addr.getText().toString().trim());
+        // TODO: 2018/6/29 0029  modify recentTime
+        long recentTime = apexWalletDbDao.getRecentTransactionRecordTimeByWalletAddress
+                (mWalletFrom.address()) + 1;
+        transactionRecord.setTxTime(recentTime);
+        // TODO: 2018/6/28 0028 symbol logoUrl
+        transactionRecord.setAssetSymbol("");
+        transactionRecord.setAssetLogoUrl("");
+        apexWalletDbDao.insertTxRecord(transactionRecord);
 
         // prompt the user
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 if (isSuccess) {
-                    Toast.makeText(TransferActivity.this, "交易广播成功!请等待区块确认", Toast.LENGTH_SHORT)
-                            .show();
+                    Toast.makeText(TransferActivity.this, "交易广播成功!", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(TransferActivity.this, "交易广播失败！", Toast.LENGTH_SHORT).show();
                 }
@@ -315,7 +328,7 @@ public class TransferActivity extends BaseActivity implements View.OnClickListen
             return;
         }
 
-        if (Constant.TX_CONFIRM_ONE == confirmations) {
+        if (Constant.TX_CONFIRM_ONE <= confirmations && confirmations < Constant.TX_CONFIRM_OK) {
             TaskController.getInstance().submit(new GetTransactionHistory(mWalletFrom.address(),
                     this));
             return;
@@ -324,13 +337,21 @@ public class TransferActivity extends BaseActivity implements View.OnClickListen
         if (Constant.TX_CONFIRM_OK <= confirmations) {
             CpLog.i(TAG, "TX_CONFIRM_OK");
             mScheduledFuture.cancel(false);
-            // TODO: 2018/6/28 0028 修改数据库状态
+            ApexWalletDbDao apexWalletDbDao = ApexWalletDbDao.getInstance(ApexWalletApplication
+                    .getInstance());
+            if (null == apexWalletDbDao) {
+                CpLog.e(TAG, "apexWalletDbDao is null!");
+                return;
+            }
 
+            apexWalletDbDao.updateTxState(mOrder, Constant.TRANSACTION_STATE_SUCCESS);
+            ApexListeners.getInstance().notifyTxStateUpdate(mOrder, Constant
+                    .TRANSACTION_STATE_SUCCESS, Constant.NO_NEED_MODIFY_TX_TIME);
         }
     }
 
     @Override
     public void getTransactionHistory(List<TransactionRecord> transactionRecords) {
-        
+
     }
 }
