@@ -82,6 +82,7 @@ public class ApexWalletDbDao {
         contentValues.put(Constant.FIELD_BACKUP_STATE, walletBean.getBackupState());
         contentValues.put(Constant.FIELD_WALLET_KEYSTORE, walletBean.getKeyStore());
         contentValues.put(Constant.FIELD_WALLET_ASSETS_JSON, walletBean.getAssetsJson());
+        contentValues.put(Constant.FIELD_WALLET_ASSETS_NEP5_JSON, walletBean.getAssetsNep5Json());
         contentValues.put(Constant.FIELD_CREATE_TIME, SystemClock.currentThreadTimeMillis());
 
         SQLiteDatabase db = openDatabase();
@@ -142,12 +143,15 @@ public class ApexWalletDbDao {
                 int walletKeystoreIndex = cursor.getColumnIndex(Constant.FIELD_WALLET_KEYSTORE);
                 int walletAssetsJsonIndex = cursor.getColumnIndex(Constant
                         .FIELD_WALLET_ASSETS_JSON);
+                int walletAssetsNep5JsonIndex = cursor.getColumnIndex(Constant
+                        .FIELD_WALLET_ASSETS_NEP5_JSON);
 
                 String walletName = cursor.getString(walletNameIndex);
                 String walletAddress = cursor.getString(walletAddressIndex);
                 int backupState = cursor.getInt(backupStateIndex);
                 String walletKeystore = cursor.getString(walletKeystoreIndex);
                 String walletAssetsJson = cursor.getString(walletAssetsJsonIndex);
+                String walletAssetsNep5Json = cursor.getString(walletAssetsNep5JsonIndex);
 
                 WalletBean walletBean = new WalletBean();
                 walletBean.setWalletName(walletName);
@@ -155,6 +159,7 @@ public class ApexWalletDbDao {
                 walletBean.setBackupState(backupState);
                 walletBean.setKeyStore(walletKeystore);
                 walletBean.setAssetsJson(walletAssetsJson);
+                walletBean.setAssetsNep5Json(walletAssetsNep5Json);
 
                 walletBeans.add(walletBean);
             }
@@ -187,12 +192,15 @@ public class ApexWalletDbDao {
                 int walletKeystoreIndex = cursor.getColumnIndex(Constant.FIELD_WALLET_KEYSTORE);
                 int walletAssetsJsonIndex = cursor.getColumnIndex(Constant
                         .FIELD_WALLET_ASSETS_JSON);
+                int walletAssetsNep5JsonIndex = cursor.getColumnIndex(Constant
+                        .FIELD_WALLET_ASSETS_NEP5_JSON);
 
                 String walletName = cursor.getString(walletNameIndex);
                 String walletAddr = cursor.getString(walletAddrIndex);
                 int backupState = cursor.getInt(backupStateIndex);
                 String walletKeystore = cursor.getString(walletKeystoreIndex);
                 String walletAssetsJson = cursor.getString(walletAssetsJsonIndex);
+                String walletAssetsNep5Json = cursor.getString(walletAssetsNep5JsonIndex);
 
                 WalletBean walletBean = new WalletBean();
                 walletBean.setWalletName(walletName);
@@ -200,6 +208,7 @@ public class ApexWalletDbDao {
                 walletBean.setBackupState(backupState);
                 walletBean.setKeyStore(walletKeystore);
                 walletBean.setAssetsJson(walletAssetsJson);
+                walletBean.setAssetsNep5Json(walletAssetsNep5Json);
 
                 walletBeans.add(walletBean);
             }

@@ -68,15 +68,19 @@ public class CreateWallet implements Runnable {
         }
 
         ArrayList<String> assets = new ArrayList<>();
-        assets.add(Constant.ASSETS_CPX);
         assets.add(Constant.ASSETS_NEO);
         assets.add(Constant.ASSETS_NEO_GAS);
+
+        ArrayList<String> assetsNep5 = new ArrayList<>();
+        assetsNep5.add(Constant.ASSETS_CPX);
+
         WalletBean walletBean = new WalletBean();
         walletBean.setWalletName(mWalletName);
         walletBean.setWalletAddr(wallet.address());
         walletBean.setBackupState(Constant.BACKUP_UNFINISHED);
         walletBean.setKeyStore(toKeyStore);
         walletBean.setAssetsJson(GsonUtils.toJsonStr(assets));
+        walletBean.setAssetsNep5Json(GsonUtils.toJsonStr(assetsNep5));
 
         ApexWalletDbDao apexWalletDbDao = ApexWalletDbDao.getInstance(ApexWalletApplication
                 .getInstance());
@@ -86,7 +90,6 @@ public class CreateWallet implements Runnable {
         }
 
         apexWalletDbDao.insert(Constant.TABLE_APEX_WALLET, walletBean);
-        CpLog.i(TAG, "ApexListeners.getInstance().notifyItemAdd");
         ApexListeners.getInstance().notifyItemAdd(walletBean);
         mICreateWalletCallback.newWallet(wallet);
     }

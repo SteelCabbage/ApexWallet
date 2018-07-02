@@ -27,6 +27,11 @@ public class Constant {
 //    public static final String URL_CLI = "http://dev.chinapex.com.cn:10086/neo-cli/";
 //    public static final String URL_UTXOS = "http://dev.chinapex.com.cn:10086/tool/utxos/";
 
+    // neo正式网
+    public static final String HOSTNAME_VERIFIER = "tracker.chinapex.com.cn";
+    public static final String URL_CLI = "http://tracker.chinapex.com.cn:80/neo-cli/";
+    public static final String URL_UTXOS = "http://tracker.chinapex.com.cn:80/tool/utxos/";
+
     // 交易记录
     public static final String URL_TRANSACTION_HISTORY = "http://tracker.chinapex.com" +
             ".cn/tool/transaction-history/";
@@ -35,11 +40,6 @@ public class Constant {
     public static final long TX_CONFIRM_ONE = 1;
     public static final long TX_CONFIRM_OK = 6;
     public static final long NO_NEED_MODIFY_TX_TIME = -2;
-
-    // neo正式网
-    public static final String HOSTNAME_VERIFIER = "tracker.chinapex.com.cn";
-    public static final String URL_CLI = "http://tracker.chinapex.com.cn:80/neo-cli/";
-    public static final String URL_UTXOS = "http://tracker.chinapex.com.cn:80/tool/utxos/";
 
     // fragmentTag
     public static final String FRAGMENT_TAG_IMPORT_MNEMONIC = "ImportMnemonicFragment";
@@ -56,6 +56,10 @@ public class Constant {
     // assets
     public static final String WALLET_BEAN = "walletBean";
     public static final String BALANCE_BEAN = "balanceBean";
+
+    // 一键映射
+    public static final int MAP_STATE_FINISHED = 1;
+    public static final int MAP_STATE_UNFINISHED = 0;
 
     // me
     public static final String ME_MANAGER_DETAIL_BUNDLE = "meManagerDetailBundle";
@@ -100,7 +104,7 @@ public class Constant {
     public static final String ASSET_TYPE_NEP5 = "NEP5";
 
     public static final String MARK_NEO = "NEO";
-    public static final String MARK_NEO_GAS = "NeoGas";
+    public static final String MARK_NEO_GAS = "GAS";
     public static final String MARK_CPX = "CPX";
 
     public static final String UNIT_NEO = "neo";
@@ -125,6 +129,7 @@ public class Constant {
     public static final String FIELD_BACKUP_STATE = "backup_state";
     public static final String FIELD_WALLET_KEYSTORE = "wallet_keystore";
     public static final String FIELD_WALLET_ASSETS_JSON = "wallet_assets_json";
+    public static final String FIELD_WALLET_ASSETS_NEP5_JSON = "wallet_assets_nep5_json";
     public static final String FIELD_CREATE_TIME = "create_time";
 
     public static final String SQL_CREATE_APEX_WALLET = "create table " + TABLE_APEX_WALLET
@@ -134,6 +139,7 @@ public class Constant {
             + FIELD_BACKUP_STATE + " integer, "
             + FIELD_WALLET_KEYSTORE + " text, "
             + FIELD_WALLET_ASSETS_JSON + " text, "
+            + FIELD_WALLET_ASSETS_NEP5_JSON + " text, "
             + FIELD_CREATE_TIME + " integer)";
 
 

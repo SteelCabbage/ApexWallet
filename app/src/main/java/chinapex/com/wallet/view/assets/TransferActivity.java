@@ -129,7 +129,7 @@ public class TransferActivity extends BaseActivity implements View.OnClickListen
                     BigDecimal amountBigDecimal = new BigDecimal(amount);
                     if (amountBigDecimal.compareTo(balanceBigDecimal) == 1) {
                         Toast.makeText(TransferActivity.this, "余额不足！", Toast.LENGTH_SHORT).show();
-//                        return;
+                        return;
                     }
                 } catch (NumberFormatException e) {
                     CpLog.e(TAG, "NumberFormatException: " + e.getMessage());

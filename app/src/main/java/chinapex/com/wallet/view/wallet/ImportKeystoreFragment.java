@@ -175,17 +175,20 @@ public class ImportKeystoreFragment extends BaseFragment implements View.OnClick
         }
 
         String keystore = mEt_import_wallet_keystore.getText().toString().trim();
-        ArrayList<String> assetses = new ArrayList<>();
-        assetses.add(Constant.ASSETS_CPX);
-        assetses.add(Constant.ASSETS_NEO);
-        assetses.add(Constant.ASSETS_NEO_GAS);
+        ArrayList<String> assets = new ArrayList<>();
+        assets.add(Constant.ASSETS_NEO);
+        assets.add(Constant.ASSETS_NEO_GAS);
+
+        ArrayList<String> assetsNep5 = new ArrayList<>();
+        assetsNep5.add(Constant.ASSETS_CPX);
 
         WalletBean walletBean = new WalletBean();
         walletBean.setWalletName(Constant.WALLET_NAME_IMPORT_DEFAULT);
         walletBean.setWalletAddr(walletAddress);
         walletBean.setBackupState(Constant.BACKUP_UNFINISHED);
         walletBean.setKeyStore(keystore);
-        walletBean.setAssetsJson(GsonUtils.toJsonStr(assetses));
+        walletBean.setAssetsJson(GsonUtils.toJsonStr(assets));
+        walletBean.setAssetsNep5Json(GsonUtils.toJsonStr(assetsNep5));
 
         apexWalletDbDao.insert(Constant.TABLE_APEX_WALLET, walletBean);
         CpLog.i(TAG, "ApexListeners.getInstance().notifyItemAdd");
