@@ -350,7 +350,6 @@ public class AssetsFragment extends BaseFragment implements AssetsRecyclerViewAd
                 continue;
             }
 
-            CpLog.e(TAG, "walletBean:" + walletBean.toString());
             if (!walletBean.getWalletAddr().contains(s)) {
                 iterator.remove();
             }
