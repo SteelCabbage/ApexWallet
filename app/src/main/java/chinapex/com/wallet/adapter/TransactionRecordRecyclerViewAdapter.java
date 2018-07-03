@@ -96,7 +96,7 @@ public class TransactionRecordRecyclerViewAdapter extends RecyclerView
                 holder.txState.setText(Constant.TRANSACTION_STATE_FAIL_TEXT);
                 holder.txState.setTextColor(ApexWalletApplication.getInstance().getResources()
                         .getColor(R.color.c_E16A67));
-                holder.txTime.setVisibility(View.VISIBLE);
+                holder.txTime.setVisibility(View.INVISIBLE);
                 break;
             case Constant.TRANSACTION_STATE_SUCCESS:
                 holder.txState.setText(Constant.TRANSACTION_STATE_SUCCESS_TEXT);

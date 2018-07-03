@@ -3,6 +3,7 @@ package chinapex.com.wallet.executor.runnable;
 import android.text.TextUtils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import chinapex.com.wallet.bean.TransactionRecord;
@@ -16,6 +17,7 @@ import chinapex.com.wallet.net.INetCallback;
 import chinapex.com.wallet.net.OkHttpClientManager;
 import chinapex.com.wallet.utils.CpLog;
 import chinapex.com.wallet.utils.GsonUtils;
+import chinapex.com.wallet.utils.SharedPreferencesUtils;
 
 /**
  * Created by SteelCabbage on 2018/6/22 0022 11:42.
@@ -49,7 +51,9 @@ public class GetTransactionHistory implements Runnable, INetCallback {
             return;
         }
 
-        mRecentTime = apexWalletDbDao.getRecentTransactionRecordTimeByWalletAddress(mAddress);
+        mRecentTime = (long) SharedPreferencesUtils.getParam(ApexWalletApplication.getInstance(),
+                mAddress, 0L);
+        CpLog.i(TAG, "mRecentTime:" + mRecentTime);
 
         String url = Constant.URL_TRANSACTION_HISTORY + mAddress + "?beginTime=" + mRecentTime;
         OkHttpClientManager.getInstance().get(url, this);
@@ -74,7 +78,7 @@ public class GetTransactionHistory implements Runnable, INetCallback {
         List<ResponseGetTransactionHistory.ResultBean> resultBeans = responseGetTransactionHistory
                 .getResult();
         if (null == resultBeans || resultBeans.isEmpty()) {
-            CpLog.e(TAG, "resultBeans is null or empty!");
+            CpLog.w(TAG, "resultBeans is null or empty!");
             mIGetTransactionHistoryCallback.getTransactionHistory(null);
             return;
         }
@@ -87,11 +91,18 @@ public class GetTransactionHistory implements Runnable, INetCallback {
             return;
         }
 
-        List<TransactionRecord> qureyTransactionRecords = apexWalletDbDao
-                .queryTxsByAddressAndTime(mAddress, mRecentTime);
-        if (mRecentTime != 0 && qureyTransactionRecords.isEmpty()) {
-            resultBeans.remove(resultBeans.size() - 1);
+        HashMap<String, TransactionRecord> txCacheByAddress = apexWalletDbDao
+                .queryTxCacheByAddress(Constant.TABLE_TX_CACHE, mAddress);
+
+        if (null == txCacheByAddress) {
+            CpLog.e(TAG, "txCacheByAddress is null!");
+            mIGetTransactionHistoryCallback.getTransactionHistory(null);
+            return;
         }
+
+        // 记录该地址的最近更新时间
+        SharedPreferencesUtils.putParam(ApexWalletApplication.getInstance(), mAddress,
+                resultBeans.get(resultBeans.size() - 1).getTime());
 
         List<TransactionRecord> transactionRecords = new ArrayList<>();
 
@@ -102,24 +113,36 @@ public class GetTransactionHistory implements Runnable, INetCallback {
             }
 
             TransactionRecord transactionRecord = new TransactionRecord();
-            transactionRecord.setWalletAddress(mAddress);
-            String resultBeanType = resultBean.getType();
-            transactionRecord.setTxType(resultBeanType);
-            transactionRecord.setTxID(resultBean.getTxid());
-            transactionRecord.setTxAmount(resultBean.getValue());
-            switch (resultBeanType) {
-                case Constant.ASSET_TYPE_NEP5:
-                    String vmstate = (String) resultBean.getVmstate();
-                    if (!TextUtils.isEmpty(vmstate) && !vmstate.contains("FAULT")) {
+
+            // 如果缓存中包含相同txid，删除缓存中该地址对应的该条txid，并写入正式表，状态为确认中
+            String txID = resultBean.getTxid();
+            String txType = resultBean.getType();
+            long txTime = resultBean.getTime();
+            if (txCacheByAddress.containsKey(txID)) {
+                transactionRecord.setTxState(Constant.TRANSACTION_STATE_CONFIRMING);
+                ApexListeners.getInstance().notifyTxStateUpdate(txID, Constant
+                        .TRANSACTION_STATE_CONFIRMING, txTime);
+                apexWalletDbDao.delCacheByTxIDAndAddr(Constant.TABLE_TX_CACHE, txID, mAddress);
+            } else {
+                switch (txType) {
+                    case Constant.ASSET_TYPE_NEP5:
+                        String vmstate = (String) resultBean.getVmstate();
+                        if (!TextUtils.isEmpty(vmstate) && !vmstate.contains("FAULT")) {
+                            transactionRecord.setTxState(Constant.TRANSACTION_STATE_SUCCESS);
+                        } else {
+                            transactionRecord.setTxState(Constant.TRANSACTION_STATE_FAIL);
+                        }
+                        break;
+                    default:
                         transactionRecord.setTxState(Constant.TRANSACTION_STATE_SUCCESS);
-                    } else {
-                        transactionRecord.setTxState(Constant.TRANSACTION_STATE_FAIL);
-                    }
-                    break;
-                default:
-                    transactionRecord.setTxState(Constant.TRANSACTION_STATE_SUCCESS);
-                    break;
+                        break;
+                }
+
             }
+            transactionRecord.setWalletAddress(mAddress);
+            transactionRecord.setTxType(txType);
+            transactionRecord.setTxID(txID);
+            transactionRecord.setTxAmount(resultBean.getValue());
             transactionRecord.setTxFrom(resultBean.getFrom());
             transactionRecord.setTxTo(resultBean.getTo());
             transactionRecord.setGasConsumed(null == resultBean.getGas_consumed() ? "0" : (String)
@@ -129,18 +152,10 @@ public class GetTransactionHistory implements Runnable, INetCallback {
             transactionRecord.setAssetLogoUrl(resultBean.getImageURL());
             transactionRecord.setAssetDecimal(null == resultBean.getDecimal() ? 0 : Integer
                     .valueOf((String) resultBean.getDecimal()));
-            transactionRecord.setTxTime(resultBean.getTime());
+            transactionRecord.setTxTime(txTime);
 
-            if (qureyTransactionRecords.contains(transactionRecord)) {
-                CpLog.i(TAG, "modify tx state confirming");
-                transactionRecord.setTxState(Constant.TRANSACTION_STATE_CONFIRMING);
-                apexWalletDbDao.updateTxRecord(transactionRecord);
-                ApexListeners.getInstance().notifyTxStateUpdate(transactionRecord.getTxID(),
-                        Constant.TRANSACTION_STATE_CONFIRMING, transactionRecord.getTxTime());
-            } else {
-                transactionRecords.add(transactionRecord);
-                apexWalletDbDao.insertTxRecord(transactionRecord);
-            }
+            apexWalletDbDao.insertTxRecord(Constant.TABLE_TRANSACTION_RECORD, transactionRecord);
+            transactionRecords.add(transactionRecord);
         }
 
         mIGetTransactionHistoryCallback.getTransactionHistory(transactionRecords);

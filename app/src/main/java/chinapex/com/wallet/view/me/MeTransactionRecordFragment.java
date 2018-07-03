@@ -252,7 +252,7 @@ public class MeTransactionRecordFragment extends BaseFragment implements View.On
 
             if (txID.equals(transactionRecord.getTxID())) {
                 transactionRecord.setTxState(state);
-                if (Constant.NO_NEED_MODIFY_TX_TIME != txTime) {
+                if (txTime != Constant.NO_NEED_MODIFY_TX_TIME) {
                     transactionRecord.setTxTime(txTime);
                 }
             }

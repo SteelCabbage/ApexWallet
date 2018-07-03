@@ -124,13 +124,16 @@ public class GetNep5Balance implements Runnable, INetCallback {
             BigInteger reverseArray = new BigInteger(PhoneUtils.reverseArray(stackBeanValue));
             BigDecimal pow = new BigDecimal(10).pow(Integer.parseInt("8"));
             BigDecimal value = new BigDecimal(reverseArray).divide(pow);
+            CpLog.i(TAG, "nep5 value:" + value);
+            String valueOf = String.valueOf(value);
+            CpLog.i(TAG, "nep5 valueOf:" + valueOf);
 
             BalanceBean balanceBean = new BalanceBean();
             balanceBean.setMapState(Constant.MAP_STATE_UNFINISHED);
             balanceBean.setAssetsID(mAssetID);
             balanceBean.setAssetType(Constant.ASSET_TYPE_NEP5);
             balanceBean.setAssetDecimal(8);
-            balanceBean.setAssetsValue(String.valueOf(value));
+            balanceBean.setAssetsValue(valueOf);
             balanceBeans.put(mAssetID, balanceBean);
 
         }

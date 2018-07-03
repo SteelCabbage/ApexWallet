@@ -175,4 +175,24 @@ public class Constant {
             + FIELD_ASSET_DECIMAL + " integer, "
             + FIELD_CREATE_TIME + " integer)";
 
+    // table tx cache
+    public static final String TABLE_TX_CACHE = "txCache";
+
+    public static final String SQL_CREATE_TX_CACHE = "create table " +
+            TABLE_TX_CACHE
+            + " (" + FIELD_ID + " integer primary key autoincrement, "
+            + FIELD_WALLET_ADDRESS + " text, "
+            + FIELD_TX_TYPE + " text, "
+            + FIELD_TX_ID + " text, "
+            + FIELD_TX_AMOUNT + " text, "
+            + FIELD_TX_STATE + " integer, "
+            + FIELD_TX_FROM + " text, "
+            + FIELD_TX_TO + " text, "
+            + FIELD_GAS_CONSUMED + " text, "
+            + FIELD_ASSET_ID + " text, "
+            + FIELD_ASSET_SYMBOL + " text, "
+            + FIELD_ASSET_LOGO_URL + " text, "
+            + FIELD_ASSET_DECIMAL + " integer, "
+            + FIELD_CREATE_TIME + " integer)";
+
 }

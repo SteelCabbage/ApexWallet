@@ -59,7 +59,7 @@ public class ResponseGetTransactionHistory {
         private String type;
         private String txid;
         private String to;
-        private int time;
+        private long time;
         private String symbol;
         private String imageURL;
         private Object gas_consumed;
@@ -107,11 +107,11 @@ public class ResponseGetTransactionHistory {
             this.to = to;
         }
 
-        public int getTime() {
+        public long getTime() {
             return time;
         }
 
-        public void setTime(int time) {
+        public void setTime(long time) {
             this.time = time;
         }
 

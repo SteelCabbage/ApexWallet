@@ -2,12 +2,14 @@ package chinapex.com.wallet.executor.runnable;
 
 import android.text.TextUtils;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import chinapex.com.wallet.bean.TransactionRecord;
 import chinapex.com.wallet.executor.callback.ILoadTransactionRecordCallback;
 import chinapex.com.wallet.global.ApexWalletApplication;
+import chinapex.com.wallet.global.Constant;
 import chinapex.com.wallet.model.ApexWalletDbDao;
 import chinapex.com.wallet.utils.CpLog;
 
@@ -43,9 +45,22 @@ public class LoadTransacitonRecord implements Runnable {
             return;
         }
 
-        List<TransactionRecord> transactionRecords = apexWalletDbDao
-                .queryTransactionRecordsByWalletAddress(mAddress);
-        Collections.reverse(transactionRecords);
-        mILoadTransactionRecordCallback.loadTransactionRecord(transactionRecords);
+        List<TransactionRecord> finalTxs = new ArrayList<>();
+
+        List<TransactionRecord> txCache = apexWalletDbDao.queryTxByAddress(Constant
+                .TABLE_TX_CACHE, mAddress);
+        if (null != txCache && !txCache.isEmpty()) {
+            Collections.reverse(txCache);
+            finalTxs.addAll(txCache);
+        }
+
+        List<TransactionRecord> transactionRecords = apexWalletDbDao.queryTxByAddress(Constant
+                .TABLE_TRANSACTION_RECORD, mAddress);
+        if (null != transactionRecords && !transactionRecords.isEmpty()) {
+            Collections.reverse(transactionRecords);
+            finalTxs.addAll(transactionRecords);
+        }
+
+        mILoadTransactionRecordCallback.loadTransactionRecord(finalTxs);
     }
 }

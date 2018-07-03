@@ -278,24 +278,28 @@ public class TransferActivity extends BaseActivity implements View.OnClickListen
 
         TransactionRecord transactionRecord = new TransactionRecord();
         transactionRecord.setWalletAddress(mWalletFrom.address());
-        transactionRecord.setTxID(mOrder);
-        transactionRecord.setTxAmount(String.valueOf("-" + mEt_transfer_amount.getText()
-                .toString().trim()));
-        if (isSuccess) {
-            transactionRecord.setTxState(Constant.TRANSACTION_STATE_PACKAGING);
-        } else {
-            transactionRecord.setTxState(Constant.TRANSACTION_STATE_FAIL);
-        }
+        transactionRecord.setTxAmount(String.valueOf("-" + mEt_transfer_amount.getText().toString
+                ().trim()));
+        String symbol = mTv_transfer_unit.getText().toString().trim();
+        transactionRecord.setAssetSymbol(TextUtils.isEmpty(symbol) ? "" : symbol.toUpperCase());
         transactionRecord.setTxFrom(mWalletFrom.address());
         transactionRecord.setTxTo(mEt_transfer_to_wallet_addr.getText().toString().trim());
-        // TODO: 2018/6/29 0029  modify recentTime
-        long recentTime = apexWalletDbDao.getRecentTransactionRecordTimeByWalletAddress
-                (mWalletFrom.address()) + 1;
-        transactionRecord.setTxTime(recentTime);
-        // TODO: 2018/6/28 0028 symbol logoUrl
-        transactionRecord.setAssetSymbol("");
+        transactionRecord.setTxTime(0);
+        transactionRecord.setTxID(mOrder);
+        // TODO: 2018/6/28 0028 logoUrl
         transactionRecord.setAssetLogoUrl("");
-        apexWalletDbDao.insertTxRecord(transactionRecord);
+
+        if (isSuccess) {
+            transactionRecord.setTxState(Constant.TRANSACTION_STATE_PACKAGING);
+            apexWalletDbDao.insertTxRecord(Constant.TABLE_TX_CACHE, transactionRecord);
+        } else {
+            transactionRecord.setTxState(Constant.TRANSACTION_STATE_FAIL);
+            apexWalletDbDao.insertTxRecord(Constant.TABLE_TRANSACTION_RECORD, transactionRecord);
+        }
+
+        // start polling
+        mScheduledFuture = TaskController.getInstance().schedule(new UpdateTransacitonState
+                (mOrder, this), 0, Constant.TX_POLLING_TIME);
 
         // prompt the user
         runOnUiThread(new Runnable() {
@@ -309,10 +313,6 @@ public class TransferActivity extends BaseActivity implements View.OnClickListen
                 finish();
             }
         });
-
-        // start polling
-        mScheduledFuture = TaskController.getInstance().schedule(new UpdateTransacitonState
-                (mOrder, this), 0, Constant.TX_POLLING_TIME);
     }
 
     @Override
@@ -324,7 +324,8 @@ public class TransferActivity extends BaseActivity implements View.OnClickListen
 
         if (Constant.TX_CONFIRM_EXCEPTION == confirmations) {
             CpLog.e(TAG, "TX_CONFIRM_EXCEPTION");
-            mScheduledFuture.cancel(false);
+            // TODO: 2018/7/3 0003 网络异常的逻辑处理
+//            mScheduledFuture.cancel(false);
             return;
         }
 

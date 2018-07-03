@@ -9,6 +9,7 @@ import android.os.SystemClock;
 import android.text.TextUtils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -269,9 +270,9 @@ public class ApexWalletDbDao {
         closeDatabase();
     }
 
-    public synchronized void insertTxRecord(TransactionRecord transactionRecord) {
-        if (null == transactionRecord) {
-            CpLog.e(TAG, "insertTxRecord() -> transactionRecord is null!");
+    public synchronized void insertTxRecord(String tableName, TransactionRecord transactionRecord) {
+        if (TextUtils.isEmpty(tableName) || null == transactionRecord) {
+            CpLog.e(TAG, "insertTxRecord() -> tableName or transactionRecord is null!");
             return;
         }
 
@@ -293,9 +294,9 @@ public class ApexWalletDbDao {
         SQLiteDatabase db = openDatabase();
         try {
             db.beginTransaction();
-            db.insertOrThrow(Constant.TABLE_TRANSACTION_RECORD, null, contentValues);
+            db.insertOrThrow(tableName, null, contentValues);
             db.setTransactionSuccessful();
-            CpLog.i(TAG, "insertTxRecord() -> insert " + transactionRecord.getTxID() + " ok!");
+//            CpLog.i(TAG, "insertTxRecord() -> insert " + transactionRecord.getTxID() + " ok!");
         } catch (SQLException e) {
             CpLog.e(TAG, "insertTxRecord exception:" + e.getMessage());
         } finally {
@@ -346,17 +347,18 @@ public class ApexWalletDbDao {
         closeDatabase();
     }
 
-    public List<TransactionRecord> queryTransactionRecordsByWalletAddress(String walletAddress) {
+    public List<TransactionRecord> queryTxByAddress(String tableName, String walletAddress) {
         List<TransactionRecord> transactionRecords = new ArrayList<>();
 
-        if (TextUtils.isEmpty(walletAddress)) {
-            CpLog.e(TAG, "queryTransactionRecordsByWalletAddress() -> walletAddress is null!");
+        if (TextUtils.isEmpty(tableName) || TextUtils.isEmpty(walletAddress)) {
+            CpLog.e(TAG, "queryTxByAddress() -> tableName or walletAddress " +
+                    "is null!");
             return transactionRecords;
         }
 
         SQLiteDatabase db = openDatabase();
-        Cursor cursor = db.query(Constant.TABLE_TRANSACTION_RECORD, null,
-                WHERE_CLAUSE_WALLET_ADDRESS_EQ, new String[]{walletAddress}, null, null, null);
+        Cursor cursor = db.query(tableName, null, WHERE_CLAUSE_WALLET_ADDRESS_EQ, new
+                String[]{walletAddress}, null, null, null);
         if (null != cursor) {
             while (cursor.moveToNext()) {
                 int walletAddressIndex = cursor.getColumnIndex(Constant.FIELD_WALLET_ADDRESS);
@@ -411,6 +413,98 @@ public class ApexWalletDbDao {
         return transactionRecords;
     }
 
+    public HashMap<String, TransactionRecord> queryTxCacheByAddress(String tableName, String
+            walletAddress) {
+        HashMap<String, TransactionRecord> txHashMap = new HashMap<>();
+
+        if (TextUtils.isEmpty(tableName) || TextUtils.isEmpty(walletAddress)) {
+            CpLog.e(TAG, "queryTxCacheByAddress() -> tableName or walletAddress is null!");
+            return txHashMap;
+        }
+
+        SQLiteDatabase db = openDatabase();
+        Cursor cursor = db.query(tableName, null, WHERE_CLAUSE_WALLET_ADDRESS_EQ, new
+                String[]{walletAddress}, null, null, null);
+        if (null != cursor) {
+            while (cursor.moveToNext()) {
+                int walletAddressIndex = cursor.getColumnIndex(Constant.FIELD_WALLET_ADDRESS);
+                int txTypeIndex = cursor.getColumnIndex(Constant.FIELD_TX_TYPE);
+                int txIdIndex = cursor.getColumnIndex(Constant.FIELD_TX_ID);
+                int txAmountIndex = cursor.getColumnIndex(Constant.FIELD_TX_AMOUNT);
+                int txStateIndex = cursor.getColumnIndex(Constant.FIELD_TX_STATE);
+                int txFromIndex = cursor.getColumnIndex(Constant.FIELD_TX_FROM);
+                int txToIndex = cursor.getColumnIndex(Constant.FIELD_TX_TO);
+                int gasConsumedIndex = cursor.getColumnIndex(Constant.FIELD_GAS_CONSUMED);
+                int assetIdIndex = cursor.getColumnIndex(Constant.FIELD_ASSET_ID);
+                int assetSymbolIndex = cursor.getColumnIndex(Constant.FIELD_ASSET_SYMBOL);
+                int assetLogoUrlIndex = cursor.getColumnIndex(Constant.FIELD_ASSET_LOGO_URL);
+                int assetDecimalIndex = cursor.getColumnIndex(Constant.FIELD_ASSET_DECIMAL);
+                int createTimeIndex = cursor.getColumnIndex(Constant.FIELD_CREATE_TIME);
+
+
+                String walletAddressTmp = cursor.getString(walletAddressIndex);
+                String txType = cursor.getString(txTypeIndex);
+                String txId = cursor.getString(txIdIndex);
+                String txAmount = cursor.getString(txAmountIndex);
+                int txState = cursor.getInt(txStateIndex);
+                String txFrom = cursor.getString(txFromIndex);
+                String txTo = cursor.getString(txToIndex);
+                String gasConsumed = cursor.getString(gasConsumedIndex);
+                String assetId = cursor.getString(assetIdIndex);
+                String assetSymbol = cursor.getString(assetSymbolIndex);
+                String assetLogoUrl = cursor.getString(assetLogoUrlIndex);
+                int assetDecimal = cursor.getInt(assetDecimalIndex);
+                long createTime = cursor.getLong(createTimeIndex);
+
+                TransactionRecord transactionRecord = new TransactionRecord();
+                transactionRecord.setWalletAddress(walletAddressTmp);
+                transactionRecord.setTxType(txType);
+                transactionRecord.setTxID(txId);
+                transactionRecord.setTxAmount(txAmount);
+                transactionRecord.setTxState(txState);
+                transactionRecord.setTxFrom(txFrom);
+                transactionRecord.setTxTo(txTo);
+                transactionRecord.setGasConsumed(gasConsumed);
+                transactionRecord.setAssetID(assetId);
+                transactionRecord.setAssetSymbol(assetSymbol);
+                transactionRecord.setAssetLogoUrl(assetLogoUrl);
+                transactionRecord.setAssetDecimal(assetDecimal);
+                transactionRecord.setTxTime(createTime);
+
+                txHashMap.put(txId, transactionRecord);
+            }
+            cursor.close();
+        }
+        closeDatabase();
+        return txHashMap;
+    }
+
+    private static final String WHERE_CLAUSE_FIELD_TX_ID_EQ = Constant.FIELD_TX_ID + " = ?";
+
+    public void delCacheByTxIDAndAddr(String tableName, String txID, String walletAddress) {
+        if (TextUtils.isEmpty(tableName)
+                || TextUtils.isEmpty(txID)
+                || TextUtils.isEmpty(walletAddress)) {
+            CpLog.e(TAG, "delCacheByTxIDAndAddr() -> tableName or txID or walletAddress is null!");
+            return;
+        }
+
+        SQLiteDatabase db = openDatabase();
+        try {
+            db.beginTransaction();
+            db.delete(tableName,
+                    WHERE_CLAUSE_FIELD_TX_ID_EQ + " and " + WHERE_CLAUSE_WALLET_ADDRESS_EQ,
+                    new String[]{txID, walletAddress});
+            db.setTransactionSuccessful();
+            CpLog.i(TAG, "delCacheByTxIDAndAddr() -> delete:" + txID + " ok!");
+        } catch (Exception e) {
+            CpLog.e(TAG, "delCacheByTxIDAndAddr exception:" + e.getMessage());
+        } finally {
+            db.endTransaction();
+        }
+        closeDatabase();
+    }
+
     private static final String WHERE_CLAUSE_TIME_GT_EQ = Constant.FIELD_CREATE_TIME + " >= ?";
 
     private static final String WHERE_CLAUSE_DECIMAL_EQ = Constant.FIELD_ASSET_DECIMAL + " = ?";
@@ -419,7 +513,7 @@ public class ApexWalletDbDao {
         List<TransactionRecord> transactionRecords = new ArrayList<>();
 
         if (TextUtils.isEmpty(walletAddress)) {
-            CpLog.e(TAG, "queryTransactionRecordsByWalletAddress() -> walletAddress is null!");
+            CpLog.e(TAG, "queryTxByAddress() -> walletAddress is null!");
             return transactionRecords;
         }
 
@@ -530,4 +624,5 @@ public class ApexWalletDbDao {
         closeDatabase();
         return recentTransactionRecordTime;
     }
+
 }

@@ -91,6 +91,10 @@ public class PhoneUtils {
 
     public static String getFormatTime(long time) {
         String formatTime = "";
+        if (time == 0) {
+            return formatTime;
+        }
+
         try {
             formatTime = sSimpleDateFormat.format(new Date(time * 1000));
         } catch (Exception e) {
