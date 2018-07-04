@@ -126,18 +126,15 @@ public class TransactionRecordRecyclerViewAdapter extends RecyclerView
         if (!TextUtils.isEmpty(assetID)) {
             switch (assetID) {
                 case Constant.ASSETS_CPX:
-                    CpLog.i(TAG, "assetIDCPX:" + assetID);
-                    holder.txLogo.setBackground(ApexWalletApplication.getInstance().getResources()
+                    holder.txLogo.setImageDrawable(ApexWalletApplication.getInstance().getResources()
                             .getDrawable(R.drawable.logo_nep5_cpx));
                     break;
                 case Constant.ASSETS_NEO:
-                    CpLog.i(TAG, "assetIDNEO:" + assetID);
-                    holder.txLogo.setBackground(ApexWalletApplication.getInstance().getResources()
+                    holder.txLogo.setImageDrawable(ApexWalletApplication.getInstance().getResources()
                             .getDrawable(R.drawable.logo_global_neo));
                     break;
                 case Constant.ASSETS_NEO_GAS:
-                    CpLog.i(TAG, "assetIDGAS:" + assetID);
-                    holder.txLogo.setBackground(ApexWalletApplication.getInstance().getResources()
+                    holder.txLogo.setImageDrawable(ApexWalletApplication.getInstance().getResources()
                             .getDrawable(R.drawable.logo_global_gas));
                     break;
                 default:
