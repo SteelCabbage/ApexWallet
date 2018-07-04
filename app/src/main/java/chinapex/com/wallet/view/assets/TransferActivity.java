@@ -289,6 +289,22 @@ public class TransferActivity extends BaseActivity implements View.OnClickListen
         // TODO: 2018/6/28 0028 logoUrl
         transactionRecord.setAssetLogoUrl("");
 
+        // 临时logo逻辑，后续完善移除
+        switch (symbol) {
+            case Constant.UNIT_CPX:
+                transactionRecord.setAssetID(Constant.ASSETS_CPX);
+                break;
+            case Constant.UNIT_NEO:
+                transactionRecord.setAssetID(Constant.ASSETS_NEO);
+                break;
+            case Constant.UNIT_NEO_GAS:
+                transactionRecord.setAssetID(Constant.ASSETS_NEO_GAS);
+                break;
+            default:
+                transactionRecord.setAssetID("");
+                break;
+        }
+
         if (isSuccess) {
             transactionRecord.setTxState(Constant.TRANSACTION_STATE_PACKAGING);
             apexWalletDbDao.insertTxRecord(Constant.TABLE_TX_CACHE, transactionRecord);
@@ -296,10 +312,6 @@ public class TransferActivity extends BaseActivity implements View.OnClickListen
             transactionRecord.setTxState(Constant.TRANSACTION_STATE_FAIL);
             apexWalletDbDao.insertTxRecord(Constant.TABLE_TRANSACTION_RECORD, transactionRecord);
         }
-
-        // start polling
-        mScheduledFuture = TaskController.getInstance().schedule(new UpdateTransacitonState
-                (mOrder, this), 0, Constant.TX_POLLING_TIME);
 
         // prompt the user
         runOnUiThread(new Runnable() {
@@ -310,9 +322,19 @@ public class TransferActivity extends BaseActivity implements View.OnClickListen
                 } else {
                     Toast.makeText(TransferActivity.this, "交易广播失败！", Toast.LENGTH_SHORT).show();
                 }
-                finish();
             }
         });
+
+        if (!isSuccess) {
+            CpLog.e(TAG, "send fail! no need polling!");
+            finish();
+            return;
+        }
+
+        // start polling
+        mScheduledFuture = TaskController.getInstance().schedule(new UpdateTransacitonState
+                (mOrder, this), 0, Constant.TX_POLLING_TIME);
+        finish();
     }
 
     @Override

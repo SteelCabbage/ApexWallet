@@ -34,6 +34,8 @@ import chinapex.com.wallet.executor.runnable.LoadTransacitonRecord;
 import chinapex.com.wallet.global.ApexWalletApplication;
 import chinapex.com.wallet.global.Constant;
 import chinapex.com.wallet.utils.CpLog;
+import chinapex.com.wallet.utils.PhoneUtils;
+import chinapex.com.wallet.utils.ToastUtils;
 import chinapex.com.wallet.view.MeSkipActivity;
 import chinapex.com.wallet.view.dialog.SwitchWalletDialog;
 
@@ -105,6 +107,9 @@ public class MeTransactionRecordFragment extends BaseFragment implements View.On
         mSl_transaction_record.setColorSchemeColors(this.getActivity().getResources().getColor(R
                 .color.colorPrimary));
         mSl_transaction_record.setOnRefreshListener(this);
+
+        // copy address
+        mTv_me_transaction_record_address.setOnClickListener(this);
     }
 
     private void initData() {
@@ -186,6 +191,11 @@ public class MeTransactionRecordFragment extends BaseFragment implements View.On
                 break;
             case R.id.tv_tx_records_cancel:
                 mEt_tx_records_search.getText().clear();
+                break;
+            case R.id.tv_me_transaction_record_address:
+                String copyAddr = mTv_me_transaction_record_address.getText().toString().trim();
+                PhoneUtils.copy2Clipboard(ApexWalletApplication.getInstance(), copyAddr);
+                ToastUtils.getInstance().showToast("钱包地址已复制");
                 break;
             default:
                 break;

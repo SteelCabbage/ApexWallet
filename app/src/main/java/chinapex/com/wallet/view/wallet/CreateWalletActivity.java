@@ -230,17 +230,13 @@ public class CreateWalletActivity extends BaseActivity implements View.OnClickLi
             return;
         }
 
-        CpLog.i(TAG, "111111111111111111111111111111");
         WalletBean walletBean = new WalletBean();
         walletBean.setWalletAddr(wallet.address());
         walletBean.setBackupState(Constant.BACKUP_UNFINISHED);
         Intent intent = new Intent(this, BackupWalletActivity.class);
         intent.putExtra(Constant.BACKUP_MNEMONIC, mnemonicEnUs);
         intent.putExtra(Constant.WALLET_BEAN, walletBean);
-        CpLog.i(TAG, "222222222222222222222222222222");
         startActivity(intent);
-        CpLog.i(TAG, "333333333333333333333333333333");
         finish();
-        CpLog.i(TAG, "444444444444444444444444444444");
     }
 }

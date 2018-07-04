@@ -29,11 +29,11 @@ public class Constant {
 
     // neo正式网
     public static final String HOSTNAME_VERIFIER = "tracker.chinapex.com.cn";
-    public static final String URL_CLI = "http://tracker.chinapex.com.cn:80/neo-cli/";
-    public static final String URL_UTXOS = "http://tracker.chinapex.com.cn:80/tool/utxos/";
+    public static final String URL_CLI = "https://tracker.chinapex.com.cn/neo-cli/";
+    public static final String URL_UTXOS = "https://tracker.chinapex.com.cn/tool/utxos/";
 
     // 交易记录
-    public static final String URL_TRANSACTION_HISTORY = "http://tracker.chinapex.com" +
+    public static final String URL_TRANSACTION_HISTORY = "https://tracker.chinapex.com" +
             ".cn/tool/transaction-history/";
     public static final long TX_POLLING_TIME = 20 * 1000;
     public static final long TX_CONFIRM_EXCEPTION = -1;

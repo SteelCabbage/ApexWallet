@@ -37,6 +37,8 @@ import chinapex.com.wallet.global.Constant;
 import chinapex.com.wallet.utils.CpLog;
 import chinapex.com.wallet.utils.DensityUtil;
 import chinapex.com.wallet.utils.GsonUtils;
+import chinapex.com.wallet.utils.PhoneUtils;
+import chinapex.com.wallet.utils.ToastUtils;
 import chinapex.com.wallet.view.wallet.CreateWalletActivity;
 import chinapex.com.wallet.view.wallet.ImportWalletActivity;
 
@@ -95,6 +97,9 @@ public class AssetsOverviewActivity extends BaseActivity implements
         mDrawerMenuRecyclerViewAdapter = new DrawerMenuRecyclerViewAdapter(getAssetsMenus());
         mDrawerMenuRecyclerViewAdapter.setDrawerMenuOnItemClickListener(this);
         mRv_assets_overview_drawer_menu.setAdapter(mDrawerMenuRecyclerViewAdapter);
+
+        // 复制地址
+        mTv_assets_overview_wallet_address.setOnClickListener(this);
     }
 
     private void initData() {
@@ -413,6 +418,10 @@ public class AssetsOverviewActivity extends BaseActivity implements
             case R.id.ib_assets_overview_ellipsis:
                 openDrawer(mLl_assets_overview_drawer);
                 break;
+            case R.id.tv_assets_overview_wallet_address:
+                String copyAddr = mTv_assets_overview_wallet_address.getText().toString().trim();
+                PhoneUtils.copy2Clipboard(ApexWalletApplication.getInstance(), copyAddr);
+                ToastUtils.getInstance().showToast("钱包地址已复制");
             default:
                 break;
         }

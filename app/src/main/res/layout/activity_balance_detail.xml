@@ -79,7 +79,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="11dp"
-                android:src="@drawable/logo_nep5_cpx"/>
+                android:src="@drawable/logo_nep5_cpx" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -115,6 +115,7 @@
             android:background="@color/c_B0C7FA"
             android:gravity="center"
             android:paddingTop="10dp"
+            android:singleLine="true"
             android:text="@string/tv_wallet_detail_drawer_title"
             android:textSize="18sp"
             android:textStyle="bold" />

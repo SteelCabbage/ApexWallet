@@ -16,6 +16,9 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/fragment_assets_title_margin_top"
             android:text="@string/tv_me_manager_detail_title"
+            android:gravity="center_horizontal"
+            android:singleLine="true"
+            android:ems="6"
             android:textColor="@android:color/white"
             android:textSize="@dimen/title_18sp" />
 

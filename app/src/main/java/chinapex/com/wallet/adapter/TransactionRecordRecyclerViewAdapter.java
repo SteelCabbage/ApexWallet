@@ -2,6 +2,7 @@ package chinapex.com.wallet.adapter;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -118,6 +119,30 @@ public class TransactionRecordRecyclerViewAdapter extends RecyclerView
                 break;
             default:
                 break;
+        }
+
+        // 临时logo填充，后期完善逻辑移除
+        String assetID = transactionRecord.getAssetID();
+        if (!TextUtils.isEmpty(assetID)) {
+            switch (assetID) {
+                case Constant.ASSETS_CPX:
+                    CpLog.i(TAG, "assetIDCPX:" + assetID);
+                    holder.txLogo.setBackground(ApexWalletApplication.getInstance().getResources()
+                            .getDrawable(R.drawable.logo_nep5_cpx));
+                    break;
+                case Constant.ASSETS_NEO:
+                    CpLog.i(TAG, "assetIDNEO:" + assetID);
+                    holder.txLogo.setBackground(ApexWalletApplication.getInstance().getResources()
+                            .getDrawable(R.drawable.logo_global_neo));
+                    break;
+                case Constant.ASSETS_NEO_GAS:
+                    CpLog.i(TAG, "assetIDGAS:" + assetID);
+                    holder.txLogo.setBackground(ApexWalletApplication.getInstance().getResources()
+                            .getDrawable(R.drawable.logo_global_gas));
+                    break;
+                default:
+                    break;
+            }
         }
 
         holder.itemView.setTag(position);

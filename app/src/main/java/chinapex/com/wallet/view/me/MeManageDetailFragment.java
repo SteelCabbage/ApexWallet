@@ -20,6 +20,8 @@ import chinapex.com.wallet.global.ApexWalletApplication;
 import chinapex.com.wallet.global.Constant;
 import chinapex.com.wallet.model.ApexWalletDbDao;
 import chinapex.com.wallet.utils.CpLog;
+import chinapex.com.wallet.utils.PhoneUtils;
+import chinapex.com.wallet.utils.ToastUtils;
 import chinapex.com.wallet.view.MeSkipActivity;
 import chinapex.com.wallet.view.dialog.BackupWalletPwdDialog;
 import chinapex.com.wallet.view.dialog.DeleteWalletPwdDialog;
@@ -72,6 +74,9 @@ public class MeManageDetailFragment extends BaseFragment implements View.OnClick
         mBt_me_manager_detail_save.setOnClickListener(this);
         mIb_manage_detail_export.setOnClickListener(this);
         ApexListeners.getInstance().addOnItemStateUpdateListener(this);
+
+        // 复制地址
+        mTv_me_manager_detail_address.setOnClickListener(this);
     }
 
     private void initData() {
@@ -104,6 +109,11 @@ public class MeManageDetailFragment extends BaseFragment implements View.OnClick
                 break;
             case R.id.bt_me_manager_detail_save:
                 modifyWalletName();
+                break;
+            case R.id.tv_me_manager_detail_address:
+                String copyAddr = mTv_me_manager_detail_address.getText().toString().trim();
+                PhoneUtils.copy2Clipboard(ApexWalletApplication.getInstance(), copyAddr);
+                ToastUtils.getInstance().showToast("钱包地址已复制");
                 break;
             default:
                 break;
