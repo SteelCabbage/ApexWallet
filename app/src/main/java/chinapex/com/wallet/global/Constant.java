@@ -51,7 +51,7 @@ public class Constant {
     public static final String FRAGMENT_TAG_ME_TRANSACTION_RECORD = "MeTransactionRecordFragment";
 
     // import wallet from mnemonic
-    public static final String WALLET_NAME_IMPORT_DEFAULT = "Import_Wallet";
+    public static final String WALLET_NAME_IMPORT_DEFAULT = "Wallet";
 
     // assets
     public static final String WALLET_BEAN = "walletBean";

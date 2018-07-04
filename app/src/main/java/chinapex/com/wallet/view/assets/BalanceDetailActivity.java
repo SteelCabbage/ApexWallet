@@ -106,7 +106,7 @@ public class BalanceDetailActivity extends BaseActivity implements View.OnClickL
                 break;
             case Constant.ASSETS_CPX:
                 mTv_balance_detail_assets_name.setText(Constant.MARK_CPX);
-                mLl_balance_detail_map.setVisibility(View.VISIBLE);
+                mLl_balance_detail_map.setVisibility(View.INVISIBLE);
                 break;
             default:
                 break;

@@ -15,6 +15,7 @@ import com.google.zxing.common.BitmapUtils;
 import chinapex.com.wallet.R;
 import chinapex.com.wallet.base.BaseActivity;
 import chinapex.com.wallet.bean.WalletBean;
+import chinapex.com.wallet.global.ApexWalletApplication;
 import chinapex.com.wallet.global.Constant;
 import chinapex.com.wallet.utils.CpLog;
 import chinapex.com.wallet.utils.PhoneUtils;
@@ -79,7 +80,8 @@ public class GatheringActivity extends BaseActivity implements View.OnClickListe
         switch (v.getId()) {
             case R.id.bt_gathering_copy_addr:
                 CpLog.i(TAG, "bt_gathering_copy_addr is click！");
-                PhoneUtils.copy2Clipboard(this, mWalletBean.getWalletAddr());
+                PhoneUtils.copy2Clipboard(ApexWalletApplication.getInstance(), mWalletBean
+                        .getWalletAddr());
                 Toast.makeText(this, "收款地址已复制", Toast.LENGTH_SHORT).show();
                 break;
             default:

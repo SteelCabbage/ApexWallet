@@ -100,7 +100,7 @@ public class AssetsFragment extends BaseFragment implements AssetsRecyclerViewAd
         mAssetsRecyclerViewAdapter.setOnItemClickListener(this);
         mAssetsRecyclerViewAdapter.setOnItemLongClickListener(this);
 
-        int space = DensityUtil.dip2px(getActivity(), 5);
+        int space = DensityUtil.dip2px(getActivity(), 8);
         mRv_assets.addItemDecoration(new SpacesItemDecoration(space));
 
         mRv_assets.setAdapter(mAssetsRecyclerViewAdapter);

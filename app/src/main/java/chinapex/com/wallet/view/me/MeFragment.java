@@ -79,7 +79,7 @@ public class MeFragment extends BaseFragment implements MeRecyclerViewAdapter
         mMeRecyclerViewAdapter = new MeRecyclerViewAdapter(mWalletBeans);
         mMeRecyclerViewAdapter.setOnItemClickListener(this);
 
-        int space = DensityUtil.dip2px(getActivity(), 5);
+        int space = DensityUtil.dip2px(getActivity(), 8);
         mRv_me.addItemDecoration(new SpacesItemDecoration(space));
 
         mRv_me.setAdapter(mMeRecyclerViewAdapter);

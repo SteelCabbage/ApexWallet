@@ -115,7 +115,7 @@ public class AssetsOverviewActivity extends BaseActivity implements
         mAssetsOverviewRecyclerViewAdapter = new AssetsOverviewRecyclerViewAdapter(mBalanceBeans);
         mAssetsOverviewRecyclerViewAdapter.setOnItemClickListener(this);
 
-        int space = DensityUtil.dip2px(this, 5);
+        int space = DensityUtil.dip2px(this, 8);
         mRv_assets_overview.addItemDecoration(new SpacesItemDecoration(space));
         mRv_assets_overview.setAdapter(mAssetsOverviewRecyclerViewAdapter);
     }
