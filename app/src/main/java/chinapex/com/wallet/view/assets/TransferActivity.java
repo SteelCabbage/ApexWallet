@@ -6,8 +6,11 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.zxing.activity.CaptureActivity;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -59,6 +62,8 @@ public class TransferActivity extends BaseActivity implements View.OnClickListen
     private TextView mTv_transfer_unit;
     private String mOrder;
     private ScheduledFuture mScheduledFuture;
+    private ImageButton mIb_transfer_scan;
+    private final static int REQ_CODE = 1029;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,9 +81,11 @@ public class TransferActivity extends BaseActivity implements View.OnClickListen
         mEt_transfer_to_wallet_addr = (EditText) findViewById(R.id.et_transfer_to_wallet_addr);
         mEt_transfer_amount = (EditText) findViewById(R.id.et_transfer_amount);
         mTv_transfer_unit = findViewById(R.id.tv_transfer_unit);
+        mIb_transfer_scan = (ImageButton) findViewById(R.id.ib_transfer_scan);
 
         mBt_transfer_send = (Button) findViewById(R.id.bt_transfer_send);
         mBt_transfer_send.setOnClickListener(this);
+        mIb_transfer_scan.setOnClickListener(this);
 
     }
 
@@ -146,6 +153,10 @@ public class TransferActivity extends BaseActivity implements View.OnClickListen
                 }
 
                 showDeleteWalletPwdDialog();
+                break;
+            case R.id.ib_transfer_scan:
+                Intent intent = new Intent(TransferActivity.this, CaptureActivity.class);
+                startActivityForResult(intent, REQ_CODE);
                 break;
             default:
                 break;
@@ -384,5 +395,29 @@ public class TransferActivity extends BaseActivity implements View.OnClickListen
     @Override
     public void getTransactionHistory(List<TransactionRecord> transactionRecords) {
 
+    }
+
+    // QR_CODE Result
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode != REQ_CODE) {
+            CpLog.e(TAG, "requestCode != REQ_CODE");
+            return;
+        }
+
+        if (null == data) {
+            CpLog.e(TAG, "onActivityResult() -> data is null!");
+            return;
+        }
+
+        String qrCode = data.getStringExtra(CaptureActivity.SCAN_QRCODE_RESULT);
+        if (TextUtils.isEmpty(qrCode)) {
+            CpLog.e(TAG, "qrCode is null or empty!");
+            return;
+        }
+
+        CpLog.i(TAG, "qrCode:" + qrCode);
+        mEt_transfer_to_wallet_addr.setText(qrCode);
     }
 }

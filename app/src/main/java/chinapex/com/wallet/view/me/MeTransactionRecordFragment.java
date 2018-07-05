@@ -158,6 +158,8 @@ public class MeTransactionRecordFragment extends BaseFragment implements View.On
                 }
             });
         }
+
+        mEt_tx_records_search.getText().clear();
     }
 
     private void incrementalUpdateTxDbFromNet() {
@@ -219,6 +221,10 @@ public class MeTransactionRecordFragment extends BaseFragment implements View.On
         mCurrentClickedWalletBean = walletBean;
         mTv_me_transaction_record_title.setText(walletBean.getWalletName());
         mTv_me_transaction_record_address.setText(walletBean.getWalletAddr());
+
+        // update transactionRecord
+        loadTxsFromDb();
+        incrementalUpdateTxDbFromNet();
     }
 
     @Override
