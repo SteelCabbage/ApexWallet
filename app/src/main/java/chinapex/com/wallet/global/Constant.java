@@ -89,6 +89,8 @@ public class Constant {
     // wallet detail transfer
     public static final String PARCELABLE_WALLET_BEAN_TRANSFER = "parcelableWalletBeanTransfer";
     public static final String PARCELABLE_BALANCE_BEAN_TRANSFER = "parcelableBalanceBeanTransfer";
+    public static final String PARCELABLE_QR_CODE_TRANSFER = "parcelableQrCodeTransfer";
+
     // wallet detail gathering
     public static final String PARCELABLE_WALLET_BEAN_GATHERING = "parcelableWalletBeanGathering";
 

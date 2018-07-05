@@ -102,6 +102,7 @@
 
     <!--侧滑内容-->
     <LinearLayout
+        android:id="@+id/ll_balance_detail_drawer"
         android:layout_width="@dimen/ll_wallet_detail_drawer_width"
         android:layout_height="match_parent"
         android:layout_gravity="end"

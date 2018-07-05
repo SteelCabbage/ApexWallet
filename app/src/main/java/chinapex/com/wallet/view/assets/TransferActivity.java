@@ -116,6 +116,14 @@ public class TransferActivity extends BaseActivity implements View.OnClickListen
                 mTv_transfer_unit.setText(Constant.UNIT_CPX);
                 break;
         }
+
+        String qrCode = intent.getStringExtra(Constant.PARCELABLE_QR_CODE_TRANSFER);
+        if (TextUtils.isEmpty(qrCode)) {
+            CpLog.e(TAG, "qrCode is null or empty!");
+            return;
+        }
+
+        mEt_transfer_to_wallet_addr.setText(qrCode);
     }
 
     @Override
