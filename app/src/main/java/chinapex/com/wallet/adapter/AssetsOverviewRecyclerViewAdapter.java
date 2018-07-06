@@ -68,19 +68,19 @@ public class AssetsOverviewRecyclerViewAdapter extends RecyclerView
 
         switch (balanceBean.getAssetsID()) {
             case Constant.ASSETS_NEO:
-                holder.assetsName.setText(Constant.MARK_NEO);
+                holder.assetsName.setText(Constant.SYMBOL_NEO);
                 holder.mapState.setVisibility(View.GONE);
                 holder.assetLogo.setBackground(ApexWalletApplication.getInstance().getResources()
                         .getDrawable(R.drawable.logo_global_neo));
                 break;
             case Constant.ASSETS_NEO_GAS:
-                holder.assetsName.setText(Constant.MARK_NEO_GAS);
+                holder.assetsName.setText(Constant.SYMBOL_NEO_GAS);
                 holder.mapState.setVisibility(View.GONE);
                 holder.assetLogo.setBackground(ApexWalletApplication.getInstance().getResources()
                         .getDrawable(R.drawable.logo_global_gas));
                 break;
             case Constant.ASSETS_CPX:
-                holder.assetsName.setText(Constant.MARK_CPX);
+                holder.assetsName.setText(Constant.SYMBOL_CPX);
                 holder.mapState.setVisibility(View.VISIBLE);
                 holder.assetLogo.setBackground(ApexWalletApplication.getInstance().getResources()
                         .getDrawable(R.drawable.logo_nep5_cpx));

@@ -104,15 +104,15 @@ public class BalanceDetailActivity extends BaseActivity implements View.OnClickL
 
         switch (mBalanceBean.getAssetsID()) {
             case Constant.ASSETS_NEO:
-                mTv_balance_detail_assets_name.setText(Constant.MARK_NEO);
+                mTv_balance_detail_assets_name.setText(Constant.SYMBOL_NEO);
                 mLl_balance_detail_map.setVisibility(View.INVISIBLE);
                 break;
             case Constant.ASSETS_NEO_GAS:
-                mTv_balance_detail_assets_name.setText(Constant.MARK_NEO_GAS);
+                mTv_balance_detail_assets_name.setText(Constant.SYMBOL_NEO_GAS);
                 mLl_balance_detail_map.setVisibility(View.INVISIBLE);
                 break;
             case Constant.ASSETS_CPX:
-                mTv_balance_detail_assets_name.setText(Constant.MARK_CPX);
+                mTv_balance_detail_assets_name.setText(Constant.SYMBOL_CPX);
                 mLl_balance_detail_map.setVisibility(View.INVISIBLE);
                 break;
             default:

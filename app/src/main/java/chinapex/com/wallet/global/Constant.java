@@ -105,9 +105,9 @@ public class Constant {
     public static final String ASSET_TYPE_GLOBAL = "GLOBAL";
     public static final String ASSET_TYPE_NEP5 = "NEP5";
 
-    public static final String MARK_NEO = "NEO";
-    public static final String MARK_NEO_GAS = "GAS";
-    public static final String MARK_CPX = "CPX";
+    public static final String SYMBOL_NEO = "NEO";
+    public static final String SYMBOL_NEO_GAS = "GAS";
+    public static final String SYMBOL_CPX = "CPX";
 
     public static final String UNIT_NEO = "neo";
     public static final String UNIT_NEO_GAS = "gas";

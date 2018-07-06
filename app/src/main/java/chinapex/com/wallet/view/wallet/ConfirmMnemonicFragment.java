@@ -100,7 +100,6 @@ public class ConfirmMnemonicFragment extends BaseFragment implements View.OnClic
 
         // 打乱助记词
         Collections.shuffle(mMnemonicStatesClick);
-
         mBackupClickMnemonicAdapter = new BackupClickMnemonicAdapter(mMnemonicStatesClick);
         FlexboxLayoutManager layoutManager = new FlexboxLayoutManager(ApexWalletApplication
                 .getInstance());
@@ -113,7 +112,6 @@ public class ConfirmMnemonicFragment extends BaseFragment implements View.OnClic
         mRv_confirm_mnemonic_click.addItemDecoration(new SpacesItemDecoration(space));
         mBackupClickMnemonicAdapter.setOnItemClickListener(this);
 
-
         // 设置展示的助记词
         mMnemonicStatesShow = new ArrayList<>();
         mBackupShowMnemonicAdapter = new BackupShowMnemonicAdapter(mMnemonicStatesShow);
@@ -121,6 +119,7 @@ public class ConfirmMnemonicFragment extends BaseFragment implements View.OnClic
                 .getInstance());
         layoutManagerShow.setFlexDirection(FlexDirection.ROW);
         layoutManagerShow.setJustifyContent(JustifyContent.FLEX_START);
+        layoutManager.setFlexWrap(FlexWrap.WRAP);
         mRv_confirm_mnemonic_show.setLayoutManager(layoutManagerShow);
         mRv_confirm_mnemonic_show.setAdapter(mBackupShowMnemonicAdapter);
         mRv_confirm_mnemonic_show.addItemDecoration(new SpacesItemDecoration(space));

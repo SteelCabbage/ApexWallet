@@ -26,13 +26,13 @@
     <RelativeLayout
         android:layout_width="330dp"
         android:layout_height="180dp"
-        android:layout_marginTop="15dp">
+        android:layout_marginTop="15dp"
+        android:background="@drawable/shape_bg_copy_mnemonic">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_confirm_mnemonic_show"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/shape_bg_copy_mnemonic"
             android:overScrollMode="never"
             android:padding="5dp" />
     </RelativeLayout>
