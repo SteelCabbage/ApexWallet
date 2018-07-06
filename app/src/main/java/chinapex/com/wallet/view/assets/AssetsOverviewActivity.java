@@ -1,17 +1,14 @@
 package chinapex.com.wallet.view.assets;
 
 import android.content.Intent;
-import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -21,11 +18,9 @@ import java.util.Map;
 
 import chinapex.com.wallet.R;
 import chinapex.com.wallet.adapter.AssetsOverviewRecyclerViewAdapter;
-import chinapex.com.wallet.adapter.DrawerMenuRecyclerViewAdapter;
 import chinapex.com.wallet.adapter.SpacesItemDecoration;
 import chinapex.com.wallet.base.BaseActivity;
 import chinapex.com.wallet.bean.BalanceBean;
-import chinapex.com.wallet.bean.DrawerMenu;
 import chinapex.com.wallet.bean.WalletBean;
 import chinapex.com.wallet.executor.TaskController;
 import chinapex.com.wallet.executor.callback.IGetAccountStateCallback;
@@ -44,9 +39,7 @@ import chinapex.com.wallet.view.wallet.ImportWalletActivity;
 
 public class AssetsOverviewActivity extends BaseActivity implements
         AssetsOverviewRecyclerViewAdapter.OnItemClickListener, IGetAccountStateCallback,
-        SwipeRefreshLayout.OnRefreshListener, DrawerLayout.DrawerListener,
-        DrawerMenuRecyclerViewAdapter.DrawerMenuOnItemClickListener, View.OnClickListener,
-        IGetNep5BalanceCallback {
+        SwipeRefreshLayout.OnRefreshListener, View.OnClickListener, IGetNep5BalanceCallback {
 
     private static final String TAG = AssetsOverviewActivity.class.getSimpleName();
     private TextView mTv_assets_overview_wallet_name;
@@ -56,10 +49,6 @@ public class AssetsOverviewActivity extends BaseActivity implements
     private List<BalanceBean> mBalanceBeans;
     private AssetsOverviewRecyclerViewAdapter mAssetsOverviewRecyclerViewAdapter;
     private SwipeRefreshLayout mSl_assets_overview_rv;
-    private DrawerLayout mDl_assets_overview;
-    private RecyclerView mRv_assets_overview_drawer_menu;
-    private DrawerMenuRecyclerViewAdapter mDrawerMenuRecyclerViewAdapter;
-    private LinearLayout mLl_assets_overview_drawer;
     private ImageButton mIb_assets_overview_ellipsis;
 
     @Override
@@ -79,24 +68,12 @@ public class AssetsOverviewActivity extends BaseActivity implements
                 .tv_assets_overview_wallet_address);
         mRv_assets_overview = (RecyclerView) findViewById(R.id.rv_assets_overview);
         mSl_assets_overview_rv = (SwipeRefreshLayout) findViewById(R.id.sl_assets_overview_rv);
-        mDl_assets_overview = (DrawerLayout) findViewById(R.id.dl_assets_overview);
-        mRv_assets_overview_drawer_menu = (RecyclerView) findViewById(R.id
-                .rv_assets_overview_drawer_menu);
         mIb_assets_overview_ellipsis = (ImageButton) findViewById(R.id.ib_assets_overview_ellipsis);
-        mLl_assets_overview_drawer = (LinearLayout) findViewById(R.id.ll_assets_overview_drawer);
 
         mSl_assets_overview_rv.setColorSchemeColors(this.getResources().getColor(R.color
                 .colorPrimary));
         mSl_assets_overview_rv.setOnRefreshListener(this);
         mIb_assets_overview_ellipsis.setOnClickListener(this);
-        mDl_assets_overview.addDrawerListener(this);
-
-        mRv_assets_overview_drawer_menu.setLayoutManager(new LinearLayoutManager(this,
-                LinearLayoutManager.VERTICAL, false));
-
-        mDrawerMenuRecyclerViewAdapter = new DrawerMenuRecyclerViewAdapter(getAssetsMenus());
-        mDrawerMenuRecyclerViewAdapter.setDrawerMenuOnItemClickListener(this);
-        mRv_assets_overview_drawer_menu.setAdapter(mDrawerMenuRecyclerViewAdapter);
 
         // 复制地址
         mTv_assets_overview_wallet_address.setOnClickListener(this);
@@ -356,67 +333,10 @@ public class AssetsOverviewActivity extends BaseActivity implements
     }
 
     @Override
-    public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
-
-    }
-
-    @Override
-    public void onDrawerOpened(@NonNull View drawerView) {
-
-    }
-
-    @Override
-    public void onDrawerClosed(@NonNull View drawerView) {
-
-    }
-
-    @Override
-    public void onDrawerStateChanged(int newState) {
-
-    }
-
-    @Override
-    public void drawerMenuOnItemClick(int position) {
-        switch (position) {
-            case 0:
-                // 添加资产
-                // TODO: 2018/6/20 0020  
-                break;
-            case 1:
-                // 创建钱包
-                startActivity(CreateWalletActivity.class, false);
-                break;
-            case 2:
-                // 导入钱包
-                startActivity(ImportWalletActivity.class, false);
-                break;
-            default:
-                break;
-        }
-        closeDrawer(mLl_assets_overview_drawer);
-    }
-
-    private List<DrawerMenu> getAssetsMenus() {
-        ArrayList<DrawerMenu> drawerMenus = new ArrayList<>();
-        //drawable数组要用TypedArray获取
-        TypedArray ar = getResources().obtainTypedArray(R.array.assets_overview_drawer_icons);
-        String[] menuTexts = getResources().getStringArray(R.array.assets_overview_drawer_texts);
-
-        for (int i = 0; i < ar.length(); i++) {
-            DrawerMenu drawerMenu = new DrawerMenu();
-            drawerMenu.setMenuIcon(ar.getResourceId(i, 0));
-            drawerMenu.setMenuText(menuTexts[i]);
-            drawerMenus.add(drawerMenu);
-        }
-        ar.recycle();
-        return drawerMenus;
-    }
-
-    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ib_assets_overview_ellipsis:
-                openDrawer(mLl_assets_overview_drawer);
+                CpLog.i(TAG, "添加资产");
                 break;
             case R.id.tv_assets_overview_wallet_address:
                 String copyAddr = mTv_assets_overview_wallet_address.getText().toString().trim();
@@ -426,18 +346,5 @@ public class AssetsOverviewActivity extends BaseActivity implements
                 break;
         }
     }
-
-    private void openDrawer(View drawer) {
-        if (!mDl_assets_overview.isDrawerOpen(drawer)) {
-            mDl_assets_overview.openDrawer(drawer);
-        }
-    }
-
-    private void closeDrawer(View drawer) {
-        if (mDl_assets_overview.isDrawerOpen(drawer)) {
-            mDl_assets_overview.closeDrawer(drawer);
-        }
-    }
-
 
 }
