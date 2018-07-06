@@ -62,7 +62,6 @@ public class ConfirmMnemonicFragment extends BaseFragment implements View.OnClic
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         initView(view);
         initData();
     }
@@ -113,6 +112,7 @@ public class ConfirmMnemonicFragment extends BaseFragment implements View.OnClic
         int space = DensityUtil.dip2px(getActivity(), 5);
         mRv_confirm_mnemonic_click.addItemDecoration(new SpacesItemDecoration(space));
         mBackupClickMnemonicAdapter.setOnItemClickListener(this);
+
 
         // 设置展示的助记词
         mMnemonicStatesShow = new ArrayList<>();
