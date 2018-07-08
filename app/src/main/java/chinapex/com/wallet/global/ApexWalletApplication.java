@@ -17,10 +17,11 @@ public class ApexWalletApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        CpLog.i(TAG, "onCreate() -> start!");
+        CpLog.i(TAG, "ApexWalletApplication start!");
         sApexWalletApplication = this;
         TaskController.getInstance().doInit();
         ApexListeners.getInstance().doInit();
+        ApexGlobalTask.getInstance().doInit();
     }
 
     public static ApexWalletApplication getInstance() {

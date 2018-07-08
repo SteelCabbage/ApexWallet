@@ -17,20 +17,16 @@ public class Constant {
     public static final int NET_SUCCESS = 1;
     public static final int NET_BODY_NULL = 0;
 
-    // neo测试网ip
-//    public static final String HOSTNAME_VERIFIER = "40.125.171.0";
-//    public static final String URL_CLI = "http://40.125.171.0:20332";
-//    public static final String URL_UTXOS = "http://40.125.171.0:8083/utxos/";
-
-    // neo测试网域名
-//    public static final String HOSTNAME_VERIFIER = "dev.chinapex.com.cn";
-//    public static final String URL_CLI = "http://dev.chinapex.com.cn:10086/neo-cli/";
-//    public static final String URL_UTXOS = "http://dev.chinapex.com.cn:10086/tool/utxos/";
-
     // neo正式网
     public static final String HOSTNAME_VERIFIER = "tracker.chinapex.com.cn";
     public static final String URL_CLI = "https://tracker.chinapex.com.cn/neo-cli/";
     public static final String URL_UTXOS = "https://tracker.chinapex.com.cn/tool/utxos/";
+    public static final String URL_ASSETS = "https://tracker.chinapex.com.cn/tool/assets";
+
+    // ApexGlobalTask
+    public static final long ASSETS_POLLING_TIME = 10 * 1000;
+    public static final String UPDATE_ASSETS_OK = "updateAssetsOk";
+
 
     // 交易记录
     public static final String URL_TRANSACTION_HISTORY = "https://tracker.chinapex.com" +
@@ -195,6 +191,27 @@ public class Constant {
             + FIELD_ASSET_SYMBOL + " text, "
             + FIELD_ASSET_LOGO_URL + " text, "
             + FIELD_ASSET_DECIMAL + " integer, "
+            + FIELD_CREATE_TIME + " integer)";
+
+    // table assets
+    public static final String TABLE_ASSETS = "assets";
+
+    public static final String FIELD_ASSET_TYPE = "asset_type";
+    public static final String FIELD_ASSET_PRECISION = "asset_precision";
+    public static final String FIELD_ASSET_NAME = "asset_name";
+    public static final String FIELD_ASSET_IMAGE_URL = "asset_image_url";
+    public static final String FIELD_ASSET_HEX_HASH = "asset_hex_hash";
+    public static final String FIELD_ASSET_HASH = "asset_hash";
+
+    public static final String SQL_CREATE_ASSETS = "create table " + TABLE_ASSETS
+            + " (" + FIELD_ID + " integer primary key autoincrement, "
+            + FIELD_ASSET_TYPE + " text, "
+            + FIELD_ASSET_SYMBOL + " text, "
+            + FIELD_ASSET_PRECISION + " text, "
+            + FIELD_ASSET_NAME + " text, "
+            + FIELD_ASSET_IMAGE_URL + " text, "
+            + FIELD_ASSET_HEX_HASH + " text, "
+            + FIELD_ASSET_HASH + " text, "
             + FIELD_CREATE_TIME + " integer)";
 
 }

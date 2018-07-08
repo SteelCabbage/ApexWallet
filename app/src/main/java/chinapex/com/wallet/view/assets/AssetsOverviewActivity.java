@@ -34,6 +34,8 @@ import chinapex.com.wallet.utils.DensityUtil;
 import chinapex.com.wallet.utils.GsonUtils;
 import chinapex.com.wallet.utils.PhoneUtils;
 import chinapex.com.wallet.utils.ToastUtils;
+import chinapex.com.wallet.view.dialog.BackupWalletPwdDialog;
+import chinapex.com.wallet.view.dialog.BottomDialog;
 import chinapex.com.wallet.view.wallet.CreateWalletActivity;
 import chinapex.com.wallet.view.wallet.ImportWalletActivity;
 
@@ -337,6 +339,7 @@ public class AssetsOverviewActivity extends BaseActivity implements
         switch (v.getId()) {
             case R.id.ib_assets_overview_ellipsis:
                 CpLog.i(TAG, "添加资产");
+                showBottomDialog();
                 break;
             case R.id.tv_assets_overview_wallet_address:
                 String copyAddr = mTv_assets_overview_wallet_address.getText().toString().trim();
@@ -345,6 +348,11 @@ public class AssetsOverviewActivity extends BaseActivity implements
             default:
                 break;
         }
+    }
+
+    public void showBottomDialog() {
+        BottomDialog bottomDialog = BottomDialog.newInstance();
+        bottomDialog.show(getFragmentManager(), "BottomDialog");
     }
 
 }
