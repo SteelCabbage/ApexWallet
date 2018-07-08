@@ -72,9 +72,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/ll_add_assets_search"
-        android:layout_marginTop="15dp">
-
-    </android.support.v7.widget.RecyclerView>
-
+        android:layout_marginTop="15dp"
+        android:overScrollMode="never" />
 
 </RelativeLayout>

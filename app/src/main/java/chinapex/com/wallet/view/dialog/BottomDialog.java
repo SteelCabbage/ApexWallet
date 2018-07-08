@@ -5,6 +5,8 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,16 +15,27 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageButton;
 
+import java.util.List;
+
 import chinapex.com.wallet.R;
+import chinapex.com.wallet.adapter.AddAssetsRecyclerViewAdapter;
+import chinapex.com.wallet.bean.AssetBean;
+import chinapex.com.wallet.global.ApexWalletApplication;
+import chinapex.com.wallet.global.Constant;
+import chinapex.com.wallet.model.ApexWalletDbDao;
 import chinapex.com.wallet.utils.CpLog;
 
 /**
  * Created by SteelCabbage on 2018/5/31 0031.
  */
 
-public class BottomDialog extends DialogFragment implements View.OnClickListener {
+public class BottomDialog extends DialogFragment implements View.OnClickListener,
+        AddAssetsRecyclerViewAdapter.OnItemClickListener {
 
     private static final String TAG = BottomDialog.class.getSimpleName();
+    private RecyclerView mRv_add_assets;
+    private List<AssetBean> mAssetBeans;
+    private AddAssetsRecyclerViewAdapter mAddAssetsRecyclerViewAdapter;
 
 
     public static BottomDialog newInstance() {
@@ -84,13 +97,31 @@ public class BottomDialog extends DialogFragment implements View.OnClickListener
 
     private void initView(View view) {
         ImageButton ib_add_assets_close = view.findViewById(R.id.ib_add_assets_close);
+        mRv_add_assets = view.findViewById(R.id.rv_add_assets);
         ib_add_assets_close.setOnClickListener(this);
     }
 
     private void initData() {
+        ApexWalletDbDao apexWalletDbDao = ApexWalletDbDao.getInstance(ApexWalletApplication
+                .getInstance());
+        if (null == apexWalletDbDao) {
+            CpLog.e(TAG, "apexWalletDbDao is null!");
+            return;
+        }
+
+        mAssetBeans = apexWalletDbDao.queryAssetsByType(Constant.ASSET_TYPE_NEP5);
+        if (null == mAssetBeans || mAssetBeans.isEmpty()) {
+            CpLog.e(TAG, "assetBeans is null or empty!");
+            return;
+        }
+
+        mAddAssetsRecyclerViewAdapter = new AddAssetsRecyclerViewAdapter(mAssetBeans);
+        mAddAssetsRecyclerViewAdapter.setOnItemClickListener(this);
+        mRv_add_assets.setLayoutManager(new LinearLayoutManager(ApexWalletApplication.getInstance
+                (), LinearLayoutManager.VERTICAL, false));
+        mRv_add_assets.setAdapter(mAddAssetsRecyclerViewAdapter);
 
     }
-
 
     @Override
     public void onClick(View v) {
@@ -101,5 +132,21 @@ public class BottomDialog extends DialogFragment implements View.OnClickListener
             default:
                 break;
         }
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        if (null == mAssetBeans || mAssetBeans.isEmpty()) {
+            CpLog.e(TAG, "mAssetBeans is null or empty!");
+            return;
+        }
+
+        AssetBean assetBean = mAssetBeans.get(position);
+        if (null == assetBean) {
+            CpLog.e(TAG, "assetBean is null!");
+            return;
+        }
+
+        CpLog.i(TAG, assetBean.getSymbol());
     }
 }

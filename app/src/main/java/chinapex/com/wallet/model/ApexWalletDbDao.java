@@ -523,12 +523,12 @@ public class ApexWalletDbDao {
     private static final String WHERE_CLAUSE_ASSET_TYPE_EQ = Constant.FIELD_ASSET_TYPE + " = ?";
 
     public List<AssetBean> queryAssetsByType(String assetType) {
+        ArrayList<AssetBean> assetBeans = new ArrayList<>();
+
         if (TextUtils.isEmpty(assetType)) {
             CpLog.e(TAG, "queryAssetsByType() -> assetType is null!");
-            return null;
+            return assetBeans;
         }
-
-        ArrayList<AssetBean> assetBeans = new ArrayList<>();
 
         SQLiteDatabase db = openDatabase();
         Cursor cursor = db.query(Constant.TABLE_ASSETS, null, WHERE_CLAUSE_ASSET_TYPE_EQ, new
