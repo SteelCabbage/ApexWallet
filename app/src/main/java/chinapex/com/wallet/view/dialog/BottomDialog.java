@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.TextView;
+import android.widget.ImageButton;
 
 import chinapex.com.wallet.R;
 import chinapex.com.wallet.utils.CpLog;
@@ -83,8 +83,8 @@ public class BottomDialog extends DialogFragment implements View.OnClickListener
 
 
     private void initView(View view) {
-        TextView tv_dialog = view.findViewById(R.id.tv_dialog);
-        tv_dialog.setOnClickListener(this);
+        ImageButton ib_add_assets_close = view.findViewById(R.id.ib_add_assets_close);
+        ib_add_assets_close.setOnClickListener(this);
     }
 
     private void initData() {
@@ -95,7 +95,7 @@ public class BottomDialog extends DialogFragment implements View.OnClickListener
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.tv_dialog:
+            case R.id.ib_add_assets_close:
                 dismiss();
                 break;
             default:

@@ -87,4 +87,6 @@
     <string name="tv_title_export_keystore">导出Keystore</string>
     <string name="bt_copy_keystore_text">复制Keystore</string>
     <string name="transaction_detail_title">交易详情</string>
+    <string name="et_add_assets_search">搜索资产</string>
+    <string name="tv_add_assets_search_cancel">取消</string>
 </resources>
