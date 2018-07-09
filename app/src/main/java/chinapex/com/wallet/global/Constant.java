@@ -97,6 +97,22 @@ public class Constant {
             "0x602c79718b16e442de58778e148d0b1084e3b2dffd5de6b7b16cee7969282de7";
     public static final String ASSETS_CPX = "0x45d493a6f73fa5f404244a5fb8472fc014ca5885";
 
+    // tmp 后台更新后删除
+    public static final String ASSETS_APH = "0xa0777c3ce2b169d4a23bcba4565e3225a0122d95";
+    public static final String ASSETS_AVA = "0xde2ed49b691e76754c20fe619d891b78ef58e537";
+    public static final String ASSETS_DBC = "0xb951ecbbc5fe37a9c280a76cb0ce0014827294cf";
+    public static final String ASSETS_EXT = "0xe8f98440ad0d7a6e76d84fb1c3d3f8a16e162e97";
+    public static final String ASSETS_LRN = "0x06fa8be9b6609d963e8fc63977b9f8dc5f10895f";
+    public static final String ASSETS_NKN = "0xc36aee199dbba6c3f439983657558cfb67629599";
+    public static final String ASSETS_ONT = "0xceab719b8baa2310f232ee0d277c061704541cfb";
+    public static final String ASSETS_PKC = "0xaf7c7328eee5a275a3bcaee2bf0cf662b5e739be";
+    public static final String ASSETS_RPX = "0xecc6b20d3ccac1ee9ef109af5a7cdb85706b1df9";
+    public static final String ASSETS_SOUL = "0xed07cffad18f1308db51920d99a2af60ac66a7b3";
+    public static final String ASSETS_SWTH = "0xab38352559b8b203bde5fddfa0b07d8b2525e132";
+    public static final String ASSETS_TKY = "0x132947096727c84c7f9e076c90f08fec3bc17f18";
+    public static final String ASSETS_ZPT = "0xac116d4b8d4ca55e6b6d4ecce2192039b51cccc5";
+
+
     // asset type
     public static final String ASSET_TYPE_GLOBAL = "GLOBAL";
     public static final String ASSET_TYPE_NEP5 = "NEP5";

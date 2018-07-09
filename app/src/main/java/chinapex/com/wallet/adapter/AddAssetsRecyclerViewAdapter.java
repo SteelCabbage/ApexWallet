@@ -8,11 +8,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.List;
 
 import chinapex.com.wallet.R;
 import chinapex.com.wallet.bean.AssetBean;
 import chinapex.com.wallet.global.ApexWalletApplication;
+import chinapex.com.wallet.global.Constant;
 import chinapex.com.wallet.utils.CpLog;
 
 public class AddAssetsRecyclerViewAdapter extends RecyclerView.Adapter<AddAssetsRecyclerViewAdapter
@@ -78,7 +81,78 @@ public class AddAssetsRecyclerViewAdapter extends RecyclerView.Adapter<AddAssets
             return;
         }
 
-        // TODO: 2018/7/8 logo url
+        // tmp 后台更新logo后删除
+        switch (assetBean.getHexHash()) {
+            case Constant.ASSETS_NEO:
+                Glide.with(ApexWalletApplication.getInstance()).load(R.drawable.logo_global_neo)
+                        .into(holder.assetLogo);
+                break;
+            case Constant.ASSETS_NEO_GAS:
+                Glide.with(ApexWalletApplication.getInstance()).load(R.drawable.logo_global_gas)
+                        .into(holder.assetLogo);
+                break;
+            case Constant.ASSETS_CPX:
+                Glide.with(ApexWalletApplication.getInstance()).load(R.drawable.logo_nep5_cpx)
+                        .into(holder.assetLogo);
+                break;
+            case Constant.ASSETS_APH:
+                Glide.with(ApexWalletApplication.getInstance()).load(R.drawable.logo_nep5_aph)
+                        .into(holder.assetLogo);
+                break;
+            case Constant.ASSETS_AVA:
+                Glide.with(ApexWalletApplication.getInstance()).load(R.drawable.logo_nep5_ava)
+                        .into(holder.assetLogo);
+                break;
+            case Constant.ASSETS_DBC:
+                Glide.with(ApexWalletApplication.getInstance()).load(R.drawable.logo_nep5_dbc)
+                        .into(holder.assetLogo);
+                break;
+            case Constant.ASSETS_EXT:
+                Glide.with(ApexWalletApplication.getInstance()).load(R.drawable.logo_nep5_ext)
+                        .into(holder.assetLogo);
+                break;
+            case Constant.ASSETS_LRN:
+                Glide.with(ApexWalletApplication.getInstance()).load(R.drawable.logo_nep5_lrn)
+                        .into(holder.assetLogo);
+                break;
+            case Constant.ASSETS_NKN:
+                Glide.with(ApexWalletApplication.getInstance()).load(R.drawable.logo_nep5_nkn)
+                        .into(holder.assetLogo);
+                break;
+            case Constant.ASSETS_ONT:
+                Glide.with(ApexWalletApplication.getInstance()).load(R.drawable.logo_nep5_ont)
+                        .into(holder.assetLogo);
+                break;
+            case Constant.ASSETS_PKC:
+                Glide.with(ApexWalletApplication.getInstance()).load(R.drawable.logo_nep5_pkc)
+                        .into(holder.assetLogo);
+                break;
+            case Constant.ASSETS_RPX:
+                Glide.with(ApexWalletApplication.getInstance()).load(R.drawable.logo_nep5_rpx)
+                        .into(holder.assetLogo);
+                break;
+            case Constant.ASSETS_SOUL:
+                Glide.with(ApexWalletApplication.getInstance()).load(R.drawable.logo_nep5_soul)
+                        .into(holder.assetLogo);
+                break;
+            case Constant.ASSETS_SWTH:
+                Glide.with(ApexWalletApplication.getInstance()).load(R.drawable.logo_nep5_swth)
+                        .into(holder.assetLogo);
+                break;
+            case Constant.ASSETS_TKY:
+                Glide.with(ApexWalletApplication.getInstance()).load(R.drawable.logo_nep5_tky)
+                        .into(holder.assetLogo);
+                break;
+            case Constant.ASSETS_ZPT:
+                Glide.with(ApexWalletApplication.getInstance()).load(R.drawable.logo_nep5_zpt)
+                        .into(holder.assetLogo);
+                break;
+            default:
+                Glide.with(ApexWalletApplication.getInstance()).load(assetBean.getImageUrl())
+                        .into(holder.assetLogo);
+                break;
+        }
+
         holder.assetSymbol.setText(assetBean.getSymbol());
         holder.assetName.setText(assetBean.getName());
         if (assetBean.isChecked()) {

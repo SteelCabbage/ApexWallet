@@ -106,6 +106,71 @@ public class AssetsOverviewRecyclerViewAdapter extends RecyclerView
                 Glide.with(ApexWalletApplication.getInstance()).load(R.drawable.logo_nep5_cpx)
                         .into(holder.assetLogo);
                 break;
+            case Constant.ASSETS_APH:
+                holder.mapState.setVisibility(View.GONE);
+                Glide.with(ApexWalletApplication.getInstance()).load(R.drawable.logo_nep5_aph)
+                        .into(holder.assetLogo);
+                break;
+            case Constant.ASSETS_AVA:
+                holder.mapState.setVisibility(View.GONE);
+                Glide.with(ApexWalletApplication.getInstance()).load(R.drawable.logo_nep5_ava)
+                        .into(holder.assetLogo);
+                break;
+            case Constant.ASSETS_DBC:
+                holder.mapState.setVisibility(View.GONE);
+                Glide.with(ApexWalletApplication.getInstance()).load(R.drawable.logo_nep5_dbc)
+                        .into(holder.assetLogo);
+                break;
+            case Constant.ASSETS_EXT:
+                holder.mapState.setVisibility(View.GONE);
+                Glide.with(ApexWalletApplication.getInstance()).load(R.drawable.logo_nep5_ext)
+                        .into(holder.assetLogo);
+                break;
+            case Constant.ASSETS_LRN:
+                holder.mapState.setVisibility(View.GONE);
+                Glide.with(ApexWalletApplication.getInstance()).load(R.drawable.logo_nep5_lrn)
+                        .into(holder.assetLogo);
+                break;
+            case Constant.ASSETS_NKN:
+                holder.mapState.setVisibility(View.GONE);
+                Glide.with(ApexWalletApplication.getInstance()).load(R.drawable.logo_nep5_nkn)
+                        .into(holder.assetLogo);
+                break;
+            case Constant.ASSETS_ONT:
+                holder.mapState.setVisibility(View.GONE);
+                Glide.with(ApexWalletApplication.getInstance()).load(R.drawable.logo_nep5_ont)
+                        .into(holder.assetLogo);
+                break;
+            case Constant.ASSETS_PKC:
+                holder.mapState.setVisibility(View.GONE);
+                Glide.with(ApexWalletApplication.getInstance()).load(R.drawable.logo_nep5_pkc)
+                        .into(holder.assetLogo);
+                break;
+            case Constant.ASSETS_RPX:
+                holder.mapState.setVisibility(View.GONE);
+                Glide.with(ApexWalletApplication.getInstance()).load(R.drawable.logo_nep5_rpx)
+                        .into(holder.assetLogo);
+                break;
+            case Constant.ASSETS_SOUL:
+                holder.mapState.setVisibility(View.GONE);
+                Glide.with(ApexWalletApplication.getInstance()).load(R.drawable.logo_nep5_soul)
+                        .into(holder.assetLogo);
+                break;
+            case Constant.ASSETS_SWTH:
+                holder.mapState.setVisibility(View.GONE);
+                Glide.with(ApexWalletApplication.getInstance()).load(R.drawable.logo_nep5_swth)
+                        .into(holder.assetLogo);
+                break;
+            case Constant.ASSETS_TKY:
+                holder.mapState.setVisibility(View.GONE);
+                Glide.with(ApexWalletApplication.getInstance()).load(R.drawable.logo_nep5_tky)
+                        .into(holder.assetLogo);
+                break;
+            case Constant.ASSETS_ZPT:
+                holder.mapState.setVisibility(View.GONE);
+                Glide.with(ApexWalletApplication.getInstance()).load(R.drawable.logo_nep5_zpt)
+                        .into(holder.assetLogo);
+                break;
             default:
                 holder.mapState.setVisibility(View.GONE);
                 Glide.with(ApexWalletApplication.getInstance()).load(assetBean.getImageUrl())
