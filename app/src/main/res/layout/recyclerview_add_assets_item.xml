@@ -43,6 +43,6 @@
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
         android:layout_marginEnd="20dp"
-        android:src="@drawable/icon_add_asset" />
+        android:src="@drawable/icon_unchecked_asset" />
 
 </RelativeLayout>

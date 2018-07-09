@@ -271,6 +271,37 @@ public class ApexWalletDbDao {
         closeDatabase();
     }
 
+    public void updateCheckedAssets(WalletBean walletBean) {
+        if (null == walletBean) {
+            CpLog.e(TAG, "walletBean is null!");
+            return;
+        }
+
+        String walletAddress = walletBean.getWalletAddr();
+        if (TextUtils.isEmpty(walletAddress)) {
+            CpLog.e(TAG, "walletAddress is null!");
+            return;
+        }
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(Constant.FIELD_WALLET_ASSETS_NEP5_JSON, walletBean.getAssetsNep5Json());
+        contentValues.put(Constant.FIELD_WALLET_ASSETS_JSON, walletBean.getAssetsJson());
+
+        SQLiteDatabase db = openDatabase();
+        try {
+            db.beginTransaction();
+            db.update(Constant.TABLE_APEX_WALLET, contentValues, WHERE_CLAUSE_WALLET_ADDRESS_EQ, new
+                    String[]{walletAddress});
+            db.setTransactionSuccessful();
+            CpLog.i(TAG, "updateCheckedAssets is ok!");
+        } catch (SQLException e) {
+            CpLog.e(TAG, "updateCheckedAssets exception:" + e.getMessage());
+        } finally {
+            db.endTransaction();
+        }
+        closeDatabase();
+    }
+
     public synchronized void insertTxRecord(String tableName, TransactionRecord transactionRecord) {
         if (TextUtils.isEmpty(tableName) || null == transactionRecord) {
             CpLog.e(TAG, "insertTxRecord() -> tableName or transactionRecord is null!");
@@ -567,6 +598,51 @@ public class ApexWalletDbDao {
         }
         closeDatabase();
         return assetBeans;
+    }
+
+    private static final String WHERE_CLAUSE_ASSET_HEX_HASH_EQ = Constant.FIELD_ASSET_HEX_HASH +
+            " = ?";
+
+    public AssetBean queryAssetByHash(String assetHexHash) {
+        if (TextUtils.isEmpty(assetHexHash)) {
+            CpLog.e(TAG, "queryAssetsByType() -> assetType is null!");
+            return null;
+        }
+
+        AssetBean assetBean = new AssetBean();
+        SQLiteDatabase db = openDatabase();
+        Cursor cursor = db.query(Constant.TABLE_ASSETS, null, WHERE_CLAUSE_ASSET_HEX_HASH_EQ, new
+                String[]{assetHexHash}, null, null, null);
+        if (null != cursor) {
+            while (cursor.moveToNext()) {
+                int assetTypeIndex = cursor.getColumnIndex(Constant.FIELD_ASSET_TYPE);
+                int assetSymbolIndex = cursor.getColumnIndex(Constant.FIELD_ASSET_SYMBOL);
+                int assetPrecisionIndex = cursor.getColumnIndex(Constant.FIELD_ASSET_PRECISION);
+                int assetNameIndex = cursor.getColumnIndex(Constant.FIELD_ASSET_NAME);
+                int assetImageUrlIndex = cursor.getColumnIndex(Constant.FIELD_ASSET_IMAGE_URL);
+                int assetHexHashIndex = cursor.getColumnIndex(Constant.FIELD_ASSET_HEX_HASH);
+                int assetHashIndex = cursor.getColumnIndex(Constant.FIELD_ASSET_HASH);
+
+                String assetTypeTmp = cursor.getString(assetTypeIndex);
+                String assetSymbol = cursor.getString(assetSymbolIndex);
+                String assetPrecision = cursor.getString(assetPrecisionIndex);
+                String assetName = cursor.getString(assetNameIndex);
+                String assetImageUrl = cursor.getString(assetImageUrlIndex);
+                String assetHexHashTmp = cursor.getString(assetHexHashIndex);
+                String assetHash = cursor.getString(assetHashIndex);
+
+                assetBean.setType(assetTypeTmp);
+                assetBean.setSymbol(assetSymbol);
+                assetBean.setPrecision(assetPrecision);
+                assetBean.setName(assetName);
+                assetBean.setImageUrl(assetImageUrl);
+                assetBean.setHexHash(assetHexHashTmp);
+                assetBean.setHash(assetHash);
+            }
+            cursor.close();
+        }
+        closeDatabase();
+        return assetBean;
     }
 
 }

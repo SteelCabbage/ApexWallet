@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageButton;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import chinapex.com.wallet.R;
@@ -29,17 +31,31 @@ import chinapex.com.wallet.utils.CpLog;
  * Created by SteelCabbage on 2018/5/31 0031.
  */
 
-public class BottomDialog extends DialogFragment implements View.OnClickListener,
+public class AddAssetsDialog extends DialogFragment implements View.OnClickListener,
         AddAssetsRecyclerViewAdapter.OnItemClickListener {
 
-    private static final String TAG = BottomDialog.class.getSimpleName();
+    private static final String TAG = AddAssetsDialog.class.getSimpleName();
     private RecyclerView mRv_add_assets;
     private List<AssetBean> mAssetBeans;
     private AddAssetsRecyclerViewAdapter mAddAssetsRecyclerViewAdapter;
+    private List<String> mCheckedAssets;
+    private List<String> mCurrentAssets;
+    private onCheckedAssetsListener mOnCheckedAssetsListener;
 
+    public interface onCheckedAssetsListener {
+        void onCheckedAssets(List<String> checkedAssets);
+    }
 
-    public static BottomDialog newInstance() {
-        return new BottomDialog();
+    public void setOnCheckedAssetsListener(onCheckedAssetsListener onCheckedAssetsListener) {
+        mOnCheckedAssetsListener = onCheckedAssetsListener;
+    }
+
+    public static AddAssetsDialog newInstance() {
+        return new AddAssetsDialog();
+    }
+
+    public void setCurrentAssets(List<String> currentAssets) {
+        mCurrentAssets = currentAssets;
     }
 
     @Nullable
@@ -79,7 +95,7 @@ public class BottomDialog extends DialogFragment implements View.OnClickListener
                     View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         }
 
-        return inflater.inflate(R.layout.dialog_bottom, container, false);
+        return inflater.inflate(R.layout.dialog_add_assets, container, false);
     }
 
     @Override
@@ -115,18 +131,57 @@ public class BottomDialog extends DialogFragment implements View.OnClickListener
             return;
         }
 
+        List<AssetBean> governingAssets = apexWalletDbDao.queryAssetsByType(Constant
+                .ASSET_TYPE_GOVERNING);
+        if (null == governingAssets || governingAssets.isEmpty()) {
+            CpLog.e(TAG, "governingAssets is null or empty!");
+            return;
+        }
+
+        mAssetBeans.addAll(governingAssets);
+
+        List<AssetBean> utilityAssets = apexWalletDbDao.queryAssetsByType(Constant
+                .ASSET_TYPE_UTILITY);
+        if (null == utilityAssets || utilityAssets.isEmpty()) {
+            CpLog.e(TAG, "utilityAssets is null or empty!");
+            return;
+        }
+
+        mAssetBeans.addAll(utilityAssets);
+
+        if (null == mCurrentAssets) {
+            CpLog.e(TAG, "mCurrentAssets is null!");
+            return;
+        }
+
+        for (AssetBean assetBean : mAssetBeans) {
+            if (null == assetBean) {
+                CpLog.e(TAG, "assetBean is null!");
+                continue;
+            }
+
+            if (mCurrentAssets.contains(assetBean.getHexHash())) {
+                assetBean.setChecked(true);
+            }
+        }
+
         mAddAssetsRecyclerViewAdapter = new AddAssetsRecyclerViewAdapter(mAssetBeans);
         mAddAssetsRecyclerViewAdapter.setOnItemClickListener(this);
         mRv_add_assets.setLayoutManager(new LinearLayoutManager(ApexWalletApplication.getInstance
                 (), LinearLayoutManager.VERTICAL, false));
         mRv_add_assets.setAdapter(mAddAssetsRecyclerViewAdapter);
-
+        mCheckedAssets = new ArrayList<>();
+        mCheckedAssets.addAll(mCurrentAssets);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ib_add_assets_close:
+                if (null != mOnCheckedAssetsListener) {
+                    mOnCheckedAssetsListener.onCheckedAssets(mCheckedAssets);
+                }
+
                 dismiss();
                 break;
             default:
@@ -147,6 +202,25 @@ public class BottomDialog extends DialogFragment implements View.OnClickListener
             return;
         }
 
-        CpLog.i(TAG, assetBean.getSymbol());
+        if (null == mCheckedAssets) {
+            CpLog.e(TAG, "mCheckedAssets is null!");
+            return;
+        }
+
+        String assetHexHash = assetBean.getHexHash();
+        if (TextUtils.isEmpty(assetHexHash)) {
+            CpLog.e(TAG, "hexHash is null!");
+            return;
+        }
+
+        if (assetBean.isChecked()) {
+            if (!mCheckedAssets.contains(assetHexHash)) {
+                mCheckedAssets.add(assetHexHash);
+            }
+        } else {
+            if (mCheckedAssets.contains(assetHexHash)) {
+                mCheckedAssets.remove(assetHexHash);
+            }
+        }
     }
 }

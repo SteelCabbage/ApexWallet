@@ -12,6 +12,7 @@ import java.util.List;
 
 import chinapex.com.wallet.R;
 import chinapex.com.wallet.bean.AssetBean;
+import chinapex.com.wallet.global.ApexWalletApplication;
 import chinapex.com.wallet.utils.CpLog;
 
 public class AddAssetsRecyclerViewAdapter extends RecyclerView.Adapter<AddAssetsRecyclerViewAdapter
@@ -53,9 +54,10 @@ public class AddAssetsRecyclerViewAdapter extends RecyclerView.Adapter<AddAssets
             return;
         }
 
+        boolean checked = assetBean.isChecked();
+        assetBean.setChecked(!checked);
+        notifyDataSetChanged();
         mOnItemClickListener.onItemClick(position);
-
-
     }
 
     @NonNull
@@ -79,6 +81,13 @@ public class AddAssetsRecyclerViewAdapter extends RecyclerView.Adapter<AddAssets
         // TODO: 2018/7/8 logo url
         holder.assetSymbol.setText(assetBean.getSymbol());
         holder.assetName.setText(assetBean.getName());
+        if (assetBean.isChecked()) {
+            holder.assetChecked.setImageDrawable(ApexWalletApplication.getInstance().getResources()
+                    .getDrawable(R.drawable.icon_checked_asset));
+        } else {
+            holder.assetChecked.setImageDrawable(ApexWalletApplication.getInstance().getResources()
+                    .getDrawable(R.drawable.icon_unchecked_asset));
+        }
 
         holder.itemView.setTag(position);
     }

@@ -100,6 +100,8 @@ public class Constant {
     // asset type
     public static final String ASSET_TYPE_GLOBAL = "GLOBAL";
     public static final String ASSET_TYPE_NEP5 = "NEP5";
+    public static final String ASSET_TYPE_UTILITY = "UtilityToken";
+    public static final String ASSET_TYPE_GOVERNING = "GoverningToken";
 
     public static final String SYMBOL_NEO = "NEO";
     public static final String SYMBOL_NEO_GAS = "GAS";

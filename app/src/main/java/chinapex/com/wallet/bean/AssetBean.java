@@ -13,6 +13,7 @@ public class AssetBean {
     private String hexHash;
     private String hash;
     private String creatTime;
+    private boolean isChecked;
 
     public String getType() {
         return type;
@@ -76,5 +77,13 @@ public class AssetBean {
 
     public void setCreatTime(String creatTime) {
         this.creatTime = creatTime;
+    }
+
+    public boolean isChecked() {
+        return isChecked;
+    }
+
+    public void setChecked(boolean checked) {
+        isChecked = checked;
     }
 }
