@@ -7,16 +7,21 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import chinapex.com.wallet.R;
@@ -32,15 +37,18 @@ import chinapex.com.wallet.utils.CpLog;
  */
 
 public class AddAssetsDialog extends DialogFragment implements View.OnClickListener,
-        AddAssetsRecyclerViewAdapter.OnItemClickListener {
+        AddAssetsRecyclerViewAdapter.OnItemClickListener, TextWatcher {
 
     private static final String TAG = AddAssetsDialog.class.getSimpleName();
     private RecyclerView mRv_add_assets;
     private List<AssetBean> mAssetBeans;
+    private List<AssetBean> mSearchAssetBeans;
     private AddAssetsRecyclerViewAdapter mAddAssetsRecyclerViewAdapter;
     private List<String> mCheckedAssets;
     private List<String> mCurrentAssets;
     private onCheckedAssetsListener mOnCheckedAssetsListener;
+    private EditText mEt_add_assets_search;
+    private TextView mTv_add_assets_cancel;
 
     public interface onCheckedAssetsListener {
         void onCheckedAssets(List<String> checkedAssets);
@@ -113,8 +121,14 @@ public class AddAssetsDialog extends DialogFragment implements View.OnClickListe
 
     private void initView(View view) {
         ImageButton ib_add_assets_close = view.findViewById(R.id.ib_add_assets_close);
+        mEt_add_assets_search = view.findViewById(R.id.et_add_assets_search);
+        mTv_add_assets_cancel = view.findViewById(R.id.tv_add_assets_cancel);
+
         mRv_add_assets = view.findViewById(R.id.rv_add_assets);
+
         ib_add_assets_close.setOnClickListener(this);
+        mEt_add_assets_search.addTextChangedListener(this);
+        mTv_add_assets_cancel.setOnClickListener(this);
     }
 
     private void initData() {
@@ -154,6 +168,9 @@ public class AddAssetsDialog extends DialogFragment implements View.OnClickListe
             return;
         }
 
+        mSearchAssetBeans = new ArrayList<>();
+        mSearchAssetBeans.addAll(mAssetBeans);
+
         for (AssetBean assetBean : mAssetBeans) {
             if (null == assetBean) {
                 CpLog.e(TAG, "assetBean is null!");
@@ -183,6 +200,8 @@ public class AddAssetsDialog extends DialogFragment implements View.OnClickListe
                 }
 
                 dismiss();
+            case R.id.tv_add_assets_cancel:
+                mEt_add_assets_search.getText().clear();
                 break;
             default:
                 break;
@@ -222,5 +241,48 @@ public class AddAssetsDialog extends DialogFragment implements View.OnClickListe
                 mCheckedAssets.remove(assetHexHash);
             }
         }
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+        if (null == mSearchAssetBeans || mSearchAssetBeans.isEmpty()) {
+            CpLog.e(TAG, "mSearchAssetBeans is null or empty!");
+            return;
+        }
+
+        mAssetBeans.clear();
+        mAssetBeans.addAll(mSearchAssetBeans);
+
+        if (TextUtils.isEmpty(s)) {
+            CpLog.w(TAG, "onTextChanged() -> is empty!");
+            mAddAssetsRecyclerViewAdapter.notifyDataSetChanged();
+            return;
+        }
+
+        Iterator<AssetBean> iterator = mAssetBeans.iterator();
+        while (iterator.hasNext()) {
+            AssetBean assetBean = iterator.next();
+            if (null == assetBean) {
+                CpLog.e(TAG, "assetBean is null!");
+                continue;
+            }
+
+            if (!assetBean.getSymbol().contains(s.toString().toUpperCase())
+                    && !assetBean.getSymbol().contains(s.toString().toLowerCase())) {
+                iterator.remove();
+            }
+        }
+
+        mAddAssetsRecyclerViewAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+
     }
 }

@@ -39,13 +39,12 @@
 
         <ImageButton
             android:id="@+id/ib_assets_overview_ellipsis"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
             android:layout_alignParentEnd="true"
-            android:layout_marginEnd="13dp"
-            android:layout_marginTop="35dp"
+            android:layout_marginTop="10dp"
             android:background="@null"
-            android:src="@drawable/icon_ellipsis" />
+            android:src="@drawable/icon_add_assets_round" />
     </RelativeLayout>
 
     <android.support.v4.widget.SwipeRefreshLayout
