@@ -50,7 +50,7 @@
             android:background="@null"
             android:hint="@string/et_add_assets_search"
             android:singleLine="true"
-            android:textColor="@android:color/white"
+            android:textColor="@color/c_666666"
             android:textColorHint="@color/c_666666"
             android:textSize="@dimen/paratext_14sp" />
     </LinearLayout>

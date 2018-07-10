@@ -73,7 +73,7 @@
                 android:layout_alignBottom="@+id/ll_assets_search"
                 android:layout_alignParentEnd="true"
                 android:layout_marginBottom="5dp"
-                android:layout_marginEnd="8dp"
+                android:layout_marginEnd="10dp"
                 android:text="@string/tv_assets_search_cancel"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/paratext_14sp" />
