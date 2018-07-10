@@ -110,8 +110,22 @@ public class AssetsOverviewActivity extends BaseActivity implements
 
     private void getAssetsBalance() {
         TaskController.getInstance().submit(new GetAccountState(mWalletBean.getWalletAddr(), this));
-        TaskController.getInstance().submit(new GetNep5Balance(Constant.ASSETS_CPX, mWalletBean
-                .getWalletAddr(), this));
+
+        if (null == mCurrentAssets || mCurrentAssets.isEmpty()) {
+            CpLog.e(TAG, "mCurrentAssets is null or empty!");
+            return;
+        }
+
+        for (String currentAsset : mCurrentAssets) {
+            if (TextUtils.isEmpty(currentAsset)) {
+                CpLog.e(TAG, "currentAsset is null or empty!");
+                continue;
+            }
+
+            TaskController.getInstance().submit(new GetNep5Balance(currentAsset, mWalletBean
+                    .getWalletAddr(), this));
+        }
+
     }
 
     @Override
@@ -234,7 +248,9 @@ public class AssetsOverviewActivity extends BaseActivity implements
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                mSl_assets_overview_rv.setRefreshing(false);
+                if (mSl_assets_overview_rv.isRefreshing()) {
+                    mSl_assets_overview_rv.setRefreshing(false);
+                }
             }
         });
 
@@ -244,25 +260,7 @@ public class AssetsOverviewActivity extends BaseActivity implements
         }
 
         if (null == balanceBeans || balanceBeans.isEmpty()) {
-            CpLog.w(TAG, "getNep5Balance() -> the current assets is null!");
-            for (BalanceBean balanceBean0 : mBalanceBeans) {
-                if (null == balanceBean0) {
-                    CpLog.e(TAG, "balanceBean0 is null!");
-                    continue;
-                }
-
-                if (Constant.ASSET_TYPE_NEP5.equals(balanceBean0.getAssetType())) {
-                    balanceBean0.setAssetsValue("0");
-                }
-            }
-
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    mAssetsOverviewRecyclerViewAdapter.notifyDataSetChanged();
-                }
-            });
-
+            CpLog.w(TAG, "balanceBeans is null or empty!");
             return;
         }
 
@@ -275,10 +273,6 @@ public class AssetsOverviewActivity extends BaseActivity implements
             String assetsID = balanceBean.getAssetsID();
             if (balanceBeans.containsKey(assetsID)) {
                 balanceBean.setAssetsValue(balanceBeans.get(assetsID).getAssetsValue());
-            } else {
-                if (Constant.ASSET_TYPE_NEP5.equals(balanceBean.getAssetType())) {
-                    balanceBean.setAssetsValue("0");
-                }
             }
         }
 
@@ -289,6 +283,68 @@ public class AssetsOverviewActivity extends BaseActivity implements
             }
         });
     }
+    
+    // 保留，服务器更新接口后，应用此逻辑
+//    @Override
+//    public void getNep5Balance(Map<String, BalanceBean> balanceBeans) {
+//        runOnUiThread(new Runnable() {
+//            @Override
+//            public void run() {
+//                mSl_assets_overview_rv.setRefreshing(false);
+//            }
+//        });
+//
+//        if (null == mBalanceBeans || mBalanceBeans.isEmpty()) {
+//            CpLog.e(TAG, "mBalanceBeans is null or empty!");
+//            return;
+//        }
+//
+//        if (null == balanceBeans || balanceBeans.isEmpty()) {
+//            CpLog.w(TAG, "getNep5Balance() -> the current assets is null!");
+//            for (BalanceBean balanceBean0 : mBalanceBeans) {
+//                if (null == balanceBean0) {
+//                    CpLog.e(TAG, "balanceBean0 is null!");
+//                    continue;
+//                }
+//
+//                if (Constant.ASSET_TYPE_NEP5.equals(balanceBean0.getAssetType())) {
+//                    balanceBean0.setAssetsValue("0");
+//                }
+//            }
+//
+//            runOnUiThread(new Runnable() {
+//                @Override
+//                public void run() {
+//                    mAssetsOverviewRecyclerViewAdapter.notifyDataSetChanged();
+//                }
+//            });
+//
+//            return;
+//        }
+//
+//        for (BalanceBean balanceBean : mBalanceBeans) {
+//            if (null == balanceBean) {
+//                CpLog.e(TAG, "balanceBean is null!");
+//                continue;
+//            }
+//
+//            String assetsID = balanceBean.getAssetsID();
+//            if (balanceBeans.containsKey(assetsID)) {
+//                balanceBean.setAssetsValue(balanceBeans.get(assetsID).getAssetsValue());
+//            } else {
+//                if (Constant.ASSET_TYPE_NEP5.equals(balanceBean.getAssetType())) {
+//                    balanceBean.setAssetsValue("0");
+//                }
+//            }
+//        }
+//
+//        runOnUiThread(new Runnable() {
+//            @Override
+//            public void run() {
+//                mAssetsOverviewRecyclerViewAdapter.notifyDataSetChanged();
+//            }
+//        });
+//    }
 
     @Override
     public void assetsBalance(Map<String, BalanceBean> balanceBeans) {
