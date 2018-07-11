@@ -81,8 +81,14 @@
         <activity
             android:name=".view.wallet.ExportKeystoreActivity"
             android:screenOrientation="portrait" />
-        <!--交易记录明细-->
-        <activity android:name=".view.me.TransactionDetailActivity" />
+        <!-- 交易记录明细 -->
+        <activity
+            android:name=".view.me.TransactionDetailActivity"
+            android:screenOrientation="portrait" />
+        <!-- Me的二级activity -->
+        <activity
+            android:name=".view.Me2Activity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

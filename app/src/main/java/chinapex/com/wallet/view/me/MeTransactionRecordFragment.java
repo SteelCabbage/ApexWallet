@@ -129,7 +129,12 @@ public class MeTransactionRecordFragment extends BaseFragment implements View.On
         String address = mTv_me_transaction_record_address.getText().toString().trim();
         mTransactionRecords.clear();
         mSearchTxRecords.clear();
-        mTransactionRecordRecyclerViewAdapter.notifyDataSetChanged();
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mTransactionRecordRecyclerViewAdapter.notifyDataSetChanged();
+            }
+        });
         TaskController.getInstance().submit(new LoadTransacitonRecord(address, this));
     }
 

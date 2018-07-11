@@ -30,6 +30,7 @@ public class MeSkipActivity extends BaseActivity implements OnItemDeleteListener
     }
 
     private void initView() {
+
     }
 
     private void initData() {

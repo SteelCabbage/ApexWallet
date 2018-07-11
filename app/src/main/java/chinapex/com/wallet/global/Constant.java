@@ -60,6 +60,9 @@ public class Constant {
     // me
     public static final String ME_MANAGER_DETAIL_BUNDLE = "meManagerDetailBundle";
     public static final String ME_SKIP_ACTIVITY_FRAGMENT_TAG = "meSkipActivityFragmentTag";
+    public static final String ME_2_SHOULD_BE_SHOW = "me2ShouldBeShow";
+    public static final String ME_2_SHOULD_BE_SHOW_MANAGE_WALLET = "me2ShouldBeShowManageWallet";
+    public static final String ME_2_SHOULD_BE_SHOW_TX_RECORDS = "me2ShouldBeShowTxRecords";
     public static final String PARCELABLE_WALLET_BEAN_MANAGE_DETAIL =
             "parcelableWalletBeanManageDetail";
 
