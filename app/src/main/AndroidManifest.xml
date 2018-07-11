@@ -42,6 +42,7 @@
         <!-- 主activity -->
         <activity
             android:name=".view.MainActivity"
+            android:alwaysRetainTaskState="true"
             android:screenOrientation="portrait" />
         <!-- 跳转activity -->
         <activity
@@ -58,6 +59,7 @@
         <!-- 备份 -->
         <activity
             android:name=".view.wallet.BackupWalletActivity"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <!-- 资产概览 -->
         <activity

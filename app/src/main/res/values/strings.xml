@@ -89,4 +89,8 @@
     <string name="transaction_detail_title">交易详情</string>
     <string name="et_add_assets_search">搜索资产</string>
     <string name="tv_add_assets_search_cancel">取消</string>
+
+    <!--Toast content-->
+    <string name="address_cannot_be_empty">地址不能为空！</string>
+    <string name="address_cannot_be_same">收付款地址不能相同！</string>
 </resources>

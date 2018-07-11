@@ -41,6 +41,7 @@ import chinapex.com.wallet.global.ApexWalletApplication;
 import chinapex.com.wallet.global.Constant;
 import chinapex.com.wallet.model.ApexWalletDbDao;
 import chinapex.com.wallet.utils.CpLog;
+import chinapex.com.wallet.utils.ToastUtils;
 import chinapex.com.wallet.view.dialog.TransferPwdDialog;
 import neomobile.Tx;
 import neomobile.Wallet;
@@ -127,6 +128,22 @@ public class TransferActivity extends BaseActivity implements View.OnClickListen
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_transfer_send:
+                String addressFrom = mTv_transfer_from_wallet_addr.getText().toString().trim();
+                String addressTo = mEt_transfer_to_wallet_addr.getText().toString().trim();
+                if (TextUtils.isEmpty(addressFrom) || TextUtils.isEmpty(addressTo)) {
+                    CpLog.e(TAG, "addressFrom or addressTo is null or empty!");
+                    ToastUtils.getInstance().showToast(ApexWalletApplication.getInstance()
+                            .getResources().getString(R.string.address_cannot_be_empty));
+                    return;
+                }
+
+                if (addressFrom.equals(addressTo)) {
+                    CpLog.e(TAG, "addressFrom equals addressTo!");
+                    ToastUtils.getInstance().showToast(ApexWalletApplication.getInstance()
+                            .getResources().getString(R.string.address_cannot_be_same));
+                    return;
+                }
+
                 String balance = mBalanceBean.getAssetsValue();
                 String amount = mEt_transfer_amount.getText().toString().trim();
                 try {
