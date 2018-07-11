@@ -1,4 +1,4 @@
-package chinapex.com.wallet.view;
+package chinapex.com.wallet.view.me;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -147,7 +147,7 @@ public class Me2Activity extends BaseActivity implements MeRecyclerViewAdapter
     }
 
     private void toMeManagerDetailFragment() {
-        startActivityBundle(MeSkipActivity.class,
+        startActivityBundle(Me3Activity.class,
                 false,
                 Constant.ME_MANAGER_DETAIL_BUNDLE,
                 Constant.ME_SKIP_ACTIVITY_FRAGMENT_TAG, Constant.FRAGMENT_TAG_ME_MANAGE_DETAIL,
@@ -155,7 +155,7 @@ public class Me2Activity extends BaseActivity implements MeRecyclerViewAdapter
     }
 
     private void toMeTransactionRecordFragment() {
-        startActivityBundle(MeSkipActivity.class,
+        startActivityBundle(Me3Activity.class,
                 false,
                 Constant.ME_MANAGER_DETAIL_BUNDLE,
                 Constant.ME_SKIP_ACTIVITY_FRAGMENT_TAG,

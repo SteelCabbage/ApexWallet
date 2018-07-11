@@ -11,7 +11,6 @@ import android.widget.TextView;
 import chinapex.com.wallet.R;
 import chinapex.com.wallet.base.BaseFragment;
 import chinapex.com.wallet.global.Constant;
-import chinapex.com.wallet.view.Me2Activity;
 
 /**
  * Created by SteelCabbage on 2018/7/11 0011 16:48.

@@ -46,7 +46,7 @@
             android:screenOrientation="portrait" />
         <!-- 跳转activity -->
         <activity
-            android:name=".view.MeSkipActivity"
+            android:name=".view.me.Me3Activity"
             android:screenOrientation="portrait" />
         <!-- 新建钱包 -->
         <activity
@@ -87,7 +87,7 @@
             android:screenOrientation="portrait" />
         <!-- Me的二级activity -->
         <activity
-            android:name=".view.Me2Activity"
+            android:name=".view.me.Me2Activity"
             android:screenOrientation="portrait" />
     </application>
 

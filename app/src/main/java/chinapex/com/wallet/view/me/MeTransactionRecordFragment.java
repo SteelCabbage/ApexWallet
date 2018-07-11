@@ -36,7 +36,6 @@ import chinapex.com.wallet.global.Constant;
 import chinapex.com.wallet.utils.CpLog;
 import chinapex.com.wallet.utils.PhoneUtils;
 import chinapex.com.wallet.utils.ToastUtils;
-import chinapex.com.wallet.view.MeSkipActivity;
 import chinapex.com.wallet.view.dialog.SwitchWalletDialog;
 
 /**
@@ -113,8 +112,8 @@ public class MeTransactionRecordFragment extends BaseFragment implements View.On
     }
 
     private void initData() {
-        MeSkipActivity meSkipActivity = (MeSkipActivity) getActivity();
-        mCurrentClickedWalletBean = meSkipActivity.getWalletBean();
+        Me3Activity me3Activity = (Me3Activity) getActivity();
+        mCurrentClickedWalletBean = me3Activity.getWalletBean();
         if (null == mCurrentClickedWalletBean) {
             CpLog.e(TAG, "currentClickedWalletBean is null!");
             return;
