@@ -75,23 +75,8 @@ public class BalanceDetailActivity extends BaseActivity implements View.OnClickL
             return;
         }
 
-        switch (mBalanceBean.getAssetsID()) {
-            case Constant.ASSETS_NEO:
-                mTv_balance_detail_assets_name.setText(Constant.SYMBOL_NEO);
-                mLl_balance_detail_map.setVisibility(View.INVISIBLE);
-                break;
-            case Constant.ASSETS_NEO_GAS:
-                mTv_balance_detail_assets_name.setText(Constant.SYMBOL_NEO_GAS);
-                mLl_balance_detail_map.setVisibility(View.INVISIBLE);
-                break;
-            case Constant.ASSETS_CPX:
-                mTv_balance_detail_assets_name.setText(Constant.SYMBOL_CPX);
-                mLl_balance_detail_map.setVisibility(View.INVISIBLE);
-                break;
-            default:
-                break;
-        }
-
+        mLl_balance_detail_map.setVisibility(View.INVISIBLE);
+        mTv_balance_detail_assets_name.setText(mBalanceBean.getAssetSymbol());
         mTv_balance_detail_assets_value.setText(mBalanceBean.getAssetsValue());
     }
 

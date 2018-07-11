@@ -112,17 +112,7 @@ public class TransferActivity extends BaseActivity implements View.OnClickListen
             return;
         }
 
-        switch (mBalanceBean.getAssetsID()) {
-            case Constant.ASSETS_NEO:
-                mTv_transfer_unit.setText(Constant.UNIT_NEO);
-                break;
-            case Constant.ASSETS_NEO_GAS:
-                mTv_transfer_unit.setText(Constant.UNIT_NEO_GAS);
-                break;
-            case Constant.ASSETS_CPX:
-                mTv_transfer_unit.setText(Constant.UNIT_CPX);
-                break;
-        }
+        mTv_transfer_unit.setText(mBalanceBean.getAssetSymbol());
 
         String qrCode = intent.getStringExtra(Constant.PARCELABLE_QR_CODE_TRANSFER);
         if (TextUtils.isEmpty(qrCode)) {
