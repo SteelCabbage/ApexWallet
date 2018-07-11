@@ -142,7 +142,7 @@ public class TransferActivity extends BaseActivity implements View.OnClickListen
                     return;
                 }
 
-                showDeleteWalletPwdDialog();
+                showTransferPwdDialog();
                 break;
             case R.id.ib_transfer_scan:
                 Intent intent = new Intent(TransferActivity.this, CaptureActivity.class);
@@ -153,7 +153,7 @@ public class TransferActivity extends BaseActivity implements View.OnClickListen
         }
     }
 
-    public void showDeleteWalletPwdDialog() {
+    public void showTransferPwdDialog() {
         TransferPwdDialog transferPwdDialog = TransferPwdDialog.newInstance();
         transferPwdDialog.setCurrentWalletBean(mWalletBean);
         transferPwdDialog.setOnCheckPwdListener(this);

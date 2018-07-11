@@ -127,6 +127,9 @@ public class MeTransactionRecordFragment extends BaseFragment implements View.On
 
     private void loadTxsFromDb() {
         String address = mTv_me_transaction_record_address.getText().toString().trim();
+        mTransactionRecords.clear();
+        mSearchTxRecords.clear();
+        mTransactionRecordRecyclerViewAdapter.notifyDataSetChanged();
         TaskController.getInstance().submit(new LoadTransacitonRecord(address, this));
     }
 
@@ -137,9 +140,7 @@ public class MeTransactionRecordFragment extends BaseFragment implements View.On
             return;
         }
 
-        mTransactionRecords.clear();
         mTransactionRecords.addAll(transactionRecords);
-        mSearchTxRecords.clear();
         mSearchTxRecords.addAll(transactionRecords);
 
         getActivity().runOnUiThread(new Runnable() {
