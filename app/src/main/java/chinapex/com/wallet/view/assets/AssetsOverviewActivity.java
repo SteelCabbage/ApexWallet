@@ -122,6 +122,12 @@ public class AssetsOverviewActivity extends BaseActivity implements
                 continue;
             }
 
+            if (Constant.ASSETS_NEO.equals(currentAsset)
+                    || Constant.ASSETS_NEO_GAS.equals(currentAsset)) {
+                CpLog.w(TAG, "currentAsset is not nep5");
+                continue;
+            }
+
             TaskController.getInstance().submit(new GetNep5Balance(currentAsset, mWalletBean
                     .getWalletAddr(), this));
         }
@@ -283,7 +289,7 @@ public class AssetsOverviewActivity extends BaseActivity implements
             }
         });
     }
-    
+
     // 保留，服务器更新接口后，应用此逻辑
 //    @Override
 //    public void getNep5Balance(Map<String, BalanceBean> balanceBeans) {
@@ -463,7 +469,6 @@ public class AssetsOverviewActivity extends BaseActivity implements
                 continue;
             }
 
-            CpLog.i(TAG, "checkedAsset:" + checkedAsset);
             if (Constant.ASSETS_NEO.equals(checkedAsset)
                     || Constant.ASSETS_NEO_GAS.equals(checkedAsset)) {
                 globalAssets.add(checkedAsset);
