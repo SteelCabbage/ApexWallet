@@ -23,33 +23,32 @@
         android:textColor="@color/c_666666"
         android:textSize="14sp" />
 
-    <FrameLayout
+    <RelativeLayout
         android:layout_width="330dp"
         android:layout_height="195dp"
         android:layout_marginTop="10dp"
-        android:background="@drawable/shape_bg_copy_mnemonic">
+        android:background="@drawable/shape_bg_copy_mnemonic"
+        android:padding="5dp">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_confirm_mnemonic_show"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:overScrollMode="never"
-            android:padding="5dp" />
-    </FrameLayout>
+            android:overScrollMode="never" />
+    </RelativeLayout>
 
-    <FrameLayout
+    <RelativeLayout
         android:layout_width="330dp"
-        android:layout_height="190dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="10dp">
+        android:layout_height="195dp"
+        android:layout_marginTop="10dp"
+        android:padding="5dp">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_confirm_mnemonic_click"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:overScrollMode="never" />
-    </FrameLayout>
+    </RelativeLayout>
 
     <Button
         android:id="@+id/bt_confirm_mnemonic_confirm"
