@@ -6,5 +6,5 @@ package chinapex.com.wallet.executor.callback;
  */
 
 public interface IUpdateTransacitonStateCallback {
-    void updateTransacitonState(long confirmations);
+    void updateTransacitonState(String txId, long confirmations);
 }

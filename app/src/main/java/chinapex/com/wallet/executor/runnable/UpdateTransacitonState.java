@@ -56,25 +56,28 @@ public class UpdateTransacitonState implements Runnable, INetCallback {
                 ResponseGetRawTransaction.class);
         if (null == responseGetRawTransaction) {
             CpLog.e(TAG, "responseGetRawTransaction is null!");
-            mIUpdateTransacitonStateCallback.updateTransacitonState(Constant.TX_CONFIRM_EXCEPTION);
+            mIUpdateTransacitonStateCallback.updateTransacitonState(mTxId, Constant
+                    .TX_CONFIRM_EXCEPTION);
             return;
         }
 
         ResponseGetRawTransaction.ResultBean resultBean = responseGetRawTransaction.getResult();
         if (null == resultBean) {
             CpLog.e(TAG, "resultBean");
-            mIUpdateTransacitonStateCallback.updateTransacitonState(Constant.TX_CONFIRM_EXCEPTION);
+            mIUpdateTransacitonStateCallback.updateTransacitonState(mTxId, Constant
+                    .TX_CONFIRM_EXCEPTION);
             return;
         }
 
         long confirmations = resultBean.getConfirmations();
         CpLog.w(TAG, "confirmations:" + confirmations);
-        mIUpdateTransacitonStateCallback.updateTransacitonState(confirmations);
+        mIUpdateTransacitonStateCallback.updateTransacitonState(mTxId, confirmations);
     }
 
     @Override
     public void onFailed(int failedCode, String msg) {
         CpLog.e(TAG, "onFailed() -> msg:" + msg);
-        mIUpdateTransacitonStateCallback.updateTransacitonState(Constant.TX_CONFIRM_EXCEPTION);
+        mIUpdateTransacitonStateCallback.updateTransacitonState(mTxId, Constant
+                .TX_CONFIRM_EXCEPTION);
     }
 }

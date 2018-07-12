@@ -364,7 +364,7 @@ public class TransferActivity extends BaseActivity implements View.OnClickListen
     }
 
     @Override
-    public void updateTransacitonState(long confirmations) {
+    public void updateTransacitonState(String txId, long confirmations) {
         if (null == mScheduledFuture) {
             CpLog.e(TAG, "mScheduledFuture is null!");
             return;
