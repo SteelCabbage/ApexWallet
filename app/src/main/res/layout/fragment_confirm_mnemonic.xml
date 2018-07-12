@@ -8,7 +8,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="10dp"
         android:gravity="center"
         android:text="@string/tv_confirm_mnemonic"
         android:textColor="@color/c_666666"
@@ -23,10 +23,10 @@
         android:textColor="@color/c_666666"
         android:textSize="14sp" />
 
-    <RelativeLayout
+    <FrameLayout
         android:layout_width="330dp"
-        android:layout_height="180dp"
-        android:layout_marginTop="15dp"
+        android:layout_height="195dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/shape_bg_copy_mnemonic">
 
         <android.support.v7.widget.RecyclerView
@@ -35,27 +35,27 @@
             android:layout_height="wrap_content"
             android:overScrollMode="never"
             android:padding="5dp" />
-    </RelativeLayout>
+    </FrameLayout>
 
-    <RelativeLayout
+    <FrameLayout
         android:layout_width="330dp"
-        android:layout_height="180dp"
+        android:layout_height="190dp"
         android:layout_marginEnd="15dp"
         android:layout_marginStart="15dp"
-        android:layout_marginTop="20dp">
+        android:layout_marginTop="10dp">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_confirm_mnemonic_click"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:overScrollMode="never" />
-    </RelativeLayout>
+    </FrameLayout>
 
     <Button
         android:id="@+id/bt_confirm_mnemonic_confirm"
         android:layout_width="293dp"
         android:layout_height="39dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="15dp"
         android:background="@drawable/shape_new_visitor_bt_bg"
         android:text="@string/bt_confirm_mnemonic_confirm"
         android:textColor="@android:color/white"
