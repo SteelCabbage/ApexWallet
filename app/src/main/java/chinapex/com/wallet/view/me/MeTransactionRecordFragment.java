@@ -144,6 +144,8 @@ public class MeTransactionRecordFragment extends BaseFragment implements View.On
             return;
         }
 
+        mTransactionRecords.clear();
+        mSearchTxRecords.clear();
         mTransactionRecords.addAll(transactionRecords);
         mSearchTxRecords.addAll(transactionRecords);
 
