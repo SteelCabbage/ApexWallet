@@ -150,9 +150,6 @@ public class GetTransactionHistory implements Runnable, INetCallback {
                     resultBean.getGas_consumed());
             transactionRecord.setAssetID(assetId);
             switch (assetId) {
-                case Constant.ASSETS_NEO:
-                    transactionRecord.setAssetSymbol(resultBean.getSymbol());
-                    break;
                 case Constant.ASSETS_NEO_GAS:
                     transactionRecord.setAssetSymbol(Constant.SYMBOL_NEO_GAS);
                     break;

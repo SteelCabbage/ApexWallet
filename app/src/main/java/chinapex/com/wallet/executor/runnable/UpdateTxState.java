@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 import chinapex.com.wallet.bean.request.RequestGetRawTransaction;
 import chinapex.com.wallet.bean.response.ResponseGetRawTransaction;
-import chinapex.com.wallet.executor.callback.IUpdateTransacitonStateCallback;
+import chinapex.com.wallet.executor.callback.IUpdateTxStateCallback;
 import chinapex.com.wallet.global.Constant;
 import chinapex.com.wallet.net.INetCallback;
 import chinapex.com.wallet.net.OkHttpClientManager;
@@ -18,22 +18,26 @@ import chinapex.com.wallet.utils.GsonUtils;
  * E-Mail：liuyi_61@163.com
  */
 
-public class UpdateTransacitonState implements Runnable, INetCallback {
+public class UpdateTxState implements Runnable, INetCallback {
 
-    private static final String TAG = UpdateTransacitonState.class.getSimpleName();
+    private static final String TAG = UpdateTxState.class.getSimpleName();
     private String mTxId;
-    private IUpdateTransacitonStateCallback mIUpdateTransacitonStateCallback;
+    private String mWalletAddress;
+    private IUpdateTxStateCallback mIUpdateTxStateCallback;
 
-    public UpdateTransacitonState(String txId, IUpdateTransacitonStateCallback
-            IUpdateTransacitonStateCallback) {
+    public UpdateTxState(String txId, String walletAddress, IUpdateTxStateCallback
+            IUpdateTxStateCallback) {
         mTxId = txId;
-        mIUpdateTransacitonStateCallback = IUpdateTransacitonStateCallback;
+        mWalletAddress = walletAddress;
+        mIUpdateTxStateCallback = IUpdateTxStateCallback;
     }
 
     @Override
     public void run() {
-        if (null == mIUpdateTransacitonStateCallback || TextUtils.isEmpty(mTxId)) {
-            CpLog.e(TAG, "mIUpdateTransacitonStateCallback or mTxId is null!");
+        if (null == mIUpdateTxStateCallback
+                || TextUtils.isEmpty(mTxId)
+                || TextUtils.isEmpty(mWalletAddress)) {
+            CpLog.e(TAG, "mIUpdateTxStateCallback or mTxId or mWalletAddress is null!");
             return;
         }
 
@@ -56,7 +60,7 @@ public class UpdateTransacitonState implements Runnable, INetCallback {
                 ResponseGetRawTransaction.class);
         if (null == responseGetRawTransaction) {
             CpLog.e(TAG, "responseGetRawTransaction is null!");
-            mIUpdateTransacitonStateCallback.updateTransacitonState(mTxId, Constant
+            mIUpdateTxStateCallback.updateTxState(mTxId, mWalletAddress, Constant
                     .TX_CONFIRM_EXCEPTION);
             return;
         }
@@ -64,20 +68,19 @@ public class UpdateTransacitonState implements Runnable, INetCallback {
         ResponseGetRawTransaction.ResultBean resultBean = responseGetRawTransaction.getResult();
         if (null == resultBean) {
             CpLog.e(TAG, "resultBean");
-            mIUpdateTransacitonStateCallback.updateTransacitonState(mTxId, Constant
+            mIUpdateTxStateCallback.updateTxState(mTxId, mWalletAddress, Constant
                     .TX_CONFIRM_EXCEPTION);
             return;
         }
 
         long confirmations = resultBean.getConfirmations();
         CpLog.w(TAG, "confirmations:" + confirmations);
-        mIUpdateTransacitonStateCallback.updateTransacitonState(mTxId, confirmations);
+        mIUpdateTxStateCallback.updateTxState(mTxId, mWalletAddress, confirmations);
     }
 
     @Override
     public void onFailed(int failedCode, String msg) {
         CpLog.e(TAG, "onFailed() -> msg:" + msg);
-        mIUpdateTransacitonStateCallback.updateTransacitonState(mTxId, Constant
-                .TX_CONFIRM_EXCEPTION);
+        mIUpdateTxStateCallback.updateTxState(mTxId, mWalletAddress, Constant.TX_CONFIRM_EXCEPTION);
     }
 }

@@ -33,7 +33,7 @@ public class Constant {
             ".cn/tool/transaction-history/";
     public static final long TX_POLLING_TIME = 20 * 1000;
     public static final long TX_CONFIRM_EXCEPTION = -1;
-    public static final long TX_CONFIRM_ONE = 1;
+    public static final long TX_UN_CONFIRM = 0;
     public static final long TX_CONFIRM_OK = 6;
     public static final long NO_NEED_MODIFY_TX_TIME = -2;
 
