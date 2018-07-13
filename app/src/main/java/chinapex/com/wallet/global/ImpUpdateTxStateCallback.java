@@ -50,7 +50,7 @@ public class ImpUpdateTxStateCallback implements IUpdateTxStateCallback,
         }
 
         if (Constant.TX_UN_CONFIRM == confirmations) {
-            CpLog.e(TAG, "TX_UN_CONFIRM");
+            CpLog.w(TAG, "TX_UN_CONFIRM");
             return;
         }
 
@@ -65,6 +65,10 @@ public class ImpUpdateTxStateCallback implements IUpdateTxStateCallback,
 
     @Override
     public void getTransactionHistory(List<TransactionRecord> transactionRecords) {
+        if (Constant.TX_CONFIRM_OK > mConfirmations) {
+            return;
+        }
+
         ApexWalletDbDao apexWalletDbDao = ApexWalletDbDao.getInstance(ApexWalletApplication
                 .getInstance());
         if (null == apexWalletDbDao) {
@@ -72,10 +76,26 @@ public class ImpUpdateTxStateCallback implements IUpdateTxStateCallback,
             return;
         }
 
-        if (Constant.TX_CONFIRM_OK <= mConfirmations) {
-            apexWalletDbDao.updateTxState(mTxId, Constant.TRANSACTION_STATE_SUCCESS);
+        List<TransactionRecord> cacheTxs = apexWalletDbDao.queryTxCacheByTxId(mTxId);
+        if (null == cacheTxs || cacheTxs.isEmpty()) {
+            apexWalletDbDao.updateTxState(Constant.TABLE_TRANSACTION_RECORD, mTxId, Constant
+                    .TRANSACTION_STATE_SUCCESS);
             ApexListeners.getInstance().notifyTxStateUpdate(mTxId, Constant
                     .TRANSACTION_STATE_SUCCESS, Constant.NO_NEED_MODIFY_TX_TIME);
+            return;
         }
+
+        for (TransactionRecord cacheTx : cacheTxs) {
+            if (null == cacheTx) {
+                CpLog.e(TAG, "cacheTx is null!");
+                continue;
+            }
+
+            cacheTx.setTxState(Constant.TRANSACTION_STATE_FAIL);
+            apexWalletDbDao.insertTxRecord(Constant.TABLE_TRANSACTION_RECORD, cacheTx);
+        }
+        ApexListeners.getInstance().notifyTxStateUpdate(mTxId, Constant.TRANSACTION_STATE_FAIL,
+                Constant.NO_NEED_MODIFY_TX_TIME);
+        apexWalletDbDao.delCacheByTxId(mTxId);
     }
 }

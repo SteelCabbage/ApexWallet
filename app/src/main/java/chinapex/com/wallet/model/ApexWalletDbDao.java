@@ -328,7 +328,7 @@ public class ApexWalletDbDao {
             db.beginTransaction();
             db.insertOrThrow(tableName, null, contentValues);
             db.setTransactionSuccessful();
-//            CpLog.i(TAG, "insertTxRecord() -> insert " + transactionRecord.getTxID() + " ok!");
+            CpLog.i(TAG, "insertTxRecord() -> insert " + transactionRecord.getTxID() + " ok!");
         } catch (SQLException e) {
             CpLog.e(TAG, "insertTxRecord exception:" + e.getMessage());
         } finally {
@@ -469,6 +469,71 @@ public class ApexWalletDbDao {
         return txHashMap;
     }
 
+    public List<TransactionRecord> queryTxCacheByTxId(String txId) {
+        List<TransactionRecord> transactionRecords = new ArrayList<>();
+
+        if (TextUtils.isEmpty(txId)) {
+            CpLog.e(TAG, "queryTxCacheByTxId() -> txId is null!");
+            return transactionRecords;
+        }
+
+        SQLiteDatabase db = openDatabase();
+        Cursor cursor = db.query(Constant.TABLE_TX_CACHE, null, WHERE_CLAUSE_TX_ID_EQ, new
+                String[]{txId}, null, null, null);
+        if (null != cursor) {
+            while (cursor.moveToNext()) {
+                int walletAddressIndex = cursor.getColumnIndex(Constant.FIELD_WALLET_ADDRESS);
+                int txTypeIndex = cursor.getColumnIndex(Constant.FIELD_TX_TYPE);
+                int txIdIndex = cursor.getColumnIndex(Constant.FIELD_TX_ID);
+                int txAmountIndex = cursor.getColumnIndex(Constant.FIELD_TX_AMOUNT);
+                int txStateIndex = cursor.getColumnIndex(Constant.FIELD_TX_STATE);
+                int txFromIndex = cursor.getColumnIndex(Constant.FIELD_TX_FROM);
+                int txToIndex = cursor.getColumnIndex(Constant.FIELD_TX_TO);
+                int gasConsumedIndex = cursor.getColumnIndex(Constant.FIELD_GAS_CONSUMED);
+                int assetIdIndex = cursor.getColumnIndex(Constant.FIELD_ASSET_ID);
+                int assetSymbolIndex = cursor.getColumnIndex(Constant.FIELD_ASSET_SYMBOL);
+                int assetLogoUrlIndex = cursor.getColumnIndex(Constant.FIELD_ASSET_LOGO_URL);
+                int assetDecimalIndex = cursor.getColumnIndex(Constant.FIELD_ASSET_DECIMAL);
+                int createTimeIndex = cursor.getColumnIndex(Constant.FIELD_CREATE_TIME);
+
+
+                String walletAddressTmp = cursor.getString(walletAddressIndex);
+                String txType = cursor.getString(txTypeIndex);
+                String txIdTmp = cursor.getString(txIdIndex);
+                String txAmount = cursor.getString(txAmountIndex);
+                int txState = cursor.getInt(txStateIndex);
+                String txFrom = cursor.getString(txFromIndex);
+                String txTo = cursor.getString(txToIndex);
+                String gasConsumed = cursor.getString(gasConsumedIndex);
+                String assetId = cursor.getString(assetIdIndex);
+                String assetSymbol = cursor.getString(assetSymbolIndex);
+                String assetLogoUrl = cursor.getString(assetLogoUrlIndex);
+                int assetDecimal = cursor.getInt(assetDecimalIndex);
+                long createTime = cursor.getLong(createTimeIndex);
+
+                TransactionRecord transactionRecord = new TransactionRecord();
+                transactionRecord.setWalletAddress(walletAddressTmp);
+                transactionRecord.setTxType(txType);
+                transactionRecord.setTxID(txIdTmp);
+                transactionRecord.setTxAmount(txAmount);
+                transactionRecord.setTxState(txState);
+                transactionRecord.setTxFrom(txFrom);
+                transactionRecord.setTxTo(txTo);
+                transactionRecord.setGasConsumed(gasConsumed);
+                transactionRecord.setAssetID(assetId);
+                transactionRecord.setAssetSymbol(assetSymbol);
+                transactionRecord.setAssetLogoUrl(assetLogoUrl);
+                transactionRecord.setAssetDecimal(assetDecimal);
+                transactionRecord.setTxTime(createTime);
+
+                transactionRecords.add(transactionRecord);
+            }
+            cursor.close();
+        }
+        closeDatabase();
+        return transactionRecords;
+    }
+
     private static final String WHERE_CLAUSE_FIELD_TX_ID_EQ = Constant.FIELD_TX_ID + " = ?";
 
     public void delCacheByTxIDAndAddr(String tableName, String txID, String walletAddress) {
@@ -495,11 +560,98 @@ public class ApexWalletDbDao {
         closeDatabase();
     }
 
+    public void delCacheByTxId(String txId) {
+        if (TextUtils.isEmpty(txId)) {
+            CpLog.e(TAG, "delCacheByTxId() -> txId is null!");
+            return;
+        }
+
+        SQLiteDatabase db = openDatabase();
+        try {
+            db.beginTransaction();
+            db.delete(Constant.TABLE_TX_CACHE, WHERE_CLAUSE_FIELD_TX_ID_EQ, new String[]{txId});
+            db.setTransactionSuccessful();
+            CpLog.i(TAG, "delCacheByTxId() -> delete:" + txId + " ok!");
+        } catch (Exception e) {
+            CpLog.e(TAG, "delCacheByTxId exception:" + e.getMessage());
+        } finally {
+            db.endTransaction();
+        }
+        closeDatabase();
+    }
+
+    private static final String WHERE_CLAUSE_TX_STATE_EQ = Constant.FIELD_TX_STATE + " = ?";
+
+    public List<TransactionRecord> queryTxByState(String tableName, int txState) {
+        List<TransactionRecord> transactionRecords = new ArrayList<>();
+
+        if (TextUtils.isEmpty(tableName)) {
+            CpLog.e(TAG, "queryTxByState() -> tableName is null!");
+            return transactionRecords;
+        }
+
+        SQLiteDatabase db = openDatabase();
+        Cursor cursor = db.query(tableName, null, WHERE_CLAUSE_TX_STATE_EQ, new
+                String[]{txState + ""}, null, null, null);
+        if (null != cursor) {
+            while (cursor.moveToNext()) {
+                int walletAddressIndex = cursor.getColumnIndex(Constant.FIELD_WALLET_ADDRESS);
+                int txTypeIndex = cursor.getColumnIndex(Constant.FIELD_TX_TYPE);
+                int txIdIndex = cursor.getColumnIndex(Constant.FIELD_TX_ID);
+                int txAmountIndex = cursor.getColumnIndex(Constant.FIELD_TX_AMOUNT);
+                int txStateIndex = cursor.getColumnIndex(Constant.FIELD_TX_STATE);
+                int txFromIndex = cursor.getColumnIndex(Constant.FIELD_TX_FROM);
+                int txToIndex = cursor.getColumnIndex(Constant.FIELD_TX_TO);
+                int gasConsumedIndex = cursor.getColumnIndex(Constant.FIELD_GAS_CONSUMED);
+                int assetIdIndex = cursor.getColumnIndex(Constant.FIELD_ASSET_ID);
+                int assetSymbolIndex = cursor.getColumnIndex(Constant.FIELD_ASSET_SYMBOL);
+                int assetLogoUrlIndex = cursor.getColumnIndex(Constant.FIELD_ASSET_LOGO_URL);
+                int assetDecimalIndex = cursor.getColumnIndex(Constant.FIELD_ASSET_DECIMAL);
+                int createTimeIndex = cursor.getColumnIndex(Constant.FIELD_CREATE_TIME);
+
+
+                String walletAddressTmp = cursor.getString(walletAddressIndex);
+                String txType = cursor.getString(txTypeIndex);
+                String txId = cursor.getString(txIdIndex);
+                String txAmount = cursor.getString(txAmountIndex);
+                int txStateTmp = cursor.getInt(txStateIndex);
+                String txFrom = cursor.getString(txFromIndex);
+                String txTo = cursor.getString(txToIndex);
+                String gasConsumed = cursor.getString(gasConsumedIndex);
+                String assetId = cursor.getString(assetIdIndex);
+                String assetSymbol = cursor.getString(assetSymbolIndex);
+                String assetLogoUrl = cursor.getString(assetLogoUrlIndex);
+                int assetDecimal = cursor.getInt(assetDecimalIndex);
+                long createTime = cursor.getLong(createTimeIndex);
+
+                TransactionRecord transactionRecord = new TransactionRecord();
+                transactionRecord.setWalletAddress(walletAddressTmp);
+                transactionRecord.setTxType(txType);
+                transactionRecord.setTxID(txId);
+                transactionRecord.setTxAmount(txAmount);
+                transactionRecord.setTxState(txStateTmp);
+                transactionRecord.setTxFrom(txFrom);
+                transactionRecord.setTxTo(txTo);
+                transactionRecord.setGasConsumed(gasConsumed);
+                transactionRecord.setAssetID(assetId);
+                transactionRecord.setAssetSymbol(assetSymbol);
+                transactionRecord.setAssetLogoUrl(assetLogoUrl);
+                transactionRecord.setAssetDecimal(assetDecimal);
+                transactionRecord.setTxTime(createTime);
+
+                transactionRecords.add(transactionRecord);
+            }
+            cursor.close();
+        }
+        closeDatabase();
+        return transactionRecords;
+    }
+
     private static final String WHERE_CLAUSE_TX_ID_EQ = Constant.FIELD_TX_ID + " = ?";
 
-    public void updateTxState(String txID, int txState) {
-        if (TextUtils.isEmpty(txID)) {
-            CpLog.e(TAG, "updateTxState() -> txID is null!");
+    public void updateTxState(String tableName, String txID, int txState) {
+        if (TextUtils.isEmpty(tableName) || TextUtils.isEmpty(txID)) {
+            CpLog.e(TAG, "updateTxState() -> tableName or txID is null!");
             return;
         }
 
@@ -509,7 +661,7 @@ public class ApexWalletDbDao {
         SQLiteDatabase db = openDatabase();
         try {
             db.beginTransaction();
-            db.update(Constant.TABLE_TRANSACTION_RECORD, contentValues, WHERE_CLAUSE_TX_ID_EQ,
+            db.update(tableName, contentValues, WHERE_CLAUSE_TX_ID_EQ,
                     new String[]{txID});
             db.setTransactionSuccessful();
             CpLog.i(TAG, "updateTxState -> update: " + txID + " ok!");
