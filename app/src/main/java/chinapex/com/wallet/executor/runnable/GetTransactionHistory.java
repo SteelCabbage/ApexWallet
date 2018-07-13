@@ -163,8 +163,12 @@ public class GetTransactionHistory implements Runnable, INetCallback {
                     .valueOf((String) resultBean.getDecimal()));
             transactionRecord.setTxTime(txTime);
 
-            apexWalletDbDao.insertTxRecord(Constant.TABLE_TRANSACTION_RECORD, transactionRecord);
-            transactionRecords.add(transactionRecord);
+            List<TransactionRecord> txsByTxIdAndAddress = apexWalletDbDao.queryTxByTxIdAndAddress
+                    (Constant.TABLE_TRANSACTION_RECORD, txID, mAddress);
+            if (null == txsByTxIdAndAddress || txsByTxIdAndAddress.isEmpty()) {
+                apexWalletDbDao.insertTxRecord(Constant.TABLE_TRANSACTION_RECORD, transactionRecord);
+                transactionRecords.add(transactionRecord);
+            }
         }
 
         mIGetTransactionHistoryCallback.getTransactionHistory(transactionRecords);

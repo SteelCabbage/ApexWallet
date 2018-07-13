@@ -534,6 +534,81 @@ public class ApexWalletDbDao {
         return transactionRecords;
     }
 
+    public synchronized List<TransactionRecord> queryTxByTxIdAndAddress(String tableName, String
+            txId, String walletAddress) {
+
+        List<TransactionRecord> transactionRecords = new ArrayList<>();
+        if (TextUtils.isEmpty(tableName)
+                || TextUtils.isEmpty(txId)
+                || TextUtils.isEmpty(walletAddress)) {
+            CpLog.e(TAG, "queryTxByTxIdAndAddress() -> tableName or txId or walletAddress is " +
+                    "null!");
+            return transactionRecords;
+        }
+
+        SQLiteDatabase db = openDatabase();
+        Cursor cursor = db.query(tableName,
+                null,
+                WHERE_CLAUSE_TX_ID_EQ + " and " + WHERE_CLAUSE_WALLET_ADDRESS_EQ,
+                new String[]{txId, walletAddress},
+                null,
+                null,
+                null);
+
+        if (null != cursor) {
+            while (cursor.moveToNext()) {
+                int walletAddressIndex = cursor.getColumnIndex(Constant.FIELD_WALLET_ADDRESS);
+                int txTypeIndex = cursor.getColumnIndex(Constant.FIELD_TX_TYPE);
+                int txIdIndex = cursor.getColumnIndex(Constant.FIELD_TX_ID);
+                int txAmountIndex = cursor.getColumnIndex(Constant.FIELD_TX_AMOUNT);
+                int txStateIndex = cursor.getColumnIndex(Constant.FIELD_TX_STATE);
+                int txFromIndex = cursor.getColumnIndex(Constant.FIELD_TX_FROM);
+                int txToIndex = cursor.getColumnIndex(Constant.FIELD_TX_TO);
+                int gasConsumedIndex = cursor.getColumnIndex(Constant.FIELD_GAS_CONSUMED);
+                int assetIdIndex = cursor.getColumnIndex(Constant.FIELD_ASSET_ID);
+                int assetSymbolIndex = cursor.getColumnIndex(Constant.FIELD_ASSET_SYMBOL);
+                int assetLogoUrlIndex = cursor.getColumnIndex(Constant.FIELD_ASSET_LOGO_URL);
+                int assetDecimalIndex = cursor.getColumnIndex(Constant.FIELD_ASSET_DECIMAL);
+                int createTimeIndex = cursor.getColumnIndex(Constant.FIELD_CREATE_TIME);
+
+
+                String walletAddressTmp = cursor.getString(walletAddressIndex);
+                String txType = cursor.getString(txTypeIndex);
+                String txIdTmp = cursor.getString(txIdIndex);
+                String txAmount = cursor.getString(txAmountIndex);
+                int txState = cursor.getInt(txStateIndex);
+                String txFrom = cursor.getString(txFromIndex);
+                String txTo = cursor.getString(txToIndex);
+                String gasConsumed = cursor.getString(gasConsumedIndex);
+                String assetId = cursor.getString(assetIdIndex);
+                String assetSymbol = cursor.getString(assetSymbolIndex);
+                String assetLogoUrl = cursor.getString(assetLogoUrlIndex);
+                int assetDecimal = cursor.getInt(assetDecimalIndex);
+                long createTime = cursor.getLong(createTimeIndex);
+
+                TransactionRecord transactionRecord = new TransactionRecord();
+                transactionRecord.setWalletAddress(walletAddressTmp);
+                transactionRecord.setTxType(txType);
+                transactionRecord.setTxID(txIdTmp);
+                transactionRecord.setTxAmount(txAmount);
+                transactionRecord.setTxState(txState);
+                transactionRecord.setTxFrom(txFrom);
+                transactionRecord.setTxTo(txTo);
+                transactionRecord.setGasConsumed(gasConsumed);
+                transactionRecord.setAssetID(assetId);
+                transactionRecord.setAssetSymbol(assetSymbol);
+                transactionRecord.setAssetLogoUrl(assetLogoUrl);
+                transactionRecord.setAssetDecimal(assetDecimal);
+                transactionRecord.setTxTime(createTime);
+
+                transactionRecords.add(transactionRecord);
+            }
+            cursor.close();
+        }
+        closeDatabase();
+        return transactionRecords;
+    }
+
     private static final String WHERE_CLAUSE_FIELD_TX_ID_EQ = Constant.FIELD_TX_ID + " = ?";
 
     public void delCacheByTxIDAndAddr(String tableName, String txID, String walletAddress) {

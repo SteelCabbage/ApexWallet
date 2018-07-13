@@ -58,7 +58,10 @@ public class AddAssetsRecyclerViewAdapter extends RecyclerView.Adapter<AddAssets
         }
 
         boolean checked = assetBean.isChecked();
-        assetBean.setChecked(!checked);
+        String assetId = assetBean.getHexHash();
+        if (!Constant.ASSETS_CPX.equals(assetId)) {
+            assetBean.setChecked(!checked);
+        }
         notifyDataSetChanged();
         mOnItemClickListener.onItemClick(position);
     }

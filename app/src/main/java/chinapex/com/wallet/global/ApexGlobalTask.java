@@ -79,13 +79,8 @@ public class ApexGlobalTask implements ICheckIsUpdateAssetsCallback, IGetAssetsC
                 continue;
             }
 
-            try {
-                startPolling(transactionRecord.getTxID(), transactionRecord.getWalletAddress());
-                Thread.sleep(Constant.TX_RESTAR_POLLING_INTERVAL_TIME);
-                CpLog.i(TAG, "restart polling for txId:" + transactionRecord.getTxID());
-            } catch (InterruptedException e) {
-                CpLog.e(TAG, "InterruptedException:" + e.getMessage());
-            }
+            startPolling(transactionRecord.getTxID(), transactionRecord.getWalletAddress());
+            CpLog.i(TAG, "restart polling for txId:" + transactionRecord.getTxID());
         }
     }
 
