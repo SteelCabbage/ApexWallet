@@ -41,17 +41,7 @@ public class LanguageRecyclerViewAdapter extends RecyclerView
             return;
         }
 
-        Integer position = (Integer) v.getTag();
-        LanguageState languageState = mLanguageStates.get(position);
-        if (null == languageState) {
-            CpLog.e(TAG, "languageState is null!");
-            return;
-        }
-
-        boolean checked = languageState.isChecked();
-        languageState.setChecked(!checked);
-        notifyDataSetChanged();
-        mOnItemClickListener.onItemClick(position);
+        mOnItemClickListener.onItemClick((Integer) v.getTag());
     }
 
     @NonNull

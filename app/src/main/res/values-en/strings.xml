@@ -94,9 +94,9 @@
     <string name="save">保存</string>
 
     <!--Me页面，功能菜单文字-->
-    <string name="personal_portrait">个人画像</string>
-    <string name="language_settings">语言设置</string>
-    <string name="about_us">关于我们</string>
+    <string name="personal_portrait">Profile</string>
+    <string name="language_settings">language</string>
+    <string name="about_us">About Us</string>
 
 
     <!--Toast content-->

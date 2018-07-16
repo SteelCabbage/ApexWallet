@@ -22,7 +22,7 @@
             android:textSize="@dimen/tv_me_title_size" />
 
         <Button
-            android:id="@+id/bt_me_manager_detail_save"
+            android:id="@+id/bt_me_language_settings_save"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/tv_me_language_settings"

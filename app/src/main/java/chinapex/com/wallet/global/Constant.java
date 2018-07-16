@@ -9,6 +9,9 @@ public class Constant {
     public static final String IS_FIRST_ENTER_APP = "isFirstEnterApp";
     public static final String IS_FIRST_ENTER_MAIN = "isFirstEnterMain";
 
+    // language settings
+    public static final String CURRENT_LANGUAGE = "currentLanguage";
+
     // net
     public static final long CONNECT_TIMEOUT = 5;
     public static final long READ_TIMEOUT = 5;

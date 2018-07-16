@@ -69,6 +69,12 @@
     <!--languageSettings，语言类型-->
     <string-array name="me_language_name">
         <item>@string/language_zh_cn</item>
-        <item>@string/language_en</item>
+        <item>@string/language_en_US</item>
+    </string-array>
+
+    <!--languageSettings，语言类型-->
+    <string-array name="me_language_value">
+        <item>zh_CN</item>
+        <item>en_US</item>
     </string-array>
 </resources>
