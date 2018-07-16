@@ -91,10 +91,20 @@
     <string name="tv_add_assets_search_cancel">取消</string>
     <string name="manage_wallet">管理钱包</string>
     <string name="transaction_records">交易记录</string>
+    <string name="save">保存</string>
+
+    <!--Me页面，功能菜单文字-->
+    <string name="personal_portrait">个人画像</string>
+    <string name="language_settings">语言设置</string>
+    <string name="about_us">关于我们</string>
+
 
     <!--Toast content-->
     <string name="address_cannot_be_empty">地址不能为空！</string>
     <string name="address_cannot_be_same">收付款地址不能相同！</string>
     <string name="wallet_name_save_success">钱包名称保存成功</string>
+    <!--语言-->
+    <string name="language_zh_cn">简体中文</string>
+    <string name="language_en">English(U.S)</string>
 
 </resources>

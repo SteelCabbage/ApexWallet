@@ -64,6 +64,12 @@
             android:textColor="@android:color/white"
             android:textSize="@dimen/title_small_16sp" />
 
-
     </RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_me"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:overScrollMode="never" />
+
 </LinearLayout>

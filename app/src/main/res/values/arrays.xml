@@ -51,4 +51,24 @@
         <item>抄写助记词</item>
         <item>确认助记词</item>
     </string-array>
+
+    <!--Me页，功能菜单图片-->
+    <integer-array name="me_function_icons">
+        <item>@drawable/icon_portrait</item>
+        <item>@drawable/icon_language</item>
+        <item>@drawable/icon_about</item>
+    </integer-array>
+
+    <!--Me页，功能菜单文字-->
+    <string-array name="me_function_texts">
+        <item>@string/personal_portrait</item>
+        <item>@string/language_settings</item>
+        <item>@string/about_us</item>
+    </string-array>
+
+    <!--languageSettings，语言类型-->
+    <string-array name="me_language_name">
+        <item>@string/language_zh_cn</item>
+        <item>@string/language_en</item>
+    </string-array>
 </resources>

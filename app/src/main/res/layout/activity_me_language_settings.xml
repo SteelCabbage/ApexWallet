@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="chinapex.com.wallet.view.me.Me2Activity">
+    tools:context="chinapex.com.wallet.view.me.MeLanguageSettingsActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -12,23 +12,32 @@
         android:background="@drawable/tb_bg_narrow">
 
         <TextView
-            android:id="@+id/tv_me2_title"
+            android:id="@+id/tv_me_language_settings"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/fragment_assets_title_margin_top"
-            android:text="me2_title"
+            android:text="@string/language_settings"
             android:textColor="@android:color/white"
             android:textSize="@dimen/tv_me_title_size" />
+
+        <Button
+            android:id="@+id/bt_me_manager_detail_save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/tv_me_language_settings"
+            android:layout_alignParentEnd="true"
+            android:background="@null"
+            android:text="@string/save"
+            android:textColor="@android:color/white"
+            android:textSize="16sp" />
 
     </RelativeLayout>
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_me2"
-        android:layout_width="343dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="center_horizontal"
-        android:overScrollMode="never">
-
-    </android.support.v7.widget.RecyclerView>
+        android:id="@+id/rv_me_language_settings"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:overScrollMode="never" />
 </LinearLayout>
