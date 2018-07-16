@@ -635,6 +635,29 @@ public class ApexWalletDbDao {
         closeDatabase();
     }
 
+    public void delTxsByAddress(String tableName, String walletAddress) {
+        if (TextUtils.isEmpty(tableName) || TextUtils.isEmpty(walletAddress)) {
+            CpLog.e(TAG, "delTxsByAddress() -> tableName or walletAddress is null!");
+            return;
+        }
+
+        SQLiteDatabase db = openDatabase();
+        try {
+            db.beginTransaction();
+            db.delete(tableName,
+                    WHERE_CLAUSE_WALLET_ADDRESS_EQ,
+                    new String[]{walletAddress});
+            db.setTransactionSuccessful();
+            CpLog.i(TAG, "delTxsByAddress() -> delete txs of the " + walletAddress + " from " +
+                    tableName + " ok!");
+        } catch (Exception e) {
+            CpLog.e(TAG, "delTxsByAddress exception:" + e.getMessage());
+        } finally {
+            db.endTransaction();
+        }
+        closeDatabase();
+    }
+
     public void delCacheByTxId(String txId) {
         if (TextUtils.isEmpty(txId)) {
             CpLog.e(TAG, "delCacheByTxId() -> txId is null!");

@@ -95,5 +95,6 @@
     <!--Toast content-->
     <string name="address_cannot_be_empty">地址不能为空！</string>
     <string name="address_cannot_be_same">收付款地址不能相同！</string>
+    <string name="wallet_name_save_success">钱包名称保存成功</string>
 
 </resources>

@@ -133,7 +133,8 @@ public class MeManageDetailFragment extends BaseFragment implements View.OnClick
         mTv_me_manager_detail_title.setText(newWalletName);
         mCurrentClickedWalletBean.setWalletName(newWalletName);
         ApexListeners.getInstance().notifyItemNameUpdate(mCurrentClickedWalletBean);
-        Toast.makeText(getActivity(), "钱包名称保存成功", Toast.LENGTH_SHORT).show();
+        ToastUtils.getInstance().showToast(ApexWalletApplication.getInstance().getResources()
+                .getString(R.string.wallet_name_save_success));
     }
 
     public void showDeleteWalletPwdDialog() {
