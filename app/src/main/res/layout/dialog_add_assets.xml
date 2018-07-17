@@ -48,7 +48,7 @@
             android:layout_height="match_parent"
             android:layout_marginStart="10dp"
             android:background="@null"
-            android:hint="@string/et_add_assets_search"
+            android:hint="@string/search_asset"
             android:singleLine="true"
             android:textColor="@color/c_666666"
             android:textColorHint="@color/c_666666"
@@ -63,7 +63,7 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="15dp"
         android:layout_toEndOf="@+id/ll_add_assets_search"
-        android:text="@string/tv_add_assets_search_cancel"
+        android:text="@string/cancel"
         android:textColor="@color/c_999999"
         android:textSize="@dimen/paratext_14sp" />
 

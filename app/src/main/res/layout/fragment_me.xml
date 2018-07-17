@@ -37,7 +37,7 @@
             android:layout_marginStart="10dp"
             android:layout_toEndOf="@+id/ib_me_manage_wallet"
             android:gravity="center"
-            android:text="@string/manage_wallet"
+            android:text="@string/manage_wallets"
             android:textColor="@android:color/white"
             android:textSize="@dimen/title_small_16sp" />
 

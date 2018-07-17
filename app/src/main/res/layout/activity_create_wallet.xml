@@ -134,6 +134,7 @@
         android:background="@null"
         android:gravity="bottom|center_horizontal"
         android:text="@string/import_wallet"
+        android:textAllCaps="false"
         android:textColor="@color/c_666666"
         android:textSize="@dimen/create_wallet_et_import_size" />
 

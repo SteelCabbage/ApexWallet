@@ -66,7 +66,7 @@ public class Me2Activity extends BaseActivity implements MeRecyclerViewAdapter
         switch (mShowTag) {
             case Constant.ME_2_SHOULD_BE_SHOW_MANAGE_WALLET:
                 mTv_me2_title.setText(ApexWalletApplication.getInstance().getResources()
-                        .getString(R.string.manage_wallet));
+                        .getString(R.string.manage_wallets));
                 break;
             case Constant.ME_2_SHOULD_BE_SHOW_TX_RECORDS:
                 mTv_me2_title.setText(ApexWalletApplication.getInstance().getResources()
