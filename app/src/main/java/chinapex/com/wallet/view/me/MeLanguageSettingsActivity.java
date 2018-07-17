@@ -1,5 +1,6 @@
 package chinapex.com.wallet.view.me;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -22,6 +23,7 @@ import chinapex.com.wallet.global.ApexWalletApplication;
 import chinapex.com.wallet.global.Constant;
 import chinapex.com.wallet.utils.CpLog;
 import chinapex.com.wallet.utils.SharedPreferencesUtils;
+import chinapex.com.wallet.view.MainActivity;
 
 public class MeLanguageSettingsActivity extends BaseActivity implements
         LanguageRecyclerViewAdapter.OnItemClickListener, View.OnClickListener {
@@ -30,6 +32,7 @@ public class MeLanguageSettingsActivity extends BaseActivity implements
     private LanguageRecyclerViewAdapter mLanguageRecyclerViewAdapter;
     private List<LanguageState> mLanguageStates;
     private LanguageState mCurrentLanguage;
+    private LanguageState mPreLanguage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +49,8 @@ public class MeLanguageSettingsActivity extends BaseActivity implements
                 .getInstance(), Constant.CURRENT_LANGUAGE, defLanguage);
         mCurrentLanguage = new LanguageState();
         mCurrentLanguage.setLanguageValue(spLanguage);
+        mPreLanguage = new LanguageState();
+        mPreLanguage.setLanguageValue(spLanguage);
     }
 
     private void initView() {
@@ -128,6 +133,12 @@ public class MeLanguageSettingsActivity extends BaseActivity implements
             return;
         }
 
+        if (languageValue.equals(mPreLanguage.getLanguageValue())) {
+            CpLog.w(TAG, "language is not change,no need to switch!");
+            finish();
+            return;
+        }
+
         Resources resources = getResources();
         if (null == resources) {
             CpLog.e(TAG, "resources is null!");
@@ -146,16 +157,15 @@ public class MeLanguageSettingsActivity extends BaseActivity implements
             return;
         }
 
-        switch (languageValue) {
-            case "zh_CN":
-                configuration.locale = Locale.SIMPLIFIED_CHINESE;
-                break;
-            case "en":
-                configuration.locale = Locale.ENGLISH;
-                break;
-            default:
-                configuration.locale = Locale.getDefault();
-                break;
+        if (languageValue.contains(Locale.CHINA.toString())) {
+            CpLog.i(TAG, "SIMPLIFIED_CHINESE");
+            configuration.locale = Locale.SIMPLIFIED_CHINESE;
+        } else if (languageValue.contains(Locale.ENGLISH.toString())) {
+            CpLog.i(TAG, "ENGLISH");
+            configuration.locale = Locale.ENGLISH;
+        } else {
+            CpLog.i(TAG, "getDefault");
+            configuration.locale = Locale.getDefault();
         }
 
         resources.updateConfiguration(configuration, displayMetrics);
@@ -163,10 +173,13 @@ public class MeLanguageSettingsActivity extends BaseActivity implements
         SharedPreferencesUtils.putParam(ApexWalletApplication.getInstance(), Constant
                 .CURRENT_LANGUAGE, languageValue);
 
-        android.os.Process.killProcess(android.os.Process.myPid());
+        finish();
 
-        System.exit(0);
+        Intent intent = new Intent(ApexWalletApplication.getInstance(), MainActivity.class);
+
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+        startActivity(intent);
     }
-
 
 }
