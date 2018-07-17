@@ -54,7 +54,7 @@
             android:layout_width="@dimen/bt_wallet_detail_tx_width"
             android:layout_height="@dimen/bt_wallet_detail_tx_height"
             android:background="@drawable/selector_balance_detail_bt"
-            android:text="@string/bt_wallet_detail_tx_transfer"
+            android:text="@string/transfer"
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/bt_wallet_detail_tx_font_size" />
 
@@ -64,7 +64,7 @@
             android:layout_height="@dimen/bt_wallet_detail_tx_height"
             android:layout_marginStart="10dp"
             android:background="@drawable/selector_balance_detail_bt"
-            android:text="@string/bt_wallet_detail_tx_gathering"
+            android:text="@string/receive"
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/bt_wallet_detail_tx_font_size" />
 

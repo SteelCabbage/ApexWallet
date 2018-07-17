@@ -20,7 +20,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/fragment_assets_title_margin_top"
-                android:text="@string/tb_title_main"
+                android:text="@string/asset"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/tb_title_size" />
 
@@ -58,7 +58,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginStart="6dp"
                     android:background="@null"
-                    android:hint="@string/et_assets_search"
+                    android:hint="@string/search_wallet_address"
                     android:singleLine="true"
                     android:textColor="@android:color/white"
                     android:textColorHint="@android:color/white"
@@ -74,7 +74,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginBottom="5dp"
                 android:layout_marginEnd="10dp"
-                android:text="@string/tv_assets_search_cancel"
+                android:text="@string/cancel"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/paratext_14sp" />
 

@@ -14,7 +14,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/fragment_assets_title_margin_top"
-            android:text="@string/me_title"
+            android:text="@string/me"
             android:textColor="@android:color/white"
             android:textSize="@dimen/tv_me_title_size" />
 

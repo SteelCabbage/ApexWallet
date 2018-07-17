@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:gravity="center"
-        android:text="@string/tv_confirm_mnemonic"
+        android:text="@string/confirm_mnemonic"
         android:textColor="@color/c_666666"
         android:textSize="16sp"
         android:textStyle="bold" />
@@ -19,7 +19,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="@string/tv_confirm_mnemonic_content"
+        android:text="@string/confirm_mnemonic_content"
         android:textColor="@color/c_666666"
         android:textSize="14sp" />
 
@@ -56,7 +56,7 @@
         android:layout_height="39dp"
         android:layout_marginTop="15dp"
         android:background="@drawable/shape_new_visitor_bt_bg"
-        android:text="@string/bt_confirm_mnemonic_confirm"
+        android:text="@string/confirm"
         android:textColor="@android:color/white"
         android:textSize="14sp" />
 
