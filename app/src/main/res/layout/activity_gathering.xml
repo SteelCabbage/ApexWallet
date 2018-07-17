@@ -79,6 +79,7 @@
         android:layout_marginTop="62dp"
         android:background="@drawable/shape_balance_detail_bt_bg"
         android:text="@string/copy_payee_address"
+        android:textAllCaps="false"
         android:textColor="@android:color/white"
         android:textSize="@dimen/bt_gathering_copy_addr_text_size" />
 

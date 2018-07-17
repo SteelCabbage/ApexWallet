@@ -57,6 +57,10 @@
     <string name="transaction_detail">交易详情</string>
     <string name="search_asset">搜索资产</string>
     <string name="save">保存</string>
+    <string name="mnemonic_separated_by_spaces">助记词，按空格分割</string>
+    <string name="start_import">开始导入</string>
+    <string name="keystore_pwd">Keystore密码</string>
+    <string name="scan">扫一扫</string>
 
     <!--Me页面，功能菜单文字-->
     <string name="personal_portrait">个人画像</string>
@@ -71,6 +75,7 @@
     <!--语言-->
     <string name="language_zh_cn">简体中文</string>
     <string name="language_en_US">English(U.S)</string>
+
 
 
 </resources>

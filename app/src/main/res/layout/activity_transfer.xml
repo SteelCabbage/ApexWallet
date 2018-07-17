@@ -85,7 +85,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/tv_transfer_from_margin_start"
         android:background="@null"
-        android:hint="@string/wallet_address"
+        android:hint="@string/payee"
         android:textColor="@android:color/black"
         android:textSize="@dimen/tv_transfer_from_wallet_addr_font_size" />
 
@@ -138,6 +138,7 @@
         android:layout_marginTop="158dp"
         android:background="@drawable/shape_balance_detail_bt_bg"
         android:text="@string/send"
+        android:textAllCaps="false"
         android:textColor="@android:color/white"
         android:textSize="14sp" />
 

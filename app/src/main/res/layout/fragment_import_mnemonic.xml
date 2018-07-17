@@ -15,7 +15,7 @@
         android:layout_marginTop="15dp"
         android:background="@drawable/shape_import_wallet_tv_bg"
         android:gravity="top|start"
-        android:hint="助记词，按空格分割"
+        android:hint="@string/mnemonic_separated_by_spaces"
         android:paddingBottom="8dp"
         android:paddingEnd="13dp"
         android:paddingStart="13dp"
@@ -94,7 +94,8 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="75dp"
         android:background="@drawable/shape_import_wallet_bt_bg_def"
-        android:text="开始导入"
+        android:text="@string/start_import"
+        android:textAllCaps="false"
         android:textColor="@color/c_666666"
         android:textSize="14sp" />
 </LinearLayout>

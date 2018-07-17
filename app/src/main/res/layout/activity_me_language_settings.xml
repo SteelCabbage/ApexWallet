@@ -29,6 +29,7 @@
             android:layout_alignParentEnd="true"
             android:background="@null"
             android:text="@string/save"
+            android:textAllCaps="false"
             android:textColor="@android:color/white"
             android:textSize="16sp" />
 
