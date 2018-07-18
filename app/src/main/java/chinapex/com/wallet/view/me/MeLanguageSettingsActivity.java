@@ -158,13 +158,10 @@ public class MeLanguageSettingsActivity extends BaseActivity implements
         }
 
         if (languageValue.contains(Locale.CHINA.toString())) {
-            CpLog.i(TAG, "CHINA");
             configuration.locale = Locale.SIMPLIFIED_CHINESE;
         } else if (languageValue.contains(Locale.ENGLISH.toString())) {
-            CpLog.i(TAG, "ENGLISH");
             configuration.locale = Locale.US;
         } else {
-            CpLog.i(TAG, "getDefault");
             configuration.locale = Locale.getDefault();
         }
 

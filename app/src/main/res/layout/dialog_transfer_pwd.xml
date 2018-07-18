@@ -53,6 +53,7 @@
             android:layout_weight="1"
             android:background="@null"
             android:text="@string/cancel"
+            android:textAllCaps="false"
             android:textColor="#007AFF"
             android:textSize="12sp" />
 
@@ -68,6 +69,7 @@
             android:layout_weight="1"
             android:background="@null"
             android:text="@string/confirm_pwd"
+            android:textAllCaps="false"
             android:textColor="#E16A67"
             android:textSize="12sp" />
 

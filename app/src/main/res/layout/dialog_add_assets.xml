@@ -27,7 +27,7 @@
         android:layout_width="290dp"
         android:layout_height="33dp"
         android:layout_below="@+id/tv_add_assets_title"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="15dp"
         android:layout_marginTop="10dp"
         android:background="@drawable/shape_bg_add_assets_search"
         android:focusable="true"
@@ -60,10 +60,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_add_assets_title"
-        android:layout_marginStart="10dp"
+        android:layout_marginStart="@dimen/dialog_add_assets_margin_start"
         android:layout_marginTop="15dp"
         android:layout_toEndOf="@+id/ll_add_assets_search"
         android:text="@string/cancel"
+        android:singleLine="true"
         android:textColor="@color/c_999999"
         android:textSize="@dimen/paratext_14sp" />
 
