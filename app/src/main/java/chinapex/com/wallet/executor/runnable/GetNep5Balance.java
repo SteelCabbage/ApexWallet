@@ -117,7 +117,7 @@ public class GetNep5Balance implements Runnable, INetCallback {
             String stackBeanValue = stackBean.getValue();
             if (TextUtils.isEmpty(stackBeanValue)) {
                 CpLog.e(TAG, "stackBeanValue is null!");
-                continue;
+                stackBeanValue = "0";
             }
 
             BigInteger reverseArray = new BigInteger(PhoneUtils.reverseArray(stackBeanValue));
