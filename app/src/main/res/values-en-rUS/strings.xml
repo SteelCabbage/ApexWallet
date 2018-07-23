@@ -6,8 +6,8 @@
     <string name="wallet_name">Wallet Name</string>
     <string name="password">Password(at least 6 characters)</string>
     <string name="repeat_password">Repeat Password</string>
-    <string name="i_have_read_terms">I have read and agree to </string>
-    <string name="privacy_terms">the Service and Privacy Policy</string>
+    <string name="i_have_read_terms">I agree to the </string>
+    <string name="privacy_terms">Service and Privacy Policy</string>
     <string name="confirm">Confirm</string>
     <string name="asset">Assets</string>
     <string name="search_wallet_address">search wallet address</string>
