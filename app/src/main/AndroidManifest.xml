@@ -93,7 +93,10 @@
         <activity
             android:name=".view.me.MeLanguageSettingsActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".view.me.MePortraitActivity"></activity>
+        <!--用户画像-->
+        <activity
+            android:name=".view.me.MePortraitActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

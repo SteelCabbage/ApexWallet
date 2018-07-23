@@ -12,6 +12,7 @@
         android:background="@drawable/tb_bg">
 
         <TextView
+            android:id="@+id/tv_portrait_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
@@ -20,6 +21,31 @@
             android:textColor="@android:color/white"
             android:textSize="@dimen/title_18sp" />
 
+        <TextView
+            android:id="@+id/tv_portrait_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_portrait_title"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/paratext_14sp" />
+
+        <ImageButton
+            android:id="@+id/ib_portrait_switch_wallet"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="12dp"
+            android:background="@null"
+            android:src="@drawable/icon_switch" />
+
     </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/fl_portrait"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
 
 </LinearLayout>

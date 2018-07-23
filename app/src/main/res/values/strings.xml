@@ -71,6 +71,7 @@
     <string name="transaction_id">Transaction ID</string>
     <string name="a_key_mapping">a key mapping</string>
     <string name="add_assets">Add Assets</string>
+    <string name="portrait_empty_content">Please create wallet\nthat we could distribute our rewards.</string>
 
 
     <!--Me页面，功能菜单文字-->
@@ -108,6 +109,7 @@
     <!--语言-->
     <string name="language_zh_cn">简体中文</string>
     <string name="language_en_US">English(U.S)</string>
+
 
 
 </resources>

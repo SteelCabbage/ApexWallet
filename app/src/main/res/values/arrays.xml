@@ -30,14 +30,14 @@
     <integer-array name="me_function_icons">
         <item>@drawable/icon_portrait</item>
         <item>@drawable/icon_language</item>
-        <item>@drawable/icon_about</item>
+        <!--<item>@drawable/icon_about</item>-->
     </integer-array>
 
     <!--Me页，功能菜单文字-->
     <string-array name="me_function_texts">
         <item>@string/personal_portrait</item>
         <item>@string/language_settings</item>
-        <item>@string/about_us</item>
+        <!--<item>@string/about_us</item>-->
     </string-array>
 
     <!--languageSettings，语言类型-->

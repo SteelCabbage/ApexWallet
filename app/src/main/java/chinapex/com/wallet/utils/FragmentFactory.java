@@ -6,6 +6,8 @@ import chinapex.com.wallet.view.assets.AssetsFragment;
 import chinapex.com.wallet.view.discover.DiscoverFragment;
 import chinapex.com.wallet.view.me.MeFragment;
 import chinapex.com.wallet.view.me.MeManageDetailFragment;
+import chinapex.com.wallet.view.me.MePortraitEmptyFragment;
+import chinapex.com.wallet.view.me.MePortraitFragment;
 import chinapex.com.wallet.view.me.MeTransactionRecordFragment;
 import chinapex.com.wallet.view.wallet.BackupFragment;
 import chinapex.com.wallet.view.wallet.ConfirmMnemonicFragment;
@@ -25,6 +27,8 @@ public class FragmentFactory {
 
     private static MeManageDetailFragment sMeManageDetailFragment;
     private static MeTransactionRecordFragment sMeTransactionRecordFragment;
+    private static MePortraitEmptyFragment sMePortraitEmptyFragment;
+    private static MePortraitFragment sMePortraitFragment;
 
     private static ImportMnemonicFragment sImportMnemonicFragment;
     private static ImportKeystoreFragment sImportKeystoreFragment;
@@ -100,6 +104,18 @@ public class FragmentFactory {
                     sImportKeystoreFragment = new ImportKeystoreFragment();
                 }
                 baseFragment = sImportKeystoreFragment;
+                break;
+            case Constant.FRAGMENT_TAG_ME_PORTRAIT_EMPTY:
+                if (null == sMePortraitEmptyFragment) {
+                    sMePortraitEmptyFragment = new MePortraitEmptyFragment();
+                }
+                baseFragment = sMePortraitEmptyFragment;
+                break;
+            case Constant.FRAGMENT_TAG_ME_PORTRAIT:
+                if (null == sMePortraitFragment) {
+                    sMePortraitFragment = new MePortraitFragment();
+                }
+                baseFragment = sMePortraitFragment;
                 break;
             default:
                 break;

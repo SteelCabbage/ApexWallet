@@ -108,6 +108,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener,
         switch (position) {
             case 0:
                 // 个人画像
+                startActivity(MePortraitActivity.class, false);
                 break;
             case 1:
                 // 语言设置

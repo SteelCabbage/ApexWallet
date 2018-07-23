@@ -48,6 +48,9 @@ public class Constant {
     public static final String FRAGMENT_TAG_CONFIRM_MNEMONIC = "ConfirmMnemonicFragment";
     public static final String FRAGMENT_TAG_ME_MANAGE_DETAIL = "MeManageDetailFragment";
     public static final String FRAGMENT_TAG_ME_TRANSACTION_RECORD = "MeTransactionRecordFragment";
+    public static final String FRAGMENT_TAG_ME_PORTRAIT_EMPTY = "MePortraitEmptyFragment";
+    public static final String FRAGMENT_TAG_ME_PORTRAIT = "MePortraitFragment";
+
 
     // import wallet from mnemonic
     public static final String WALLET_NAME_IMPORT_DEFAULT = "Wallet";
