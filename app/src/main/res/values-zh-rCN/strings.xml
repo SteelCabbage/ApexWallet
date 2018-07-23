@@ -70,6 +70,7 @@
     <string name="transaction_time">交易时间</string>
     <string name="transaction_id">交易单号</string>
     <string name="a_key_mapping">一键映射</string>
+    <string name="add_assets">添加资产</string>
 
 
     <!--Me页面，功能菜单文字-->
@@ -102,6 +103,7 @@
     <string name="mnemonic_import_failed">助记词导入失败</string>
     <string name="wallet_exist">钱包已存在</string>
     <string name="keystore_copied">keystore已复制到剪切板</string>
+    <string name="mnemonic_incorrect">助记词不正确</string>
 
     <!--语言-->
     <string name="language_zh_cn">简体中文</string>

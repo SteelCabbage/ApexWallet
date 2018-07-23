@@ -9,7 +9,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import chinapex.com.wallet.R;
 import chinapex.com.wallet.base.BaseFragment;

@@ -9,7 +9,7 @@
     <string name="i_have_read_terms">I have read and agree to </string>
     <string name="privacy_terms">the Service and Privacy Policy</string>
     <string name="confirm">Confirm</string>
-    <string name="asset">Asset</string>
+    <string name="asset">Assets</string>
     <string name="search_wallet_address">search wallet address</string>
     <string name="cancel">Cancel</string>
     <string name="wallet_address">Wallet address</string>
@@ -58,7 +58,7 @@
     <string name="search_asset">Search asset</string>
     <string name="save">save</string>
     <string name="mnemonic_separated_by_spaces">Mnemonic words, separated by Spaces</string>
-    <string name="start_import">Start import</string>
+    <string name="start_import">Import</string>
     <string name="keystore_pwd">Keystore password</string>
     <string name="scan">scan</string>
     <string name="tx_failed">failed</string>
@@ -70,6 +70,7 @@
     <string name="transaction_time">Transaction Time</string>
     <string name="transaction_id">Transaction ID</string>
     <string name="a_key_mapping">a key mapping</string>
+    <string name="add_assets">Add Assets</string>
 
 
     <!--Me页面，功能菜单文字-->
@@ -102,6 +103,7 @@
     <string name="mnemonic_import_failed">Mnemonic import failed</string>
     <string name="wallet_exist">Wallet Exist</string>
     <string name="keystore_copied">The keystore has been copied to the clipboard</string>
+    <string name="mnemonic_incorrect">The mnemonic is incorrect</string>
 
     <!--语言-->
     <string name="language_zh_cn">简体中文</string>
