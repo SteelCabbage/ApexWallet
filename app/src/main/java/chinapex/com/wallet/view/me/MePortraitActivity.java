@@ -1,9 +1,7 @@
 package chinapex.com.wallet.view.me;
 
-import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -59,6 +57,14 @@ public class MePortraitActivity extends BaseActivity {
         }
 
         switchPortraitFragment();
+
+        WalletBean walletBean = walletBeans.get(0);
+        if (null == walletBean) {
+            CpLog.e(TAG, "walletBean is null!");
+            return;
+        }
+
+        mTv_portrait_address.setText(walletBean.getWalletAddr());
     }
 
     private void switchEmptyFragment() {

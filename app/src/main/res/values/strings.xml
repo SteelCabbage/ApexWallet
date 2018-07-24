@@ -110,6 +110,8 @@
     <string name="language_zh_cn">简体中文</string>
     <string name="language_en_US">English(U.S)</string>
 
-
+    <!--画像类型-->
+    <string name="portrait_type_common">Basic</string>
+    <string name="portrait_type_enterprise">Enterprise</string>
 
 </resources>

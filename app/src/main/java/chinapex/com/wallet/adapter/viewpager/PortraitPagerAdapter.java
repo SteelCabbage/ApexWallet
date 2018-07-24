@@ -1,22 +1,44 @@
 package chinapex.com.wallet.adapter.viewpager;
 
-import android.support.annotation.NonNull;
-import android.support.v4.view.PagerAdapter;
-import android.view.View;
+
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.support.annotation.Nullable;
+
+import java.util.List;
+
+import chinapex.com.wallet.base.BaseFragment;
 
 /**
  * Created by SteelCabbage on 2018/7/24 0024 10:24.
  * E-Mail：liuyi_61@163.com
  */
 
-public class PortraitPagerAdapter extends PagerAdapter {
-    @Override
-    public int getCount() {
-        return 0;
+public class PortraitPagerAdapter extends MyFragmentPagerAdapter {
+    private static final String TAG = PortraitPagerAdapter.class.getSimpleName();
+    private List<BaseFragment> mFragments;
+    private List<String> mTitles;
+
+    public PortraitPagerAdapter(FragmentManager fm, List<BaseFragment> fragments, List<String>
+            titles) {
+        super(fm);
+        mFragments = fragments;
+        mTitles = titles;
     }
 
     @Override
-    public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
-        return false;
+    public Fragment getItem(int position) {
+        return mFragments.get(position);
+    }
+
+    @Override
+    public int getCount() {
+        return null == mFragments ? 0 : mFragments.size();
+    }
+
+    @Nullable
+    @Override
+    public CharSequence getPageTitle(int position) {
+        return null == mTitles ? "" : mTitles.get(position);
     }
 }

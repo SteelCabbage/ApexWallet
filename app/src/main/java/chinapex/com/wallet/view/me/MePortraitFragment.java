@@ -8,8 +8,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import chinapex.com.wallet.R;
+import chinapex.com.wallet.adapter.viewpager.PortraitPagerAdapter;
 import chinapex.com.wallet.base.BaseFragment;
+import chinapex.com.wallet.global.Constant;
+import chinapex.com.wallet.utils.FragmentFactory;
 
 /**
  * Created by SteelCabbage on 2018/7/23 0023 18:44.
@@ -20,6 +27,8 @@ public class MePortraitFragment extends BaseFragment {
     private static final String TAG = MePortraitFragment.class.getSimpleName();
     private TabLayout mTl_portrait;
     private ViewPager mVp_portrait;
+    private PortraitPagerAdapter mPortraitPagerAdapter;
+    private List<BaseFragment> mBaseFragments;
 
     @Nullable
     @Override
@@ -43,5 +52,17 @@ public class MePortraitFragment extends BaseFragment {
 
     private void initData() {
         mTl_portrait.setupWithViewPager(mVp_portrait);
+
+        mBaseFragments = new ArrayList<>();
+        mBaseFragments.add(FragmentFactory.getFragment(Constant.FRAGMENT_TAG_ME_COMMON_PORTRAIT));
+        mBaseFragments.add(FragmentFactory.getFragment(Constant
+                .FRAGMENT_TAG_ME_ENTERPRISE_PORTRAIT));
+        List<String> titles = Arrays.asList(getResources().getStringArray(R.array
+                .me_portrait_type));
+        mPortraitPagerAdapter = new PortraitPagerAdapter(getFragmentManager(), mBaseFragments,
+                titles);
+        mVp_portrait.setAdapter(mPortraitPagerAdapter);
     }
+
+
 }

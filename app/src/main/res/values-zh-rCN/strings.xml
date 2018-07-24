@@ -110,5 +110,7 @@
     <string name="language_en_US">English(U.S)</string>
     <string name="portrait_empty_content">请创建钱包\n方便我们发放奖励</string>
 
-
+    <!--画像类型-->
+    <string name="portrait_type_common">通用画像</string>
+    <string name="portrait_type_enterprise">企业端特殊数据画像</string>
 </resources>
