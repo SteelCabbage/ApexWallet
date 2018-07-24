@@ -7,7 +7,6 @@ import android.os.Parcelable;
 import android.text.TextUtils;
 
 import chinapex.com.wallet.global.ApexWalletApplication;
-import chinapex.com.wallet.global.Constant;
 import chinapex.com.wallet.utils.CpLog;
 
 public class BaseFragment extends Fragment {

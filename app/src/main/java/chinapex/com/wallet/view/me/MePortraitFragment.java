@@ -2,6 +2,8 @@ package chinapex.com.wallet.view.me;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +18,8 @@ import chinapex.com.wallet.base.BaseFragment;
 
 public class MePortraitFragment extends BaseFragment {
     private static final String TAG = MePortraitFragment.class.getSimpleName();
+    private TabLayout mTl_portrait;
+    private ViewPager mVp_portrait;
 
     @Nullable
     @Override
@@ -33,10 +37,11 @@ public class MePortraitFragment extends BaseFragment {
     }
 
     private void initView(View view) {
-
+        mTl_portrait = view.findViewById(R.id.tl_portrait);
+        mVp_portrait = view.findViewById(R.id.vp_portrait);
     }
 
     private void initData() {
-
+        mTl_portrait.setupWithViewPager(mVp_portrait);
     }
 }

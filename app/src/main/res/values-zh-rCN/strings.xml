@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Apex</string>
+    <string name="app_name">APEX Wallet</string>
     <string name="create_wallet">创建钱包</string>
     <string name="import_wallet">导入钱包</string>
     <string name="security">• 密码用于加密私钥和交易授权，非常重要，请勿设定的过于简单。\n\n• Apex Wallet不存储密码，也无法帮你找回，请务必牢记。</string>

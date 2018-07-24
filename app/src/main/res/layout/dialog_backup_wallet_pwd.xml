@@ -21,13 +21,15 @@
 
         <EditText
             android:id="@+id/et_dialog_pwd_backup"
-            android:layout_width="211dp"
-            android:layout_height="22dp"
+            android:layout_width="@dimen/pwd_width"
+            android:layout_height="@dimen/pwd_height"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="25dp"
             android:background="@android:color/white"
             android:hint="@string/pwd_hint"
             android:inputType="textPassword"
+            android:paddingEnd="10dp"
+            android:paddingStart="10dp"
             android:textColorHint="#C7C7CD"
             android:textSize="12sp" />
 

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Apex</string>
+    <string name="app_name">APEX Wallet</string>
     <string name="create_wallet">Create Wallet</string>
     <string name="import_wallet">Import Wallet</string>
     <string name="security">• It is very important that the password is used to encrypt the private key and transaction authorization. Please do not set it too simple.\n\n• Apex Wallet does not store passwords and cannot retrieve them for you. Please keep in mind.</string>

@@ -33,7 +33,7 @@ public class MePortraitEmptyFragment extends BaseFragment {
     }
 
     private void initView(View view) {
-
+//        view.findViewById(R.)
     }
 
     private void initData() {
