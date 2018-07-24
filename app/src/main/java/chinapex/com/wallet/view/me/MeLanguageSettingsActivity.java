@@ -26,7 +26,7 @@ import chinapex.com.wallet.utils.SharedPreferencesUtils;
 import chinapex.com.wallet.view.MainActivity;
 
 public class MeLanguageSettingsActivity extends BaseActivity implements
-        LanguageRecyclerViewAdapter.OnItemClickListener, View.OnClickListener {
+        LanguageRecyclerViewAdapter.OnItemClickListener {
 
     private static final String TAG = MeLanguageSettingsActivity.class.getSimpleName();
     private LanguageRecyclerViewAdapter mLanguageRecyclerViewAdapter;
@@ -61,10 +61,6 @@ public class MeLanguageSettingsActivity extends BaseActivity implements
         mLanguageRecyclerViewAdapter = new LanguageRecyclerViewAdapter(mLanguageStates);
         mLanguageRecyclerViewAdapter.setOnItemClickListener(this);
         rv_me_language.setAdapter(mLanguageRecyclerViewAdapter);
-
-        // 语言切换保存
-        Button btLanguageSave = (Button) findViewById(R.id.bt_me_language_settings_save);
-        btLanguageSave.setOnClickListener(this);
     }
 
     private List<LanguageState> getAssetsMenus() {
@@ -111,20 +107,8 @@ public class MeLanguageSettingsActivity extends BaseActivity implements
         }
 
         mCurrentLanguage.setChecked(true);
-        CpLog.i(TAG, "mCurrentLanguage:" + mCurrentLanguage.getLanguageName());
-        CpLog.i(TAG, "mCurrentLanguage value:" + mCurrentLanguage.getLanguageValue());
         mLanguageRecyclerViewAdapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.bt_me_language_settings_save:
-                switchLanguage(mCurrentLanguage.getLanguageValue());
-                break;
-            default:
-                break;
-        }
+        switchLanguage(mCurrentLanguage.getLanguageValue());
     }
 
     private void switchLanguage(String languageValue) {
@@ -135,7 +119,6 @@ public class MeLanguageSettingsActivity extends BaseActivity implements
 
         if (languageValue.equals(mPreLanguage.getLanguageValue())) {
             CpLog.w(TAG, "language is not change,no need to switch!");
-            finish();
             return;
         }
 

@@ -20,19 +20,6 @@
             android:text="@string/language_settings"
             android:textColor="@android:color/white"
             android:textSize="@dimen/tv_me_title_size" />
-
-        <Button
-            android:id="@+id/bt_me_language_settings_save"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/tv_me_language_settings"
-            android:layout_alignParentEnd="true"
-            android:background="@null"
-            android:text="@string/save"
-            android:textAllCaps="false"
-            android:textColor="@android:color/white"
-            android:textSize="16sp" />
-
     </RelativeLayout>
 
     <android.support.v7.widget.RecyclerView

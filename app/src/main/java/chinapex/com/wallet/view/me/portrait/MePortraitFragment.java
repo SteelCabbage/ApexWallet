@@ -1,4 +1,4 @@
-package chinapex.com.wallet.view.me;
+package chinapex.com.wallet.view.me.portrait;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

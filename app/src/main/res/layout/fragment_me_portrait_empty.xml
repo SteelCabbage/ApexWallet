@@ -22,7 +22,7 @@
         android:textSize="@dimen/title_small_16sp" />
 
     <Button
-        android:id="@+id/bt_portrait_create"
+        android:id="@+id/bt_portrait_create_wallet"
         android:layout_width="330dp"
         android:layout_height="40dp"
         android:layout_alignParentBottom="true"

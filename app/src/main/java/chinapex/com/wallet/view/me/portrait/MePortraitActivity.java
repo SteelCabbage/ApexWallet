@@ -1,4 +1,4 @@
-package chinapex.com.wallet.view.me;
+package chinapex.com.wallet.view.me.portrait;
 
 import android.app.FragmentTransaction;
 import android.os.Bundle;
@@ -49,7 +49,6 @@ public class MePortraitActivity extends BaseActivity {
         List<WalletBean> walletBeans = apexWalletDbDao.queryWalletBeans(Constant.TABLE_APEX_WALLET);
         if (null == walletBeans || walletBeans.isEmpty()) {
             CpLog.e(TAG, "walletBeans is null or empty!");
-            // TODO: 2018/7/23 0023 引导用户创建
             mTv_portrait_address.setVisibility(View.INVISIBLE);
             mIb_portrait_switch_wallet.setVisibility(View.INVISIBLE);
             switchEmptyFragment();

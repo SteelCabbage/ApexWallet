@@ -56,7 +56,7 @@
     <string name="copy_keystore">Copy keystore</string>
     <string name="transaction_detail">Transaction Details</string>
     <string name="search_asset">Search asset</string>
-    <string name="save">save</string>
+    <string name="save">Save</string>
     <string name="mnemonic_separated_by_spaces">Mnemonic words, separated by Spaces</string>
     <string name="start_import">Import</string>
     <string name="keystore_pwd">Keystore password</string>

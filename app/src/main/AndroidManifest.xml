@@ -95,7 +95,7 @@
             android:screenOrientation="portrait" />
         <!--用户画像-->
         <activity
-            android:name=".view.me.MePortraitActivity"
+            android:name=".view.me.portrait.MePortraitActivity"
             android:screenOrientation="portrait" />
     </application>
 
