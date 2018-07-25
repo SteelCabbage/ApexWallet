@@ -122,7 +122,7 @@ public class MeLanguageSettingsActivity extends BaseActivity implements
             return;
         }
 
-        Resources resources = getResources();
+        Resources resources = ApexWalletApplication.getInstance().getResources();
         if (null == resources) {
             CpLog.e(TAG, "resources is null!");
             return;
@@ -141,11 +141,14 @@ public class MeLanguageSettingsActivity extends BaseActivity implements
         }
 
         if (languageValue.contains(Locale.CHINA.toString())) {
-            configuration.locale = Locale.SIMPLIFIED_CHINESE;
+//            configuration.locale = Locale.SIMPLIFIED_CHINESE;
+            configuration.setLocale(Locale.SIMPLIFIED_CHINESE);
         } else if (languageValue.contains(Locale.ENGLISH.toString())) {
-            configuration.locale = Locale.US;
+//            configuration.locale = Locale.US;
+            configuration.setLocale(Locale.US);
         } else {
-            configuration.locale = Locale.getDefault();
+//            configuration.locale = Locale.getDefault();
+            configuration.setLocale(Locale.getDefault());
         }
 
         resources.updateConfiguration(configuration, displayMetrics);

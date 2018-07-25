@@ -3,68 +3,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ScrollView
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_portrait_common"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/bt_portrait_common_save"
-
         android:layout_marginBottom="15dp"
         android:layout_marginTop="40dp">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="100dp"
-                android:text="123" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="100dp"
-                android:text="123" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="100dp"
-                android:text="123" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="100dp"
-                android:text="123" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="100dp"
-                android:text="123" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="100dp"
-                android:text="123" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="100dp"
-                android:text="123" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="100dp"
-                android:text="123" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="100dp"
-                android:text="123" />
-
-
-        </LinearLayout>
-
-    </ScrollView>
+    </android.support.v7.widget.RecyclerView>
 
     <Button
         android:id="@+id/bt_portrait_common_save"

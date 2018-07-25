@@ -2,6 +2,7 @@ package chinapex.com.wallet.view.me.portrait;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import chinapex.com.wallet.base.BaseFragment;
 
 public class MeCommonPortraitFragment extends BaseFragment {
     private static final String TAG = MeCommonPortraitFragment.class.getSimpleName();
+    private RecyclerView mRv_portrait_common;
 
     @Nullable
     @Override
@@ -33,9 +35,10 @@ public class MeCommonPortraitFragment extends BaseFragment {
     }
 
     private void initView(View view) {
-
+        mRv_portrait_common = view.findViewById(R.id.rv_portrait_common);
     }
 
     private void initData() {
+
     }
 }

@@ -65,11 +65,14 @@ public class ApexWalletApplication extends Application {
         }
 
         if (spLanguage.contains(Locale.CHINA.toString())) {
-            configuration.locale = Locale.SIMPLIFIED_CHINESE;
+//            configuration.locale = Locale.SIMPLIFIED_CHINESE;
+            configuration.setLocale(Locale.SIMPLIFIED_CHINESE);
         } else if (spLanguage.contains(Locale.ENGLISH.toString())) {
-            configuration.locale = Locale.US;
+//            configuration.locale = Locale.US;
+            configuration.setLocale(Locale.US);
         } else {
-            configuration.locale = Locale.getDefault();
+//            configuration.locale = Locale.getDefault();
+            configuration.setLocale(Locale.getDefault());
         }
 
         resources.updateConfiguration(configuration, displayMetrics);

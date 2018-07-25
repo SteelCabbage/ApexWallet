@@ -93,7 +93,7 @@
 //                "}";
 //
 //
-//        Test test = GsonUtils.json2Bean(json, Test.class);
+//        ResponsePortrait test = GsonUtils.json2Bean(json, ResponsePortrait.class);
 //        if (null == test) {
 //            System.out.println("test is null!");
 //            return;
