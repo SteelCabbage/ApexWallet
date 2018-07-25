@@ -19,10 +19,11 @@ public class PortraitRecyclerViewAdapter extends RecyclerView.Adapter implements
         .OnClickListener {
 
     private static final String TAG = PortraitRecyclerViewAdapter.class.getSimpleName();
+    public static final int TYPE_UNKNOW = -1;
     public static final int TYPE_INPUT = 0;
-    public static final int TYPE_LEVEL_ONE_LINKAGE = 1;
-    public static final int TYPE_LEVEL_TWO_LINKAGE = 2;
-    public static final int TYPE_LEVEL_THREE_LINKAGE = 3;
+    public static final int TYPE_LEVEL_ONE_LINKAGE = 10;
+    public static final int TYPE_LEVEL_TWO_LINKAGE = 20;
+    public static final int TYPE_LEVEL_THREE_LINKAGE = 30;
     public static final int TYPE_TAGS = 4;
     private OnItemClickListener mOnItemClickListener;
     private List<PortraitBean> mPortraitBeans;
@@ -68,6 +69,30 @@ public class PortraitRecyclerViewAdapter extends RecyclerView.Adapter implements
     }
 
     @Override
+    public int getItemViewType(int position) {
+        PortraitBean portraitBean = mPortraitBeans.get(position);
+        if (null == portraitBean) {
+            CpLog.e(TAG, "portraitBean is null");
+            return TYPE_UNKNOW;
+        }
+
+        switch (portraitBean.getType()) {
+            case TYPE_INPUT:
+                return TYPE_INPUT;
+            case TYPE_LEVEL_ONE_LINKAGE:
+                return TYPE_LEVEL_ONE_LINKAGE;
+            case TYPE_LEVEL_TWO_LINKAGE:
+                return TYPE_LEVEL_TWO_LINKAGE;
+            case TYPE_LEVEL_THREE_LINKAGE:
+                return TYPE_LEVEL_THREE_LINKAGE;
+            case TYPE_TAGS:
+                return TYPE_TAGS;
+            default:
+                return TYPE_INPUT;
+        }
+    }
+
+    @Override
     public int getItemCount() {
         return null == mPortraitBeans ? 0 : mPortraitBeans.size();
     }
@@ -80,9 +105,7 @@ public class PortraitRecyclerViewAdapter extends RecyclerView.Adapter implements
 
         MeAdapterHolder(View itemView) {
             super(itemView);
-            walletName = itemView.findViewById(R.id.tv_me_rv_item_wallet_name);
-            walletAddr = itemView.findViewById(R.id.tv_me_rv_item_wallet_addr);
-            isBackup = itemView.findViewById(R.id.tv_me_rv_item_backup);
+
         }
     }
 }
