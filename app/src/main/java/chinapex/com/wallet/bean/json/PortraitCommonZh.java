@@ -5,8 +5,8 @@ package chinapex.com.wallet.bean.json;
  * E-Mail：liuyi_61@163.com
  */
 
-public class PortraitZh {
-    public static final String PORTRAIT_ZH_CN = "{\n" +
+public class PortraitCommonZh {
+    public static final String PORTRAIT_COMMON_ZH = "{\n" +
             "    \"code\": 200,\n" +
             "    \"result\": [\n" +
             "               {\n" +

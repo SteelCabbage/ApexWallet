@@ -18,7 +18,7 @@ import chinapex.com.wallet.adapter.PortraitRecyclerViewAdapter;
 import chinapex.com.wallet.base.BaseFragment;
 import chinapex.com.wallet.bean.PortraitBean;
 import chinapex.com.wallet.bean.PortraitTagsBean;
-import chinapex.com.wallet.bean.json.PortraitZh;
+import chinapex.com.wallet.bean.json.PortraitCommonZh;
 import chinapex.com.wallet.bean.response.ResponsePortrait;
 import chinapex.com.wallet.global.ApexWalletApplication;
 import chinapex.com.wallet.global.Constant;
@@ -60,7 +60,7 @@ public class MeCommonPortraitFragment extends BaseFragment implements PortraitRe
 
     private void initData() {
         mPortraitBeans = new ArrayList<>();
-        ResponsePortrait responsePortrait = GsonUtils.json2Bean(PortraitZh.PORTRAIT_ZH_CN,
+        ResponsePortrait responsePortrait = GsonUtils.json2Bean(PortraitCommonZh.PORTRAIT_COMMON_ZH,
                 ResponsePortrait.class);
         if (null == responsePortrait) {
             CpLog.e(TAG, "responsePortrait is null!");
