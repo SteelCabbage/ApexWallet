@@ -1,5 +1,6 @@
 package chinapex.com.wallet.view.me.portrait;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -40,6 +41,7 @@ public class MeCommonPortraitFragment extends BaseFragment implements PortraitRe
     private RecyclerView mRv_portrait_common;
     private List<PortraitBean> mPortraitBeans;
     private PortraitRecyclerViewAdapter mPortraitRecyclerViewAdapter;
+    private static final int REQUEST_CODE = 101;
 
     @Nullable
     @Override
@@ -76,6 +78,7 @@ public class MeCommonPortraitFragment extends BaseFragment implements PortraitRe
             portraitBean.setType(resultBean.getType());
             portraitBean.setTitle(resultBean.getTitle());
             portraitBean.setResource(resultBean.getResource());
+            portraitBean.setSelectedContent("");
             List<ResponsePortrait.ResultBean.DataBean> data = resultBean.getData();
             List<PortraitTagsBean> portraitTagsBeans = new ArrayList<>();
             for (ResponsePortrait.ResultBean.DataBean datum : data) {
@@ -112,15 +115,20 @@ public class MeCommonPortraitFragment extends BaseFragment implements PortraitRe
 
         switch (portraitBean.getType()) {
             case Constant.TYPE_INPUT:
+                Intent intent = new Intent(ApexWalletApplication.getInstance(), TypeInputActivity
+                        .class);
+                intent.putExtra(Constant.EXTRA_TYPE_INPUT_TITLE, portraitBean.getTitle());
+                intent.putExtra(Constant.EXTRA_TYPE_INPUT_POSITION, position);
+                startActivityForResult(intent, REQUEST_CODE);
                 break;
             case Constant.TYPE_LEVEL_ONE_LINKAGE:
-                showOptionPicker(portraitBean.getData());
+                showOptionPicker(portraitBean);
                 break;
             case Constant.TYPE_LEVEL_TWO_LINKAGE:
 
                 break;
             case Constant.TYPE_LEVEL_THREE_LINKAGE:
-                showDatePicker();
+                showDatePicker(portraitBean);
                 break;
             case Constant.TYPE_TAGS:
 
@@ -128,10 +136,45 @@ public class MeCommonPortraitFragment extends BaseFragment implements PortraitRe
             default:
                 break;
         }
-
     }
 
-    private void showOptionPicker(List<PortraitTagsBean> portraitTagsBeans) {
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode != REQUEST_CODE) {
+            CpLog.e(TAG, "requestCode != REQUEST_CODE");
+            return;
+        }
+
+        if (null == data) {
+            CpLog.e(TAG, "onActivityResult() -> data is null!");
+            return;
+        }
+
+        String inputContent = data.getStringExtra(Constant.EXTRA_TYPE_INPUT_CONTENT);
+        int position = data.getIntExtra(Constant.EXTRA_TYPE_INPUT_POSITION, -1);
+        if (position == -1) {
+            CpLog.e(TAG, "position is -1");
+            return;
+        }
+
+        PortraitBean portraitBean = mPortraitBeans.get(position);
+        if (null == portraitBean) {
+            CpLog.e(TAG, "portraitBean is null!");
+            return;
+        }
+
+        portraitBean.setSelectedContent(inputContent);
+        mPortraitRecyclerViewAdapter.notifyDataSetChanged();
+    }
+
+    private void showOptionPicker(final PortraitBean portraitBean) {
+        if (null == portraitBean) {
+            CpLog.e(TAG, "portraitBean is null!");
+            return;
+        }
+
+        final List<PortraitTagsBean> portraitTagsBeans = portraitBean.getData();
         if (null == portraitTagsBeans || portraitTagsBeans.isEmpty()) {
             CpLog.e(TAG, "portraitTagsBeans is null or empty!");
             return;
@@ -179,14 +222,15 @@ public class MeCommonPortraitFragment extends BaseFragment implements PortraitRe
         picker.setOnOptionPickListener(new OptionPicker.OnOptionPickListener() {
             @Override
             public void onOptionPicked(int index, String item) {
-                CpLog.i(TAG, "index:" + index + ", item:" + item);
+                portraitBean.setSelectedContent(item);
+                mPortraitRecyclerViewAdapter.notifyDataSetChanged();
             }
         });
 
         picker.show();
     }
 
-    private void showDatePicker() {
+    private void showDatePicker(final PortraitBean portraitBean) {
         DatePicker picker = new DatePicker(this.getActivity(), DateTimePicker.YEAR_MONTH_DAY);
         picker.setRangeStart(1918, 1, 1);
         picker.setRangeEnd(2118, 12, 31);
@@ -225,7 +269,8 @@ public class MeCommonPortraitFragment extends BaseFragment implements PortraitRe
         picker.setOnDatePickListener(new DatePicker.OnYearMonthDayPickListener() {
             @Override
             public void onDatePicked(String year, String month, String day) {
-                CpLog.i(TAG, year + "-" + month + "-" + day);
+                portraitBean.setSelectedContent(year + "-" + month + "-" + day);
+                mPortraitRecyclerViewAdapter.notifyDataSetChanged();
             }
         });
         picker.show();

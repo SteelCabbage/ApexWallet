@@ -49,6 +49,7 @@ public class PortraitRecyclerViewAdapter extends RecyclerView.Adapter implements
             CpLog.e(TAG, "mOnItemClickListener is null!");
             return;
         }
+
         mOnItemClickListener.onItemClick((Integer) v.getTag());
     }
 
@@ -116,6 +117,7 @@ public class PortraitRecyclerViewAdapter extends RecyclerView.Adapter implements
             }
         } else {
             ((GeneraListHolder) holder).title.setText(portraitBean.getTitle());
+            ((GeneraListHolder) holder).content.setText(portraitBean.getSelectedContent());
         }
 
         holder.itemView.setTag(position);

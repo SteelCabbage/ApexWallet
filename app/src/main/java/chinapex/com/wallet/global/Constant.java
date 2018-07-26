@@ -40,6 +40,9 @@ public class Constant {
     public static final int TYPE_LEVEL_TWO_LINKAGE = 20;
     public static final int TYPE_LEVEL_THREE_LINKAGE = 30;
     public static final int TYPE_TAGS = 40;
+    public static final String EXTRA_TYPE_INPUT_TITLE = "extraTypeInputTitle";
+    public static final String EXTRA_TYPE_INPUT_CONTENT = "extraTypeInputContent";
+    public static final String EXTRA_TYPE_INPUT_POSITION = "extraTypeInputPosition";
 
 
     // 交易记录

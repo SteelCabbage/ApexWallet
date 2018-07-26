@@ -19,6 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_toStartOf="@+id/iv_genera_arrows"
+        android:singleLine="true"
         android:textColor="@color/c_333333"
         android:textSize="@dimen/paratext_14sp" />
 

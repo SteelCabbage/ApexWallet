@@ -20,6 +20,7 @@ public class PortraitBean {
     private int resource;
     private String title;
     private List<PortraitTagsBean> data;
+    private String selectedContent;
 
     public int getType() {
         return type;
@@ -53,6 +54,14 @@ public class PortraitBean {
         this.data = data;
     }
 
+    public String getSelectedContent() {
+        return selectedContent;
+    }
+
+    public void setSelectedContent(String selectedContent) {
+        this.selectedContent = selectedContent;
+    }
+
     @Override
     public String toString() {
         return "PortraitBean{" +
@@ -60,6 +69,9 @@ public class PortraitBean {
                 ", resource=" + resource +
                 ", title='" + title + '\'' +
                 ", data=" + data +
+                ", selectedContent='" + selectedContent + '\'' +
                 '}';
     }
+
+
 }

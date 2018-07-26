@@ -74,6 +74,8 @@
     <string name="year">年</string>
     <string name="month">月</string>
     <string name="day">日</string>
+    <string name="example_address">例如：中国 上海</string>
+    <string name="place_of_residence">常住地</string>
 
 
     <!--Me页面，功能菜单文字-->
@@ -116,4 +118,6 @@
     <!--画像类型-->
     <string name="portrait_type_common">通用画像</string>
     <string name="portrait_type_enterprise">企业端特殊数据画像</string>
+
+
 </resources>
