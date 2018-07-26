@@ -4,14 +4,12 @@ import chinapex.com.wallet.base.BaseFragment;
 import chinapex.com.wallet.global.Constant;
 import chinapex.com.wallet.view.assets.AssetsFragment;
 import chinapex.com.wallet.view.discover.DiscoverFragment;
+import chinapex.com.wallet.view.me.MeFragment;
+import chinapex.com.wallet.view.me.MeManageDetailFragment;
+import chinapex.com.wallet.view.me.MeTransactionRecordFragment;
 import chinapex.com.wallet.view.me.portrait.MeCommonPortraitFragment;
 import chinapex.com.wallet.view.me.portrait.MeEnterpriseKeyFragment;
 import chinapex.com.wallet.view.me.portrait.MeEnterprisePortraitFragment;
-import chinapex.com.wallet.view.me.MeFragment;
-import chinapex.com.wallet.view.me.MeManageDetailFragment;
-import chinapex.com.wallet.view.me.portrait.MePortraitEmptyFragment;
-import chinapex.com.wallet.view.me.portrait.MePortraitFragment;
-import chinapex.com.wallet.view.me.MeTransactionRecordFragment;
 import chinapex.com.wallet.view.wallet.BackupFragment;
 import chinapex.com.wallet.view.wallet.ConfirmMnemonicFragment;
 import chinapex.com.wallet.view.wallet.CopyMnemonicFragment;
@@ -30,8 +28,6 @@ public class FragmentFactory {
 
     private static MeManageDetailFragment sMeManageDetailFragment;
     private static MeTransactionRecordFragment sMeTransactionRecordFragment;
-    private static MePortraitEmptyFragment sMePortraitEmptyFragment;
-    private static MePortraitFragment sMePortraitFragment;
     private static MeCommonPortraitFragment sMeCommonPortraitFragment;
     private static MeEnterprisePortraitFragment sMeEnterprisePortraitFragment;
     private static MeEnterpriseKeyFragment sMeEnterpriseKeyFragment;
@@ -110,18 +106,6 @@ public class FragmentFactory {
                     sImportKeystoreFragment = new ImportKeystoreFragment();
                 }
                 baseFragment = sImportKeystoreFragment;
-                break;
-            case Constant.FRAGMENT_TAG_ME_PORTRAIT_EMPTY:
-                if (null == sMePortraitEmptyFragment) {
-                    sMePortraitEmptyFragment = new MePortraitEmptyFragment();
-                }
-                baseFragment = sMePortraitEmptyFragment;
-                break;
-            case Constant.FRAGMENT_TAG_ME_PORTRAIT:
-                if (null == sMePortraitFragment) {
-                    sMePortraitFragment = new MePortraitFragment();
-                }
-                baseFragment = sMePortraitFragment;
                 break;
             case Constant.FRAGMENT_TAG_ME_COMMON_PORTRAIT:
                 if (null == sMeCommonPortraitFragment) {

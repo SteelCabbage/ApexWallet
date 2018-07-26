@@ -19,9 +19,14 @@ import chinapex.com.wallet.adapter.MeFunctionRecyclerViewAdapter;
 import chinapex.com.wallet.adapter.SpacesItemDecorationTopBottom;
 import chinapex.com.wallet.base.BaseFragment;
 import chinapex.com.wallet.bean.MeFunction;
+import chinapex.com.wallet.bean.WalletBean;
+import chinapex.com.wallet.global.ApexWalletApplication;
 import chinapex.com.wallet.global.Constant;
+import chinapex.com.wallet.model.ApexWalletDbDao;
+import chinapex.com.wallet.utils.CpLog;
 import chinapex.com.wallet.utils.DensityUtil;
 import chinapex.com.wallet.view.me.portrait.MePortraitActivity;
+import chinapex.com.wallet.view.me.portrait.MePortraitEmptyActivity;
 
 /**
  * Created by SteelCabbage on 2018/7/11 0011 16:48.
@@ -109,7 +114,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener,
         switch (position) {
             case 0:
                 // 个人画像
-                startActivity(MePortraitActivity.class, false);
+                skip2Portrait();
                 break;
             case 1:
                 // 语言设置
@@ -122,4 +127,32 @@ public class MeFragment extends BaseFragment implements View.OnClickListener,
                 break;
         }
     }
+
+    private void skip2Portrait() {
+        WalletBean rewardWallet = getRewardWallet();
+        if (null == rewardWallet) {
+            startActivity(MePortraitEmptyActivity.class, false);
+        } else {
+            startActivity(MePortraitActivity.class, false);
+        }
+
+    }
+
+    private WalletBean getRewardWallet() {
+        ApexWalletDbDao apexWalletDbDao = ApexWalletDbDao.getInstance(ApexWalletApplication
+                .getInstance());
+        if (null == apexWalletDbDao) {
+            CpLog.e(TAG, "apexWalletDbDao is null!");
+            return null;
+        }
+
+        List<WalletBean> walletBeans = apexWalletDbDao.queryWalletBeans(Constant.TABLE_APEX_WALLET);
+        if (null == walletBeans || walletBeans.isEmpty()) {
+            CpLog.e(TAG, "walletBeans is null or empty!");
+            return null;
+        }
+
+        return walletBeans.get(0);
+    }
+
 }
