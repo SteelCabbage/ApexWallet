@@ -7,29 +7,42 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="133dp"
-        android:background="@drawable/tb_bg">
+        android:layout_height="225dp"
+        android:background="@drawable/tb_bg_wide">
 
         <TextView
-            android:id="@+id/tv_balance_detail_assets_name"
+            android:id="@+id/tv_balance_detail_wallet_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/fragment_assets_title_margin_top"
-            android:text="CPX"
+            android:text="Wallet"
             android:textColor="@android:color/white"
-            android:textSize="@dimen/tb_title_size" />
+            android:textSize="@dimen/title_18sp" />
 
         <TextView
             android:id="@+id/tv_balance_detail_assets_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
+            android:layout_below="@+id/tv_balance_detail_wallet_name"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="20dp"
-            android:text="2.0032"
+            android:layout_marginTop="45dp"
+            android:text="2.00320000"
             android:textColor="@android:color/white"
-            android:textSize="28sp" />
+            android:textSize="48sp" />
+
+        <TextView
+            android:id="@+id/tv_balance_detail_assets_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="40dp"
+            android:layout_marginTop="@dimen/fragment_assets_title_margin_top"
+            android:text="CPX"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/title_small_16sp" />
 
         <ImageButton
             android:id="@+id/ib_balance_detail_scan"
@@ -42,35 +55,33 @@
 
     </RelativeLayout>
 
-    <LinearLayout
+    <Button
+        android:id="@+id/bt_balance_detail_transfer"
+        style="?android:attr/borderlessButtonStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal">
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/shape_balance_detail_bt_bg"
+        android:text="@string/transfer"
+        android:textAllCaps="false"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/bt_wallet_detail_tx_font_size" />
 
-        <Button
-            android:id="@+id/bt_balance_detail_transfer"
-            android:layout_width="@dimen/bt_wallet_detail_tx_width"
-            android:layout_height="@dimen/bt_wallet_detail_tx_height"
-            android:background="@drawable/selector_balance_detail_bt"
-            android:text="@string/transfer"
-            android:textAllCaps="false"
-            android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/bt_wallet_detail_tx_font_size" />
-
-        <Button
-            android:id="@+id/bt_balance_detail_gathering"
-            android:layout_width="@dimen/bt_wallet_detail_tx_width"
-            android:layout_height="@dimen/bt_wallet_detail_tx_height"
-            android:layout_marginStart="10dp"
-            android:background="@drawable/selector_balance_detail_bt"
-            android:text="@string/receive"
-            android:textAllCaps="false"
-            android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/bt_wallet_detail_tx_font_size" />
-
-    </LinearLayout>
+    <Button
+        android:id="@+id/bt_balance_detail_gathering"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/shape_balance_detail_bt_bg_def"
+        android:text="@string/receive"
+        android:textAllCaps="false"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/bt_wallet_detail_tx_font_size" />
 
     <LinearLayout
         android:id="@+id/ll_balance_detail_map"

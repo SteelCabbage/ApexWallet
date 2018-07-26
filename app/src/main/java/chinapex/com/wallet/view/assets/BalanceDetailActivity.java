@@ -34,6 +34,7 @@ public class BalanceDetailActivity extends BaseActivity implements View.OnClickL
     // QR_CODE activity请求码
     private final static int REQ_CODE = 1028;
     private ImageButton mIb_balance_detail_scan;
+    private TextView mTv_balance_detail_wallet_name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +54,8 @@ public class BalanceDetailActivity extends BaseActivity implements View.OnClickL
                 .tv_balance_detail_assets_value);
         mLl_balance_detail_map = (LinearLayout) findViewById(R.id.ll_balance_detail_map);
         mIb_balance_detail_scan = (ImageButton) findViewById(R.id.ib_balance_detail_scan);
+        mTv_balance_detail_wallet_name = (TextView) findViewById(R.id
+                .tv_balance_detail_wallet_name);
 
         mBt_balance_detail_transfer.setOnClickListener(this);
         mBt_balance_detail_gathering.setOnClickListener(this);
@@ -78,6 +81,7 @@ public class BalanceDetailActivity extends BaseActivity implements View.OnClickL
         mLl_balance_detail_map.setVisibility(View.INVISIBLE);
         mTv_balance_detail_assets_name.setText(mBalanceBean.getAssetSymbol());
         mTv_balance_detail_assets_value.setText(mBalanceBean.getAssetsValue());
+        mTv_balance_detail_wallet_name.setText(mWalletBean.getWalletName());
     }
 
     @Override
