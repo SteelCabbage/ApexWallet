@@ -96,6 +96,12 @@ public class MeCommonPortraitFragment extends BaseFragment implements PortraitRe
 
     @Override
     public void onItemClick(int position) {
+        PortraitBean portraitBean = mPortraitBeans.get(position);
+        if (null == portraitBean) {
+            CpLog.e(TAG, "portraitBean is null!");
+            return;
+        }
 
+        CpLog.i(TAG, "portraitBean:" + portraitBean.toString());
     }
 }

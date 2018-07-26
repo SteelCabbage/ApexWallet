@@ -53,4 +53,13 @@ public class PortraitBean {
         this.data = data;
     }
 
+    @Override
+    public String toString() {
+        return "PortraitBean{" +
+                "type=" + type +
+                ", resource=" + resource +
+                ", title='" + title + '\'' +
+                ", data=" + data +
+                '}';
+    }
 }

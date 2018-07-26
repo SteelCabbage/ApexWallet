@@ -12,10 +12,7 @@ import com.google.android.flexbox.FlexWrap;
 import com.google.android.flexbox.FlexboxLayoutManager;
 import com.google.android.flexbox.JustifyContent;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import chinapex.com.wallet.R;
 import chinapex.com.wallet.bean.PortraitBean;
@@ -26,18 +23,13 @@ import chinapex.com.wallet.utils.CpLog;
 import chinapex.com.wallet.utils.DensityUtil;
 
 public class PortraitRecyclerViewAdapter extends RecyclerView.Adapter implements View
-        .OnClickListener, PortraitTagsAdapter.OnItemClickListener {
+        .OnClickListener {
 
     private static final String TAG = PortraitRecyclerViewAdapter.class.getSimpleName();
 
     private OnItemClickListener mOnItemClickListener;
     private List<PortraitBean> mPortraitBeans;
 
-    @Override
-    public void onItemClick(int position) {
-        CpLog.i(TAG, "PortraitRecyclerViewAdapter onItemClick");
-        notifyDataSetChanged();
-    }
 
     public interface OnItemClickListener {
         void onItemClick(int position);
@@ -91,8 +83,9 @@ public class PortraitRecyclerViewAdapter extends RecyclerView.Adapter implements
             generaTagsHolder.tagsTitle.setText(portraitBean.getTitle());
             RecyclerView.Adapter adapter = generaTagsHolder.tags.getAdapter();
             if (null == adapter) {
-                PortraitTagsAdapter portraitTagsAdapter = new PortraitTagsAdapter(portraitBean
-                        .getData());
+                final List<PortraitTagsBean> portraitTagsBeans = portraitBean.getData();
+                PortraitTagsAdapter portraitTagsAdapter = new PortraitTagsAdapter
+                        (portraitTagsBeans);
                 FlexboxLayoutManager layoutManager = new FlexboxLayoutManager
                         (ApexWalletApplication.getInstance());
                 layoutManager.setFlexDirection(FlexDirection.ROW);
@@ -104,13 +97,26 @@ public class PortraitRecyclerViewAdapter extends RecyclerView.Adapter implements
                 int space = DensityUtil.dip2px(ApexWalletApplication.getInstance(), 2);
                 generaTagsHolder.tags.addItemDecoration(new SpacesItemDecorationHorizontal(space));
 
-                portraitTagsAdapter.setOnItemClickListener(this);
+                portraitTagsAdapter.setOnItemClickListener(new PortraitTagsAdapter
+                        .OnItemClickListener() {
+
+
+                    @Override
+                    public void onItemClick(int position) {
+                        PortraitTagsBean portraitTagsBean = portraitTagsBeans.get(position);
+                        if (null == portraitTagsBean) {
+                            CpLog.e(TAG, "portraitTagsBean is null!");
+                            return;
+                        }
+
+                        CpLog.i(TAG, "portraitTagsBean:" + portraitTagsBean.toString());
+                    }
+                });
                 generaTagsHolder.tags.setAdapter(portraitTagsAdapter);
             }
         } else {
             ((GeneraListHolder) holder).title.setText(portraitBean.getTitle());
         }
-
 
         holder.itemView.setTag(position);
     }

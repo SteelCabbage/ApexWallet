@@ -10,7 +10,7 @@
         android:layout_height="64dp"
         android:layout_marginTop="10dp"
         android:background="@null"
-        android:src="@drawable/icon_close" />
+        android:src="@drawable/icon_arrows_left" />
 
     <TextView
         android:id="@+id/tv_add_assets_title"
@@ -63,8 +63,8 @@
         android:layout_marginStart="@dimen/dialog_add_assets_margin_start"
         android:layout_marginTop="15dp"
         android:layout_toEndOf="@+id/ll_add_assets_search"
-        android:text="@string/cancel"
         android:singleLine="true"
+        android:text="@string/cancel"
         android:textColor="@color/c_999999"
         android:textSize="@dimen/paratext_14sp" />
 

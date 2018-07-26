@@ -33,4 +33,13 @@ public class PortraitTagsBean {
     public void setChecked(boolean checked) {
         isChecked = checked;
     }
+
+    @Override
+    public String toString() {
+        return "PortraitTagsBean{" +
+                "name='" + name + '\'' +
+                ", id='" + id + '\'' +
+                ", isChecked=" + isChecked +
+                '}';
+    }
 }

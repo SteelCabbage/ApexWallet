@@ -52,7 +52,6 @@ public class PortraitTagsAdapter extends RecyclerView.Adapter<PortraitTagsAdapte
         boolean checked = portraitTagsBean.isChecked();
         portraitTagsBean.setChecked(!checked);
         notifyDataSetChanged();
-        CpLog.i(TAG, "PortraitTagsAdapter notifyDataSetChanged");
         mOnItemClickListener.onItemClick(position);
     }
 
