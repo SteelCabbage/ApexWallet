@@ -7,24 +7,29 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.android.flexbox.FlexDirection;
+import com.google.android.flexbox.FlexWrap;
+import com.google.android.flexbox.FlexboxLayoutManager;
+import com.google.android.flexbox.JustifyContent;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import chinapex.com.wallet.R;
 import chinapex.com.wallet.bean.PortraitBean;
-import chinapex.com.wallet.bean.WalletBean;
+import chinapex.com.wallet.bean.PortraitTagsBean;
+import chinapex.com.wallet.global.ApexWalletApplication;
 import chinapex.com.wallet.global.Constant;
 import chinapex.com.wallet.utils.CpLog;
+import chinapex.com.wallet.utils.DensityUtil;
 
 public class PortraitRecyclerViewAdapter extends RecyclerView.Adapter implements View
         .OnClickListener {
 
     private static final String TAG = PortraitRecyclerViewAdapter.class.getSimpleName();
-    public static final int TYPE_UNKNOW = -1;
-    public static final int TYPE_INPUT = 0;
-    public static final int TYPE_LEVEL_ONE_LINKAGE = 10;
-    public static final int TYPE_LEVEL_TWO_LINKAGE = 20;
-    public static final int TYPE_LEVEL_THREE_LINKAGE = 30;
-    public static final int TYPE_TAGS = 4;
+
     private OnItemClickListener mOnItemClickListener;
     private List<PortraitBean> mPortraitBeans;
 
@@ -52,17 +57,52 @@ public class PortraitRecyclerViewAdapter extends RecyclerView.Adapter implements
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout
-                        .recyclerview_me_item,
-                parent, false);
-        MeAdapterHolder holder = new MeAdapterHolder(view);
-        view.setOnClickListener(this);
-        return holder;
+        View view;
+
+        if (viewType == Constant.TYPE_GENERA_TAGS) {
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.genera_tags, parent,
+                    false);
+            view.setOnClickListener(this);
+            return new GeneraTagsHolder(view);
+        } else {
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.genera_list, parent,
+                    false);
+            view.setOnClickListener(this);
+            return new GeneraListHolder(view);
+        }
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-//        WalletBean walletBean = mWalletBeans.get(position);
+        PortraitBean portraitBean = mPortraitBeans.get(position);
+        if (null == portraitBean) {
+            CpLog.e(TAG, "portraitBean is null!");
+            return;
+        }
+
+        if (holder instanceof GeneraTagsHolder) {
+            GeneraTagsHolder generaTagsHolder = (GeneraTagsHolder) holder;
+            generaTagsHolder.tagsTitle.setText(portraitBean.getTitle());
+            RecyclerView.Adapter adapter = generaTagsHolder.tags.getAdapter();
+            if (null == adapter) {
+                PortraitTagsAdapter portraitTagsAdapter = new PortraitTagsAdapter(portraitBean
+                        .getData());
+                FlexboxLayoutManager layoutManager = new FlexboxLayoutManager
+                        (ApexWalletApplication.getInstance());
+                layoutManager.setFlexDirection(FlexDirection.ROW);
+                layoutManager.setJustifyContent(JustifyContent.FLEX_START);
+                layoutManager.setFlexWrap(FlexWrap.WRAP);
+
+                generaTagsHolder.tags.setLayoutManager(layoutManager);
+                generaTagsHolder.tags.setAdapter(portraitTagsAdapter);
+                int space = DensityUtil.dip2px(ApexWalletApplication.getInstance(), 2);
+                generaTagsHolder.tags.addItemDecoration(new SpacesItemDecorationHorizontal(space));
+
+                generaTagsHolder.tags.setAdapter(portraitTagsAdapter);
+            }
+        } else {
+            ((GeneraListHolder) holder).title.setText(portraitBean.getTitle());
+        }
 
 
         holder.itemView.setTag(position);
@@ -73,22 +113,14 @@ public class PortraitRecyclerViewAdapter extends RecyclerView.Adapter implements
         PortraitBean portraitBean = mPortraitBeans.get(position);
         if (null == portraitBean) {
             CpLog.e(TAG, "portraitBean is null");
-            return TYPE_UNKNOW;
+            return Constant.TYPE_UNKNOW;
         }
 
         switch (portraitBean.getType()) {
-            case TYPE_INPUT:
-                return TYPE_INPUT;
-            case TYPE_LEVEL_ONE_LINKAGE:
-                return TYPE_LEVEL_ONE_LINKAGE;
-            case TYPE_LEVEL_TWO_LINKAGE:
-                return TYPE_LEVEL_TWO_LINKAGE;
-            case TYPE_LEVEL_THREE_LINKAGE:
-                return TYPE_LEVEL_THREE_LINKAGE;
-            case TYPE_TAGS:
-                return TYPE_TAGS;
+            case Constant.TYPE_TAGS:
+                return Constant.TYPE_GENERA_TAGS;
             default:
-                return TYPE_INPUT;
+                return Constant.TYPE_GENERA_LIST;
         }
     }
 
@@ -97,15 +129,26 @@ public class PortraitRecyclerViewAdapter extends RecyclerView.Adapter implements
         return null == mPortraitBeans ? 0 : mPortraitBeans.size();
     }
 
-    class MeAdapterHolder extends RecyclerView.ViewHolder {
-        TextView walletName;
-        TextView walletAddr;
-        TextView isBackup;
 
+    class GeneraListHolder extends RecyclerView.ViewHolder {
+        TextView title;
+        TextView content;
 
-        MeAdapterHolder(View itemView) {
+        GeneraListHolder(View itemView) {
             super(itemView);
+            title = itemView.findViewById(R.id.tv_genera_title);
+            content = itemView.findViewById(R.id.tv_genera_content);
+        }
+    }
 
+    class GeneraTagsHolder extends RecyclerView.ViewHolder {
+        TextView tagsTitle;
+        RecyclerView tags;
+
+        GeneraTagsHolder(View itemView) {
+            super(itemView);
+            tagsTitle = itemView.findViewById(R.id.tv_genera_tags_title);
+            tags = itemView.findViewById(R.id.rv_genera_tags);
         }
     }
 }

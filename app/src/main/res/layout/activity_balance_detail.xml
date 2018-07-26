@@ -100,7 +100,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="210dp"
             android:background="@null"
-            android:src="@drawable/icon_wallet_item_arrows" />
+            android:src="@drawable/icon_arrows" />
 
     </LinearLayout>
 

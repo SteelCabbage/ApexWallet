@@ -28,6 +28,6 @@
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="20dp"
         android:background="@null"
-        android:src="@drawable/icon_wallet_item_arrows" />
+        android:src="@drawable/icon_arrows" />
 
 </RelativeLayout>

@@ -1,6 +1,5 @@
 package chinapex.com.wallet.bean.response;
 
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -13,12 +12,23 @@ public class ResponsePortrait {
 
     /**
      * code : 200
-     * result : [{"type":1,"resource":1,"title":"学历","data":[{"name":"初中","id":"0144",
-     * "type":"666"},{"name":"高中","id":"0322"},{"name":"大学","id":"0433"}]},{"type":0,
-     * "resource":0,"title":"年收入","data":[]},{"type":1,"resource":1,"title":"移动运营商",
-     * "data":[{"name":"电信","id":14},{"name":"联通","id":32},{"name":"移动","id":43},{"name":"其他",
-     * "id":11}]},{"type":4,"resource":1,"title":"用户商业兴趣","data":[{"name":"旅游","id":0},
-     * {"name":"旅游","id":0},{"name":"旅游","id":0},{"name":"旅游","id":0}]}]
+     * language : en_US
+     * result : [{"type":1,"resource":1,"title":"性别","data":[{"name":"男","id":"0"},{"name":"女",
+     * "id":"0"}]},{"type":0,"resource":0,"title":"常住地","data":[]},{"type":1,"resource":1,
+     * "title":"学历","data":[{"name":"初中及以下","id":"0"},{"name":"高中","id":"0"},{"name":"中技",
+     * "id":"0"},{"name":"中专","id":"0"},{"name":"大专","id":"0"},{"name":"本科","id":"0"},
+     * {"name":"硕士","id":"0"},{"name":"MBA","id":"0"},{"name":"EMBA","id":"0"},{"name":"博士",
+     * "id":"0"},{"name":"博士后","id":"0"}]},{"type":0,"resource":0,"title":"年收入","data":[]},
+     * {"type":1,"resource":1,"title":"移动运营商","data":[{"name":"中国电信","id":"0"},{"name":"中国联通",
+     * "id":"0"},{"name":"中国移动","id":"0"},{"name":"其他","id":"0"}]},{"type":1,"resource":0,
+     * "title":"手机系统","data":[{"name":"iOS","id":"0"},{"name":"Android","id":"0"},{"name":"其他",
+     * "id":"0"}]},{"type":0,"resource":0,"title":"职业","data":[]},{"type":4,"resource":1,
+     * "title":"用户商业兴趣","data":[{"name":"教育","id":"0"},{"name":"旅游","id":"0"},{"name":"金融",
+     * "id":"0"},{"name":"汽车","id":"0"},{"name":"房产","id":"0"},{"name":"家居","id":"0"},
+     * {"name":"服饰","id":"0"},{"name":"时尚珠宝","id":"0"},{"name":"餐饮","id":"0"},{"name":"生活服务",
+     * "id":"0"},{"name":"美容美发","id":"0"},{"name":"互联网","id":"0"},{"name":"电子产品","id":"0"},
+     * {"name":"运动户外","id":"0"},{"name":"医疗健康","id":"0"},{"name":"孕产育婴","id":"0"},{"name":"游戏",
+     * "id":"0"},{"name":"政法","id":"0"},{"name":"娱乐休闲","id":"0"}]}]
      */
 
     private int code;
@@ -53,15 +63,14 @@ public class ResponsePortrait {
         /**
          * type : 1
          * resource : 1
-         * title : 学历
-         * data : [{"name":"初中","id":"0144","type":"666"},{"name":"高中","id":"0322"},{"name":"大学",
-         * "id":"0433"}]
+         * title : 性别
+         * data : [{"name":"男","id":"0"},{"name":"女","id":"0"}]
          */
 
         private int type;
         private int resource;
         private String title;
-        private List<HashMap<String, String>> data;
+        private List<DataBean> data;
 
         public int getType() {
             return type;
@@ -87,12 +96,38 @@ public class ResponsePortrait {
             this.title = title;
         }
 
-        public List<HashMap<String, String>> getData() {
+        public List<DataBean> getData() {
             return data;
         }
 
-        public void setData(List<HashMap<String, String>> data) {
+        public void setData(List<DataBean> data) {
             this.data = data;
+        }
+
+        public static class DataBean {
+            /**
+             * name : 男
+             * id : 0
+             */
+
+            private String name;
+            private String id;
+
+            public String getName() {
+                return name;
+            }
+
+            public void setName(String name) {
+                this.name = name;
+            }
+
+            public String getId() {
+                return id;
+            }
+
+            public void setId(String id) {
+                this.id = id;
+            }
         }
     }
 }

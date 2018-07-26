@@ -31,6 +31,17 @@ public class Constant {
     public static final String UPDATE_ASSETS_OK = "updateAssetsOk";
 
 
+    // Portrait type
+    public static final int TYPE_GENERA_LIST = 1;
+    public static final int TYPE_GENERA_TAGS = 2;
+    public static final int TYPE_UNKNOW = -1;
+    public static final int TYPE_INPUT = 0;
+    public static final int TYPE_LEVEL_ONE_LINKAGE = 10;
+    public static final int TYPE_LEVEL_TWO_LINKAGE = 20;
+    public static final int TYPE_LEVEL_THREE_LINKAGE = 30;
+    public static final int TYPE_TAGS = 40;
+
+
     // 交易记录
     public static final String URL_TRANSACTION_HISTORY = "https://tracker.chinapex.com" +
             ".cn/tool/transaction-history/";
@@ -103,6 +114,7 @@ public class Constant {
             "0x602c79718b16e442de58778e148d0b1084e3b2dffd5de6b7b16cee7969282de7";
     public static final String ASSETS_CPX = "0x45d493a6f73fa5f404244a5fb8472fc014ca5885";
 
+
     // tmp 后台更新后删除
     public static final String ASSETS_APH = "0xa0777c3ce2b169d4a23bcba4565e3225a0122d95";
     public static final String ASSETS_AVA = "0xde2ed49b691e76754c20fe619d891b78ef58e537";
@@ -129,12 +141,6 @@ public class Constant {
     public static final String SYMBOL_NEO_GAS = "GAS";
     public static final String SYMBOL_CPX = "CPX";
 
-    public static final String UNIT_NEO = "neo";
-    public static final String UNIT_NEO_GAS = "gas";
-    public static final String UNIT_CPX = "cpx";
-
-    // wallet title
-    public static final String WALLET_NAME = "Wallet ";
 
     // selected tag
     public static final int SELECTED_TAG_MANAGER_WALLET = 0;

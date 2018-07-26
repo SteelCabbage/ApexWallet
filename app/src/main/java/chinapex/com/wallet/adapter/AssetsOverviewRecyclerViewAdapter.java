@@ -6,7 +6,6 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -193,14 +192,14 @@ public class AssetsOverviewRecyclerViewAdapter extends RecyclerView
         ImageView assetLogo;
         TextView assetsName;
         TextView assetsValue;
-        Button mapState;
+        TextView mapState;
 
         AssetsOverviewAdapterHolder(View itemView) {
             super(itemView);
             assetLogo = itemView.findViewById(R.id.iv_assets_overview_item_logo);
             assetsName = itemView.findViewById(R.id.tv_assets_overview_assets_name);
             assetsValue = itemView.findViewById(R.id.tv_assets_overview_assets_value);
-            mapState = itemView.findViewById(R.id.bt_assets_overview_map);
+            mapState = itemView.findViewById(R.id.tv_assets_overview_map);
         }
     }
 }

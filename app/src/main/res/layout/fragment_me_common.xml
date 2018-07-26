@@ -9,7 +9,8 @@
         android:layout_height="match_parent"
         android:layout_above="@+id/bt_portrait_common_save"
         android:layout_marginBottom="15dp"
-        android:layout_marginTop="40dp">
+        android:layout_marginTop="40dp"
+        android:overScrollMode="never">
 
     </android.support.v7.widget.RecyclerView>
 

@@ -1,6 +1,5 @@
 package chinapex.com.wallet.bean;
 
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -9,18 +8,18 @@ import java.util.List;
  */
 
 public class PortraitBean {
+
     /**
      * type : 1
      * resource : 1
-     * title : 学历
-     * data : [{"name":"初中","id":"0144","type":"666"},{"name":"高中","id":"0322"},{"name":"大学",
-     * "id":"0433"}]
+     * title : 性别
+     * data : [{"name":"男","id":"0"},{"name":"女","id":"0"}]
      */
 
     private int type;
     private int resource;
     private String title;
-    private List<HashMap<String, String>> data;
+    private List<PortraitTagsBean> data;
 
     public int getType() {
         return type;
@@ -46,11 +45,12 @@ public class PortraitBean {
         this.title = title;
     }
 
-    public List<HashMap<String, String>> getData() {
+    public List<PortraitTagsBean> getData() {
         return data;
     }
 
-    public void setData(List<HashMap<String, String>> data) {
+    public void setData(List<PortraitTagsBean> data) {
         this.data = data;
     }
+
 }
