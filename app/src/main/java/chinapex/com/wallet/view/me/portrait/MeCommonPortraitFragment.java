@@ -1,5 +1,6 @@
 package chinapex.com.wallet.view.me.portrait;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,8 +20,14 @@ import chinapex.com.wallet.bean.PortraitTagsBean;
 import chinapex.com.wallet.bean.json.PortraitZh;
 import chinapex.com.wallet.bean.response.ResponsePortrait;
 import chinapex.com.wallet.global.ApexWalletApplication;
+import chinapex.com.wallet.global.Constant;
 import chinapex.com.wallet.utils.CpLog;
+import chinapex.com.wallet.utils.DensityUtil;
 import chinapex.com.wallet.utils.GsonUtils;
+import cn.qqtheme.framework.picker.DatePicker;
+import cn.qqtheme.framework.picker.DateTimePicker;
+import cn.qqtheme.framework.picker.OptionPicker;
+import cn.qqtheme.framework.widget.WheelView;
 
 /**
  * Created by SteelCabbage on 2018/7/24 0024 15:09.
@@ -86,8 +93,7 @@ public class MeCommonPortraitFragment extends BaseFragment implements PortraitRe
     private void initView(View view) {
         mRv_portrait_common = view.findViewById(R.id.rv_portrait_common);
         mRv_portrait_common.setLayoutManager(new LinearLayoutManager(ApexWalletApplication
-                .getInstance(),
-                LinearLayoutManager.VERTICAL, false));
+                .getInstance(), LinearLayoutManager.VERTICAL, false));
         mPortraitRecyclerViewAdapter = new PortraitRecyclerViewAdapter(mPortraitBeans);
         mPortraitRecyclerViewAdapter.setOnItemClickListener(this);
         mRv_portrait_common.setAdapter(mPortraitRecyclerViewAdapter);
@@ -103,5 +109,126 @@ public class MeCommonPortraitFragment extends BaseFragment implements PortraitRe
         }
 
         CpLog.i(TAG, "portraitBean:" + portraitBean.toString());
+
+        switch (portraitBean.getType()) {
+            case Constant.TYPE_INPUT:
+                break;
+            case Constant.TYPE_LEVEL_ONE_LINKAGE:
+                showOptionPicker(portraitBean.getData());
+                break;
+            case Constant.TYPE_LEVEL_TWO_LINKAGE:
+
+                break;
+            case Constant.TYPE_LEVEL_THREE_LINKAGE:
+                showDatePicker();
+                break;
+            case Constant.TYPE_TAGS:
+
+                break;
+            default:
+                break;
+        }
+
     }
+
+    private void showOptionPicker(List<PortraitTagsBean> portraitTagsBeans) {
+        if (null == portraitTagsBeans || portraitTagsBeans.isEmpty()) {
+            CpLog.e(TAG, "portraitTagsBeans is null or empty!");
+            return;
+        }
+
+        ArrayList<String> list = new ArrayList<>();
+        for (PortraitTagsBean portraitTagsBean : portraitTagsBeans) {
+            if (null == portraitTagsBean) {
+                CpLog.e(TAG, "portraitTagsBean is null!");
+                continue;
+            }
+
+            list.add(portraitTagsBean.getName());
+        }
+
+        OptionPicker picker = new OptionPicker(this.getActivity(), list);
+        picker.setOffset(2);
+        picker.setDividerRatio(WheelView.DividerConfig.FILL);
+        picker.setHeight(DensityUtil.dip2px(ApexWalletApplication.getInstance(), 200));
+        picker.setTopHeight(40);
+        picker.setDividerColor(ApexWalletApplication.getInstance().getResources().getColor(R
+                .color.c_DDDDDD));
+        picker.setTopLineColor(ApexWalletApplication.getInstance().getResources().getColor(R
+                .color.c_DDDDDD));
+        picker.setTextColor(
+                Color.BLACK,
+                ApexWalletApplication.getInstance().getResources().getColor(R.color.c_999999));
+        picker.setSelectedIndex(1);
+        picker.setTextSize(16);
+
+        // set cancel
+        picker.setCancelText(ApexWalletApplication.getInstance().getResources().getString(R
+                .string.cancel));
+        picker.setCancelTextColor(ApexWalletApplication.getInstance().getResources().getColor(R
+                .color.colorPrimary));
+        picker.setCancelTextSize(14);
+
+        // set confirm
+        picker.setSubmitText(ApexWalletApplication.getInstance().getResources().getString(R
+                .string.confirm));
+        picker.setSubmitTextColor(ApexWalletApplication.getInstance().getResources().getColor(R
+                .color.colorPrimary));
+        picker.setSubmitTextSize(14);
+
+        picker.setOnOptionPickListener(new OptionPicker.OnOptionPickListener() {
+            @Override
+            public void onOptionPicked(int index, String item) {
+                CpLog.i(TAG, "index:" + index + ", item:" + item);
+            }
+        });
+
+        picker.show();
+    }
+
+    private void showDatePicker() {
+        DatePicker picker = new DatePicker(this.getActivity(), DateTimePicker.YEAR_MONTH_DAY);
+        picker.setRangeStart(1918, 1, 1);
+        picker.setRangeEnd(2118, 12, 31);
+
+        picker.setTopHeight(40);
+        picker.setDividerColor(ApexWalletApplication.getInstance().getResources().getColor(R
+                .color.c_DDDDDD));
+        picker.setTopLineColor(ApexWalletApplication.getInstance().getResources().getColor(R
+                .color.c_DDDDDD));
+        picker.setTextColor(
+                Color.BLACK,
+                ApexWalletApplication.getInstance().getResources().getColor(R.color.c_999999));
+        picker.setContentPadding(20, 20);
+        picker.setSelectedItem(2018, 7, 27);
+        picker.setLabelTextColor(Color.BLACK);
+
+        String year = ApexWalletApplication.getInstance().getResources().getString(R.string.year);
+        String month = ApexWalletApplication.getInstance().getResources().getString(R.string.month);
+        String day = ApexWalletApplication.getInstance().getResources().getString(R.string.day);
+        picker.setLabel(year, month, day);
+
+        // set cancel
+        picker.setCancelText(ApexWalletApplication.getInstance().getResources().getString(R
+                .string.cancel));
+        picker.setCancelTextColor(ApexWalletApplication.getInstance().getResources().getColor(R
+                .color.colorPrimary));
+        picker.setCancelTextSize(14);
+
+        // set confirm
+        picker.setSubmitText(ApexWalletApplication.getInstance().getResources().getString(R
+                .string.confirm));
+        picker.setSubmitTextColor(ApexWalletApplication.getInstance().getResources().getColor(R
+                .color.colorPrimary));
+
+        picker.setSubmitTextSize(14);
+        picker.setOnDatePickListener(new DatePicker.OnYearMonthDayPickListener() {
+            @Override
+            public void onDatePicked(String year, String month, String day) {
+                CpLog.i(TAG, year + "-" + month + "-" + day);
+            }
+        });
+        picker.show();
+    }
+
 }

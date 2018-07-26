@@ -37,7 +37,7 @@ public class PortraitZh {
             "               \"data\": []\n" +
             "               },\n" +
             "               {\n" +
-            "               \"type\": 11,\n" +
+            "               \"type\": 10,\n" +
             "               \"resource\": 1,\n" +
             "               \"title\": \"学历\",\n" +
             "               \"data\": [\n" +
@@ -94,7 +94,7 @@ public class PortraitZh {
             "               \"data\": []\n" +
             "               },\n" +
             "               {\n" +
-            "               \"type\": 12,\n" +
+            "               \"type\": 10,\n" +
             "               \"resource\": 1,\n" +
             "               \"title\": \"移动运营商\",\n" +
             "               \"data\": [\n" +
@@ -117,7 +117,7 @@ public class PortraitZh {
             "                        ]\n" +
             "               },\n" +
             "               {\n" +
-            "               \"type\": 13,\n" +
+            "               \"type\": 10,\n" +
             "               \"resource\": 0,\n" +
             "               \"title\": \"手机系统\",\n" +
             "               \"data\": [\n" +

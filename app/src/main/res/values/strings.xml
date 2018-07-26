@@ -72,7 +72,9 @@
     <string name="a_key_mapping">Pre-Mainnet</string>
     <string name="add_assets">Add Assets</string>
     <string name="portrait_empty_content">Please create wallet\nthat we could distribute our rewards.</string>
-
+    <string name="year">year</string>
+    <string name="month">month</string>
+    <string name="day">day</string>
 
     <!--Me页面，功能菜单文字-->
     <string name="personal_portrait">Profile</string>
