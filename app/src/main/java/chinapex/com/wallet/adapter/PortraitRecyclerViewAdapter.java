@@ -26,12 +26,18 @@ import chinapex.com.wallet.utils.CpLog;
 import chinapex.com.wallet.utils.DensityUtil;
 
 public class PortraitRecyclerViewAdapter extends RecyclerView.Adapter implements View
-        .OnClickListener {
+        .OnClickListener, PortraitTagsAdapter.OnItemClickListener {
 
     private static final String TAG = PortraitRecyclerViewAdapter.class.getSimpleName();
 
     private OnItemClickListener mOnItemClickListener;
     private List<PortraitBean> mPortraitBeans;
+
+    @Override
+    public void onItemClick(int position) {
+        CpLog.i(TAG, "PortraitRecyclerViewAdapter onItemClick");
+        notifyDataSetChanged();
+    }
 
     public interface OnItemClickListener {
         void onItemClick(int position);
@@ -94,10 +100,11 @@ public class PortraitRecyclerViewAdapter extends RecyclerView.Adapter implements
                 layoutManager.setFlexWrap(FlexWrap.WRAP);
 
                 generaTagsHolder.tags.setLayoutManager(layoutManager);
-                generaTagsHolder.tags.setAdapter(portraitTagsAdapter);
+
                 int space = DensityUtil.dip2px(ApexWalletApplication.getInstance(), 2);
                 generaTagsHolder.tags.addItemDecoration(new SpacesItemDecorationHorizontal(space));
 
+                portraitTagsAdapter.setOnItemClickListener(this);
                 generaTagsHolder.tags.setAdapter(portraitTagsAdapter);
             }
         } else {
