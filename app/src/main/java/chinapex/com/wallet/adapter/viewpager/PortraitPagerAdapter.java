@@ -3,11 +3,16 @@ package chinapex.com.wallet.adapter.viewpager;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.support.annotation.Nullable;
 
 import java.util.List;
 
+import chinapex.com.wallet.R;
 import chinapex.com.wallet.base.BaseFragment;
+import chinapex.com.wallet.global.Constant;
+import chinapex.com.wallet.utils.CpLog;
+import chinapex.com.wallet.utils.FragmentFactory;
 
 /**
  * Created by SteelCabbage on 2018/7/24 0024 10:24.
@@ -41,4 +46,5 @@ public class PortraitPagerAdapter extends MyFragmentPagerAdapter {
     public CharSequence getPageTitle(int position) {
         return null == mTitles ? "" : mTitles.get(position);
     }
+
 }

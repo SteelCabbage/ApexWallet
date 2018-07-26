@@ -5,6 +5,7 @@ import chinapex.com.wallet.global.Constant;
 import chinapex.com.wallet.view.assets.AssetsFragment;
 import chinapex.com.wallet.view.discover.DiscoverFragment;
 import chinapex.com.wallet.view.me.portrait.MeCommonPortraitFragment;
+import chinapex.com.wallet.view.me.portrait.MeEnterpriseKeyFragment;
 import chinapex.com.wallet.view.me.portrait.MeEnterprisePortraitFragment;
 import chinapex.com.wallet.view.me.MeFragment;
 import chinapex.com.wallet.view.me.MeManageDetailFragment;
@@ -33,6 +34,7 @@ public class FragmentFactory {
     private static MePortraitFragment sMePortraitFragment;
     private static MeCommonPortraitFragment sMeCommonPortraitFragment;
     private static MeEnterprisePortraitFragment sMeEnterprisePortraitFragment;
+    private static MeEnterpriseKeyFragment sMeEnterpriseKeyFragment;
 
     private static ImportMnemonicFragment sImportMnemonicFragment;
     private static ImportKeystoreFragment sImportKeystoreFragment;
@@ -132,6 +134,12 @@ public class FragmentFactory {
                     sMeEnterprisePortraitFragment = new MeEnterprisePortraitFragment();
                 }
                 baseFragment = sMeEnterprisePortraitFragment;
+                break;
+            case Constant.FRAGMENT_TAG_ME_ENTERPRISE_KEY:
+                if (null == sMeEnterpriseKeyFragment) {
+                    sMeEnterpriseKeyFragment = new MeEnterpriseKeyFragment();
+                }
+                baseFragment = sMeEnterpriseKeyFragment;
                 break;
             default:
                 break;

@@ -66,6 +66,7 @@ public class Constant {
     public static final String FRAGMENT_TAG_ME_PORTRAIT = "MePortraitFragment";
     public static final String FRAGMENT_TAG_ME_COMMON_PORTRAIT = "MeCommonPortraitFragment";
     public static final String FRAGMENT_TAG_ME_ENTERPRISE_PORTRAIT = "MeEnterprisePortraitFragment";
+    public static final String FRAGMENT_TAG_ME_ENTERPRISE_KEY = "MeEnterpriseKeyFragment";
 
 
     // import wallet from mnemonic

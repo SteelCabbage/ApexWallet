@@ -16,6 +16,7 @@ import chinapex.com.wallet.R;
 import chinapex.com.wallet.adapter.viewpager.PortraitPagerAdapter;
 import chinapex.com.wallet.base.BaseFragment;
 import chinapex.com.wallet.global.Constant;
+import chinapex.com.wallet.utils.CpLog;
 import chinapex.com.wallet.utils.FragmentFactory;
 
 /**
@@ -23,12 +24,14 @@ import chinapex.com.wallet.utils.FragmentFactory;
  * E-Mail：liuyi_61@163.com
  */
 
-public class MePortraitFragment extends BaseFragment {
+public class MePortraitFragment extends BaseFragment implements MeEnterpriseKeyFragment
+        .OnConfirmClickListener {
     private static final String TAG = MePortraitFragment.class.getSimpleName();
     private TabLayout mTl_portrait;
     private ViewPager mVp_portrait;
     private PortraitPagerAdapter mPortraitPagerAdapter;
     private List<BaseFragment> mBaseFragments;
+    private List<String> mTitles;
 
     @Nullable
     @Override
@@ -54,15 +57,24 @@ public class MePortraitFragment extends BaseFragment {
         mTl_portrait.setupWithViewPager(mVp_portrait);
 
         mBaseFragments = new ArrayList<>();
+//        MeEnterpriseKeyFragment enterpriseKeyFragment = (MeEnterpriseKeyFragment) FragmentFactory
+//                .getFragment(Constant.FRAGMENT_TAG_ME_ENTERPRISE_KEY);
         mBaseFragments.add(FragmentFactory.getFragment(Constant.FRAGMENT_TAG_ME_COMMON_PORTRAIT));
         mBaseFragments.add(FragmentFactory.getFragment(Constant
                 .FRAGMENT_TAG_ME_ENTERPRISE_PORTRAIT));
-        List<String> titles = Arrays.asList(getResources().getStringArray(R.array
-                .me_portrait_type));
+//        mBaseFragments.add(enterpriseKeyFragment);
+        mTitles = Arrays.asList(getResources().getStringArray(R.array.me_portrait_type));
         mPortraitPagerAdapter = new PortraitPagerAdapter(getFragmentManager(), mBaseFragments,
-                titles);
+                mTitles);
         mVp_portrait.setAdapter(mPortraitPagerAdapter);
+
+//        enterpriseKeyFragment.setOnConfirmClickListener(this);
     }
 
 
+    @Override
+    public void onConfirmClick() {
+        CpLog.i(TAG, "onConfirmClick");
+
+    }
 }
