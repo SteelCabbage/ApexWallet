@@ -13,7 +13,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import chinapex.com.wallet.R;
-import chinapex.com.wallet.adapter.viewpager.PortraitPagerAdapter;
+import chinapex.com.wallet.adapter.viewpager.FragmentUpdateAdapter;
 import chinapex.com.wallet.base.BaseFragment;
 import chinapex.com.wallet.global.Constant;
 import chinapex.com.wallet.utils.CpLog;
@@ -29,9 +29,9 @@ public class MePortraitFragment extends BaseFragment implements MeEnterpriseKeyF
     private static final String TAG = MePortraitFragment.class.getSimpleName();
     private TabLayout mTl_portrait;
     private ViewPager mVp_portrait;
-    private PortraitPagerAdapter mPortraitPagerAdapter;
     private List<BaseFragment> mBaseFragments;
     private List<String> mTitles;
+    private FragmentUpdateAdapter mFragmentUpdateAdapter;
 
     @Nullable
     @Override
@@ -57,24 +57,32 @@ public class MePortraitFragment extends BaseFragment implements MeEnterpriseKeyF
         mTl_portrait.setupWithViewPager(mVp_portrait);
 
         mBaseFragments = new ArrayList<>();
-//        MeEnterpriseKeyFragment enterpriseKeyFragment = (MeEnterpriseKeyFragment) FragmentFactory
-//                .getFragment(Constant.FRAGMENT_TAG_ME_ENTERPRISE_KEY);
         mBaseFragments.add(FragmentFactory.getFragment(Constant.FRAGMENT_TAG_ME_COMMON_PORTRAIT));
-        mBaseFragments.add(FragmentFactory.getFragment(Constant
-                .FRAGMENT_TAG_ME_ENTERPRISE_PORTRAIT));
-//        mBaseFragments.add(enterpriseKeyFragment);
+        MeEnterpriseKeyFragment enterpriseKeyFragment = (MeEnterpriseKeyFragment) FragmentFactory
+                .getFragment(Constant.FRAGMENT_TAG_ME_ENTERPRISE_KEY);
+        mBaseFragments.add(enterpriseKeyFragment);
         mTitles = Arrays.asList(getResources().getStringArray(R.array.me_portrait_type));
-        mPortraitPagerAdapter = new PortraitPagerAdapter(getFragmentManager(), mBaseFragments,
-                mTitles);
-        mVp_portrait.setAdapter(mPortraitPagerAdapter);
 
-//        enterpriseKeyFragment.setOnConfirmClickListener(this);
+        mFragmentUpdateAdapter = new FragmentUpdateAdapter(getFragmentManager(), mBaseFragments,
+                mTitles);
+        mVp_portrait.setAdapter(mFragmentUpdateAdapter);
+
+        enterpriseKeyFragment.setOnConfirmClickListener(this);
     }
 
 
     @Override
     public void onConfirmClick() {
-        CpLog.i(TAG, "onConfirmClick");
+        mBaseFragments.remove(FragmentFactory.getFragment(Constant
+                .FRAGMENT_TAG_ME_ENTERPRISE_KEY));
+        BaseFragment fragment = FragmentFactory.getFragment(Constant
+                .FRAGMENT_TAG_ME_ENTERPRISE_PORTRAIT);
 
+        if (!mBaseFragments.contains(fragment)) {
+            mBaseFragments.add(fragment);
+        }
+
+        mFragmentUpdateAdapter.setNewFragments();
     }
+
 }
