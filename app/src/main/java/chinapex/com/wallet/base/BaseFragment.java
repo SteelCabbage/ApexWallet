@@ -1,6 +1,7 @@
 package chinapex.com.wallet.base;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -14,20 +15,6 @@ public class BaseFragment extends Fragment {
 
     public void startActivity(Class cls, boolean isFinish) {
         Intent intent = new Intent(ApexWalletApplication.getInstance(), cls);
-        startActivity(intent);
-        if (isFinish) {
-            getActivity().finish();
-        }
-    }
-
-    public void startActivityBundle(Class cls, boolean isFinish, String bundleKey, String key,
-                                    String value, String
-                                            parcelableKey, Parcelable parcelable) {
-        Intent intent = new Intent(ApexWalletApplication.getInstance(), cls);
-        Bundle bundle = new Bundle();
-        bundle.putString(key, value);
-        bundle.putParcelable(parcelableKey, parcelable);
-        intent.putExtra(bundleKey, bundle);
         startActivity(intent);
         if (isFinish) {
             getActivity().finish();
@@ -56,5 +43,10 @@ public class BaseFragment extends Fragment {
         if (isFinish) {
             getActivity().finish();
         }
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
     }
 }

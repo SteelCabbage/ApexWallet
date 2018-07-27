@@ -1,5 +1,6 @@
 package chinapex.com.wallet.utils;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -7,6 +8,8 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Build;
+import android.os.LocaleList;
+import android.text.TextUtils;
 import android.util.DisplayMetrics;
 
 import java.text.SimpleDateFormat;
@@ -158,10 +161,58 @@ public class PhoneUtils {
         }
         DisplayMetrics _DisplayMetrics = ApexWalletApplication.getInstance().getResources()
                 .getDisplayMetrics();
-        ApexWalletApplication.getInstance().getResources().updateConfiguration(_Configuration,
-                _DisplayMetrics);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            ApexWalletApplication.getInstance().createConfigurationContext(_Configuration);
+        } else {
+            ApexWalletApplication.getInstance().getResources().updateConfiguration
+                    (_Configuration, _DisplayMetrics);
+        }
 
         SharedPreferencesUtils.putParam(ApexWalletApplication.getInstance(), Constant
-                .CURRENT_LANGUAGE, newUserLocale);
+                .CURRENT_LANGUAGE, newUserLocale.toString());
+    }
+
+    public static Context attachBaseContext(Context context) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) { // 8.0需要使用createConfigurationContext处理
+            return updateResources(context);
+        } else {
+            return context;
+        }
+    }
+
+    @TargetApi(Build.VERSION_CODES.N)
+    private static Context updateResources(Context context) {
+        Resources resources = context.getResources();
+        Locale locale = getUserLocale();// getSetLocale方法是获取新设置的语言
+
+        Configuration configuration = resources.getConfiguration();
+        configuration.setLocale(locale);
+        configuration.setLocales(new LocaleList(locale));
+        return context.createConfigurationContext(configuration);
+    }
+
+    public static Locale getUserLocale() {
+        String defLanguage = Locale.getDefault().toString();
+        String spLanguage = (String) SharedPreferencesUtils.getParam(ApexWalletApplication
+                .getInstance(), Constant.CURRENT_LANGUAGE, defLanguage);
+
+        if (TextUtils.isEmpty(spLanguage)) {
+            CpLog.e(TAG, "languageValue is null or empty!");
+            return Locale.ENGLISH;
+        }
+
+        if (spLanguage.contains(Locale.CHINA.toString())) {
+            return Locale.SIMPLIFIED_CHINESE;
+        } else if (spLanguage.contains(Locale.ENGLISH.toString())) {
+            return Locale.US;
+        } else {
+            return Locale.getDefault();
+        }
+    }
+
+    public static void setLanguage() {
+        Locale userLocale = PhoneUtils.getUserLocale();
+        PhoneUtils.updateLocale(userLocale);
     }
 }

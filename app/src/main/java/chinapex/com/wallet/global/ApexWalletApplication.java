@@ -1,6 +1,7 @@
 package chinapex.com.wallet.global;
 
 import android.app.Application;
+import android.content.res.Configuration;
 import android.text.TextUtils;
 
 import java.util.Locale;
@@ -27,29 +28,18 @@ public class ApexWalletApplication extends Application {
         TaskController.getInstance().doInit();
         ApexListeners.getInstance().doInit();
         ApexGlobalTask.getInstance().doInit();
-        setLanguage();
+        PhoneUtils.setLanguage();
     }
 
     public static ApexWalletApplication getInstance() {
         return sApexWalletApplication;
     }
 
-    private void setLanguage() {
-        String defLanguage = Locale.getDefault().toString();
-        String spLanguage = (String) SharedPreferencesUtils.getParam(ApexWalletApplication
-                .getInstance(), Constant.CURRENT_LANGUAGE, defLanguage);
 
-        if (TextUtils.isEmpty(spLanguage)) {
-            CpLog.e(TAG, "languageValue is null or empty!");
-            return;
-        }
-
-        if (spLanguage.contains(Locale.CHINA.toString())) {
-            PhoneUtils.updateLocale(Locale.SIMPLIFIED_CHINESE);
-        } else if (spLanguage.contains(Locale.ENGLISH.toString())) {
-            PhoneUtils.updateLocale(Locale.US);
-        } else {
-            PhoneUtils.updateLocale(Locale.getDefault());
-        }
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        CpLog.i(TAG, "onConfigurationChanged");
+        PhoneUtils.setLanguage();
     }
 }

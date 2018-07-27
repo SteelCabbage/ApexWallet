@@ -1,6 +1,7 @@
 package chinapex.com.wallet.base;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
@@ -20,6 +21,7 @@ import java.util.Map;
 import chinapex.com.wallet.global.ApexWalletApplication;
 import chinapex.com.wallet.global.Constant;
 import chinapex.com.wallet.utils.CpLog;
+import chinapex.com.wallet.utils.PhoneUtils;
 
 /**
  * Created by SteelCabbage on 2018/5/21 0021.
@@ -120,4 +122,8 @@ public class BaseActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(PhoneUtils.attachBaseContext(ApexWalletApplication.getInstance()));
+    }
 }
