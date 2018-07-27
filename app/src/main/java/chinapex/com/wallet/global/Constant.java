@@ -247,4 +247,18 @@ public class Constant {
             + FIELD_ASSET_HASH + " text, "
             + FIELD_CREATE_TIME + " integer)";
 
+    // table portrait
+    public static final String TABLE_PORTRAIT = "portrait";
+
+    public static final String FIELD_PORTRAIT_TYPE = "portrait_type";
+    public static final String FIELD_PORTRAIT_LABEL = "portrait_label";
+    public static final String FIELD_PORTRAIT_VALUE = "portrait_value";
+
+    public static final String SQL_CREATE_PORTRAIT = "create table " + TABLE_PORTRAIT
+            + " (" + FIELD_ID + " integer primary key autoincrement, "
+            + FIELD_PORTRAIT_TYPE + " text, "
+            + FIELD_PORTRAIT_LABEL + " text, "
+            + FIELD_PORTRAIT_VALUE + " text, "
+            + FIELD_CREATE_TIME + " integer)";
+
 }

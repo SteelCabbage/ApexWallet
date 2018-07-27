@@ -1,16 +1,14 @@
 package chinapex.com.wallet.global;
 
 import android.app.Application;
-import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.text.TextUtils;
-import android.util.DisplayMetrics;
 
 import java.util.Locale;
 
 import chinapex.com.wallet.changelistener.ApexListeners;
 import chinapex.com.wallet.executor.TaskController;
 import chinapex.com.wallet.utils.CpLog;
+import chinapex.com.wallet.utils.PhoneUtils;
 import chinapex.com.wallet.utils.SharedPreferencesUtils;
 
 /**
@@ -46,38 +44,12 @@ public class ApexWalletApplication extends Application {
             return;
         }
 
-        Resources resources = getResources();
-        if (null == resources) {
-            CpLog.e(TAG, "resources is null!");
-            return;
-        }
-
-        Configuration configuration = resources.getConfiguration();
-        if (null == configuration) {
-            CpLog.e(TAG, "configuration is null!");
-            return;
-        }
-
-        DisplayMetrics displayMetrics = resources.getDisplayMetrics();
-        if (null == displayMetrics) {
-            CpLog.e(TAG, "displayMetrics is null!");
-            return;
-        }
-
         if (spLanguage.contains(Locale.CHINA.toString())) {
-//            configuration.locale = Locale.SIMPLIFIED_CHINESE;
-            configuration.setLocale(Locale.SIMPLIFIED_CHINESE);
+            PhoneUtils.updateLocale(Locale.SIMPLIFIED_CHINESE);
         } else if (spLanguage.contains(Locale.ENGLISH.toString())) {
-//            configuration.locale = Locale.US;
-            configuration.setLocale(Locale.US);
+            PhoneUtils.updateLocale(Locale.US);
         } else {
-//            configuration.locale = Locale.getDefault();
-            configuration.setLocale(Locale.getDefault());
+            PhoneUtils.updateLocale(Locale.getDefault());
         }
-
-        resources.updateConfiguration(configuration, displayMetrics);
-
-        SharedPreferencesUtils.putParam(ApexWalletApplication.getInstance(), Constant
-                .CURRENT_LANGUAGE, spLanguage);
     }
 }

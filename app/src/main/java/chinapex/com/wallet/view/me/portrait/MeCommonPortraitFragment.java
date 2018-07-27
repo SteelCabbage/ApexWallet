@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -19,12 +20,14 @@ import chinapex.com.wallet.R;
 import chinapex.com.wallet.adapter.PortraitRecyclerViewAdapter;
 import chinapex.com.wallet.base.BaseFragment;
 import chinapex.com.wallet.bean.PortraitBean;
+import chinapex.com.wallet.bean.PortraitShow;
 import chinapex.com.wallet.bean.PortraitTagsBean;
 import chinapex.com.wallet.bean.json.PortraitCommonEn;
 import chinapex.com.wallet.bean.json.PortraitCommonZh;
 import chinapex.com.wallet.bean.response.ResponsePortrait;
 import chinapex.com.wallet.global.ApexWalletApplication;
 import chinapex.com.wallet.global.Constant;
+import chinapex.com.wallet.model.ApexWalletDbDao;
 import chinapex.com.wallet.utils.CpLog;
 import chinapex.com.wallet.utils.DensityUtil;
 import chinapex.com.wallet.utils.GsonUtils;
@@ -48,6 +51,8 @@ public class MeCommonPortraitFragment extends BaseFragment implements PortraitRe
     private PortraitRecyclerViewAdapter mPortraitRecyclerViewAdapter;
     private static final int REQUEST_CODE = 101;
     private Button mBt_portrait_common_save;
+    private HashMap<String, String> mhowHmS;
+    private String mAppLanguage;
 
     @Nullable
     @Override
@@ -66,11 +71,11 @@ public class MeCommonPortraitFragment extends BaseFragment implements PortraitRe
 
     private void initData() {
         mPortraitBeans = new ArrayList<>();
-        String appLanguage = PhoneUtils.getAppLanguage();
+        mAppLanguage = PhoneUtils.getAppLanguage();
         String portraitJson;
-        if (appLanguage.contains(Locale.CHINA.toString())) {
+        if (mAppLanguage.contains(Locale.CHINA.toString())) {
             portraitJson = PortraitCommonZh.PORTRAIT_COMMON_ZH;
-        } else if (appLanguage.contains(Locale.ENGLISH.toString())) {
+        } else if (mAppLanguage.contains(Locale.ENGLISH.toString())) {
             portraitJson = PortraitCommonEn.PORTRAIT_COMMON_EN;
         } else {
             portraitJson = PortraitCommonEn.PORTRAIT_COMMON_EN;
@@ -83,6 +88,14 @@ public class MeCommonPortraitFragment extends BaseFragment implements PortraitRe
             return;
         }
 
+        ApexWalletDbDao instance = ApexWalletDbDao.getInstance(ApexWalletApplication.getInstance());
+        if (null == instance) {
+            CpLog.e(TAG, "instance is null!");
+            return;
+        }
+
+        HashMap<String, PortraitShow> hm = instance.queryPortraitShowByType(mAppLanguage);
+
         List<ResponsePortrait.ResultBean> result = responsePortrait.getResult();
         if (null == result || result.isEmpty()) {
             CpLog.e(TAG, "result is null or empty!");
@@ -91,10 +104,15 @@ public class MeCommonPortraitFragment extends BaseFragment implements PortraitRe
 
         for (ResponsePortrait.ResultBean resultBean : result) {
             PortraitBean portraitBean = new PortraitBean();
+            String title = resultBean.getTitle();
             portraitBean.setType(resultBean.getType());
-            portraitBean.setTitle(resultBean.getTitle());
+            portraitBean.setTitle(title);
             portraitBean.setResource(resultBean.getResource());
-            portraitBean.setSelectedContent("");
+            if (null != hm && hm.containsKey(title)) {
+                portraitBean.setSelectedContent(hm.get(title).getValue());
+            } else {
+                portraitBean.setSelectedContent("");
+            }
             List<ResponsePortrait.ResultBean.DataBean> data = resultBean.getData();
             List<PortraitTagsBean> portraitTagsBeans = new ArrayList<>();
             for (ResponsePortrait.ResultBean.DataBean datum : data) {
@@ -183,6 +201,18 @@ public class MeCommonPortraitFragment extends BaseFragment implements PortraitRe
             return;
         }
 
+        ApexWalletDbDao instance = ApexWalletDbDao.getInstance(ApexWalletApplication.getInstance());
+        if (null == instance) {
+            CpLog.e(TAG, "instance is null！");
+            return;
+        }
+
+        PortraitShow portraitShow = new PortraitShow();
+        portraitShow.setType(mAppLanguage);
+        portraitShow.setLabel(portraitBean.getTitle());
+        portraitShow.setValue(inputContent);
+        instance.insertPortraitShow(portraitShow);
+
         portraitBean.setSelectedContent(inputContent);
         mPortraitRecyclerViewAdapter.notifyDataSetChanged();
     }
@@ -241,6 +271,19 @@ public class MeCommonPortraitFragment extends BaseFragment implements PortraitRe
         picker.setOnOptionPickListener(new OptionPicker.OnOptionPickListener() {
             @Override
             public void onOptionPicked(int index, String item) {
+                ApexWalletDbDao instance = ApexWalletDbDao.getInstance(ApexWalletApplication
+                        .getInstance());
+                if (null == instance) {
+                    CpLog.e(TAG, "instance is null!");
+                    return;
+                }
+
+                PortraitShow portraitShow = new PortraitShow();
+                portraitShow.setType(mAppLanguage);
+                portraitShow.setLabel(portraitBean.getTitle());
+                portraitShow.setValue(item);
+                instance.insertPortraitShow(portraitShow);
+
                 portraitBean.setSelectedContent(item);
                 mPortraitRecyclerViewAdapter.notifyDataSetChanged();
             }
@@ -288,6 +331,19 @@ public class MeCommonPortraitFragment extends BaseFragment implements PortraitRe
         picker.setOnDatePickListener(new DatePicker.OnYearMonthDayPickListener() {
             @Override
             public void onDatePicked(String year, String month, String day) {
+                ApexWalletDbDao instance = ApexWalletDbDao.getInstance(ApexWalletApplication
+                        .getInstance());
+                if (null == instance) {
+                    CpLog.e(TAG, "instance is null!");
+                    return;
+                }
+
+                PortraitShow portraitShow = new PortraitShow();
+                portraitShow.setType(mAppLanguage);
+                portraitShow.setLabel(portraitBean.getTitle());
+                portraitShow.setValue(year + "-" + month + "-" + day);
+                instance.insertPortraitShow(portraitShow);
+
                 portraitBean.setSelectedContent(year + "-" + month + "-" + day);
                 mPortraitRecyclerViewAdapter.notifyDataSetChanged();
             }

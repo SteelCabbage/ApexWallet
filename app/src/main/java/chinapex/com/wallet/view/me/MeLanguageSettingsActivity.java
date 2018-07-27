@@ -22,6 +22,7 @@ import chinapex.com.wallet.bean.LanguageState;
 import chinapex.com.wallet.global.ApexWalletApplication;
 import chinapex.com.wallet.global.Constant;
 import chinapex.com.wallet.utils.CpLog;
+import chinapex.com.wallet.utils.PhoneUtils;
 import chinapex.com.wallet.utils.SharedPreferencesUtils;
 import chinapex.com.wallet.view.MainActivity;
 
@@ -122,39 +123,13 @@ public class MeLanguageSettingsActivity extends BaseActivity implements
             return;
         }
 
-        Resources resources = ApexWalletApplication.getInstance().getResources();
-        if (null == resources) {
-            CpLog.e(TAG, "resources is null!");
-            return;
-        }
-
-        Configuration configuration = resources.getConfiguration();
-        if (null == configuration) {
-            CpLog.e(TAG, "configuration is null!");
-            return;
-        }
-
-        DisplayMetrics displayMetrics = resources.getDisplayMetrics();
-        if (null == displayMetrics) {
-            CpLog.e(TAG, "displayMetrics is null!");
-            return;
-        }
-
         if (languageValue.contains(Locale.CHINA.toString())) {
-//            configuration.locale = Locale.SIMPLIFIED_CHINESE;
-            configuration.setLocale(Locale.SIMPLIFIED_CHINESE);
+            PhoneUtils.updateLocale(Locale.SIMPLIFIED_CHINESE);
         } else if (languageValue.contains(Locale.ENGLISH.toString())) {
-//            configuration.locale = Locale.US;
-            configuration.setLocale(Locale.US);
+            PhoneUtils.updateLocale(Locale.US);
         } else {
-//            configuration.locale = Locale.getDefault();
-            configuration.setLocale(Locale.getDefault());
+            PhoneUtils.updateLocale(Locale.getDefault());
         }
-
-        resources.updateConfiguration(configuration, displayMetrics);
-
-        SharedPreferencesUtils.putParam(ApexWalletApplication.getInstance(), Constant
-                .CURRENT_LANGUAGE, languageValue);
 
         finish();
 

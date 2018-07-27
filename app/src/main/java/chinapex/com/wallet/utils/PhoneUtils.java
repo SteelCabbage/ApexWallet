@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.os.Build;
 import android.util.DisplayMetrics;
 
 import java.text.SimpleDateFormat;
@@ -143,5 +145,23 @@ public class PhoneUtils {
         String defLanguage = Locale.getDefault().toString();
         return (String) SharedPreferencesUtils.getParam(ApexWalletApplication.getInstance(),
                 Constant.CURRENT_LANGUAGE, defLanguage);
+    }
+
+    // update language
+    public static void updateLocale(Locale newUserLocale) {
+        Configuration _Configuration = ApexWalletApplication.getInstance().getResources()
+                .getConfiguration();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            _Configuration.setLocale(newUserLocale);
+        } else {
+            _Configuration.locale = newUserLocale;
+        }
+        DisplayMetrics _DisplayMetrics = ApexWalletApplication.getInstance().getResources()
+                .getDisplayMetrics();
+        ApexWalletApplication.getInstance().getResources().updateConfiguration(_Configuration,
+                _DisplayMetrics);
+
+        SharedPreferencesUtils.putParam(ApexWalletApplication.getInstance(), Constant
+                .CURRENT_LANGUAGE, newUserLocale);
     }
 }

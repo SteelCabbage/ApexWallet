@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import chinapex.com.wallet.bean.AssetBean;
+import chinapex.com.wallet.bean.PortraitShow;
 import chinapex.com.wallet.bean.TransactionRecord;
 import chinapex.com.wallet.bean.WalletBean;
 import chinapex.com.wallet.global.Constant;
@@ -893,6 +894,66 @@ public class ApexWalletDbDao {
         }
         closeDatabase();
         return assetBean;
+    }
+
+    public synchronized void insertPortraitShow(PortraitShow portraitShow) {
+        if (null == portraitShow) {
+            CpLog.e(TAG, "insertPortraitShow() -> portraitShow is null!");
+            return;
+        }
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(Constant.FIELD_PORTRAIT_TYPE, portraitShow.getType());
+        contentValues.put(Constant.FIELD_PORTRAIT_LABEL, portraitShow.getLabel());
+        contentValues.put(Constant.FIELD_PORTRAIT_VALUE, portraitShow.getValue());
+        contentValues.put(Constant.FIELD_CREATE_TIME, SystemClock.currentThreadTimeMillis());
+
+        SQLiteDatabase db = openDatabase();
+        try {
+            db.beginTransaction();
+            db.insertOrThrow(Constant.TABLE_PORTRAIT, null, contentValues);
+            db.setTransactionSuccessful();
+        } catch (SQLException e) {
+            CpLog.e(TAG, "insertPortraitShow exception:" + e.getMessage());
+        } finally {
+            db.endTransaction();
+        }
+        closeDatabase();
+    }
+
+    private static final String WHERE_CLAUSE_PORTRAIT_TYPE_EQ = Constant.FIELD_PORTRAIT_TYPE + " " +
+            "= ?";
+
+    public HashMap<String, PortraitShow> queryPortraitShowByType(String portraitType) {
+        HashMap<String, PortraitShow> hm = new HashMap<>();
+        if (TextUtils.isEmpty(portraitType)) {
+            CpLog.e(TAG, "queryPortraitShowByType() -> portraitType is null!");
+            return hm;
+        }
+
+        SQLiteDatabase db = openDatabase();
+        Cursor cursor = db.query(Constant.TABLE_PORTRAIT, null, WHERE_CLAUSE_PORTRAIT_TYPE_EQ, new
+                String[]{portraitType}, null, null, null);
+        if (null != cursor) {
+            while (cursor.moveToNext()) {
+                int portraitTypeIndex = cursor.getColumnIndex(Constant.FIELD_PORTRAIT_TYPE);
+                int portraitLabelIndex = cursor.getColumnIndex(Constant.FIELD_PORTRAIT_LABEL);
+                int portraitValueIndex = cursor.getColumnIndex(Constant.FIELD_PORTRAIT_VALUE);
+
+                String portraitTypeTmp = cursor.getString(portraitTypeIndex);
+                String portraitLabel = cursor.getString(portraitLabelIndex);
+                String portraitValue = cursor.getString(portraitValueIndex);
+
+                PortraitShow portraitShow = new PortraitShow();
+                portraitShow.setType(portraitTypeTmp);
+                portraitShow.setLabel(portraitLabel);
+                portraitShow.setValue(portraitValue);
+                hm.put(portraitLabel, portraitShow);
+            }
+            cursor.close();
+        }
+        closeDatabase();
+        return hm;
     }
 
 }
