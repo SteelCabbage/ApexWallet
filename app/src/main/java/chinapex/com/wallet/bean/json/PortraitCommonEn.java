@@ -94,48 +94,6 @@ public class PortraitCommonEn {
             "               \"data\": []\n" +
             "               },\n" +
             "               {\n" +
-            "               \"type\": 10,\n" +
-            "               \"resource\": 1,\n" +
-            "               \"title\": \"Mobile Operator\",\n" +
-            "               \"data\": [\n" +
-            "                        {\n" +
-            "                        \"name\": \"CMCC\",\n" +
-            "                        \"id\": \"0\"\n" +
-            "                        },\n" +
-            "                        {\n" +
-            "                        \"name\": \"CUCC\",\n" +
-            "                        \"id\": \"0\"\n" +
-            "                        },\n" +
-            "                        {\n" +
-            "                        \"name\": \"CTCC\",\n" +
-            "                        \"id\": \"0\"\n" +
-            "                        },\n" +
-            "                        {\n" +
-            "                        \"name\": \"Other\",\n" +
-            "                        \"id\": \"0\"\n" +
-            "                        }\n" +
-            "                        ]\n" +
-            "               },\n" +
-            "               {\n" +
-            "               \"type\": 10,\n" +
-            "               \"resource\": 0,\n" +
-            "               \"title\": \"Phone OS\",\n" +
-            "               \"data\": [\n" +
-            "                        {\n" +
-            "                        \"name\": \"iOS\",\n" +
-            "                        \"id\": \"0\"\n" +
-            "                        },\n" +
-            "                        {\n" +
-            "                        \"name\": \"Android\",\n" +
-            "                        \"id\": \"0\"\n" +
-            "                        },\n" +
-            "                        {\n" +
-            "                        \"name\": \"Other\",\n" +
-            "                        \"id\": \"0\"\n" +
-            "                        }\n" +
-            "                        ]\n" +
-            "               },\n" +
-            "               {\n" +
             "               \"type\": 0,\n" +
             "               \"resource\": 0,\n" +
             "               \"title\": \"Career\",\n" +
