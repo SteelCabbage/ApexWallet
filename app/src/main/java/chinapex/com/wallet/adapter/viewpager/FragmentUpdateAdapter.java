@@ -4,6 +4,7 @@ package chinapex.com.wallet.adapter.viewpager;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.support.annotation.Nullable;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
@@ -54,7 +55,6 @@ public class FragmentUpdateAdapter extends MyFragmentPagerAdapter {
         return POSITION_NONE;
     }
 
-    //这个就不说了
     private String makeFragmentName(int viewId, long id) {
         return "android:switcher:" + viewId + ":" + id;
     }
@@ -65,6 +65,7 @@ public class FragmentUpdateAdapter extends MyFragmentPagerAdapter {
     }
 
     // 必须重写此方法，添加tag一一做记录
+    @Nullable
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
         mTags.add(makeFragmentName(container.getId(), getItemId(position)));

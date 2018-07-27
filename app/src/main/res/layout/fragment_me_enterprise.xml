@@ -9,7 +9,6 @@
         android:layout_height="match_parent"
         android:layout_above="@+id/bt_portrait_enterprise_save"
         android:layout_marginBottom="15dp"
-        android:layout_marginTop="40dp"
         android:overScrollMode="never" />
 
     <Button
