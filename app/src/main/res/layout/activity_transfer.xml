@@ -9,8 +9,8 @@
     <RelativeLayout
         android:id="@+id/tb_transfer"
         android:layout_width="match_parent"
-        android:layout_height="?actionBarSize"
-        android:background="@color/c_3660A7">
+        android:layout_height="@dimen/tb_bg_narrow_height"
+        android:background="@drawable/tb_bg_narrow">
 
         <TextView
             android:id="@+id/tv_transfer_title"
@@ -26,8 +26,8 @@
             android:id="@+id/ib_transfer_scan"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
+            android:layout_alignTop="@+id/tv_transfer_title"
             android:layout_marginEnd="15dp"
             android:background="@null"
             android:src="@drawable/icon_scan_qr_code" />

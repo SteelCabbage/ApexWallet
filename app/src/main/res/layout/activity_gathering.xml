@@ -9,8 +9,8 @@
     <android.support.v7.widget.Toolbar
         android:id="@+id/tb_gathering"
         android:layout_width="match_parent"
-        android:layout_height="?actionBarSize"
-        android:background="@color/c_3660A7"
+        android:layout_height="@dimen/tb_bg_narrow_height"
+        android:background="@drawable/tb_bg_narrow"
         android:gravity="center_vertical">
 
         <TextView
@@ -29,7 +29,6 @@
         android:layout_height="195dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="27dp"
-        android:background="@color/c_F1F1F1"
         android:scaleType="fitCenter" />
 
     <View
