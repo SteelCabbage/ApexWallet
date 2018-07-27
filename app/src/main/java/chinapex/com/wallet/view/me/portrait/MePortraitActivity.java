@@ -23,8 +23,8 @@ import chinapex.com.wallet.utils.CpLog;
 import chinapex.com.wallet.utils.FragmentFactory;
 import chinapex.com.wallet.view.dialog.SwitchWalletDialog;
 
-public class MePortraitActivity extends BaseActivity implements MeEnterpriseKeyFragment
-        .OnConfirmClickListener, View.OnClickListener, SwitchWalletDialog.onItemSelectedListener {
+public class MePortraitActivity extends BaseActivity implements View.OnClickListener,
+        SwitchWalletDialog.onItemSelectedListener {
 
     private static final String TAG = MePortraitActivity.class.getSimpleName();
     private TextView mTv_portrait_address;
@@ -84,60 +84,30 @@ public class MePortraitActivity extends BaseActivity implements MeEnterpriseKeyF
         MeCommonPortraitFragment commonPortraitFragment = (MeCommonPortraitFragment)
                 FragmentFactory.getFragment(Constant.FRAGMENT_TAG_ME_COMMON_PORTRAIT);
         mBaseFragments.add(commonPortraitFragment);
-        MeEnterpriseKeyFragment enterpriseKeyFragment = (MeEnterpriseKeyFragment) FragmentFactory
-                .getFragment(Constant.FRAGMENT_TAG_ME_ENTERPRISE_KEY);
-        mBaseFragments.add(enterpriseKeyFragment);
+        MeEnterprisePortraitFragment enterprisePortraitFragment = (MeEnterprisePortraitFragment)
+                FragmentFactory.getFragment(Constant.FRAGMENT_TAG_ME_ENTERPRISE_PORTRAIT);
+        mBaseFragments.add(enterprisePortraitFragment);
         mTitles = Arrays.asList(getResources().getStringArray(R.array.me_portrait_type));
 
         mFragmentUpdateAdapter = new FragmentUpdateAdapter(getFragmentManager(), mBaseFragments,
                 mTitles);
         mVp_portrait.setAdapter(mFragmentUpdateAdapter);
-
-        enterpriseKeyFragment.setOnConfirmClickListener(this);
     }
 
-
-    @Override
-    public void onConfirmClick() {
-        mBaseFragments.remove(FragmentFactory.getFragment(Constant
-                .FRAGMENT_TAG_ME_ENTERPRISE_KEY));
-        BaseFragment fragment = FragmentFactory.getFragment(Constant
-                .FRAGMENT_TAG_ME_ENTERPRISE_PORTRAIT);
-
-        if (!mBaseFragments.contains(fragment)) {
-            mBaseFragments.add(fragment);
-        }
-
-        mFragmentUpdateAdapter.setNewFragments();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
+//    @Override
+//    public void onConfirmClick() {
 //        mBaseFragments.remove(FragmentFactory.getFragment(Constant
-//                .FRAGMENT_TAG_ME_ENTERPRISE_PORTRAIT));
+//                .FRAGMENT_TAG_ME_ENTERPRISE_KEY));
 //        BaseFragment fragment = FragmentFactory.getFragment(Constant
-//                .FRAGMENT_TAG_ME_ENTERPRISE_KEY);
+//                .FRAGMENT_TAG_ME_ENTERPRISE_PORTRAIT);
 //
 //        if (!mBaseFragments.contains(fragment)) {
 //            mBaseFragments.add(fragment);
 //        }
 //
 //        mFragmentUpdateAdapter.setNewFragments();
-        CpLog.i(TAG, "onPause");
-    }
+//    }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        CpLog.i(TAG, "onStop");
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        CpLog.i(TAG, "onDestroy");
-    }
 
     @Override
     public void onClick(View v) {

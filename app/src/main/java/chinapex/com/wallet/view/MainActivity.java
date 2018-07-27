@@ -1,8 +1,11 @@
 package chinapex.com.wallet.view;
 
+import android.Manifest;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -27,6 +30,8 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar
     private BottomNavigationBar mBn_main;
     private String[] mBnItemTitles;
     private TextView mTv_main_title;
+    private static final int REQUEST_PERMISSION = 201;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +47,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar
         initBottomNavigationBar();
         initFragment();
         mTb_main.setVisibility(View.GONE);
+        checkPermission();
     }
 
     private void initData() {
@@ -127,6 +133,20 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar
     @Override
     public void onTabReselected(int position) {
 
+    }
+
+    private void checkPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager
+                    .PERMISSION_GRANTED
+                    || checkSelfPermission(Manifest.permission.CAMERA) != PackageManager
+                    .PERMISSION_GRANTED) {
+                requestPermissions(
+                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest
+                                .permission.CAMERA},
+                        REQUEST_PERMISSION);
+            }
+        }
     }
 
 }

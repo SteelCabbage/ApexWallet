@@ -78,6 +78,7 @@
     <string name="example_address">Example：China ShangHai</string>
     <string name="place_of_residence">Place Of Residence</string>
     <string name="enterprise_key">Enterprise Key</string>
+    <string name="to_dht_cloud">Saving Data to DHT Cloud</string>
 
     <!--Me页面，功能菜单文字-->
     <string name="personal_portrait">Profile</string>
@@ -118,6 +119,7 @@
     <!--画像类型-->
     <string name="portrait_type_common">Basic</string>
     <string name="portrait_type_enterprise">Enterprise</string>
+
 
 
 </resources>

@@ -3,24 +3,13 @@ package chinapex.com.wallet.view;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 
-import java.util.List;
-
 import chinapex.com.wallet.R;
 import chinapex.com.wallet.base.BaseActivity;
-import chinapex.com.wallet.bean.WalletBean;
-import chinapex.com.wallet.global.ApexWalletApplication;
-import chinapex.com.wallet.global.Constant;
-import chinapex.com.wallet.model.ApexWalletDbDao;
-import chinapex.com.wallet.model.ApexWalletDbHelper;
-import chinapex.com.wallet.utils.CpLog;
-import chinapex.com.wallet.utils.PhoneUtils;
-import chinapex.com.wallet.utils.SharedPreferencesUtils;
 import chinapex.com.wallet.view.wallet.CreateWalletActivity;
 import chinapex.com.wallet.view.wallet.ImportWalletActivity;
 
@@ -71,5 +60,4 @@ public class NewVisitorActivity extends BaseActivity implements View.OnClickList
         }
 
     }
-
 }

@@ -45,4 +45,7 @@ dependencies {
     implementation('cn.qqtheme.framework:ColorPicker:latest.release') {
         exclude group: 'com.android.support'
     }
+
+    // 加载圈
+    implementation 'com.tt:whorlviewlibrary:1.0.3'
 }

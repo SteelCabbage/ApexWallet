@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +29,7 @@ import chinapex.com.wallet.utils.CpLog;
 import chinapex.com.wallet.utils.DensityUtil;
 import chinapex.com.wallet.utils.GsonUtils;
 import chinapex.com.wallet.utils.PhoneUtils;
+import chinapex.com.wallet.view.dialog.WhorlViewDialog;
 import cn.qqtheme.framework.picker.DatePicker;
 import cn.qqtheme.framework.picker.DateTimePicker;
 import cn.qqtheme.framework.picker.OptionPicker;
@@ -39,12 +41,13 @@ import cn.qqtheme.framework.widget.WheelView;
  */
 
 public class MeEnterprisePortraitFragment extends BaseFragment implements
-        PortraitRecyclerViewAdapter.OnItemClickListener {
+        PortraitRecyclerViewAdapter.OnItemClickListener, View.OnClickListener {
     private static final String TAG = MeEnterprisePortraitFragment.class.getSimpleName();
     private RecyclerView mRv_portrait_enterprise;
     private List<PortraitBean> mPortraitBeans;
     private PortraitRecyclerViewAdapter mPortraitRecyclerViewAdapter;
     private static final int REQUEST_CODE = 101;
+    private Button mBt_portrait_enterprise_save;
 
     @Nullable
     @Override
@@ -113,6 +116,9 @@ public class MeEnterprisePortraitFragment extends BaseFragment implements
         mPortraitRecyclerViewAdapter = new PortraitRecyclerViewAdapter(mPortraitBeans);
         mPortraitRecyclerViewAdapter.setOnItemClickListener(this);
         mRv_portrait_enterprise.setAdapter(mPortraitRecyclerViewAdapter);
+
+        mBt_portrait_enterprise_save = view.findViewById(R.id.bt_portrait_enterprise_save);
+        mBt_portrait_enterprise_save.setOnClickListener(this);
     }
 
 
@@ -286,7 +292,23 @@ public class MeEnterprisePortraitFragment extends BaseFragment implements
                 mPortraitRecyclerViewAdapter.notifyDataSetChanged();
             }
         });
+        
         picker.show();
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.bt_portrait_enterprise_save:
+                showWhorlViewDialog();
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void showWhorlViewDialog() {
+        WhorlViewDialog whorlViewDialog = WhorlViewDialog.newInstance();
+        whorlViewDialog.show(getFragmentManager(), "WhorlViewDialog");
+    }
 }
