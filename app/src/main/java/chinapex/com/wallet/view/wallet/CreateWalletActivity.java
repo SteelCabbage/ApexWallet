@@ -40,6 +40,7 @@ public class CreateWalletActivity extends BaseActivity implements View.OnClickLi
     private TextInputLayout mTl_create_wallet_repeat_pwd;
     private TextView mTv_create_wallet_privacy_have_read;
     private Button mBt_create_wallet_import;
+    private TextView mTv_create_wallet_privacy;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +60,7 @@ public class CreateWalletActivity extends BaseActivity implements View.OnClickLi
         mIb_create_wallet_privacy_point = findViewById(R.id.ib_create_wallet_privacy_point);
         mTv_create_wallet_privacy_have_read = (TextView) findViewById(R.id
                 .tv_create_wallet_privacy_have_read);
+        mTv_create_wallet_privacy = (TextView) findViewById(R.id.tv_create_wallet_privacy);
         mTl_create_wallet_name = (TextInputLayout) findViewById(R.id.tl_create_wallet_name);
         mTl_create_wallet_pwd = (TextInputLayout) findViewById(R.id.tl_create_wallet_pwd);
         mTl_create_wallet_repeat_pwd = (TextInputLayout) findViewById(R.id
@@ -68,6 +70,7 @@ public class CreateWalletActivity extends BaseActivity implements View.OnClickLi
         mIb_create_wallet_privacy_point.setOnClickListener(this);
         mTv_create_wallet_privacy_have_read.setOnClickListener(this);
         mBt_create_wallet_import.setOnClickListener(this);
+        mTv_create_wallet_privacy.setOnClickListener(this);
 
         mEt_create_wallet_name.addTextChangedListener(new MyTextWatcher(mEt_create_wallet_name) {
             @Override
@@ -159,6 +162,9 @@ public class CreateWalletActivity extends BaseActivity implements View.OnClickLi
                             .c_979797));
                     mIsAgreePrivacy = false;
                 }
+                break;
+            case R.id.tv_create_wallet_privacy:
+                startActivity(PrivacyActivity.class, false);
                 break;
             default:
                 break;

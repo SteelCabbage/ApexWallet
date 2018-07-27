@@ -12,13 +12,14 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import chinapex.com.wallet.R;
 import chinapex.com.wallet.adapter.PortraitRecyclerViewAdapter;
 import chinapex.com.wallet.base.BaseFragment;
 import chinapex.com.wallet.bean.PortraitBean;
 import chinapex.com.wallet.bean.PortraitTagsBean;
-import chinapex.com.wallet.bean.json.PortraitCommonZh;
+import chinapex.com.wallet.bean.json.PortraitEnterpriseEn;
 import chinapex.com.wallet.bean.json.PortraitEnterpriseZh;
 import chinapex.com.wallet.bean.response.ResponsePortrait;
 import chinapex.com.wallet.global.ApexWalletApplication;
@@ -26,6 +27,7 @@ import chinapex.com.wallet.global.Constant;
 import chinapex.com.wallet.utils.CpLog;
 import chinapex.com.wallet.utils.DensityUtil;
 import chinapex.com.wallet.utils.GsonUtils;
+import chinapex.com.wallet.utils.PhoneUtils;
 import cn.qqtheme.framework.picker.DatePicker;
 import cn.qqtheme.framework.picker.DateTimePicker;
 import cn.qqtheme.framework.picker.OptionPicker;
@@ -61,8 +63,18 @@ public class MeEnterprisePortraitFragment extends BaseFragment implements
 
     private void initData() {
         mPortraitBeans = new ArrayList<>();
-        ResponsePortrait responsePortrait = GsonUtils.json2Bean(PortraitEnterpriseZh
-                .PORTRAIT_ENTERPRISE_ZH, ResponsePortrait.class);
+        String appLanguage = PhoneUtils.getAppLanguage();
+        String portraitJson;
+        if (appLanguage.contains(Locale.CHINA.toString())) {
+            portraitJson = PortraitEnterpriseZh.PORTRAIT_ENTERPRISE_ZH;
+        } else if (appLanguage.contains(Locale.ENGLISH.toString())) {
+            portraitJson = PortraitEnterpriseEn.PORTRAIT_ENTERPRISE_EN;
+        } else {
+            portraitJson = PortraitEnterpriseEn.PORTRAIT_ENTERPRISE_EN;
+        }
+
+        ResponsePortrait responsePortrait = GsonUtils.json2Bean(portraitJson, ResponsePortrait
+                .class);
         if (null == responsePortrait) {
             CpLog.e(TAG, "responsePortrait is null!");
             return;
@@ -276,4 +288,5 @@ public class MeEnterprisePortraitFragment extends BaseFragment implements
         });
         picker.show();
     }
+
 }

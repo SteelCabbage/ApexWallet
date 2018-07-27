@@ -12,7 +12,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -49,6 +48,7 @@ public class ImportKeystoreFragment extends BaseFragment implements View.OnClick
     private boolean mIsAgreePrivacy;
     private EditText mEt_import_wallet_keystore_pwd;
     private TextInputLayout mTl_import_wallet_keystore;
+    private TextView mTv_import_wallet_keystore_privacy;
 
     @Nullable
     @Override
@@ -72,12 +72,15 @@ public class ImportKeystoreFragment extends BaseFragment implements View.OnClick
                 .ib_import_wallet_keystore_privacy_point);
         mTv_import_wallet_keystore_privacy_have_read = view.findViewById(R.id
                 .tv_import_wallet_keystore_privacy_have_read);
+        mTv_import_wallet_keystore_privacy = view.findViewById(R.id
+                .tv_import_wallet_keystore_privacy);
         mBt_import_wallet_keystore = view.findViewById(R.id.bt_import_wallet_keystore);
         mTl_import_wallet_keystore = view.findViewById(R.id.tl_import_wallet_keystore);
 
         mIb_import_wallet_keystore_privacy_point.setOnClickListener(this);
         mTv_import_wallet_keystore_privacy_have_read.setOnClickListener(this);
         mBt_import_wallet_keystore.setOnClickListener(this);
+        mTv_import_wallet_keystore_privacy.setOnClickListener(this);
     }
 
     private void initData() {
@@ -107,6 +110,9 @@ public class ImportKeystoreFragment extends BaseFragment implements View.OnClick
                             .c_666666));
                     mIsAgreePrivacy = false;
                 }
+                break;
+            case R.id.tv_import_wallet_keystore_privacy:
+                startActivity(PrivacyActivity.class, false);
                 break;
             case R.id.bt_import_wallet_keystore:
                 if (!checkInput()) {

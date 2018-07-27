@@ -12,12 +12,14 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import chinapex.com.wallet.R;
 import chinapex.com.wallet.adapter.PortraitRecyclerViewAdapter;
 import chinapex.com.wallet.base.BaseFragment;
 import chinapex.com.wallet.bean.PortraitBean;
 import chinapex.com.wallet.bean.PortraitTagsBean;
+import chinapex.com.wallet.bean.json.PortraitCommonEn;
 import chinapex.com.wallet.bean.json.PortraitCommonZh;
 import chinapex.com.wallet.bean.response.ResponsePortrait;
 import chinapex.com.wallet.global.ApexWalletApplication;
@@ -25,6 +27,8 @@ import chinapex.com.wallet.global.Constant;
 import chinapex.com.wallet.utils.CpLog;
 import chinapex.com.wallet.utils.DensityUtil;
 import chinapex.com.wallet.utils.GsonUtils;
+import chinapex.com.wallet.utils.PhoneUtils;
+import chinapex.com.wallet.utils.SharedPreferencesUtils;
 import cn.qqtheme.framework.picker.DatePicker;
 import cn.qqtheme.framework.picker.DateTimePicker;
 import cn.qqtheme.framework.picker.OptionPicker;
@@ -60,8 +64,18 @@ public class MeCommonPortraitFragment extends BaseFragment implements PortraitRe
 
     private void initData() {
         mPortraitBeans = new ArrayList<>();
-        ResponsePortrait responsePortrait = GsonUtils.json2Bean(PortraitCommonZh.PORTRAIT_COMMON_ZH,
-                ResponsePortrait.class);
+        String appLanguage = PhoneUtils.getAppLanguage();
+        String portraitJson;
+        if (appLanguage.contains(Locale.CHINA.toString())) {
+            portraitJson = PortraitCommonZh.PORTRAIT_COMMON_ZH;
+        } else if (appLanguage.contains(Locale.ENGLISH.toString())) {
+            portraitJson = PortraitCommonEn.PORTRAIT_COMMON_EN;
+        } else {
+            portraitJson = PortraitCommonEn.PORTRAIT_COMMON_EN;
+        }
+
+        ResponsePortrait responsePortrait = GsonUtils.json2Bean(portraitJson, ResponsePortrait
+                .class);
         if (null == responsePortrait) {
             CpLog.e(TAG, "responsePortrait is null!");
             return;

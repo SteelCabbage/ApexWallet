@@ -9,6 +9,10 @@ import android.util.DisplayMetrics;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
+
+import chinapex.com.wallet.global.ApexWalletApplication;
+import chinapex.com.wallet.global.Constant;
 
 /**
  * Created by SteelCabbage on 2018/5/24 0024.
@@ -133,5 +137,11 @@ public class PhoneUtils {
 
     private static byte charToByte(char c) {
         return (byte) "0123456789ABCDEF".indexOf(c);
+    }
+
+    public static String getAppLanguage() {
+        String defLanguage = Locale.getDefault().toString();
+        return (String) SharedPreferencesUtils.getParam(ApexWalletApplication.getInstance(),
+                Constant.CURRENT_LANGUAGE, defLanguage);
     }
 }

@@ -12,7 +12,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -51,6 +50,7 @@ public class ImportMnemonicFragment extends BaseFragment implements View.OnClick
     private TextInputLayout mTl_import_wallet_repeat_pwd;
     private boolean mIsSelectedPrivacy;
     private boolean mIsAgreePrivacy;
+    private TextView mTv_import_wallet_privacy;
 
     @Nullable
     @Override
@@ -74,6 +74,7 @@ public class ImportMnemonicFragment extends BaseFragment implements View.OnClick
         mIb_import_wallet_privacy_point = view.findViewById(R.id.ib_import_wallet_privacy_point);
         mTv_import_wallet_privacy_have_read = view.findViewById(R.id
                 .tv_import_wallet_privacy_have_read);
+        mTv_import_wallet_privacy = view.findViewById(R.id.tv_import_wallet_privacy);
         mBt_import_wallet_mnemonic = view.findViewById(R.id.bt_import_wallet_mnemonic);
         mTl_import_wallet_pwd = view.findViewById(R.id.tl_import_wallet_pwd);
         mTl_import_wallet_repeat_pwd = view.findViewById(R.id.tl_import_wallet_repeat_pwd);
@@ -84,6 +85,7 @@ public class ImportMnemonicFragment extends BaseFragment implements View.OnClick
         mIb_import_wallet_privacy_point.setOnClickListener(this);
         mTv_import_wallet_privacy_have_read.setOnClickListener(this);
         mBt_import_wallet_mnemonic.setOnClickListener(this);
+        mTv_import_wallet_privacy.setOnClickListener(this);
 
         mEt_import_wallet_pwd.addTextChangedListener(new MyTextWatcher(mEt_import_wallet_pwd) {
             @Override
@@ -150,6 +152,9 @@ public class ImportMnemonicFragment extends BaseFragment implements View.OnClick
                             .c_666666));
                     mIsAgreePrivacy = false;
                 }
+                break;
+            case R.id.tv_import_wallet_privacy:
+                startActivity(PrivacyActivity.class, false);
                 break;
             case R.id.bt_import_wallet_mnemonic:
                 if (!checkInput()) {

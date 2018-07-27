@@ -8,9 +8,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/shape_portrait_tag_def"
-        android:padding="5dp"
+        android:paddingBottom="2dp"
+        android:paddingEnd="5dp"
+        android:paddingStart="5dp"
+        android:paddingTop="2dp"
         android:singleLine="true"
-        android:textColor="@color/c_66BB6A"
+        android:textColor="@color/c_3AA03F"
         android:textSize="14sp" />
 
 </RelativeLayout>

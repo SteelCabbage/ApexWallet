@@ -82,7 +82,7 @@ public class PortraitTagsAdapter extends RecyclerView.Adapter<PortraitTagsAdapte
         } else {
             holder.tag.setBackgroundResource(R.drawable.shape_portrait_tag_def);
             holder.tag.setTextColor(ApexWalletApplication.getInstance().getResources()
-                    .getColor(R.color.c_66BB6A));
+                    .getColor(R.color.c_3AA03F));
         }
         holder.itemView.setTag(position);
     }

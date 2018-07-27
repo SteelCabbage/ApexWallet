@@ -93,4 +93,5 @@
     <dimen name="dialog_add_assets_margin_start">5dp</dimen>
     <dimen name="pwd_height">30dp</dimen>
     <dimen name="pwd_width">210dp</dimen>
+    <dimen name="tb_bg_narrow_height">80dp</dimen>
 </resources>

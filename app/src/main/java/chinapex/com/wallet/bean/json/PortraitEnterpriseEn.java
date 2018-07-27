@@ -5,14 +5,14 @@ package chinapex.com.wallet.bean.json;
  * E-Mail：liuyi_61@163.com
  */
 
-public class PortraitEnterpriseZh {
-    public static final String PORTRAIT_ENTERPRISE_ZH = "{\n" +
+public class PortraitEnterpriseEn {
+    public static final String PORTRAIT_ENTERPRISE_EN = "{\n" +
             "    \"code\": 200,\n" +
             "    \"result\": [\n" +
             "               {\n" +
             "               \"type\": 10,\n" +
             "               \"resource\": 0,\n" +
-            "               \"title\": \"企业名称\",\n" +
+            "               \"title\": \" Enterprise Name \",\n" +
             "               \"data\": [{\n" +
             "                        \"name\": \"APEX Technologies\",\n" +
             "                        \"id\": \"0\"\n" +
@@ -21,14 +21,14 @@ public class PortraitEnterpriseZh {
             "               {\n" +
             "               \"type\": 10,\n" +
             "               \"resource\": 1,\n" +
-            "               \"title\": \"饮用咖啡\",\n" +
+            "               \"title\": \"Drink Coffee\",\n" +
             "               \"data\": [\n" +
             "                        {\n" +
-            "                        \"name\": \"是\",\n" +
+            "                        \"name\": \"Yes\",\n" +
             "                        \"id\": \"0\"\n" +
             "                        },\n" +
             "                        {\n" +
-            "                        \"name\": \"否\",\n" +
+            "                        \"name\": \"No\",\n" +
             "                        \"id\": \"0\"\n" +
             "                        }\n" +
             "                        ]\n" +
@@ -36,14 +36,14 @@ public class PortraitEnterpriseZh {
             "               {\n" +
             "               \"type\": 10,\n" +
             "               \"resource\": 1,\n" +
-            "               \"title\": \"饮用方式\",\n" +
+            "               \"title\": \"Drinking Preference\",\n" +
             "               \"data\": [\n" +
             "                        {\n" +
-            "                        \"name\": \"购买\",\n" +
+            "                        \"name\": \" Drink Outside\",\n" +
             "                        \"id\": \"0\"\n" +
             "                        },\n" +
             "                        {\n" +
-            "                        \"name\": \"手工自做\",\n" +
+            "                        \"name\": \"Self Make\",\n" +
             "                        \"id\": \"0\"\n" +
             "                        }\n" +
             "                        ]\n" +
@@ -51,14 +51,14 @@ public class PortraitEnterpriseZh {
             "               {\n" +
             "               \"type\": 10,\n" +
             "               \"resource\": 1,\n" +
-            "               \"title\": \"喜爱的类型\",\n" +
+            "               \"title\": \"Prefer Type\",\n" +
             "               \"data\": [\n" +
             "                        {\n" +
-            "                        \"name\": \"现磨\",\n" +
+            "                        \"name\": \"Ground\",\n" +
             "                        \"id\": \"0\"\n" +
             "                        },\n" +
             "                        {\n" +
-            "                        \"name\": \"速溶\",\n" +
+            "                        \"name\": \"Instant\",\n" +
             "                        \"id\": \"0\"\n" +
             "                        }\n" +
             "                        ]\n" +
@@ -66,50 +66,50 @@ public class PortraitEnterpriseZh {
             "               {\n" +
             "               \"type\": 10,\n" +
             "               \"resource\": 1,\n" +
-            "               \"title\": \"喜欢的口味\",\n" +
+            "               \"title\": \"Prefer Flavor\",\n" +
             "               \"data\": [\n" +
             "                        {\n" +
-            "                        \"name\": \"蓝山咖啡\",\n" +
+            "                        \"name\": \"Blue Mountain\",\n" +
             "                        \"id\": \"0\"\n" +
             "                        },\n" +
             "                        {\n" +
-            "                        \"name\": \"曼特宁咖啡\",\n" +
+            "                        \"name\": \"Mande Ling\",\n" +
             "                        \"id\": \"0\"\n" +
             "                        },\n" +
             "                        {\n" +
-            "                        \"name\": \"巴西\",\n" +
+            "                        \"name\": \"BrziL\",\n" +
             "                        \"id\": \"0\"\n" +
             "                        },\n" +
             "                        {\n" +
-            "                        \"name\": \"摩卡\",\n" +
+            "                        \"name\": \"Macha\",\n" +
             "                        \"id\": \"0\"\n" +
             "                        },\n" +
             "                        {\n" +
-            "                        \"name\": \"意大利\",\n" +
+            "                        \"name\": \"Espresso\",\n" +
             "                        \"id\": \"0\"\n" +
             "                        },\n" +
             "                        {\n" +
-            "                        \"name\": \"卡布基诺咖啡\",\n" +
+            "                        \"name\": \"Cappuccino\",\n" +
             "                        \"id\": \"0\"\n" +
             "                        },\n" +
             "                        {\n" +
-            "                        \"name\": \"拿铁咖啡\",\n" +
+            "                        \"name\": \"Latte\",\n" +
             "                        \"id\": \"0\"\n" +
             "                        },\n" +
             "                        {\n" +
-            "                        \"name\": \"爱尔兰卡咖啡\",\n" +
+            "                        \"name\": \"Ireland\",\n" +
             "                        \"id\": \"0\"\n" +
             "                        },\n" +
             "                        {\n" +
-            "                        \"name\": \"维也纳咖啡\",\n" +
+            "                        \"name\": \"Viennese\",\n" +
             "                        \"id\": \"0\"\n" +
             "                        },\n" +
             "                        {\n" +
-            "                        \"name\": \"炭烧\",\n" +
+            "                        \"name\": \"Charcoal Roast\",\n" +
             "                        \"id\": \"0\"\n" +
             "                        },\n" +
             "                        {\n" +
-            "                        \"name\": \"名典热咖啡\",\n" +
+            "                        \"name\": \"M.T.Hot\",\n" +
             "                        \"id\": \"0\"\n" +
             "                        }\n" +
             "                        ]\n" +
@@ -117,56 +117,56 @@ public class PortraitEnterpriseZh {
             "               {\n" +
             "               \"type\": 0,\n" +
             "               \"resource\": 0,\n" +
-            "               \"title\": \"消费金额/月\",\n" +
+            "               \"title\": \"Consumption Amount / Month $\",\n" +
             "               \"data\": []\n" +
             "               },\n" +
             "               {\n" +
             "               \"type\": 0,\n" +
             "               \"resource\": 0,\n" +
-            "               \"title\": \"咖啡饮用频次/月\",\n" +
+            "               \"title\": \"Drinking Frequency / Month\",\n" +
             "               \"data\": []\n" +
             "               },\n" +
             "               {\n" +
             "               \"type\": 0,\n" +
             "               \"resource\": 0,\n" +
-            "               \"title\": \"能接受的价格$\",\n" +
+            "               \"title\": \"Acceptable Price $\",\n" +
             "               \"data\": []\n" +
             "               },\n" +
             "               {\n" +
             "               \"type\": 40,\n" +
             "               \"resource\": 1,\n" +
-            "               \"title\": \"画像标签\",\n" +
+            "               \"title\": \"Tag\",\n" +
             "               \"data\": [\n" +
             "                        {\n" +
-            "                        \"name\": \"银行VIP用户\",\n" +
+            "                        \"name\": \"Bank VIP User\",\n" +
             "                        \"id\": \"0\"\n" +
             "                        },\n" +
             "                        {\n" +
-            "                        \"name\": \"稳健生活族\",\n" +
+            "                        \"name\": \"Steady Life\",\n" +
+            "                        \"id\": \"0\"\n" +
+            "                        },\n" +
+            "\t\t\t\t\t\t{\n" +
+            "                        \"name\": \"Enjoy Life\",\n" +
+            "                        \"id\": \"0\"\n" +
+            "                        },\n" +
+            "\t\t\t\t\t\t{\n" +
+            "                        \"name\": \"Work Hard\",\n" +
             "                        \"id\": \"0\"\n" +
             "                        },\n" +
             "                        {\n" +
-            "                        \"name\": \"时尚先锋族\",\n" +
+            "                        \"name\": \"Financial Staff\",\n" +
+            "                        \"id\": \"0\"\n" +
+            "                        },\n" +
+            "\t\t\t\t\t\t{\n" +
+            "                        \"name\": \"Abroad Study\",\n" +
             "                        \"id\": \"0\"\n" +
             "                        },\n" +
             "                        {\n" +
-            "                        \"name\": \"热爱生活族\",\n" +
+            "                        \"name\": \"Entertaining & Social\",\n" +
             "                        \"id\": \"0\"\n" +
-            "                        },\n" +
+            "                        }, \n" +
             "                        {\n" +
-            "                        \"name\": \"爱家务实\",\n" +
-            "                        \"id\": \"0\"\n" +
-            "                        },\n" +
-            "                        {\n" +
-            "                        \"name\": \"海外留学\",\n" +
-            "                        \"id\": \"0\"\n" +
-            "                        },\n" +
-            "                        {\n" +
-            "                        \"name\": \"娱乐社交族\",\n" +
-            "                        \"id\": \"0\"\n" +
-            "                        },\n" +
-            "                        {\n" +
-            "                        \"name\": \"金融从业者\",\n" +
+            "                        \"name\": \"Practical & Home Lover\",\n" +
             "                        \"id\": \"0\"\n" +
             "                        }\n" +
             "                        ]\n" +

@@ -4,6 +4,6 @@
 
     <corners android:radius="3dp" />
 
-    <solid android:color="@color/c_66BB6A" />
+    <solid android:color="@color/c_3AA03F" />
 
 </shape>

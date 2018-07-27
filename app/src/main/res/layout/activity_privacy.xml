@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="chinapex.com.wallet.view.me.Me2Activity">
+    tools:context="chinapex.com.wallet.view.wallet.PrivacyActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -12,24 +12,19 @@
         android:background="@drawable/tb_bg_narrow">
 
         <TextView
-            android:id="@+id/tv_me2_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/fragment_assets_title_margin_top"
-            android:text="me2_title"
+            android:text="@string/privacy_terms"
             android:textColor="@android:color/white"
             android:textSize="@dimen/tv_me_title_size" />
-
     </RelativeLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_me2"
+    <WebView
+        android:id="@+id/wv_privacy"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginEnd="10dp"
-        android:layout_marginStart="10dp"
-        android:overScrollMode="never">
+        android:overScrollMode="never" />
 
-    </android.support.v7.widget.RecyclerView>
 </LinearLayout>
