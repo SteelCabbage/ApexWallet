@@ -10,7 +10,7 @@
     <string name="privacy_terms">Service and Privacy Policy</string>
     <string name="confirm">Confirm</string>
     <string name="asset">Assets</string>
-    <string name="search_wallet_address">search wallet address</string>
+    <string name="search_wallet_address">Search Wallet Address</string>
     <string name="cancel">Cancel</string>
     <string name="wallet_address">Wallet Address</string>
     <string name="transfer">Transfer</string>
@@ -37,7 +37,7 @@
     <string name="please_backup">Please Backup</string>
     <string name="backup_mnemonic">Backup Mnemonic</string>
     <string name="delete_wallet">Delete wallet</string>
-    <string name="search_tx_id">Search the transaction number</string>
+    <string name="search_tx_id">Search The Transaction Number</string>
     <string name="input_pwd">Please input your password</string>
     <string name="be_careful">Attention! Delete Wallet Can Not Be Revoked</string>
     <string name="confirm_pwd">Confirm</string>

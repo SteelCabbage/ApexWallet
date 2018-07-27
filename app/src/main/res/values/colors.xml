@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#4C8EFA</color>
     <color name="colorPrimaryDark">#4C8EFA</color>
-    <color name="colorAccent">#979797</color>
+    <color name="colorAccent">#1253BF</color>
     <color name="c_cc4C8EFA">#cc4C8EFA</color>
     <color name="c_666666">#666666</color>
     <color name="c_DDDDDD">#DDDDDD</color>
@@ -22,6 +22,8 @@
     <color name="c_F5A623">#F5A623</color>
     <color name="c_66BB6A">#66BB6A</color>
     <color name="c_979797">#979797</color>
+    <color name="c_1253BF">#1253BF</color>
+    <color name="c_80000000">#80000000</color>
 
 
 </resources>

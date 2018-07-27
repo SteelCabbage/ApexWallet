@@ -10,7 +10,7 @@
         android:background="@drawable/shape_backup_click_mnemonic_def"
         android:padding="5dp"
         android:singleLine="true"
-        android:textColor="@color/colorPrimary"
+        android:textColor="@color/c_1253BF"
         android:textSize="14sp" />
 
 </RelativeLayout>

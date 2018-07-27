@@ -6,52 +6,48 @@
     android:paddingEnd="20dp"
     android:paddingStart="20dp">
 
-    <LinearLayout
-        android:id="@+id/ll_me_item"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_centerVertical="true"
-        android:gravity="center_vertical"
-        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tv_me_rv_item_wallet_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:ems="6"
-            android:singleLine="true"
-            android:text="@string/wallet_name"
-            android:textColor="@color/c_333333"
-            android:textSize="@dimen/card_title" />
+    <TextView
+        android:id="@+id/tv_me_rv_item_wallet_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/ib_me_rv_item_arrows"
+        android:ellipsize="end"
+        android:ems="6"
+        android:singleLine="true"
+        android:text="@string/wallet_name"
+        android:textColor="@color/c_333333"
+        android:textSize="@dimen/card_title" />
 
-        <TextView
-            android:id="@+id/tv_me_rv_item_wallet_addr"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:ellipsize="middle"
-            android:ems="10"
-            android:singleLine="true"
-            android:text="@string/wallet_address"
-            android:textColor="@android:color/black"
-            android:textSize="@dimen/paratext_14sp" />
-    </LinearLayout>
+    <TextView
+        android:id="@+id/tv_me_rv_item_wallet_addr"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ib_me_rv_item_arrows"
+        android:ellipsize="middle"
+        android:ems="10"
+        android:singleLine="true"
+        android:text="@string/wallet_address"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/paratext_14sp" />
 
     <TextView
         android:id="@+id/tv_me_rv_item_backup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="80dp"
-        android:layout_marginTop="20dp"
+        android:layout_above="@+id/ib_me_rv_item_arrows"
+        android:layout_toEndOf="@+id/tv_me_rv_item_wallet_name"
         android:background="@drawable/shape_bg_me_item_backup"
-        android:padding="3dp"
+        android:paddingBottom="3dp"
+        android:paddingEnd="8dp"
+        android:paddingStart="8dp"
+        android:paddingTop="3dp"
         android:text="@string/please_backup"
         android:textColor="#B3D38D"
         android:textSize="12sp" />
 
     <ImageButton
+        android:id="@+id/ib_me_rv_item_arrows"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"

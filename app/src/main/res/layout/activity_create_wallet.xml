@@ -113,7 +113,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/create_wallet_tv_margin_start"
             android:text="@string/privacy_terms"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/c_1253BF"
             android:textSize="@dimen/create_wallet_rb_text_size" />
     </LinearLayout>
 
@@ -125,7 +125,7 @@
         android:background="@drawable/shape_gray_bt_bg"
         android:text="@string/confirm"
         android:textAllCaps="false"
-        android:textColor="@color/colorAccent"
+        android:textColor="@color/c_979797"
         android:textSize="14sp" />
 
     <Button
@@ -143,6 +143,6 @@
         android:layout_width="@dimen/activity_create_wallet_underline_width"
         android:layout_height="1dp"
         android:layout_marginTop="5dp"
-        android:background="@color/colorAccent" />
+        android:background="@color/c_979797" />
 
 </LinearLayout>

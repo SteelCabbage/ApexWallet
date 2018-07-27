@@ -156,7 +156,7 @@ public class CreateWalletActivity extends BaseActivity implements View.OnClickLi
                             .shape_privacy_point_def);
                     mBt_create_wallet_confirm.setBackgroundResource(R.drawable.shape_gray_bt_bg);
                     mBt_create_wallet_confirm.setTextColor(getResources().getColor(R.color
-                            .colorAccent));
+                            .c_979797));
                     mIsAgreePrivacy = false;
                 }
                 break;

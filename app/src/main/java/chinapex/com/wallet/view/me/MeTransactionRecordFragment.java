@@ -104,7 +104,7 @@ public class MeTransactionRecordFragment extends BaseFragment implements View.On
 
         mIb_me_transaction_record_switch.setOnClickListener(this);
         mSl_transaction_record.setColorSchemeColors(this.getActivity().getResources().getColor(R
-                .color.colorPrimary));
+                .color.c_1253BF));
         mSl_transaction_record.setOnRefreshListener(this);
 
         // copy address

@@ -71,7 +71,7 @@ public class BackupClickMnemonicAdapter extends RecyclerView.Adapter<BackupClick
         } else {
             holder.clickMnemonic.setBackgroundResource(R.drawable.shape_backup_click_mnemonic_def);
             holder.clickMnemonic.setTextColor(ApexWalletApplication.getInstance().getResources()
-                    .getColor(R.color.colorPrimary));
+                    .getColor(R.color.c_1253BF));
         }
         holder.itemView.setTag(position);
     }

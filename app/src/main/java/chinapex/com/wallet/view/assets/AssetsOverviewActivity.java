@@ -75,7 +75,7 @@ public class AssetsOverviewActivity extends BaseActivity implements
         mIb_assets_overview_ellipsis = (ImageButton) findViewById(R.id.ib_assets_overview_ellipsis);
 
         mSl_assets_overview_rv.setColorSchemeColors(this.getResources().getColor(R.color
-                .colorPrimary));
+                .c_1253BF));
         mSl_assets_overview_rv.setOnRefreshListener(this);
         mIb_assets_overview_ellipsis.setOnClickListener(this);
 

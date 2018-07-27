@@ -80,7 +80,7 @@
         android:background="@drawable/shape_balance_detail_bt_bg_def"
         android:text="@string/receive"
         android:textAllCaps="false"
-        android:textColor="@color/colorPrimary"
+        android:textColor="@color/c_1253BF"
         android:textSize="@dimen/bt_wallet_detail_tx_font_size" />
 
     <LinearLayout

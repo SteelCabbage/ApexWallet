@@ -63,8 +63,7 @@ public class ImportWalletActivity extends BaseActivity implements View.OnClickLi
     private void mnemonicIsSelected() {
         mBt_import_wallet_mnemonic.setBackgroundResource(R.drawable.shape_white_bt_bg);
         mBt_import_wallet_mnemonic.setTextColor(ApexWalletApplication.getInstance().getResources
-                ().getColor(R.color
-                .colorPrimary));
+                ().getColor(R.color.c_1253BF));
 
         mBt_import_wallet_keystore.setBackground(new ColorDrawable(0));
         mBt_import_wallet_keystore.setTextColor(Color.WHITE);
@@ -76,8 +75,7 @@ public class ImportWalletActivity extends BaseActivity implements View.OnClickLi
     private void keystoreIsSelected() {
         mBt_import_wallet_keystore.setBackgroundResource(R.drawable.shape_white_bt_bg);
         mBt_import_wallet_keystore.setTextColor(ApexWalletApplication.getInstance().getResources
-                ().getColor(R.color
-                .colorPrimary));
+                ().getColor(R.color.c_1253BF));
 
         mBt_import_wallet_mnemonic.setBackground(new ColorDrawable(0));
         mBt_import_wallet_mnemonic.setTextColor(Color.WHITE);

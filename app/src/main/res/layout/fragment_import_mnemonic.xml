@@ -83,7 +83,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/create_wallet_tv_margin_start"
             android:text="@string/privacy_terms"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/c_1253BF"
             android:textSize="@dimen/create_wallet_rb_text_size" />
     </LinearLayout>
 

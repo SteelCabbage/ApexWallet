@@ -107,7 +107,7 @@ public class AssetsFragment extends BaseFragment implements AssetsRecyclerViewAd
         mRv_assets.setAdapter(mAssetsRecyclerViewAdapter);
 
         mSl_assets_rv.setColorSchemeColors(this.getActivity().getResources().getColor(R.color
-                .colorPrimary));
+                .c_1253BF));
         mSl_assets_rv.setOnRefreshListener(this);
 
         // 侧滑布局

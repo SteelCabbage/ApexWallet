@@ -209,14 +209,14 @@ public class MeCommonPortraitFragment extends BaseFragment implements PortraitRe
         picker.setCancelText(ApexWalletApplication.getInstance().getResources().getString(R
                 .string.cancel));
         picker.setCancelTextColor(ApexWalletApplication.getInstance().getResources().getColor(R
-                .color.colorPrimary));
+                .color.c_1253BF));
         picker.setCancelTextSize(14);
 
         // set confirm
         picker.setSubmitText(ApexWalletApplication.getInstance().getResources().getString(R
                 .string.confirm));
         picker.setSubmitTextColor(ApexWalletApplication.getInstance().getResources().getColor(R
-                .color.colorPrimary));
+                .color.c_1253BF));
         picker.setSubmitTextSize(14);
 
         picker.setOnOptionPickListener(new OptionPicker.OnOptionPickListener() {
@@ -256,14 +256,14 @@ public class MeCommonPortraitFragment extends BaseFragment implements PortraitRe
         picker.setCancelText(ApexWalletApplication.getInstance().getResources().getString(R
                 .string.cancel));
         picker.setCancelTextColor(ApexWalletApplication.getInstance().getResources().getColor(R
-                .color.colorPrimary));
+                .color.c_1253BF));
         picker.setCancelTextSize(14);
 
         // set confirm
         picker.setSubmitText(ApexWalletApplication.getInstance().getResources().getString(R
                 .string.confirm));
         picker.setSubmitTextColor(ApexWalletApplication.getInstance().getResources().getColor(R
-                .color.colorPrimary));
+                .color.c_1253BF));
 
         picker.setSubmitTextSize(14);
         picker.setOnDatePickListener(new DatePicker.OnYearMonthDayPickListener() {

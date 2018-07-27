@@ -76,8 +76,8 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar
                 mBnItemTitles[0]));
         mBn_main.addItem(new BottomNavigationItem(R.drawable.bn_main_item_me,
                 mBnItemTitles[1]));
-        mBn_main.setActiveColor(R.color.colorPrimary);
-        mBn_main.setInActiveColor(R.color.colorAccent);
+        mBn_main.setActiveColor(R.color.c_1253BF);
+        mBn_main.setInActiveColor(R.color.c_979797);
         mBn_main.initialise();
         mBn_main.setTabSelectedListener(this);
     }

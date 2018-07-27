@@ -109,7 +109,7 @@ public class TransactionRecordRecyclerViewAdapter extends RecyclerView
             case Constant.TRANSACTION_STATE_CONFIRMING:
                 holder.txState.setText(R.string.tx_confirming);
                 holder.txState.setTextColor(ApexWalletApplication.getInstance().getResources()
-                        .getColor(R.color.colorPrimary));
+                        .getColor(R.color.c_1253BF));
                 holder.txTime.setVisibility(View.VISIBLE);
                 break;
             case Constant.TRANSACTION_STATE_PACKAGING:

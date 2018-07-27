@@ -76,7 +76,7 @@
         android:layout_marginStart="@dimen/tv_transfer_from_margin_start"
         android:layout_marginTop="10dp"
         android:text="@string/to"
-        android:textColor="@color/colorAccent"
+        android:textColor="@color/c_979797"
         android:textSize="@dimen/tv_transfer_from_font_size" />
 
     <EditText

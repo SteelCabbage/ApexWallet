@@ -24,7 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="37dp"
             android:layout_alignParentBottom="true"
-            android:background="@color/colorPrimary"
+            android:background="@color/c_1253BF"
             android:padding="4dp">
 
             <Button
@@ -34,7 +34,7 @@
                 android:background="@drawable/shape_white_bt_bg"
                 android:text="@string/mnemonic"
                 android:textAllCaps="false"
-                android:textColor="@color/colorPrimary"
+                android:textColor="@color/c_1253BF"
                 android:textSize="14sp" />
 
             <Button

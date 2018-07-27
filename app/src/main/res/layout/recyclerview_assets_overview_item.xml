@@ -51,7 +51,7 @@
         android:gravity="end"
         android:lines="1"
         android:text="2.00320000"
-        android:textColor="@color/c_5D99FA"
+        android:textColor="@color/c_1253BF"
         android:textSize="20sp" />
 
 </RelativeLayout>

@@ -13,6 +13,7 @@
         android:layout_marginTop="80dp"
         android:background="@null"
         android:hint="@string/enterprise_key"
+        android:singleLine="true"
         android:textSize="@dimen/paratext_14sp" />
 
     <View

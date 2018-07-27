@@ -8,8 +8,8 @@
         android:id="@+id/tl_portrait"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        app:tabIndicatorColor="@color/colorPrimary"
-        app:tabSelectedTextColor="@color/colorPrimary"
+        app:tabIndicatorColor="@color/c_1253BF"
+        app:tabSelectedTextColor="@color/c_1253BF"
         app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
         app:tabTextColor="@color/c_666666" />
 
