@@ -39,7 +39,6 @@ public class ApexWalletApplication extends Application {
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        CpLog.i(TAG, "onConfigurationChanged");
         PhoneUtils.setLanguage();
     }
 }

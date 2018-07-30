@@ -162,26 +162,22 @@ public class PhoneUtils {
         DisplayMetrics _DisplayMetrics = ApexWalletApplication.getInstance().getResources()
                 .getDisplayMetrics();
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            ApexWalletApplication.getInstance().createConfigurationContext(_Configuration);
-        } else {
-            ApexWalletApplication.getInstance().getResources().updateConfiguration
-                    (_Configuration, _DisplayMetrics);
-        }
+        ApexWalletApplication.getInstance().getResources().updateConfiguration
+                (_Configuration, _DisplayMetrics);
 
         SharedPreferencesUtils.putParam(ApexWalletApplication.getInstance(), Constant
                 .CURRENT_LANGUAGE, newUserLocale.toString());
     }
 
     public static Context attachBaseContext(Context context) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) { // 8.0需要使用createConfigurationContext处理
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) { // 8.0需要使用createConfigurationContext处理
             return updateResources(context);
         } else {
             return context;
         }
     }
 
-    @TargetApi(Build.VERSION_CODES.N)
+    @TargetApi(Build.VERSION_CODES.O)
     private static Context updateResources(Context context) {
         Resources resources = context.getResources();
         Locale locale = getUserLocale();// getSetLocale方法是获取新设置的语言
