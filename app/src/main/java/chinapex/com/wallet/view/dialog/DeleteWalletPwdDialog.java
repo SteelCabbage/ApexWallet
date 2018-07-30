@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import chinapex.com.wallet.R;
 import chinapex.com.wallet.bean.WalletBean;
@@ -24,6 +23,7 @@ import chinapex.com.wallet.model.ApexWalletDbDao;
 import chinapex.com.wallet.utils.CpLog;
 import chinapex.com.wallet.utils.DensityUtil;
 import chinapex.com.wallet.utils.SharedPreferencesUtils;
+import chinapex.com.wallet.utils.ToastUtils;
 import neomobile.Wallet;
 
 /**
@@ -115,7 +115,8 @@ public class DeleteWalletPwdDialog extends DialogFragment implements View.OnClic
             getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    Toast.makeText(getActivity(), "密码输入有误！", Toast.LENGTH_SHORT).show();
+                    ToastUtils.getInstance().showToast(ApexWalletApplication.getInstance()
+                            .getResources().getString(R.string.password_incorrect));
                 }
             });
             return;

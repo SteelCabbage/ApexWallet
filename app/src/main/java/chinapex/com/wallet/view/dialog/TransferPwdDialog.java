@@ -18,8 +18,10 @@ import chinapex.com.wallet.executor.TaskController;
 import chinapex.com.wallet.executor.callback.IFromKeystoreToWalletCallback;
 import chinapex.com.wallet.executor.runnable.FromKeystoreToWallet;
 import chinapex.com.wallet.executor.runnable.GetUtxos;
+import chinapex.com.wallet.global.ApexWalletApplication;
 import chinapex.com.wallet.utils.CpLog;
 import chinapex.com.wallet.utils.DensityUtil;
+import chinapex.com.wallet.utils.ToastUtils;
 import neomobile.Wallet;
 
 /**
@@ -125,7 +127,8 @@ public class TransferPwdDialog extends DialogFragment implements View.OnClickLis
             getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    Toast.makeText(getActivity(), "密码输入有误！", Toast.LENGTH_SHORT).show();
+                    ToastUtils.getInstance().showToast(ApexWalletApplication.getInstance()
+                            .getResources().getString(R.string.password_incorrect));
                 }
             });
             return;

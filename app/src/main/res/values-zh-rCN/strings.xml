@@ -120,6 +120,7 @@
     <!--画像类型-->
     <string name="portrait_type_common">通用画像</string>
     <string name="portrait_type_enterprise">企业端特殊数据画像</string>
+    <string name="password_incorrect">密码输入有误！</string>
 
 
 </resources>

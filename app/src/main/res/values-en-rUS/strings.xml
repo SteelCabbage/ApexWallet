@@ -111,6 +111,7 @@
     <string name="wallet_exist">Wallet Exist</string>
     <string name="keystore_copied">The keystore has been copied to the clipboard</string>
     <string name="mnemonic_incorrect">The mnemonic is incorrect</string>
+    <string name="password_incorrect">Password Incorrect!</string>
 
     <!--语言-->
     <string name="language_zh_cn">简体中文</string>
