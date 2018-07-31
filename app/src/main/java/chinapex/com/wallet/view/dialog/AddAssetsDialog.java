@@ -1,6 +1,7 @@
 package chinapex.com.wallet.view.dialog;
 
 import android.app.DialogFragment;
+import android.content.DialogInterface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,7 +39,8 @@ import chinapex.com.wallet.utils.CpLog;
  */
 
 public class AddAssetsDialog extends DialogFragment implements View.OnClickListener,
-        AddAssetsRecyclerViewAdapter.OnItemClickListener, TextWatcher {
+        AddAssetsRecyclerViewAdapter.OnItemClickListener, TextWatcher, DialogInterface
+                .OnKeyListener {
 
     private static final String TAG = AddAssetsDialog.class.getSimpleName();
     private RecyclerView mRv_add_assets;
@@ -49,6 +52,7 @@ public class AddAssetsDialog extends DialogFragment implements View.OnClickListe
     private onCheckedAssetsListener mOnCheckedAssetsListener;
     private EditText mEt_add_assets_search;
     private TextView mTv_add_assets_cancel;
+
 
     public interface onCheckedAssetsListener {
         void onCheckedAssets(List<String> checkedAssets);
@@ -103,7 +107,24 @@ public class AddAssetsDialog extends DialogFragment implements View.OnClickListe
                     View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         }
 
+        // 监听返回键回调
+        this.getDialog().setOnKeyListener(this);
+
         return inflater.inflate(R.layout.dialog_add_assets, container, false);
+    }
+
+    // 返回键回调
+    @Override
+    public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_UP) {
+            if (null != mOnCheckedAssetsListener) {
+                mOnCheckedAssetsListener.onCheckedAssets(mCheckedAssets);
+            }
+
+            dismiss();
+            return true;
+        }
+        return false;
     }
 
     @Override
