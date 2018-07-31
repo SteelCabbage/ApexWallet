@@ -4,8 +4,6 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.widget.TextView;
 
 import chinapex.com.wallet.R;
@@ -19,7 +17,6 @@ public class BackupWalletActivity extends BaseActivity {
 
     private static final String TAG = BackupWalletActivity.class.getSimpleName();
     private TextView mTv_backup_title;
-    private Toolbar mTb_backup;
     private String[] mBackupTitles;
     private String mBackupMnemonic;
     private WalletBean mWalletBean;
@@ -32,7 +29,6 @@ public class BackupWalletActivity extends BaseActivity {
 
         initData();
         initView();
-        initToolBar();
         initFragment();
     }
 
@@ -51,21 +47,14 @@ public class BackupWalletActivity extends BaseActivity {
     }
 
     private void initView() {
-        mTb_backup = (Toolbar) findViewById(R.id.tb_backup);
         mTv_backup_title = (TextView) findViewById(R.id.tv_backup_title);
-    }
-
-    private void initToolBar() {
-        mTb_backup.setTitle("");
-        setSupportActionBar(mTb_backup);
-        mTv_backup_title.setText(mBackupTitles[0]);
-
     }
 
     private void initFragment() {
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.fl_backup, FragmentFactory.getFragment(Constant.FRAGMENT_TAG_BACKUP), Constant
+        fragmentTransaction.add(R.id.fl_backup, FragmentFactory.getFragment(Constant
+                .FRAGMENT_TAG_BACKUP), Constant
                 .FRAGMENT_TAG_BACKUP);
         fragmentTransaction.commit();
 

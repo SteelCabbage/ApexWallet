@@ -78,6 +78,7 @@
                     android:layout_marginStart="9dp"
                     android:background="@null"
                     android:hint="@string/search_tx_id"
+                    android:singleLine="true"
                     android:textColor="@android:color/white"
                     android:textColorHint="@android:color/white"
                     android:textSize="@dimen/paratext_14sp" />
