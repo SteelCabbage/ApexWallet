@@ -1,5 +1,6 @@
 package chinapex.com.wallet.adapter;
 
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -72,9 +73,12 @@ public class SwitchTransactionRecyclerViewAdapter extends RecyclerView
 
         if (walletBean.isSelected()) {
             holder.walletName.setBackgroundColor(ApexWalletApplication.getInstance().getResources
-                    ().getColor(R.color.c_B0C7FA));
+                    ().getColor(R.color.c_1253BF));
+            holder.walletName.setTextColor(Color.WHITE);
         } else {
             holder.walletName.setBackgroundResource(0);
+            holder.walletName.setTextColor(ApexWalletApplication.getInstance().getResources
+                    ().getColor(R.color.c_333333));
         }
 
         holder.itemView.setTag(position);
