@@ -4,70 +4,67 @@
     android:layout_height="159dp"
     android:background="@drawable/gradient_dialog_pwd_bg">
 
-    <LinearLayout
-        android:layout_width="match_parent"
+
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="18dp"
+        android:text="@string/input_pwd"
+        android:textColor="@color/c_030303"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/et_dialog_pwd_transfer"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="18dp"
-            android:text="@string/input_pwd"
+            android:text="@string/dialog_amount"
             android:textColor="@color/c_030303"
-            android:textSize="14sp"
-            android:textStyle="bold" />
+            android:textSize="@dimen/paratext_14sp" />
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/tv_dialog_amount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="5dp"
-            android:orientation="horizontal">
+            android:layout_marginStart="5dp"
+            android:text="0.00000007"
+            android:textColor="@color/c_030303"
+            android:textSize="@dimen/paratext_14sp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/dialog_amount"
-                android:textColor="@color/c_030303"
-                android:textSize="@dimen/paratext_14sp" />
-
-            <TextView
-                android:id="@+id/tv_dialog_amount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:text="0.00000007"
-                android:textColor="@color/c_030303"
-                android:textSize="@dimen/paratext_14sp" />
-
-            <TextView
-                android:id="@+id/tv_dialog_unit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:text="CPX"
-                android:textColor="@color/c_030303"
-                android:textSize="@dimen/paratext_14sp" />
-
-        </LinearLayout>
-
-        <EditText
-            android:id="@+id/et_dialog_pwd_transfer"
-            android:layout_width="@dimen/pwd_width"
-            android:layout_height="@dimen/pwd_height"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="15dp"
-            android:background="@android:color/white"
-            android:hint="@string/pwd_hint"
-            android:inputType="textPassword"
-            android:paddingEnd="10dp"
-            android:paddingStart="10dp"
-            android:textColorHint="#C7C7CD"
-            android:textSize="12sp" />
+        <TextView
+            android:id="@+id/tv_dialog_unit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:text="CPX"
+            android:textColor="@color/c_030303"
+            android:textSize="@dimen/paratext_14sp" />
 
     </LinearLayout>
+
+    <EditText
+        android:id="@+id/et_dialog_pwd_transfer"
+        android:layout_width="@dimen/pwd_width"
+        android:layout_height="@dimen/pwd_height"
+        android:layout_above="@+id/ll_dialog_pwd_transfer"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:background="@android:color/white"
+        android:hint="@string/pwd_hint"
+        android:inputType="textPassword"
+        android:paddingEnd="10dp"
+        android:paddingStart="10dp"
+        android:textColorHint="#C7C7CD"
+        android:textSize="12sp" />
+
 
     <View
         android:layout_width="match_parent"
@@ -85,7 +82,7 @@
         <Button
             android:id="@+id/bt_dialog_pwd_transfer_cancel"
             android:layout_width="0dp"
-            android:layout_height="39dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@null"
             android:text="@string/cancel"

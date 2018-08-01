@@ -4,6 +4,15 @@
     android:layout_height="match_parent"
     android:background="@drawable/shape_white_bt_bg">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/ib_switch_wallet_close"
+        android:layout_centerHorizontal="true"
+        android:text="@string/change_wallet"
+        android:textColor="@color/c_333333"
+        android:textSize="@dimen/title_small_16sp" />
+
     <ImageButton
         android:id="@+id/ib_switch_wallet_close"
         android:layout_width="wrap_content"

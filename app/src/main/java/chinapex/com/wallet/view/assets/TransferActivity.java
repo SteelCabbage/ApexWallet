@@ -57,7 +57,6 @@ public class TransferActivity extends BaseActivity implements View.OnClickListen
     private final static int REQ_CODE = 1029;
     private TextView mTv_available_amount;
     private TextView mTv_amount_all;
-    private TextView mMTv_amount_all;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,12 +74,12 @@ public class TransferActivity extends BaseActivity implements View.OnClickListen
         mTv_transfer_unit = findViewById(R.id.tv_transfer_unit);
         mIb_transfer_scan = (ImageButton) findViewById(R.id.ib_transfer_scan);
         mTv_available_amount = (TextView) findViewById(R.id.tv_available_amount);
-        mMTv_amount_all = (TextView) findViewById(R.id.tv_amount_all);
+        mTv_amount_all = (TextView) findViewById(R.id.tv_amount_all);
 
         mBt_transfer_send = (Button) findViewById(R.id.bt_transfer_send);
         mBt_transfer_send.setOnClickListener(this);
         mIb_transfer_scan.setOnClickListener(this);
-        mMTv_amount_all.setOnClickListener(this);
+        mTv_amount_all.setOnClickListener(this);
 
     }
 

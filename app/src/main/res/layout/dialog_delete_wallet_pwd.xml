@@ -4,51 +4,50 @@
     android:layout_height="159dp"
     android:background="@drawable/gradient_dialog_pwd_bg">
 
-    <LinearLayout
-        android:layout_width="match_parent"
+
+    <TextView
+        android:id="@+id/tv_delete_wallet_pwd_title"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="18dp"
+        android:text="@string/input_pwd"
+        android:textColor="@color/c_030303"
+        android:textSize="14sp"
+        android:textStyle="bold" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_delete_wallet_pwd_title"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:gravity="center"
+        android:text="@string/be_careful"
+        android:textColor="@color/c_030303"
+        android:textSize="12sp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="18dp"
-            android:text="@string/input_pwd"
-            android:textColor="@color/c_030303"
-            android:textSize="14sp"
-            android:textStyle="bold" />
+    <EditText
+        android:id="@+id/et_dialog_pwd_del"
+        android:layout_width="@dimen/pwd_width"
+        android:layout_height="@dimen/pwd_height"
+        android:layout_above="@+id/ll_dialog_pwd_del"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="18dp"
+        android:background="@android:color/white"
+        android:hint="@string/pwd_hint"
+        android:inputType="textPassword"
+        android:paddingEnd="10dp"
+        android:paddingStart="10dp"
+        android:textColorHint="#C7C7CD"
+        android:textSize="12sp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="7dp"
-            android:text="@string/be_careful"
-            android:textColor="@color/c_030303"
-            android:textSize="12sp" />
-
-        <EditText
-            android:id="@+id/et_dialog_pwd_del"
-            android:layout_width="@dimen/pwd_width"
-            android:layout_height="@dimen/pwd_height"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="18dp"
-            android:background="@android:color/white"
-            android:hint="@string/pwd_hint"
-            android:inputType="textPassword"
-            android:paddingEnd="10dp"
-            android:paddingStart="10dp"
-            android:textColorHint="#C7C7CD"
-            android:textSize="12sp" />
-
-    </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_alignTop="@+id/ll_dialog_pwd_del"
+        android:layout_above="@+id/ll_dialog_pwd_del"
         android:background="@color/c_DDDDDD" />
 
     <LinearLayout
@@ -77,7 +76,7 @@
         <Button
             android:id="@+id/bt_dialog_pwd_del_confirm"
             android:layout_width="0dp"
-            android:layout_height="39dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@null"
             android:text="@string/confirm_pwd"

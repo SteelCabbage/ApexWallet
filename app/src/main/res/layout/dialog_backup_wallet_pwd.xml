@@ -4,41 +4,36 @@
     android:layout_height="159dp"
     android:background="@drawable/gradient_dialog_pwd_bg">
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:text="@string/input_pwd"
+        android:textColor="@color/c_030303"
+        android:textSize="14sp"
+        android:textStyle="bold" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="18dp"
-            android:text="@string/input_pwd"
-            android:textColor="@color/c_030303"
-            android:textSize="14sp"
-            android:textStyle="bold" />
-
-        <EditText
-            android:id="@+id/et_dialog_pwd_backup"
-            android:layout_width="@dimen/pwd_width"
-            android:layout_height="@dimen/pwd_height"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="25dp"
-            android:background="@android:color/white"
-            android:hint="@string/pwd_hint"
-            android:inputType="textPassword"
-            android:paddingEnd="10dp"
-            android:paddingStart="10dp"
-            android:textColorHint="#C7C7CD"
-            android:textSize="12sp" />
-
-    </LinearLayout>
+    <EditText
+        android:id="@+id/et_dialog_pwd_backup"
+        android:layout_width="@dimen/pwd_width"
+        android:layout_height="@dimen/pwd_height"
+        android:layout_above="@+id/ll_dialog_pwd_backup"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="25dp"
+        android:background="@android:color/white"
+        android:hint="@string/pwd_hint"
+        android:inputType="textPassword"
+        android:paddingEnd="10dp"
+        android:paddingStart="10dp"
+        android:textColorHint="#C7C7CD"
+        android:textSize="12sp" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_alignTop="@+id/ll_dialog_pwd_backup"
+        android:layout_above="@+id/ll_dialog_pwd_backup"
         android:background="@color/c_DDDDDD" />
 
     <LinearLayout
@@ -67,7 +62,7 @@
         <Button
             android:id="@+id/bt_dialog_pwd_backup_confirm"
             android:layout_width="0dp"
-            android:layout_height="39dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@null"
             android:text="@string/confirm_pwd"

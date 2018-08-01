@@ -49,7 +49,7 @@
     <string name="keystore_note">请复制粘贴Keystore文件到安全、离线的地方保存。切勿保存至邮箱、记事本、网盘、聊天工具等，非常危险。</string>
     <string name="keystore_offline_save">离线保存</string>
     <string name="transfer_no_net">请勿使用网络传输</string>
-    <string name="keystore_transfer_no_net">请勿通过网络工具传输Keystore文件，一旦被黑客获取将造成不可挽回的资产损失。建议通过离线设备传输。</string>
+    <string name="keystore_transfer_no_net">请勿通过网络工具传输Keystore文件，一旦被黑客获取将造成不可挽回的资产损失。建议离线设备通过二维码方式传输。</string>
     <string name="strongbox_save">密码保险箱保存</string>
     <string name="online_save">如需在线保存，则建议使用安全等级更高的1Password等密码保管软件保存Keystore。</string>
     <string name="export_keystore">导出Keystore</string>
@@ -81,6 +81,7 @@
     <string name="available_amount">交易金额 ( 可用数量: </string>
     <string name="amount_all">全部</string>
     <string name="dialog_amount">交易金额 : </string>
+    <string name="change_wallet">切换钱包</string>
 
 
     <!--Me页面，功能菜单文字-->
