@@ -19,12 +19,46 @@
             android:textSize="14sp"
             android:textStyle="bold" />
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/dialog_amount"
+                android:textColor="@color/c_030303"
+                android:textSize="@dimen/paratext_14sp" />
+
+            <TextView
+                android:id="@+id/tv_dialog_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:text="0.00000007"
+                android:textColor="@color/c_030303"
+                android:textSize="@dimen/paratext_14sp" />
+
+            <TextView
+                android:id="@+id/tv_dialog_unit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:text="CPX"
+                android:textColor="@color/c_030303"
+                android:textSize="@dimen/paratext_14sp" />
+
+        </LinearLayout>
+
         <EditText
             android:id="@+id/et_dialog_pwd_transfer"
             android:layout_width="@dimen/pwd_width"
             android:layout_height="@dimen/pwd_height"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="15dp"
             android:background="@android:color/white"
             android:hint="@string/pwd_hint"
             android:inputType="textPassword"
@@ -38,7 +72,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_alignTop="@+id/ll_dialog_pwd_transfer"
+        android:layout_above="@+id/ll_dialog_pwd_transfer"
         android:background="@color/c_DDDDDD" />
 
     <LinearLayout
@@ -61,7 +95,7 @@
 
         <View
             android:layout_width="1dp"
-            android:layout_height="39dp"
+            android:layout_height="match_parent"
             android:background="@color/c_DDDDDD" />
 
         <Button

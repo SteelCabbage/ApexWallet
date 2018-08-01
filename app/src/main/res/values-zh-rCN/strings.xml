@@ -78,6 +78,9 @@
     <string name="place_of_residence">常住地</string>
     <string name="enterprise_key">企业密钥</string>
     <string name="to_dht_cloud">正在保存到DHT Cloud</string>
+    <string name="available_amount">交易金额 ( 可用数量: </string>
+    <string name="amount_all">全部</string>
+    <string name="dialog_amount">交易金额 : </string>
 
 
     <!--Me页面，功能菜单文字-->

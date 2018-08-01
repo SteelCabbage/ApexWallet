@@ -8,7 +8,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.zxing.activity.CaptureActivity;
 
@@ -48,8 +47,6 @@ public class TransferActivity extends BaseActivity implements View.OnClickListen
     private static final String TAG = TransferActivity.class.getSimpleName();
     private WalletBean mWalletBean;
     private BalanceBean mBalanceBean;
-    private TextView mTv_transfer_from_wallet_name;
-    private TextView mTv_transfer_from_wallet_addr;
     private Button mBt_transfer_send;
     private Wallet mWalletFrom;
     private EditText mEt_transfer_amount;
@@ -58,6 +55,9 @@ public class TransferActivity extends BaseActivity implements View.OnClickListen
     private String mOrder;
     private ImageButton mIb_transfer_scan;
     private final static int REQ_CODE = 1029;
+    private TextView mTv_available_amount;
+    private TextView mTv_amount_all;
+    private TextView mMTv_amount_all;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,16 +70,17 @@ public class TransferActivity extends BaseActivity implements View.OnClickListen
     }
 
     private void initView() {
-        mTv_transfer_from_wallet_name = (TextView) findViewById(R.id.tv_transfer_from_wallet_name);
-        mTv_transfer_from_wallet_addr = (TextView) findViewById(R.id.tv_transfer_from_wallet_addr);
         mEt_transfer_to_wallet_addr = (EditText) findViewById(R.id.et_transfer_to_wallet_addr);
         mEt_transfer_amount = (EditText) findViewById(R.id.et_transfer_amount);
         mTv_transfer_unit = findViewById(R.id.tv_transfer_unit);
         mIb_transfer_scan = (ImageButton) findViewById(R.id.ib_transfer_scan);
+        mTv_available_amount = (TextView) findViewById(R.id.tv_available_amount);
+        mMTv_amount_all = (TextView) findViewById(R.id.tv_amount_all);
 
         mBt_transfer_send = (Button) findViewById(R.id.bt_transfer_send);
         mBt_transfer_send.setOnClickListener(this);
         mIb_transfer_scan.setOnClickListener(this);
+        mMTv_amount_all.setOnClickListener(this);
 
     }
 
@@ -97,16 +98,14 @@ public class TransferActivity extends BaseActivity implements View.OnClickListen
             return;
         }
 
-        mTv_transfer_from_wallet_name.setText(mWalletBean.getWalletName());
-        mTv_transfer_from_wallet_addr.setText(mWalletBean.getWalletAddr());
-
         mBalanceBean = intent.getParcelableExtra(Constant.PARCELABLE_BALANCE_BEAN_TRANSFER);
         if (null == mBalanceBean) {
             CpLog.e(TAG, "mBalanceBean is null!");
             return;
         }
 
-        mTv_transfer_unit.setText(mBalanceBean.getAssetSymbol());
+        mTv_transfer_unit.setText(mBalanceBean.getAssetSymbol().toUpperCase());
+        mTv_available_amount.setText(mBalanceBean.getAssetsValue());
 
         String qrCode = intent.getStringExtra(Constant.PARCELABLE_QR_CODE_TRANSFER);
         if (TextUtils.isEmpty(qrCode)) {
@@ -121,7 +120,7 @@ public class TransferActivity extends BaseActivity implements View.OnClickListen
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_transfer_send:
-                String addressFrom = mTv_transfer_from_wallet_addr.getText().toString().trim();
+                String addressFrom = mWalletBean.getWalletAddr();
                 String addressTo = mEt_transfer_to_wallet_addr.getText().toString().trim();
                 if (TextUtils.isEmpty(addressFrom) || TextUtils.isEmpty(addressTo)) {
                     CpLog.e(TAG, "addressFrom or addressTo is null or empty!");
@@ -160,6 +159,10 @@ public class TransferActivity extends BaseActivity implements View.OnClickListen
                 Intent intent = new Intent(TransferActivity.this, CaptureActivity.class);
                 startActivityForResult(intent, REQ_CODE);
                 break;
+            case R.id.tv_amount_all:
+                mEt_transfer_amount.setText(mBalanceBean.getAssetsValue());
+                mEt_transfer_amount.setSelection(mEt_transfer_amount.getText().length());
+                break;
             default:
                 break;
         }
@@ -169,6 +172,8 @@ public class TransferActivity extends BaseActivity implements View.OnClickListen
         TransferPwdDialog transferPwdDialog = TransferPwdDialog.newInstance();
         transferPwdDialog.setCurrentWalletBean(mWalletBean);
         transferPwdDialog.setOnCheckPwdListener(this);
+        transferPwdDialog.setTransferAmount(mEt_transfer_amount.getText().toString().trim());
+        transferPwdDialog.setTransferUnit(mBalanceBean.getAssetSymbol().toUpperCase());
         transferPwdDialog.show(getFragmentManager(), "TransferPwdDialog");
     }
 

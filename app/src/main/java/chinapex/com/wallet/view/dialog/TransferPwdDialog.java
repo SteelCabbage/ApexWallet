@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import chinapex.com.wallet.R;
@@ -33,10 +34,15 @@ public class TransferPwdDialog extends DialogFragment implements View.OnClickLis
 
     private static final String TAG = TransferPwdDialog.class.getSimpleName();
     private WalletBean mCurrentWalletBean;
+
     private Button mBt_dialog_pwd_transfer_cancel;
     private Button mBt_dialog_pwd_transfer_confirm;
+    private String mTransferAmount;
+    private String mTransferUnit;
     private EditText mEt_dialog_pwd_transfer;
     private OnCheckPwdListener mOnCheckPwdListener;
+    private TextView mTv_dialog_amount;
+    private TextView mTv_dialog_unit;
 
     public static TransferPwdDialog newInstance() {
         return new TransferPwdDialog();
@@ -54,6 +60,13 @@ public class TransferPwdDialog extends DialogFragment implements View.OnClickLis
         mCurrentWalletBean = currentWalletBean;
     }
 
+    public void setTransferAmount(String transferAmount) {
+        mTransferAmount = transferAmount;
+    }
+
+    public void setTransferUnit(String transferUnit) {
+        mTransferUnit = transferUnit;
+    }
 
     @Nullable
     @Override
@@ -76,8 +89,8 @@ public class TransferPwdDialog extends DialogFragment implements View.OnClickLis
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        initData();
         initView(view);
+        initData();
     }
 
     @Override
@@ -87,17 +100,20 @@ public class TransferPwdDialog extends DialogFragment implements View.OnClickLis
                 .dip2px(getActivity(), 159));
     }
 
-    private void initData() {
-
-    }
-
     private void initView(View view) {
         mBt_dialog_pwd_transfer_cancel = view.findViewById(R.id.bt_dialog_pwd_transfer_cancel);
         mBt_dialog_pwd_transfer_confirm = view.findViewById(R.id.bt_dialog_pwd_transfer_confirm);
         mEt_dialog_pwd_transfer = view.findViewById(R.id.et_dialog_pwd_transfer);
+        mTv_dialog_amount = view.findViewById(R.id.tv_dialog_amount);
+        mTv_dialog_unit = view.findViewById(R.id.tv_dialog_unit);
 
         mBt_dialog_pwd_transfer_cancel.setOnClickListener(this);
         mBt_dialog_pwd_transfer_confirm.setOnClickListener(this);
+    }
+
+    private void initData() {
+        mTv_dialog_amount.setText(mTransferAmount);
+        mTv_dialog_unit.setText(mTransferUnit);
     }
 
 

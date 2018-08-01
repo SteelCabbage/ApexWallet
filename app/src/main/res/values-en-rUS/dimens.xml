@@ -61,7 +61,7 @@
     <dimen name="et_assets_search_padding_start">34dp</dimen>
     <dimen name="et_assets_search_font_size">16sp</dimen>
     <dimen name="tv_transfer_from_margin_top">22dp</dimen>
-    <dimen name="tv_transfer_from_margin_start">21dp</dimen>
+    <dimen name="tv_transfer_from_margin_start">30dp</dimen>
     <dimen name="tv_transfer_from_font_size">18sp</dimen>
     <dimen name="tv_transfer_from_wallet_name_font_size">16sp</dimen>
     <dimen name="tv_transfer_from_wallet_addr_font_size">14sp</dimen>
