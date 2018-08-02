@@ -95,7 +95,7 @@ public class PortraitRecyclerViewAdapter extends RecyclerView.Adapter implements
 
                 generaTagsHolder.tags.setLayoutManager(layoutManager);
 
-                int space = DensityUtil.dip2px(ApexWalletApplication.getInstance(), 2);
+                int space = DensityUtil.dip2px(ApexWalletApplication.getInstance(), 3);
                 generaTagsHolder.tags.addItemDecoration(new SpacesItemDecorationHorizontal(space));
 
                 portraitTagsAdapter.setOnItemClickListener(new PortraitTagsAdapter

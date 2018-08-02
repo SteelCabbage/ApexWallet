@@ -32,7 +32,7 @@
             android:layout_alignBaseline="@+id/tv_me_manager_detail_title"
             android:layout_alignParentEnd="true"
             android:background="@null"
-            android:text="@string/save"
+            android:text="@string/confirm"
             android:textAllCaps="false"
             android:textColor="@android:color/white"
             android:textSize="16sp" />
