@@ -75,7 +75,7 @@
     <LinearLayout
         android:id="@+id/ll_dialog_pwd_transfer"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="39dp"
         android:layout_alignParentBottom="true"
         android:orientation="horizontal">
 
@@ -85,6 +85,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@null"
+            android:gravity="center"
             android:text="@string/cancel"
             android:textAllCaps="false"
             android:textColor="#007AFF"
@@ -98,9 +99,10 @@
         <Button
             android:id="@+id/bt_dialog_pwd_transfer_confirm"
             android:layout_width="0dp"
-            android:layout_height="39dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@null"
+            android:gravity="center"
             android:text="@string/confirm_pwd"
             android:textAllCaps="false"
             android:textColor="#E16A67"
