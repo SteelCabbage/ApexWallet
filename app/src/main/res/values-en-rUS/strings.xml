@@ -83,6 +83,7 @@
     <string name="amount_all">All</string>
     <string name="dialog_amount">Amount : </string>
     <string name="change_wallet">Change Wallet</string>
+    <string name="choose_wallet">Choose Wallet</string>
 
     <!--Me页面，功能菜单文字-->
     <string name="personal_portrait">Profile</string>

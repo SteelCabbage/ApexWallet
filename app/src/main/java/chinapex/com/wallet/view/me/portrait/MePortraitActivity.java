@@ -21,10 +21,10 @@ import chinapex.com.wallet.global.Constant;
 import chinapex.com.wallet.model.ApexWalletDbDao;
 import chinapex.com.wallet.utils.CpLog;
 import chinapex.com.wallet.utils.FragmentFactory;
-import chinapex.com.wallet.view.dialog.SwitchWalletDialog;
+import chinapex.com.wallet.view.dialog.SwitchWallet2Dialog;
 
 public class MePortraitActivity extends BaseActivity implements View.OnClickListener,
-        SwitchWalletDialog.onItemSelectedListener {
+        SwitchWallet2Dialog.onSelectedWalletListener {
 
     private static final String TAG = MePortraitActivity.class.getSimpleName();
     private TextView mTv_portrait_address;
@@ -113,22 +113,22 @@ public class MePortraitActivity extends BaseActivity implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ib_portrait_switch_wallet:
-                showDialog(mCurrentClickedWalletBean);
+                showDialog();
                 break;
             default:
                 break;
         }
     }
 
-    private void showDialog(WalletBean currentClickedWalletBean) {
-        SwitchWalletDialog switchWalletDialog = SwitchWalletDialog.newInstance();
-        switchWalletDialog.setCurrentWalletBean(currentClickedWalletBean);
-        switchWalletDialog.setOnItemSelectedListener(this);
-        switchWalletDialog.show(getFragmentManager(), "SwitchWalletDialog");
+    private void showDialog() {
+        SwitchWallet2Dialog switchWallet2Dialog = SwitchWallet2Dialog.newInstance();
+        switchWallet2Dialog.setCurrentWalletBean(mCurrentClickedWalletBean);
+        switchWallet2Dialog.setOnSelectedWalletListener(this);
+        switchWallet2Dialog.show(getFragmentManager(), "SwitchWallet2Dialog");
     }
 
     @Override
-    public void onItemSelected(WalletBean walletBean) {
+    public void onSelectedWallet(WalletBean walletBean) {
         if (null == walletBean) {
             CpLog.e(TAG, "walletBean is null!");
             return;
