@@ -33,57 +33,50 @@
                 android:background="@null"
                 android:src="@drawable/icon_ellipsis" />
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="34dp"
                 android:layout_alignParentBottom="true"
                 android:layout_marginBottom="26dp"
-                android:orientation="horizontal">
+                android:layout_marginEnd="15dp"
+                android:layout_marginStart="15dp"
+                android:background="@drawable/shape_bg_search"
+                android:focusable="true"
+                android:focusableInTouchMode="true">
 
-                <LinearLayout
-                    android:id="@+id/ll_assets_search"
-                    android:layout_width="0dp"
-                    android:layout_height="27dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="18dp"
-                    android:layout_weight="4"
-                    android:background="@drawable/shape_bg_search"
-                    android:focusable="true"
-                    android:focusableInTouchMode="true"
-                    android:orientation="horizontal">
 
-                    <ImageView
-                        android:layout_width="15dp"
-                        android:layout_height="15dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="7dp"
-                        android:background="@drawable/icon_search" />
+                <ImageView
+                    android:id="@+id/iv_assets_icon_search"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="8dp"
+                    android:background="@drawable/icon_search" />
 
-                    <EditText
-                        android:id="@+id/et_assets_search"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginStart="6dp"
-                        android:background="@null"
-                        android:hint="@string/search_wallet_address"
-                        android:singleLine="true"
-                        android:textColor="@android:color/white"
-                        android:textColorHint="@android:color/white"
-                        android:textSize="@dimen/paratext_14sp" />
-
-                </LinearLayout>
-
-                <TextView
-                    android:id="@+id/tv_assets_cancel"
-                    android:layout_width="0dp"
+                <EditText
+                    android:id="@+id/et_assets_search"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="1"
-                    android:gravity="center_horizontal"
-                    android:text="@string/cancel"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="8dp"
+                    android:layout_toEndOf="@+id/iv_assets_icon_search"
+                    android:background="@null"
+                    android:hint="@string/search_wallet_address"
+                    android:singleLine="true"
                     android:textColor="@android:color/white"
+                    android:textColorHint="@android:color/white"
                     android:textSize="@dimen/paratext_14sp" />
-            </LinearLayout>
+
+                <ImageButton
+                    android:id="@+id/ib_assets_cancel"
+                    android:layout_width="34dp"
+                    android:layout_height="34dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:background="@null"
+                    android:src="@drawable/icon_search_cancel"
+                    android:visibility="invisible" />
+            </RelativeLayout>
 
 
         </RelativeLayout>

@@ -42,7 +42,6 @@ public class ImportKeystoreFragment extends BaseFragment implements View.OnClick
     private static final String TAG = ImportKeystoreFragment.class.getSimpleName();
     private EditText mEt_import_wallet_keystore;
     private ImageButton mIb_import_wallet_keystore_privacy_point;
-    private TextView mTv_import_wallet_keystore_privacy_have_read;
     private Button mBt_import_wallet_keystore;
     private boolean mIsSelectedPrivacy;
     private boolean mIsAgreePrivacy;
@@ -70,15 +69,12 @@ public class ImportKeystoreFragment extends BaseFragment implements View.OnClick
         mEt_import_wallet_keystore_pwd = view.findViewById(R.id.et_import_wallet_keystore_pwd);
         mIb_import_wallet_keystore_privacy_point = view.findViewById(R.id
                 .ib_import_wallet_keystore_privacy_point);
-        mTv_import_wallet_keystore_privacy_have_read = view.findViewById(R.id
-                .tv_import_wallet_keystore_privacy_have_read);
         mTv_import_wallet_keystore_privacy = view.findViewById(R.id
                 .tv_import_wallet_keystore_privacy);
         mBt_import_wallet_keystore = view.findViewById(R.id.bt_import_wallet_keystore);
         mTl_import_wallet_keystore = view.findViewById(R.id.tl_import_wallet_keystore);
 
         mIb_import_wallet_keystore_privacy_point.setOnClickListener(this);
-        mTv_import_wallet_keystore_privacy_have_read.setOnClickListener(this);
         mBt_import_wallet_keystore.setOnClickListener(this);
         mTv_import_wallet_keystore_privacy.setOnClickListener(this);
     }
@@ -90,25 +86,24 @@ public class ImportKeystoreFragment extends BaseFragment implements View.OnClick
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.tv_import_wallet_keystore_privacy_have_read:
             case R.id.ib_import_wallet_keystore_privacy_point:
                 if (mIsSelectedPrivacy) {
                     mIsSelectedPrivacy = false;
                     mIb_import_wallet_keystore_privacy_point.setImageResource(R.drawable
-                            .shape_privacy_point);
-                    mBt_import_wallet_keystore.setBackgroundResource(R.drawable
-                            .shape_new_visitor_bt_bg);
-                    mBt_import_wallet_keystore.setTextColor(Color.WHITE);
-                    mIsAgreePrivacy = true;
-                } else {
-                    mIsSelectedPrivacy = true;
-                    mIb_import_wallet_keystore_privacy_point.setImageResource(R.drawable
-                            .shape_privacy_point_def);
+                            .icon_privacy_def);
                     mBt_import_wallet_keystore.setBackgroundResource(R.drawable
                             .shape_import_wallet_bt_bg_def);
                     mBt_import_wallet_keystore.setTextColor(getResources().getColor(R.color
                             .c_666666));
                     mIsAgreePrivacy = false;
+                } else {
+                    mIsSelectedPrivacy = true;
+                    mIb_import_wallet_keystore_privacy_point.setImageResource(R.drawable
+                            .icon_privacy);
+                    mBt_import_wallet_keystore.setBackgroundResource(R.drawable
+                            .shape_new_visitor_bt_bg);
+                    mBt_import_wallet_keystore.setTextColor(Color.WHITE);
+                    mIsAgreePrivacy = true;
                 }
                 break;
             case R.id.tv_import_wallet_keystore_privacy:

@@ -65,7 +65,7 @@ public class AssetsFragment extends BaseFragment implements AssetsRecyclerViewAd
     private LinearLayout mLl_assets_drawer;
     private EditText mEt_assets_search;
     private List<WalletBean> mSearchTmpWalletBeans;
-    private TextView mTv_assets_cancel;
+    private ImageButton mIb_assets_cancel;
 
     @Nullable
     @Override
@@ -88,11 +88,11 @@ public class AssetsFragment extends BaseFragment implements AssetsRecyclerViewAd
         mRv_assets = (RecyclerView) view.findViewById(R.id.rv_assets);
         mSl_assets_rv = (SwipeRefreshLayout) view.findViewById(R.id.sl_assets_rv);
         mEt_assets_search = view.findViewById(R.id.et_assets_search);
-        mTv_assets_cancel = view.findViewById(R.id.tv_assets_cancel);
+        mIb_assets_cancel = view.findViewById(R.id.ib_assets_cancel);
 
         // 搜索功能
         mEt_assets_search.addTextChangedListener(this);
-        mTv_assets_cancel.setOnClickListener(this);
+        mIb_assets_cancel.setOnClickListener(this);
 
         mRv_assets.setLayoutManager(new LinearLayoutManager(ApexWalletApplication.getInstance(),
                 LinearLayoutManager.VERTICAL, false));
@@ -276,7 +276,7 @@ public class AssetsFragment extends BaseFragment implements AssetsRecyclerViewAd
             case R.id.ib_assets_ellipsis:
                 openDrawer(mLl_assets_drawer);
                 break;
-            case R.id.tv_assets_cancel:
+            case R.id.ib_assets_cancel:
                 mEt_assets_search.getText().clear();
                 break;
             default:
@@ -368,10 +368,12 @@ public class AssetsFragment extends BaseFragment implements AssetsRecyclerViewAd
 
         if (TextUtils.isEmpty(s)) {
             CpLog.w(TAG, "onTextChanged() -> is empty!");
+            mIb_assets_cancel.setVisibility(View.INVISIBLE);
             mAssetsRecyclerViewAdapter.notifyDataSetChanged();
             return;
         }
 
+        mIb_assets_cancel.setVisibility(View.VISIBLE);
         Iterator<WalletBean> iterator = mWalletBeans.iterator();
         while (iterator.hasNext()) {
             WalletBean walletBean = iterator.next();

@@ -44,7 +44,6 @@ public class ImportMnemonicFragment extends BaseFragment implements View.OnClick
     private EditText mEt_import_wallet_pwd;
     private EditText mEt_import_wallet_repeat_pwd;
     private ImageButton mIb_import_wallet_privacy_point;
-    private TextView mTv_import_wallet_privacy_have_read;
     private Button mBt_import_wallet_mnemonic;
     private TextInputLayout mTl_import_wallet_pwd;
     private TextInputLayout mTl_import_wallet_repeat_pwd;
@@ -72,8 +71,6 @@ public class ImportMnemonicFragment extends BaseFragment implements View.OnClick
         mEt_import_wallet_pwd = view.findViewById(R.id.et_import_wallet_pwd);
         mEt_import_wallet_repeat_pwd = view.findViewById(R.id.et_import_wallet_repeat_pwd);
         mIb_import_wallet_privacy_point = view.findViewById(R.id.ib_import_wallet_privacy_point);
-        mTv_import_wallet_privacy_have_read = view.findViewById(R.id
-                .tv_import_wallet_privacy_have_read);
         mTv_import_wallet_privacy = view.findViewById(R.id.tv_import_wallet_privacy);
         mBt_import_wallet_mnemonic = view.findViewById(R.id.bt_import_wallet_mnemonic);
         mTl_import_wallet_pwd = view.findViewById(R.id.tl_import_wallet_pwd);
@@ -83,7 +80,6 @@ public class ImportMnemonicFragment extends BaseFragment implements View.OnClick
         mEt_import_wallet_pwd.setOnClickListener(this);
         mEt_import_wallet_repeat_pwd.setOnClickListener(this);
         mIb_import_wallet_privacy_point.setOnClickListener(this);
-        mTv_import_wallet_privacy_have_read.setOnClickListener(this);
         mBt_import_wallet_mnemonic.setOnClickListener(this);
         mTv_import_wallet_privacy.setOnClickListener(this);
 
@@ -132,25 +128,22 @@ public class ImportMnemonicFragment extends BaseFragment implements View.OnClick
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.tv_import_wallet_privacy_have_read:
             case R.id.ib_import_wallet_privacy_point:
                 if (mIsSelectedPrivacy) {
                     mIsSelectedPrivacy = false;
-                    mIb_import_wallet_privacy_point.setImageResource(R.drawable
-                            .shape_privacy_point);
-                    mBt_import_wallet_mnemonic.setBackgroundResource(R.drawable
-                            .shape_new_visitor_bt_bg);
-                    mBt_import_wallet_mnemonic.setTextColor(Color.WHITE);
-                    mIsAgreePrivacy = true;
-                } else {
-                    mIsSelectedPrivacy = true;
-                    mIb_import_wallet_privacy_point.setImageResource(R.drawable
-                            .shape_privacy_point_def);
+                    mIb_import_wallet_privacy_point.setImageResource(R.drawable.icon_privacy_def);
                     mBt_import_wallet_mnemonic.setBackgroundResource(R.drawable
                             .shape_import_wallet_bt_bg_def);
                     mBt_import_wallet_mnemonic.setTextColor(getResources().getColor(R.color
                             .c_666666));
                     mIsAgreePrivacy = false;
+                } else {
+                    mIsSelectedPrivacy = true;
+                    mIb_import_wallet_privacy_point.setImageResource(R.drawable.icon_privacy);
+                    mBt_import_wallet_mnemonic.setBackgroundResource(R.drawable
+                            .shape_new_visitor_bt_bg);
+                    mBt_import_wallet_mnemonic.setTextColor(Color.WHITE);
+                    mIsAgreePrivacy = true;
                 }
                 break;
             case R.id.tv_import_wallet_privacy:

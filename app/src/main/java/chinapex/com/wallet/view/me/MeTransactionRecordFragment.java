@@ -58,7 +58,7 @@ public class MeTransactionRecordFragment extends BaseFragment implements View.On
     private List<TransactionRecord> mSearchTxRecords;
     private TransactionRecordRecyclerViewAdapter mTxRecyclerViewAdapter;
     private EditText mEt_tx_records_search;
-    private TextView mTv_tx_records_cancel;
+    private ImageButton mIb_tx_records_cancel;
 
     @Nullable
     @Override
@@ -87,10 +87,10 @@ public class MeTransactionRecordFragment extends BaseFragment implements View.On
 
         // 搜索功能
         mEt_tx_records_search = view.findViewById(R.id.et_tx_records_search);
-        mTv_tx_records_cancel = view.findViewById(R.id.tv_tx_records_cancel);
+        mIb_tx_records_cancel = view.findViewById(R.id.ib_tx_records_cancel);
 
         mEt_tx_records_search.addTextChangedListener(this);
-        mTv_tx_records_cancel.setOnClickListener(this);
+        mIb_tx_records_cancel.setOnClickListener(this);
 
 
         mRv_transaction_record.setLayoutManager(new LinearLayoutManager(ApexWalletApplication
@@ -197,7 +197,7 @@ public class MeTransactionRecordFragment extends BaseFragment implements View.On
             case R.id.ib_me_transaction_record_switch:
                 showDialog(mCurrentClickedWalletBean);
                 break;
-            case R.id.tv_tx_records_cancel:
+            case R.id.ib_tx_records_cancel:
                 mEt_tx_records_search.getText().clear();
                 break;
             case R.id.tv_me_transaction_record_address:
@@ -312,10 +312,12 @@ public class MeTransactionRecordFragment extends BaseFragment implements View.On
 
         if (TextUtils.isEmpty(s)) {
             CpLog.w(TAG, "onTextChanged() -> is empty!");
+            mIb_tx_records_cancel.setVisibility(View.INVISIBLE);
             mTxRecyclerViewAdapter.notifyDataSetChanged();
             return;
         }
 
+        mIb_tx_records_cancel.setVisibility(View.VISIBLE);
         Iterator<TransactionRecord> iterator = mTransactionRecords.iterator();
         while (iterator.hasNext()) {
             TransactionRecord transactionRecord = iterator.next();

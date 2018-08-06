@@ -10,7 +10,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import chinapex.com.wallet.R;
 import chinapex.com.wallet.base.BaseActivity;
@@ -38,7 +37,6 @@ public class CreateWalletActivity extends BaseActivity implements View.OnClickLi
     private TextInputLayout mTl_create_wallet_name;
     private TextInputLayout mTl_create_wallet_pwd;
     private TextInputLayout mTl_create_wallet_repeat_pwd;
-    private TextView mTv_create_wallet_privacy_have_read;
     private Button mBt_create_wallet_import;
     private TextView mTv_create_wallet_privacy;
 
@@ -58,8 +56,6 @@ public class CreateWalletActivity extends BaseActivity implements View.OnClickLi
         mBt_create_wallet_confirm = (Button) findViewById(R.id.bt_create_wallet_confirm);
         mBt_create_wallet_import = (Button) findViewById(R.id.bt_create_wallet_import);
         mIb_create_wallet_privacy_point = findViewById(R.id.ib_create_wallet_privacy_point);
-        mTv_create_wallet_privacy_have_read = (TextView) findViewById(R.id
-                .tv_create_wallet_privacy_have_read);
         mTv_create_wallet_privacy = (TextView) findViewById(R.id.tv_create_wallet_privacy);
         mTl_create_wallet_name = (TextInputLayout) findViewById(R.id.tl_create_wallet_name);
         mTl_create_wallet_pwd = (TextInputLayout) findViewById(R.id.tl_create_wallet_pwd);
@@ -68,7 +64,6 @@ public class CreateWalletActivity extends BaseActivity implements View.OnClickLi
 
         mBt_create_wallet_confirm.setOnClickListener(this);
         mIb_create_wallet_privacy_point.setOnClickListener(this);
-        mTv_create_wallet_privacy_have_read.setOnClickListener(this);
         mBt_create_wallet_import.setOnClickListener(this);
         mTv_create_wallet_privacy.setOnClickListener(this);
 
@@ -143,24 +138,22 @@ public class CreateWalletActivity extends BaseActivity implements View.OnClickLi
             case R.id.bt_create_wallet_import:
                 startActivity(ImportWalletActivity.class, true);
                 break;
-            case R.id.tv_create_wallet_privacy_have_read:
             case R.id.ib_create_wallet_privacy_point:
+                CpLog.i(TAG, "ib_create_wallet_privacy_point");
                 if (mIsSelectedPrivacy) {
                     mIsSelectedPrivacy = false;
-                    mIb_create_wallet_privacy_point.setImageResource(R.drawable
-                            .shape_privacy_point);
-                    mBt_create_wallet_confirm.setBackgroundResource(R.drawable
-                            .shape_new_visitor_bt_bg);
-                    mBt_create_wallet_confirm.setTextColor(Color.WHITE);
-                    mIsAgreePrivacy = true;
-                } else {
-                    mIsSelectedPrivacy = true;
-                    mIb_create_wallet_privacy_point.setImageResource(R.drawable
-                            .shape_privacy_point_def);
+                    mIb_create_wallet_privacy_point.setImageResource(R.drawable.icon_privacy_def);
                     mBt_create_wallet_confirm.setBackgroundResource(R.drawable.shape_gray_bt_bg);
                     mBt_create_wallet_confirm.setTextColor(getResources().getColor(R.color
                             .c_979797));
                     mIsAgreePrivacy = false;
+                } else {
+                    mIsSelectedPrivacy = true;
+                    mIb_create_wallet_privacy_point.setImageResource(R.drawable.icon_privacy);
+                    mBt_create_wallet_confirm.setBackgroundResource(R.drawable
+                            .shape_new_visitor_bt_bg);
+                    mBt_create_wallet_confirm.setTextColor(Color.WHITE);
+                    mIsAgreePrivacy = true;
                 }
                 break;
             case R.id.tv_create_wallet_privacy:

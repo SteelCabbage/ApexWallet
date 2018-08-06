@@ -24,11 +24,10 @@
 
         <ImageButton
             android:id="@+id/ib_me_transaction_record_switch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
             android:layout_alignParentEnd="true"
-            android:layout_marginEnd="13dp"
-            android:layout_marginTop="35dp"
+            android:layout_marginTop="10dp"
             android:background="@null"
             android:src="@drawable/icon_switch" />
 
@@ -38,63 +37,57 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_me_transaction_record_title"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:singleLine="true"
             android:text="@string/wallet_address"
             android:textColor="@android:color/white"
             android:textSize="@dimen/paratext_14sp" />
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="34dp"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="10dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:layout_marginEnd="15dp"
+            android:layout_marginStart="15dp"
+            android:background="@drawable/shape_bg_search"
+            android:focusable="true"
+            android:focusableInTouchMode="true">
 
-            <LinearLayout
-                android:id="@+id/ll_transaction_search"
-                android:layout_width="0dp"
-                android:layout_height="27dp"
-                android:layout_marginStart="18dp"
-                android:layout_weight="5"
-                android:background="@drawable/shape_bg_search"
-                android:focusable="true"
-                android:focusableInTouchMode="true"
-                android:gravity="center_horizontal"
-                android:orientation="horizontal">
 
-                <ImageView
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="7dp"
-                    android:background="@drawable/icon_search" />
+            <ImageView
+                android:id="@+id/iv_tx_records_icon_search"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="15dp"
+                android:background="@drawable/icon_search" />
 
-                <EditText
-                    android:id="@+id/et_tx_records_search"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="9dp"
-                    android:background="@null"
-                    android:hint="@string/search_tx_id"
-                    android:singleLine="true"
-                    android:textColor="@android:color/white"
-                    android:textColorHint="@android:color/white"
-                    android:textSize="@dimen/paratext_14sp" />
-
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/tv_tx_records_cancel"
-                android:layout_width="0dp"
+            <EditText
+                android:id="@+id/et_tx_records_search"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center_horizontal"
-                android:text="@string/cancel"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="8dp"
+                android:layout_toEndOf="@+id/iv_tx_records_icon_search"
+                android:background="@null"
+                android:hint="@string/search_tx_id"
+                android:singleLine="true"
                 android:textColor="@android:color/white"
+                android:textColorHint="@android:color/white"
                 android:textSize="@dimen/paratext_14sp" />
-        </LinearLayout>
+
+            <ImageButton
+                android:id="@+id/ib_tx_records_cancel"
+                android:layout_width="34dp"
+                android:layout_height="34dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:background="@null"
+                android:src="@drawable/icon_search_cancel"
+                android:visibility="invisible" />
+
+        </RelativeLayout>
 
     </RelativeLayout>
 
