@@ -51,7 +51,7 @@ public class AddAssetsDialog extends DialogFragment implements View.OnClickListe
     private List<String> mCurrentAssets;
     private onCheckedAssetsListener mOnCheckedAssetsListener;
     private EditText mEt_add_assets_search;
-    private TextView mTv_add_assets_cancel;
+    private ImageButton mIb_add_assets_cancel;
 
 
     public interface onCheckedAssetsListener {
@@ -143,13 +143,13 @@ public class AddAssetsDialog extends DialogFragment implements View.OnClickListe
     private void initView(View view) {
         ImageButton ib_add_assets_close = view.findViewById(R.id.ib_add_assets_close);
         mEt_add_assets_search = view.findViewById(R.id.et_add_assets_search);
-        mTv_add_assets_cancel = view.findViewById(R.id.tv_add_assets_cancel);
+        mIb_add_assets_cancel = view.findViewById(R.id.ib_add_assets_cancel);
 
         mRv_add_assets = view.findViewById(R.id.rv_add_assets);
 
         ib_add_assets_close.setOnClickListener(this);
         mEt_add_assets_search.addTextChangedListener(this);
-        mTv_add_assets_cancel.setOnClickListener(this);
+        mIb_add_assets_cancel.setOnClickListener(this);
     }
 
     private void initData() {
@@ -221,7 +221,7 @@ public class AddAssetsDialog extends DialogFragment implements View.OnClickListe
                 }
 
                 dismiss();
-            case R.id.tv_add_assets_cancel:
+            case R.id.ib_add_assets_cancel:
                 mEt_add_assets_search.getText().clear();
                 break;
             default:
@@ -271,20 +271,22 @@ public class AddAssetsDialog extends DialogFragment implements View.OnClickListe
 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
-        if (null == mSearchAssetBeans || mSearchAssetBeans.isEmpty()) {
-            CpLog.e(TAG, "mSearchAssetBeans is null or empty!");
-            return;
-        }
+//        if (null == mSearchAssetBeans || mSearchAssetBeans.isEmpty()) {
+//            CpLog.e(TAG, "mSearchAssetBeans is null or empty!");
+//            return;
+//        }
 
         mAssetBeans.clear();
         mAssetBeans.addAll(mSearchAssetBeans);
 
         if (TextUtils.isEmpty(s)) {
             CpLog.w(TAG, "onTextChanged() -> is empty!");
+            mIb_add_assets_cancel.setVisibility(View.INVISIBLE);
             mAddAssetsRecyclerViewAdapter.notifyDataSetChanged();
             return;
         }
 
+        mIb_add_assets_cancel.setVisibility(View.VISIBLE);
         Iterator<AssetBean> iterator = mAssetBeans.iterator();
         while (iterator.hasNext()) {
             AssetBean assetBean = iterator.next();

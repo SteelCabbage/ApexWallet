@@ -310,10 +310,10 @@ public class MeTransactionRecordFragment extends BaseFragment implements View.On
 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
-        if (null == mSearchTxRecords || mSearchTxRecords.isEmpty()) {
-            CpLog.e(TAG, "mSearchTxRecords is null or empty!");
-            return;
-        }
+//        if (null == mSearchTxRecords || mSearchTxRecords.isEmpty()) {
+//            CpLog.e(TAG, "mSearchTxRecords is null or empty!");
+//            return;
+//        }
 
         mTransactionRecords.clear();
         mTransactionRecords.addAll(mSearchTxRecords);

@@ -367,10 +367,10 @@ public class AssetsFragment extends BaseFragment implements AssetsRecyclerViewAd
 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
-        if (null == mSearchTmpWalletBeans || mSearchTmpWalletBeans.isEmpty()) {
-            CpLog.e(TAG, "mWalletBeans is null or empty!");
-            return;
-        }
+//        if (null == mSearchTmpWalletBeans || mSearchTmpWalletBeans.isEmpty()) {
+//            CpLog.e(TAG, "mWalletBeans is null or empty!");
+//            return;
+//        }
 
         mWalletBeans.clear();
         mWalletBeans.addAll(mSearchTmpWalletBeans);
