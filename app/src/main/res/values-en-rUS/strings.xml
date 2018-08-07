@@ -78,12 +78,14 @@
     <string name="example_address">Example：China ShangHai</string>
     <string name="place_of_residence">Place Of Residence</string>
     <string name="enterprise_key">Enterprise Key</string>
-    <string name="to_dht_cloud">Saving Data to DHT Cloud</string>
+    <string name="to_dht_cloud">Saving Data To DHT Cloud</string>
     <string name="available_amount">Amount ( Available: </string>
     <string name="amount_all">All</string>
     <string name="dialog_amount">Amount : </string>
     <string name="change_wallet">Change Wallet</string>
     <string name="choose_wallet">Choose Wallet</string>
+    <string name="data_empty">Data Empty</string>
+    <string name="empty_wallet">Please Click The Upper Right Corner\nTo Have Your Wallet</string>
 
     <!--Me页面，功能菜单文字-->
     <string name="personal_portrait">Profile</string>
@@ -125,5 +127,6 @@
     <!--画像类型-->
     <string name="portrait_type_common">Basic</string>
     <string name="portrait_type_enterprise">Enterprise</string>
+
 
 </resources>

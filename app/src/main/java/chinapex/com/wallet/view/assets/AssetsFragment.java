@@ -26,6 +26,7 @@ import java.util.List;
 import chinapex.com.wallet.R;
 import chinapex.com.wallet.adapter.AssetsRecyclerViewAdapter;
 import chinapex.com.wallet.adapter.DrawerMenuRecyclerViewAdapter;
+import chinapex.com.wallet.adapter.EmptyAdapter;
 import chinapex.com.wallet.adapter.SpacesItemDecoration;
 import chinapex.com.wallet.base.BaseFragment;
 import chinapex.com.wallet.bean.DrawerMenu;
@@ -66,6 +67,7 @@ public class AssetsFragment extends BaseFragment implements AssetsRecyclerViewAd
     private EditText mEt_assets_search;
     private List<WalletBean> mSearchTmpWalletBeans;
     private ImageButton mIb_assets_cancel;
+    private EmptyAdapter mEmptyAdapter;
 
     @Nullable
     @Override
@@ -104,7 +106,10 @@ public class AssetsFragment extends BaseFragment implements AssetsRecyclerViewAd
         int space = DensityUtil.dip2px(getActivity(), 8);
         mRv_assets.addItemDecoration(new SpacesItemDecoration(space));
 
-        mRv_assets.setAdapter(mAssetsRecyclerViewAdapter);
+//        mRv_assets.setAdapter(mAssetsRecyclerViewAdapter);
+        mEmptyAdapter = new EmptyAdapter(mAssetsRecyclerViewAdapter, ApexWalletApplication
+                .getInstance(), R.layout.recyclerview_empty_wallet);
+        mRv_assets.setAdapter(mEmptyAdapter);
 
         mSl_assets_rv.setColorSchemeColors(this.getActivity().getResources().getColor(R.color
                 .c_1253BF));
@@ -192,6 +197,7 @@ public class AssetsFragment extends BaseFragment implements AssetsRecyclerViewAd
         mWalletBeans.remove(walletBean);
         mSearchTmpWalletBeans.remove(walletBean);
         mAssetsRecyclerViewAdapter.notifyDataSetChanged();
+        mEmptyAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -213,6 +219,7 @@ public class AssetsFragment extends BaseFragment implements AssetsRecyclerViewAd
             @Override
             public void run() {
                 mAssetsRecyclerViewAdapter.notifyDataSetChanged();
+                mEmptyAdapter.notifyDataSetChanged();
             }
         });
     }
@@ -323,6 +330,7 @@ public class AssetsFragment extends BaseFragment implements AssetsRecyclerViewAd
         }
 
         mAssetsRecyclerViewAdapter.notifyDataSetChanged();
+        mEmptyAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -350,6 +358,7 @@ public class AssetsFragment extends BaseFragment implements AssetsRecyclerViewAd
         }
 
         mAssetsRecyclerViewAdapter.notifyDataSetChanged();
+        mEmptyAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -370,6 +379,7 @@ public class AssetsFragment extends BaseFragment implements AssetsRecyclerViewAd
             CpLog.w(TAG, "onTextChanged() -> is empty!");
             mIb_assets_cancel.setVisibility(View.INVISIBLE);
             mAssetsRecyclerViewAdapter.notifyDataSetChanged();
+            mEmptyAdapter.notifyDataSetChanged();
             return;
         }
 
@@ -388,6 +398,7 @@ public class AssetsFragment extends BaseFragment implements AssetsRecyclerViewAd
         }
 
         mAssetsRecyclerViewAdapter.notifyDataSetChanged();
+        mEmptyAdapter.notifyDataSetChanged();
     }
 
     @Override

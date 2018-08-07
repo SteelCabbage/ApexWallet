@@ -20,6 +20,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import chinapex.com.wallet.R;
+import chinapex.com.wallet.adapter.EmptyAdapter;
 import chinapex.com.wallet.adapter.TransactionRecordRecyclerViewAdapter;
 import chinapex.com.wallet.base.BaseFragment;
 import chinapex.com.wallet.bean.TransactionRecord;
@@ -59,6 +60,7 @@ public class MeTransactionRecordFragment extends BaseFragment implements View.On
     private TransactionRecordRecyclerViewAdapter mTxRecyclerViewAdapter;
     private EditText mEt_tx_records_search;
     private ImageButton mIb_tx_records_cancel;
+    private EmptyAdapter mEmptyAdapter;
 
     @Nullable
     @Override
@@ -100,7 +102,9 @@ public class MeTransactionRecordFragment extends BaseFragment implements View.On
         mTxRecyclerViewAdapter = new TransactionRecordRecyclerViewAdapter
                 (mTransactionRecords);
         mTxRecyclerViewAdapter.setOnItemClickListener(this);
-        mRv_transaction_record.setAdapter(mTxRecyclerViewAdapter);
+        mEmptyAdapter = new EmptyAdapter(mTxRecyclerViewAdapter, ApexWalletApplication
+                .getInstance(), R.layout.recyclerview_empty_tx);
+        mRv_transaction_record.setAdapter(mEmptyAdapter);
 
         mIb_me_transaction_record_switch.setOnClickListener(this);
         mSl_transaction_record.setColorSchemeColors(this.getActivity().getResources().getColor(R
@@ -133,6 +137,7 @@ public class MeTransactionRecordFragment extends BaseFragment implements View.On
                 mTransactionRecords.clear();
                 mSearchTxRecords.clear();
                 mTxRecyclerViewAdapter.notifyItemRangeRemoved(0, preClearSize);
+                mEmptyAdapter.notifyDataSetChanged();
             }
         });
         TaskController.getInstance().submit(new LoadTransacitonRecord(address, this));
@@ -154,10 +159,12 @@ public class MeTransactionRecordFragment extends BaseFragment implements View.On
                 mTransactionRecords.clear();
                 mSearchTxRecords.clear();
                 mTxRecyclerViewAdapter.notifyItemRangeRemoved(0, preClearSize);
+                mEmptyAdapter.notifyDataSetChanged();
 
                 mTransactionRecords.addAll(transactionRecords);
                 mSearchTxRecords.addAll(transactionRecords);
                 mTxRecyclerViewAdapter.notifyItemRangeInserted(0, transactionRecords.size());
+                mEmptyAdapter.notifyDataSetChanged();
 
                 if (mSl_transaction_record.isRefreshing()) {
                     mSl_transaction_record.setRefreshing(false);
@@ -285,6 +292,7 @@ public class MeTransactionRecordFragment extends BaseFragment implements View.On
             @Override
             public void run() {
                 mTxRecyclerViewAdapter.notifyDataSetChanged();
+                mEmptyAdapter.notifyDataSetChanged();
             }
         });
     }
@@ -314,6 +322,7 @@ public class MeTransactionRecordFragment extends BaseFragment implements View.On
             CpLog.w(TAG, "onTextChanged() -> is empty!");
             mIb_tx_records_cancel.setVisibility(View.INVISIBLE);
             mTxRecyclerViewAdapter.notifyDataSetChanged();
+            mEmptyAdapter.notifyDataSetChanged();
             return;
         }
 
@@ -332,6 +341,7 @@ public class MeTransactionRecordFragment extends BaseFragment implements View.On
         }
 
         mTxRecyclerViewAdapter.notifyDataSetChanged();
+        mEmptyAdapter.notifyDataSetChanged();
     }
 
     @Override
