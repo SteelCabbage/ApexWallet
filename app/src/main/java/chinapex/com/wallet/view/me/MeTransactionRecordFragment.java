@@ -37,6 +37,7 @@ import chinapex.com.wallet.global.Constant;
 import chinapex.com.wallet.utils.CpLog;
 import chinapex.com.wallet.utils.PhoneUtils;
 import chinapex.com.wallet.utils.ToastUtils;
+import chinapex.com.wallet.view.dialog.SwitchWallet2Dialog;
 import chinapex.com.wallet.view.dialog.SwitchWalletDialog;
 
 /**
@@ -44,9 +45,10 @@ import chinapex.com.wallet.view.dialog.SwitchWalletDialog;
  */
 
 public class MeTransactionRecordFragment extends BaseFragment implements View.OnClickListener,
-        SwitchWalletDialog.onItemSelectedListener, SwipeRefreshLayout.OnRefreshListener,
-        TransactionRecordRecyclerViewAdapter.OnItemClickListener, IGetTransactionHistoryCallback,
-        ILoadTransactionRecordCallback, OnTxStateUpdateListener, TextWatcher {
+        SwipeRefreshLayout.OnRefreshListener, TransactionRecordRecyclerViewAdapter
+                .OnItemClickListener, IGetTransactionHistoryCallback,
+        ILoadTransactionRecordCallback, OnTxStateUpdateListener, TextWatcher, SwitchWallet2Dialog
+                .onSelectedWalletListener {
 
     private static final String TAG = MeTransactionRecordFragment.class.getSimpleName();
     private TextView mTv_me_transaction_record_title;
@@ -202,7 +204,7 @@ public class MeTransactionRecordFragment extends BaseFragment implements View.On
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ib_me_transaction_record_switch:
-                showDialog(mCurrentClickedWalletBean);
+                showDialog();
                 break;
             case R.id.ib_tx_records_cancel:
                 mEt_tx_records_search.getText().clear();
@@ -218,15 +220,15 @@ public class MeTransactionRecordFragment extends BaseFragment implements View.On
         }
     }
 
-    private void showDialog(WalletBean currentClickedWalletBean) {
-        SwitchWalletDialog switchWalletDialog = SwitchWalletDialog.newInstance();
-        switchWalletDialog.setCurrentWalletBean(currentClickedWalletBean);
-        switchWalletDialog.setOnItemSelectedListener(this);
-        switchWalletDialog.show(getFragmentManager(), "SwitchWalletDialog");
+    private void showDialog() {
+        SwitchWallet2Dialog switchWallet2Dialog = SwitchWallet2Dialog.newInstance();
+        switchWallet2Dialog.setCurrentWalletBean(mCurrentClickedWalletBean);
+        switchWallet2Dialog.setOnSelectedWalletListener(this);
+        switchWallet2Dialog.show(getFragmentManager(), "SwitchWallet2Dialog");
     }
 
     @Override
-    public void onItemSelected(WalletBean walletBean) {
+    public void onSelectedWallet(WalletBean walletBean) {
         if (null == walletBean) {
             CpLog.e(TAG, "walletBean is null!");
             return;
@@ -310,11 +312,6 @@ public class MeTransactionRecordFragment extends BaseFragment implements View.On
 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
-//        if (null == mSearchTxRecords || mSearchTxRecords.isEmpty()) {
-//            CpLog.e(TAG, "mSearchTxRecords is null or empty!");
-//            return;
-//        }
-
         mTransactionRecords.clear();
         mTransactionRecords.addAll(mSearchTxRecords);
 
