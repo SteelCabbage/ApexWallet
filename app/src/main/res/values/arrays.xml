@@ -57,4 +57,10 @@
         <item>@string/portrait_type_common</item>
         <item>@string/portrait_type_enterprise</item>
     </string-array>
+
+    <!--createWallet Type，钱包类型-->
+    <string-array name="create_wallet_type">
+        <item>@string/create_wallet_type_neo</item>
+        <item>@string/create_wallet_type_eth</item>
+    </string-array>
 </resources>
