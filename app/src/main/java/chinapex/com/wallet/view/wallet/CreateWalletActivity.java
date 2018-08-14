@@ -1,7 +1,6 @@
 package chinapex.com.wallet.view.wallet;
 
 import android.content.Intent;
-import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
@@ -12,24 +11,19 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import chinapex.com.wallet.R;
 import chinapex.com.wallet.base.BaseActivity;
-import chinapex.com.wallet.bean.DrawerMenu;
-import chinapex.com.wallet.bean.PortraitBean;
-import chinapex.com.wallet.bean.PortraitShow;
-import chinapex.com.wallet.bean.PortraitTagsBean;
 import chinapex.com.wallet.bean.WalletBean;
 import chinapex.com.wallet.executor.TaskController;
 import chinapex.com.wallet.executor.callback.ICreateWalletCallback;
+import chinapex.com.wallet.executor.callback.eth.ICreateEthWalletCallback;
 import chinapex.com.wallet.executor.runnable.CreateWallet;
+import chinapex.com.wallet.executor.runnable.eth.CreateEthWallet;
 import chinapex.com.wallet.global.ApexWalletApplication;
 import chinapex.com.wallet.global.Constant;
-import chinapex.com.wallet.model.ApexWalletDbDao;
 import chinapex.com.wallet.utils.CpLog;
 import chinapex.com.wallet.utils.DensityUtil;
 import chinapex.com.wallet.utils.ToastUtils;
@@ -38,7 +32,7 @@ import cn.qqtheme.framework.widget.WheelView;
 import neomobile.Wallet;
 
 public class CreateWalletActivity extends BaseActivity implements View.OnClickListener,
-        ICreateWalletCallback {
+        ICreateWalletCallback, ICreateEthWalletCallback {
 
     private static final String TAG = CreateWalletActivity.class.getSimpleName();
     private Button mBt_create_wallet_confirm;
@@ -61,7 +55,6 @@ public class CreateWalletActivity extends BaseActivity implements View.OnClickLi
         setContentView(R.layout.activity_create_wallet);
 
         initView();
-        initData();
     }
 
     private void initView() {
@@ -135,10 +128,6 @@ public class CreateWalletActivity extends BaseActivity implements View.OnClickLi
         });
     }
 
-    private void initData() {
-
-    }
-
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -154,13 +143,31 @@ public class CreateWalletActivity extends BaseActivity implements View.OnClickLi
 
                 String walletName = mEt_create_wallet_name.getText().toString().trim();
                 String walletPwd = mEt_create_wallet_pwd.getText().toString().trim();
-                TaskController.getInstance().submit(new CreateWallet(walletName, walletPwd, this));
+                String walletType = mTv_create_wallet_type.getText().toString().trim();
+                if (TextUtils.isEmpty(walletType)) {
+                    CpLog.e(TAG, "walletType is null!");
+                    ToastUtils.getInstance().showToast(getString(R.string.select_wallet_type));
+                    return;
+                }
+
+                switch (walletType) {
+                    case "NEO":
+                        TaskController.getInstance().submit(new CreateWallet(walletName,
+                                walletPwd, this));
+                        break;
+                    case "ETH":
+                        TaskController.getInstance().submit(new CreateEthWallet(walletName,
+                                walletPwd, this));
+                        break;
+                    default:
+                        break;
+
+                }
                 break;
             case R.id.bt_create_wallet_import:
                 startActivity(ImportWalletActivity.class, true);
                 break;
             case R.id.ib_create_wallet_privacy_point:
-                CpLog.i(TAG, "ib_create_wallet_privacy_point");
                 if (mIsSelectedPrivacy) {
                     mIsSelectedPrivacy = false;
                     mIb_create_wallet_privacy_point.setImageResource(R.drawable.icon_privacy_def);
@@ -269,6 +276,28 @@ public class CreateWalletActivity extends BaseActivity implements View.OnClickLi
         finish();
     }
 
+    @Override
+    public void createEthWallet(ethmobile.Wallet wallet) {
+        if (null == wallet) {
+            CpLog.e(TAG, "wallet is null！");
+            return;
+        }
+
+        String mnemonicEnUs = null;
+        try {
+            mnemonicEnUs = wallet.mnemonic("en_US");
+        } catch (Exception e) {
+            CpLog.e(TAG, "mnemonicEnUs exception:" + e.getMessage());
+        }
+
+        if (TextUtils.isEmpty(mnemonicEnUs)) {
+            CpLog.e(TAG, "mnemonicEnUs is null！");
+            return;
+        }
+
+        CpLog.i(TAG, "mnemonicEnUs eth:" + mnemonicEnUs);
+    }
+
     private List<String> getWalletTypes() {
         String[] menuTexts = getResources().getStringArray(R.array.create_wallet_type);
         return Arrays.asList(menuTexts);
@@ -314,6 +343,5 @@ public class CreateWalletActivity extends BaseActivity implements View.OnClickLi
 
         picker.show();
     }
-
 
 }

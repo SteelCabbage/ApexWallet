@@ -117,6 +117,9 @@ public class Constant {
             "0x602c79718b16e442de58778e148d0b1084e3b2dffd5de6b7b16cee7969282de7";
     public static final String ASSETS_CPX = "0x45d493a6f73fa5f404244a5fb8472fc014ca5885";
 
+    // ETH
+    public static final String ASSET_ETH = "ether123";
+
 
     // tmp 后台更新后删除
     public static final String ASSETS_APH = "0xa0777c3ce2b169d4a23bcba4565e3225a0122d95";
@@ -260,5 +263,21 @@ public class Constant {
             + FIELD_PORTRAIT_LABEL + " text, "
             + FIELD_PORTRAIT_VALUE + " text, "
             + FIELD_CREATE_TIME + " integer)";
+
+    // ETH
+    // table wallet
+    public static final String TABLE_ETH_WALLET = "eth_wallet";
+    public static final String FIELD_WALLET_ASSETS_ERC20_JSON = "wallet_assets_erc20_json";
+
+    public static final String SQL_CREATE_ETH_WALLET = "create table " + TABLE_ETH_WALLET
+            + " (" + FIELD_ID + " integer primary key autoincrement, "
+            + FIELD_WALLET_NAME + " text, "
+            + FIELD_WALLET_ADDRESS + " text, "
+            + FIELD_BACKUP_STATE + " integer, "
+            + FIELD_WALLET_KEYSTORE + " text, "
+            + FIELD_WALLET_ASSETS_JSON + " text, "
+            + FIELD_WALLET_ASSETS_ERC20_JSON + " text, "
+            + FIELD_CREATE_TIME + " integer)";
+
 
 }

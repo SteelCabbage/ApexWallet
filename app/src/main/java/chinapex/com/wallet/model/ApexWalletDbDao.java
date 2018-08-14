@@ -17,6 +17,7 @@ import chinapex.com.wallet.bean.AssetBean;
 import chinapex.com.wallet.bean.PortraitShow;
 import chinapex.com.wallet.bean.TransactionRecord;
 import chinapex.com.wallet.bean.WalletBean;
+import chinapex.com.wallet.bean.eth.EthWallet;
 import chinapex.com.wallet.global.Constant;
 import chinapex.com.wallet.utils.CpLog;
 
@@ -954,6 +955,36 @@ public class ApexWalletDbDao {
         }
         closeDatabase();
         return hm;
+    }
+
+    // ETH
+    public synchronized void insertEth(EthWallet ethWallet) {
+        if (null == ethWallet) {
+            CpLog.e(TAG, "insert() -> ethWallet is null!");
+            return;
+        }
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(Constant.FIELD_WALLET_NAME, ethWallet.getName());
+        contentValues.put(Constant.FIELD_WALLET_ADDRESS, ethWallet.getAddress());
+        contentValues.put(Constant.FIELD_BACKUP_STATE, ethWallet.getBackupState());
+        contentValues.put(Constant.FIELD_WALLET_KEYSTORE, ethWallet.getKeyStore());
+        contentValues.put(Constant.FIELD_WALLET_ASSETS_JSON, ethWallet.getAssetsJson());
+        contentValues.put(Constant.FIELD_WALLET_ASSETS_ERC20_JSON, ethWallet.getAssetsErc20Json());
+        contentValues.put(Constant.FIELD_CREATE_TIME, SystemClock.currentThreadTimeMillis());
+
+        SQLiteDatabase db = openDatabase();
+        try {
+            db.beginTransaction();
+            db.insertOrThrow(Constant.TABLE_ETH_WALLET, null, contentValues);
+            db.setTransactionSuccessful();
+            CpLog.i(TAG, "insert() -> insert " + ethWallet.getName() + " ok!");
+        } catch (SQLException e) {
+            CpLog.e(TAG, "insert exception:" + e.getMessage());
+        } finally {
+            db.endTransaction();
+        }
+        closeDatabase();
     }
 
 }

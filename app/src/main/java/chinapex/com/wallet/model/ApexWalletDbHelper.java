@@ -36,6 +36,7 @@ public class ApexWalletDbHelper extends SQLiteOpenHelper {
         db.execSQL(Constant.SQL_CREATE_TX_CACHE);
         db.execSQL(Constant.SQL_CREATE_ASSETS);
         db.execSQL(Constant.SQL_CREATE_PORTRAIT);
+        db.execSQL(Constant.SQL_CREATE_ETH_WALLET);
 
     }
 
