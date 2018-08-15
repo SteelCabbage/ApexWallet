@@ -155,7 +155,7 @@ public class Constant {
 
     // db
     // table wallet
-    public static final String TABLE_APEX_WALLET = "apex_wallet";
+    public static final String TABLE_NEO_WALLET = "neo_wallet";
 
     public static final String FIELD_ID = "_id";
     public static final String FIELD_WALLET_NAME = "wallet_name";
@@ -166,7 +166,7 @@ public class Constant {
     public static final String FIELD_WALLET_ASSETS_NEP5_JSON = "wallet_assets_nep5_json";
     public static final String FIELD_CREATE_TIME = "create_time";
 
-    public static final String SQL_CREATE_APEX_WALLET = "create table " + TABLE_APEX_WALLET
+    public static final String SQL_CREATE_NEO_WALLET = "create table " + TABLE_NEO_WALLET
             + " (" + FIELD_ID + " integer primary key autoincrement, "
             + FIELD_WALLET_NAME + " text, "
             + FIELD_WALLET_ADDRESS + " text, "

@@ -10,7 +10,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import chinapex.com.wallet.R;
-import chinapex.com.wallet.bean.WalletBean;
+import chinapex.com.wallet.bean.NeoWallet;
 import chinapex.com.wallet.global.Constant;
 import chinapex.com.wallet.utils.CpLog;
 
@@ -20,14 +20,14 @@ public class MeRecyclerViewAdapter extends RecyclerView.Adapter<MeRecyclerViewAd
 
     private static final String TAG = MeRecyclerViewAdapter.class.getSimpleName();
     private OnItemClickListener mOnItemClickListener;
-    private List<WalletBean> mWalletBeans;
+    private List<NeoWallet> mNeoWallets;
 
     public interface OnItemClickListener {
         void onItemClick(int position);
     }
 
-    public MeRecyclerViewAdapter(List<WalletBean> walletBeans) {
-        mWalletBeans = walletBeans;
+    public MeRecyclerViewAdapter(List<NeoWallet> neoWallets) {
+        mNeoWallets = neoWallets;
     }
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
@@ -56,16 +56,16 @@ public class MeRecyclerViewAdapter extends RecyclerView.Adapter<MeRecyclerViewAd
 
     @Override
     public void onBindViewHolder(@NonNull MeAdapterHolder holder, int position) {
-        WalletBean walletBean = mWalletBeans.get(position);
-        if (null == walletBean) {
-            CpLog.e(TAG, "walletBean is null!");
+        NeoWallet neoWallet = mNeoWallets.get(position);
+        if (null == neoWallet) {
+            CpLog.e(TAG, "neoWallet is null!");
             return;
         }
 
-        holder.walletName.setText(walletBean.getWalletName());
-        holder.walletAddr.setText(walletBean.getWalletAddr());
+        holder.walletName.setText(neoWallet.getWalletName());
+        holder.walletAddr.setText(neoWallet.getWalletAddr());
 
-        int selectedTag = walletBean.getSelectedTag();
+        int selectedTag = neoWallet.getSelectedTag();
 
         if (selectedTag == Constant.SELECTED_TAG_TRANSACTION_RECORED) {
             holder.isBackup.setVisibility(View.INVISIBLE);
@@ -74,7 +74,7 @@ public class MeRecyclerViewAdapter extends RecyclerView.Adapter<MeRecyclerViewAd
         }
 
         if (selectedTag == Constant.SELECTED_TAG_MANAGER_WALLET) {
-            int backupState = walletBean.getBackupState();
+            int backupState = neoWallet.getBackupState();
             switch (backupState) {
                 case Constant.BACKUP_UNFINISHED:
                     holder.isBackup.setVisibility(View.VISIBLE);
@@ -92,7 +92,7 @@ public class MeRecyclerViewAdapter extends RecyclerView.Adapter<MeRecyclerViewAd
 
     @Override
     public int getItemCount() {
-        return null == mWalletBeans ? 0 : mWalletBeans.size();
+        return null == mNeoWallets ? 0 : mNeoWallets.size();
     }
 
     class MeAdapterHolder extends RecyclerView.ViewHolder {

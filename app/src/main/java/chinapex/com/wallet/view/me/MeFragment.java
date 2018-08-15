@@ -19,7 +19,7 @@ import chinapex.com.wallet.adapter.MeFunctionRecyclerViewAdapter;
 import chinapex.com.wallet.adapter.SpacesItemDecorationTopBottom;
 import chinapex.com.wallet.base.BaseFragment;
 import chinapex.com.wallet.bean.MeFunction;
-import chinapex.com.wallet.bean.WalletBean;
+import chinapex.com.wallet.bean.NeoWallet;
 import chinapex.com.wallet.global.ApexWalletApplication;
 import chinapex.com.wallet.global.Constant;
 import chinapex.com.wallet.model.ApexWalletDbDao;
@@ -129,7 +129,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener,
     }
 
     private void skip2Portrait() {
-        WalletBean rewardWallet = getRewardWallet();
+        NeoWallet rewardWallet = getRewardWallet();
         if (null == rewardWallet) {
             startActivity(MePortraitEmptyActivity.class, false);
         } else {
@@ -138,7 +138,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener,
 
     }
 
-    private WalletBean getRewardWallet() {
+    private NeoWallet getRewardWallet() {
         ApexWalletDbDao apexWalletDbDao = ApexWalletDbDao.getInstance(ApexWalletApplication
                 .getInstance());
         if (null == apexWalletDbDao) {
@@ -146,13 +146,13 @@ public class MeFragment extends BaseFragment implements View.OnClickListener,
             return null;
         }
 
-        List<WalletBean> walletBeans = apexWalletDbDao.queryWalletBeans(Constant.TABLE_APEX_WALLET);
-        if (null == walletBeans || walletBeans.isEmpty()) {
-            CpLog.e(TAG, "walletBeans is null or empty!");
+        List<NeoWallet> neoWallets = apexWalletDbDao.queryWalletBeans(Constant.TABLE_NEO_WALLET);
+        if (null == neoWallets || neoWallets.isEmpty()) {
+            CpLog.e(TAG, "neoWallets is null or empty!");
             return null;
         }
 
-        return walletBeans.get(0);
+        return neoWallets.get(0);
     }
 
 }

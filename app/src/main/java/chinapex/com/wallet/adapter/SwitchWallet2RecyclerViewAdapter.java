@@ -11,7 +11,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import chinapex.com.wallet.R;
-import chinapex.com.wallet.bean.WalletBean;
+import chinapex.com.wallet.bean.NeoWallet;
 import chinapex.com.wallet.utils.CpLog;
 
 public class SwitchWallet2RecyclerViewAdapter extends RecyclerView
@@ -20,15 +20,15 @@ public class SwitchWallet2RecyclerViewAdapter extends RecyclerView
 
     private static final String TAG = SwitchWallet2RecyclerViewAdapter.class.getSimpleName();
     private OnItemClickListener mOnItemClickListener;
-    private List<WalletBean> mWalletBeans;
+    private List<NeoWallet> mNeoWallets;
 
 
     public interface OnItemClickListener {
         void onItemClick(int position);
     }
 
-    public SwitchWallet2RecyclerViewAdapter(List<WalletBean> walletBeans) {
-        mWalletBeans = walletBeans;
+    public SwitchWallet2RecyclerViewAdapter(List<NeoWallet> neoWallets) {
+        mNeoWallets = neoWallets;
     }
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
@@ -42,24 +42,24 @@ public class SwitchWallet2RecyclerViewAdapter extends RecyclerView
             return;
         }
 
-        if (null == mWalletBeans || mWalletBeans.isEmpty()) {
-            CpLog.e(TAG, "mWalletBeans is null or empty!");
+        if (null == mNeoWallets || mNeoWallets.isEmpty()) {
+            CpLog.e(TAG, "mNeoWallets is null or empty!");
             return;
         }
 
         Integer position = (Integer) v.getTag();
 
-        for (int i = 0; i < mWalletBeans.size(); i++) {
-            WalletBean walletBean = mWalletBeans.get(i);
-            if (null == walletBean) {
-                CpLog.i(TAG, "walletBean is null!");
+        for (int i = 0; i < mNeoWallets.size(); i++) {
+            NeoWallet neoWallet = mNeoWallets.get(i);
+            if (null == neoWallet) {
+                CpLog.i(TAG, "neoWallet is null!");
                 continue;
             }
 
             if (i == position) {
-                walletBean.setSelected(true);
+                neoWallet.setSelected(true);
             } else {
-                walletBean.setSelected(false);
+                neoWallet.setSelected(false);
             }
         }
 
@@ -79,15 +79,15 @@ public class SwitchWallet2RecyclerViewAdapter extends RecyclerView
 
     @Override
     public void onBindViewHolder(@NonNull final SwitchWallet2Holder holder, int position) {
-        WalletBean walletBean = mWalletBeans.get(position);
-        if (null == walletBean) {
-            CpLog.e(TAG, "walletBean is null!");
+        NeoWallet neoWallet = mNeoWallets.get(position);
+        if (null == neoWallet) {
+            CpLog.e(TAG, "neoWallet is null!");
             return;
         }
 
-        holder.walletName.setText(walletBean.getWalletName());
-        holder.walletAddress.setText(walletBean.getWalletAddr());
-        if (walletBean.isSelected()) {
+        holder.walletName.setText(neoWallet.getWalletName());
+        holder.walletAddress.setText(neoWallet.getWalletAddr());
+        if (neoWallet.isSelected()) {
             holder.checkState.setVisibility(View.VISIBLE);
         } else {
             holder.checkState.setVisibility(View.INVISIBLE);
@@ -98,7 +98,7 @@ public class SwitchWallet2RecyclerViewAdapter extends RecyclerView
 
     @Override
     public int getItemCount() {
-        return null == mWalletBeans ? 0 : mWalletBeans.size();
+        return null == mNeoWallets ? 0 : mNeoWallets.size();
     }
 
 

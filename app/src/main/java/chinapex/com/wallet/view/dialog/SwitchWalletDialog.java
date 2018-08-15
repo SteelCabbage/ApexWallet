@@ -1,7 +1,6 @@
 package chinapex.com.wallet.view.dialog;
 
 import android.app.DialogFragment;
-import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -16,9 +15,8 @@ import android.widget.ImageButton;
 import java.util.List;
 
 import chinapex.com.wallet.R;
-import chinapex.com.wallet.adapter.AssetsRecyclerViewAdapter;
 import chinapex.com.wallet.adapter.SwitchTransactionRecyclerViewAdapter;
-import chinapex.com.wallet.bean.WalletBean;
+import chinapex.com.wallet.bean.NeoWallet;
 import chinapex.com.wallet.global.ApexWalletApplication;
 import chinapex.com.wallet.global.Constant;
 import chinapex.com.wallet.model.ApexWalletDbDao;
@@ -35,8 +33,8 @@ public class SwitchWalletDialog extends DialogFragment implements View.OnClickLi
     private static final String TAG = SwitchWalletDialog.class.getSimpleName();
     private ImageButton mIb_switch_wallet_close;
     private RecyclerView mRv_me_switch_wallet;
-    private List<WalletBean> mWalletBeans;
-    private WalletBean mCurrentWalletBean;
+    private List<NeoWallet> mNeoWallets;
+    private NeoWallet mCurrentNeoWallet;
     private int mPreIndex;
     private int mCurrentIndex;
     private SwitchTransactionRecyclerViewAdapter mSwitchTransactionRecyclerViewAdapter;
@@ -46,12 +44,12 @@ public class SwitchWalletDialog extends DialogFragment implements View.OnClickLi
         return new SwitchWalletDialog();
     }
 
-    public void setCurrentWalletBean(WalletBean currentWalletBean) {
-        mCurrentWalletBean = currentWalletBean;
+    public void setCurrentNeoWallet(NeoWallet currentNeoWallet) {
+        mCurrentNeoWallet = currentNeoWallet;
     }
 
     public interface onItemSelectedListener {
-        void onItemSelected(WalletBean walletBean);
+        void onItemSelected(NeoWallet neoWallet);
     }
 
     public void setOnItemSelectedListener(onItemSelectedListener onItemSelectedListener) {
@@ -86,8 +84,8 @@ public class SwitchWalletDialog extends DialogFragment implements View.OnClickLi
     }
 
     private void initData() {
-        if (null == mCurrentWalletBean) {
-            CpLog.e(TAG, "mCurrentWalletBean is null!");
+        if (null == mCurrentNeoWallet) {
+            CpLog.e(TAG, "mCurrentNeoWallet is null!");
             return;
         }
 
@@ -99,16 +97,16 @@ public class SwitchWalletDialog extends DialogFragment implements View.OnClickLi
         }
 
 
-        mWalletBeans = apexWalletDbDao.queryWalletBeans(Constant.TABLE_APEX_WALLET);
-        for (WalletBean walletBean : mWalletBeans) {
-            if (null == walletBean) {
-                CpLog.e(TAG, "walletBean is null!");
+        mNeoWallets = apexWalletDbDao.queryWalletBeans(Constant.TABLE_NEO_WALLET);
+        for (NeoWallet neoWallet : mNeoWallets) {
+            if (null == neoWallet) {
+                CpLog.e(TAG, "neoWallet is null!");
                 continue;
             }
 
-            if (mCurrentWalletBean.equals(walletBean)) {
-                walletBean.setSelected(true);
-                mCurrentIndex = mWalletBeans.indexOf(walletBean);
+            if (mCurrentNeoWallet.equals(neoWallet)) {
+                neoWallet.setSelected(true);
+                mCurrentIndex = mNeoWallets.indexOf(neoWallet);
             }
         }
     }
@@ -122,7 +120,7 @@ public class SwitchWalletDialog extends DialogFragment implements View.OnClickLi
         mRv_me_switch_wallet.setLayoutManager(new LinearLayoutManager(ApexWalletApplication
                 .getInstance(), LinearLayoutManager.VERTICAL, false));
         mSwitchTransactionRecyclerViewAdapter = new SwitchTransactionRecyclerViewAdapter
-                (mWalletBeans);
+                (mNeoWallets);
         mSwitchTransactionRecyclerViewAdapter.setOnItemClickListener(this);
         mRv_me_switch_wallet.setAdapter(mSwitchTransactionRecyclerViewAdapter);
     }
@@ -140,21 +138,21 @@ public class SwitchWalletDialog extends DialogFragment implements View.OnClickLi
 
     @Override
     public void onItemClick(int position) {
-        WalletBean walletBean = mWalletBeans.get(position);
-        if (null == walletBean) {
-            CpLog.e(TAG, "walletBean is null!");
+        NeoWallet neoWallet = mNeoWallets.get(position);
+        if (null == neoWallet) {
+            CpLog.e(TAG, "neoWallet is null!");
             return;
         }
 
-        mOnItemSelectedListener.onItemSelected(walletBean);
-        walletBean.setSelected(true);
+        mOnItemSelectedListener.onItemSelected(neoWallet);
+        neoWallet.setSelected(true);
 
         mPreIndex = mCurrentIndex;
-        mCurrentIndex = mWalletBeans.indexOf(walletBean);
+        mCurrentIndex = mNeoWallets.indexOf(neoWallet);
 
         //当前所选与上次不同
-        if (!walletBean.equals(mWalletBeans.get(mPreIndex))) {
-            mWalletBeans.get(mPreIndex).setSelected(false);
+        if (!neoWallet.equals(mNeoWallets.get(mPreIndex))) {
+            mNeoWallets.get(mPreIndex).setSelected(false);
         }
 
         mSwitchTransactionRecyclerViewAdapter.notifyDataSetChanged();

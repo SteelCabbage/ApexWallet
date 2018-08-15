@@ -21,7 +21,7 @@ import java.util.List;
 
 import chinapex.com.wallet.R;
 import chinapex.com.wallet.adapter.SwitchWallet2RecyclerViewAdapter;
-import chinapex.com.wallet.bean.WalletBean;
+import chinapex.com.wallet.bean.NeoWallet;
 import chinapex.com.wallet.global.ApexWalletApplication;
 import chinapex.com.wallet.global.Constant;
 import chinapex.com.wallet.model.ApexWalletDbDao;
@@ -38,21 +38,21 @@ public class SwitchWallet2Dialog extends DialogFragment implements View.OnClickL
     private onSelectedWalletListener mOnSelectedWalletListener;
     private ImageButton mIb_switch_wallet2_back;
     private RecyclerView mRv_dialog_switch_wallet2;
-    private List<WalletBean> mWalletBeans;
-    private WalletBean mCurrentWalletBean;
+    private List<NeoWallet> mNeoWallets;
+    private NeoWallet mCurrentNeoWallet;
     private SwitchWallet2RecyclerViewAdapter mSwitchWallet2RecyclerViewAdapter;
 
 
     public interface onSelectedWalletListener {
-        void onSelectedWallet(WalletBean walletBean);
+        void onSelectedWallet(NeoWallet neoWallet);
     }
 
     public void setOnSelectedWalletListener(onSelectedWalletListener onSelectedWalletListener) {
         mOnSelectedWalletListener = onSelectedWalletListener;
     }
 
-    public void setCurrentWalletBean(WalletBean currentWalletBean) {
-        mCurrentWalletBean = currentWalletBean;
+    public void setCurrentNeoWallet(NeoWallet currentNeoWallet) {
+        mCurrentNeoWallet = currentNeoWallet;
     }
 
     public static SwitchWallet2Dialog newInstance() {
@@ -107,7 +107,7 @@ public class SwitchWallet2Dialog extends DialogFragment implements View.OnClickL
     public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_UP) {
             if (null != mOnSelectedWalletListener) {
-                mOnSelectedWalletListener.onSelectedWallet(mCurrentWalletBean);
+                mOnSelectedWalletListener.onSelectedWallet(mCurrentNeoWallet);
             }
 
             dismiss();
@@ -139,25 +139,25 @@ public class SwitchWallet2Dialog extends DialogFragment implements View.OnClickL
             return;
         }
 
-        mWalletBeans = apexWalletDbDao.queryWalletBeans(Constant.TABLE_APEX_WALLET);
-        if (null == mWalletBeans || mWalletBeans.isEmpty()) {
-            CpLog.e(TAG, "mWalletBeans is null or empty!");
+        mNeoWallets = apexWalletDbDao.queryWalletBeans(Constant.TABLE_NEO_WALLET);
+        if (null == mNeoWallets || mNeoWallets.isEmpty()) {
+            CpLog.e(TAG, "mNeoWallets is null or empty!");
             return;
         }
 
-        for (WalletBean walletBean : mWalletBeans) {
-            if (null == walletBean) {
-                CpLog.e(TAG, "walletBean is null!");
+        for (NeoWallet neoWallet : mNeoWallets) {
+            if (null == neoWallet) {
+                CpLog.e(TAG, "neoWallet is null!");
                 continue;
             }
 
-            if (walletBean.equals(mCurrentWalletBean)) {
-                walletBean.setSelected(true);
+            if (neoWallet.equals(mCurrentNeoWallet)) {
+                neoWallet.setSelected(true);
                 break;
             }
         }
 
-        mSwitchWallet2RecyclerViewAdapter = new SwitchWallet2RecyclerViewAdapter(mWalletBeans);
+        mSwitchWallet2RecyclerViewAdapter = new SwitchWallet2RecyclerViewAdapter(mNeoWallets);
         mSwitchWallet2RecyclerViewAdapter.setOnItemClickListener(this);
         mRv_dialog_switch_wallet2.setLayoutManager(new LinearLayoutManager(ApexWalletApplication
                 .getInstance(), LinearLayoutManager.VERTICAL, false));
@@ -169,7 +169,7 @@ public class SwitchWallet2Dialog extends DialogFragment implements View.OnClickL
         switch (v.getId()) {
             case R.id.ib_switch_wallet2_back:
                 if (null != mOnSelectedWalletListener) {
-                    mOnSelectedWalletListener.onSelectedWallet(mCurrentWalletBean);
+                    mOnSelectedWalletListener.onSelectedWallet(mCurrentNeoWallet);
                 }
 
                 dismiss();
@@ -180,18 +180,18 @@ public class SwitchWallet2Dialog extends DialogFragment implements View.OnClickL
 
     @Override
     public void onItemClick(int position) {
-        if (null == mWalletBeans || mWalletBeans.isEmpty()) {
-            CpLog.e(TAG, "mWalletBeans is null or empty!");
+        if (null == mNeoWallets || mNeoWallets.isEmpty()) {
+            CpLog.e(TAG, "mNeoWallets is null or empty!");
             return;
         }
 
-        WalletBean walletBean = mWalletBeans.get(position);
-        if (null == walletBean) {
-            CpLog.e(TAG, "walletBean is null!");
+        NeoWallet neoWallet = mNeoWallets.get(position);
+        if (null == neoWallet) {
+            CpLog.e(TAG, "neoWallet is null!");
             return;
         }
 
-        mCurrentWalletBean = walletBean;
+        mCurrentNeoWallet = neoWallet;
     }
 
 }

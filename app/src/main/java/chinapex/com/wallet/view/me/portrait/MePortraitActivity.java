@@ -15,7 +15,7 @@ import chinapex.com.wallet.R;
 import chinapex.com.wallet.adapter.viewpager.FragmentUpdateAdapter;
 import chinapex.com.wallet.base.BaseActivity;
 import chinapex.com.wallet.base.BaseFragment;
-import chinapex.com.wallet.bean.WalletBean;
+import chinapex.com.wallet.bean.NeoWallet;
 import chinapex.com.wallet.global.ApexWalletApplication;
 import chinapex.com.wallet.global.Constant;
 import chinapex.com.wallet.model.ApexWalletDbDao;
@@ -29,13 +29,13 @@ public class MePortraitActivity extends BaseActivity implements View.OnClickList
     private static final String TAG = MePortraitActivity.class.getSimpleName();
     private TextView mTv_portrait_address;
     private ImageButton mIb_portrait_switch_wallet;
-    private List<WalletBean> mWalletBeans;
+    private List<NeoWallet> mNeoWallets;
     private TabLayout mTl_portrait;
     private ViewPager mVp_portrait;
     private List<BaseFragment> mBaseFragments;
     private List<String> mTitles;
     private FragmentUpdateAdapter mFragmentUpdateAdapter;
-    private WalletBean mCurrentClickedWalletBean;
+    private NeoWallet mCurrentClickedNeoWallet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,20 +63,20 @@ public class MePortraitActivity extends BaseActivity implements View.OnClickList
             return;
         }
 
-        mWalletBeans = apexWalletDbDao.queryWalletBeans(Constant.TABLE_APEX_WALLET);
-        if (null == mWalletBeans || mWalletBeans.isEmpty()) {
+        mNeoWallets = apexWalletDbDao.queryWalletBeans(Constant.TABLE_NEO_WALLET);
+        if (null == mNeoWallets || mNeoWallets.isEmpty()) {
             CpLog.e(TAG, "walletBeans is null or empty!");
             return;
         }
 
-        WalletBean walletBean = mWalletBeans.get(0);
-        if (null == walletBean) {
-            CpLog.e(TAG, "walletBean is null!");
+        NeoWallet neoWallet = mNeoWallets.get(0);
+        if (null == neoWallet) {
+            CpLog.e(TAG, "neoWallet is null!");
             return;
         }
 
-        mCurrentClickedWalletBean = walletBean;
-        mTv_portrait_address.setText(walletBean.getWalletAddr());
+        mCurrentClickedNeoWallet = neoWallet;
+        mTv_portrait_address.setText(neoWallet.getWalletAddr());
 
         mTl_portrait.setupWithViewPager(mVp_portrait);
 
@@ -122,19 +122,19 @@ public class MePortraitActivity extends BaseActivity implements View.OnClickList
 
     private void showDialog() {
         SwitchWallet2Dialog switchWallet2Dialog = SwitchWallet2Dialog.newInstance();
-        switchWallet2Dialog.setCurrentWalletBean(mCurrentClickedWalletBean);
+        switchWallet2Dialog.setCurrentNeoWallet(mCurrentClickedNeoWallet);
         switchWallet2Dialog.setOnSelectedWalletListener(this);
         switchWallet2Dialog.show(getFragmentManager(), "SwitchWallet2Dialog");
     }
 
     @Override
-    public void onSelectedWallet(WalletBean walletBean) {
-        if (null == walletBean) {
-            CpLog.e(TAG, "walletBean is null!");
+    public void onSelectedWallet(NeoWallet neoWallet) {
+        if (null == neoWallet) {
+            CpLog.e(TAG, "neoWallet is null!");
             return;
         }
 
-        mCurrentClickedWalletBean = walletBean;
-        mTv_portrait_address.setText(walletBean.getWalletAddr());
+        mCurrentClickedNeoWallet = neoWallet;
+        mTv_portrait_address.setText(neoWallet.getWalletAddr());
     }
 }

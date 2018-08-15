@@ -1,11 +1,11 @@
 package chinapex.com.wallet.changelistener;
 
-import chinapex.com.wallet.bean.WalletBean;
+import chinapex.com.wallet.bean.NeoWallet;
 
 /**
  * Created by SteelCabbage on 2018/6/6 0006.
  */
 
 public interface OnItemAddListener {
-    void onItemAdd(WalletBean walletBean);
+    void onItemAdd(NeoWallet neoWallet);
 }

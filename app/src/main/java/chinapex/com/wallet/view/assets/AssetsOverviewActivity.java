@@ -22,7 +22,7 @@ import chinapex.com.wallet.adapter.SpacesItemDecoration;
 import chinapex.com.wallet.base.BaseActivity;
 import chinapex.com.wallet.bean.AssetBean;
 import chinapex.com.wallet.bean.BalanceBean;
-import chinapex.com.wallet.bean.WalletBean;
+import chinapex.com.wallet.bean.NeoWallet;
 import chinapex.com.wallet.changelistener.ApexListeners;
 import chinapex.com.wallet.executor.TaskController;
 import chinapex.com.wallet.executor.callback.IGetAccountStateCallback;
@@ -47,7 +47,7 @@ public class AssetsOverviewActivity extends BaseActivity implements
     private static final String TAG = AssetsOverviewActivity.class.getSimpleName();
     private TextView mTv_assets_overview_wallet_name;
     private TextView mTv_assets_overview_wallet_address;
-    private WalletBean mWalletBean;
+    private NeoWallet mNeoWallet;
     private RecyclerView mRv_assets_overview;
     private List<BalanceBean> mBalanceBeans;
     private AssetsOverviewRecyclerViewAdapter mAssetsOverviewRecyclerViewAdapter;
@@ -90,10 +90,10 @@ public class AssetsOverviewActivity extends BaseActivity implements
             return;
         }
 
-        mWalletBean = (WalletBean) intent.getParcelableExtra(Constant.WALLET_BEAN);
+        mNeoWallet = (NeoWallet) intent.getParcelableExtra(Constant.WALLET_BEAN);
 
-        mTv_assets_overview_wallet_name.setText(mWalletBean.getWalletName());
-        mTv_assets_overview_wallet_address.setText(mWalletBean.getWalletAddr());
+        mTv_assets_overview_wallet_name.setText(mNeoWallet.getWalletName());
+        mTv_assets_overview_wallet_address.setText(mNeoWallet.getWalletAddr());
 
         mRv_assets_overview.setLayoutManager(new LinearLayoutManager(ApexWalletApplication
                 .getInstance(), LinearLayoutManager.VERTICAL, false));
@@ -109,7 +109,7 @@ public class AssetsOverviewActivity extends BaseActivity implements
     }
 
     private void getAssetsBalance() {
-        TaskController.getInstance().submit(new GetAccountState(mWalletBean.getWalletAddr(), this));
+        TaskController.getInstance().submit(new GetAccountState(mNeoWallet.getWalletAddr(), this));
 
         if (null == mCurrentAssets || mCurrentAssets.isEmpty()) {
             CpLog.e(TAG, "mCurrentAssets is null or empty!");
@@ -128,7 +128,7 @@ public class AssetsOverviewActivity extends BaseActivity implements
                 continue;
             }
 
-            TaskController.getInstance().submit(new GetNep5Balance(currentAsset, mWalletBean
+            TaskController.getInstance().submit(new GetNep5Balance(currentAsset, mNeoWallet
                     .getWalletAddr(), this));
         }
 
@@ -143,7 +143,7 @@ public class AssetsOverviewActivity extends BaseActivity implements
         }
 
         HashMap<String, Parcelable> parcelables = new HashMap<>();
-        parcelables.put(Constant.WALLET_BEAN, mWalletBean);
+        parcelables.put(Constant.WALLET_BEAN, mNeoWallet);
         parcelables.put(Constant.BALANCE_BEAN, balanceBean);
         startActivityParcelables(BalanceDetailActivity.class, false, parcelables);
 
@@ -168,12 +168,12 @@ public class AssetsOverviewActivity extends BaseActivity implements
     }
 
     private List<BalanceBean> getNep5Assets() {
-        if (null == mWalletBean) {
-            CpLog.e(TAG, "getNep5Assets() -> mWalletBean is null!");
+        if (null == mNeoWallet) {
+            CpLog.e(TAG, "getNep5Assets() -> mNeoWallet is null!");
             return null;
         }
 
-        String assetsNep5Json = mWalletBean.getAssetsNep5Json();
+        String assetsNep5Json = mNeoWallet.getAssetsNep5Json();
         List<String> assetsNep5 = GsonUtils.json2List(assetsNep5Json, String.class);
         if (null == assetsNep5 || assetsNep5.isEmpty()) {
             CpLog.e(TAG, "assetsNep5 is null or empty!");
@@ -209,12 +209,12 @@ public class AssetsOverviewActivity extends BaseActivity implements
     }
 
     private List<BalanceBean> getGlobalAssets() {
-        if (null == mWalletBean) {
-            CpLog.e(TAG, "getGlobalAssets() -> mWalletBean is null!");
+        if (null == mNeoWallet) {
+            CpLog.e(TAG, "getGlobalAssets() -> mNeoWallet is null!");
             return null;
         }
 
-        String assetsJson = mWalletBean.getAssetsJson();
+        String assetsJson = mNeoWallet.getAssetsJson();
         List<String> assets = GsonUtils.json2List(assetsJson, String.class);
         if (null == assets || assets.isEmpty()) {
             CpLog.e(TAG, "assets is null or empty!");
@@ -415,8 +415,8 @@ public class AssetsOverviewActivity extends BaseActivity implements
 
     @Override
     public void onRefresh() {
-        if (null == mWalletBean) {
-            CpLog.e(TAG, "mWalletBean");
+        if (null == mNeoWallet) {
+            CpLog.e(TAG, "mNeoWallet");
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
@@ -426,8 +426,8 @@ public class AssetsOverviewActivity extends BaseActivity implements
             return;
         }
 
-        TaskController.getInstance().submit(new GetAccountState(mWalletBean.getWalletAddr(), this));
-        TaskController.getInstance().submit(new GetNep5Balance(Constant.ASSETS_CPX, mWalletBean
+        TaskController.getInstance().submit(new GetAccountState(mNeoWallet.getWalletAddr(), this));
+        TaskController.getInstance().submit(new GetNep5Balance(Constant.ASSETS_CPX, mNeoWallet
                 .getWalletAddr(), this));
     }
 
@@ -479,8 +479,8 @@ public class AssetsOverviewActivity extends BaseActivity implements
             }
         }
 
-        mWalletBean.setAssetsJson(GsonUtils.toJsonStr(globalAssets));
-        mWalletBean.setAssetsNep5Json(GsonUtils.toJsonStr(nep5Assets));
+        mNeoWallet.setAssetsJson(GsonUtils.toJsonStr(globalAssets));
+        mNeoWallet.setAssetsNep5Json(GsonUtils.toJsonStr(nep5Assets));
         ApexWalletDbDao apexWalletDbDao = ApexWalletDbDao.getInstance(ApexWalletApplication
                 .getInstance());
         if (null == apexWalletDbDao) {
@@ -488,8 +488,8 @@ public class AssetsOverviewActivity extends BaseActivity implements
             return;
         }
 
-        apexWalletDbDao.updateCheckedAssets(mWalletBean);
-        ApexListeners.getInstance().notifyAssetsUpdate(mWalletBean);
+        apexWalletDbDao.updateCheckedAssets(mNeoWallet);
+        ApexListeners.getInstance().notifyAssetsUpdate(mNeoWallet);
 
         if (null == mBalanceBeans || null == mCurrentAssets) {
             CpLog.e(TAG, "mBalanceBeans or mCurrentAssets is null!");

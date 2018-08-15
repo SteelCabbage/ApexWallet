@@ -8,7 +8,7 @@ import android.text.TextUtils;
 import chinapex.com.wallet.R;
 import chinapex.com.wallet.base.BaseActivity;
 import chinapex.com.wallet.base.BaseFragment;
-import chinapex.com.wallet.bean.WalletBean;
+import chinapex.com.wallet.bean.NeoWallet;
 import chinapex.com.wallet.changelistener.ApexListeners;
 import chinapex.com.wallet.changelistener.OnItemDeleteListener;
 import chinapex.com.wallet.global.Constant;
@@ -18,7 +18,7 @@ import chinapex.com.wallet.utils.FragmentFactory;
 public class Me3Activity extends BaseActivity implements OnItemDeleteListener {
 
     private static final String TAG = Me3Activity.class.getSimpleName();
-    private WalletBean mWalletBean;
+    private NeoWallet mNeoWallet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +48,7 @@ public class Me3Activity extends BaseActivity implements OnItemDeleteListener {
             return;
         }
 
-        mWalletBean = bundle.getParcelable(Constant.PARCELABLE_WALLET_BEAN_MANAGE_DETAIL);
+        mNeoWallet = bundle.getParcelable(Constant.PARCELABLE_WALLET_BEAN_MANAGE_DETAIL);
 
         String fragmentTag = bundle.getString(Constant.ME_SKIP_ACTIVITY_FRAGMENT_TAG);
         initFragment(fragmentTag);
@@ -69,12 +69,12 @@ public class Me3Activity extends BaseActivity implements OnItemDeleteListener {
         fragmentTransaction.show(fragment).commit();
     }
 
-    public WalletBean getWalletBean() {
-        return mWalletBean;
+    public NeoWallet getNeoWallet() {
+        return mNeoWallet;
     }
 
     @Override
-    public void onItemDelete(WalletBean walletBean) {
+    public void onItemDelete(NeoWallet neoWallet) {
         finish();
     }
 

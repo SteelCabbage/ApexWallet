@@ -16,7 +16,8 @@ import java.util.List;
 
 import chinapex.com.wallet.R;
 import chinapex.com.wallet.base.BaseActivity;
-import chinapex.com.wallet.bean.WalletBean;
+import chinapex.com.wallet.bean.NeoWallet;
+import chinapex.com.wallet.bean.eth.EthWallet;
 import chinapex.com.wallet.executor.TaskController;
 import chinapex.com.wallet.executor.callback.ICreateWalletCallback;
 import chinapex.com.wallet.executor.callback.eth.ICreateEthWalletCallback;
@@ -266,12 +267,12 @@ public class CreateWalletActivity extends BaseActivity implements View.OnClickLi
             return;
         }
 
-        WalletBean walletBean = new WalletBean();
-        walletBean.setWalletAddr(wallet.address());
-        walletBean.setBackupState(Constant.BACKUP_UNFINISHED);
+        NeoWallet neoWallet = new NeoWallet();
+        neoWallet.setWalletAddr(wallet.address());
+        neoWallet.setBackupState(Constant.BACKUP_UNFINISHED);
         Intent intent = new Intent(this, BackupWalletActivity.class);
         intent.putExtra(Constant.BACKUP_MNEMONIC, mnemonicEnUs);
-        intent.putExtra(Constant.WALLET_BEAN, walletBean);
+        intent.putExtra(Constant.WALLET_BEAN, neoWallet);
         startActivity(intent);
         finish();
     }
@@ -296,6 +297,14 @@ public class CreateWalletActivity extends BaseActivity implements View.OnClickLi
         }
 
         CpLog.i(TAG, "mnemonicEnUs eth:" + mnemonicEnUs);
+        EthWallet ethWallet = new EthWallet();
+        ethWallet.setAddress(wallet.address());
+        ethWallet.setBackupState(Constant.BACKUP_UNFINISHED);
+        Intent intent = new Intent(this, BackupWalletActivity.class);
+        intent.putExtra(Constant.BACKUP_MNEMONIC, mnemonicEnUs);
+        intent.putExtra(Constant.WALLET_BEAN, ethWallet);
+        startActivity(intent);
+        finish();
     }
 
     private List<String> getWalletTypes() {

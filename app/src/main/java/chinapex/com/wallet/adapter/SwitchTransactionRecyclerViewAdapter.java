@@ -11,9 +11,8 @@ import android.widget.TextView;
 import java.util.List;
 
 import chinapex.com.wallet.R;
-import chinapex.com.wallet.bean.WalletBean;
+import chinapex.com.wallet.bean.NeoWallet;
 import chinapex.com.wallet.global.ApexWalletApplication;
-import chinapex.com.wallet.global.Constant;
 import chinapex.com.wallet.utils.CpLog;
 
 /**
@@ -26,14 +25,14 @@ public class SwitchTransactionRecyclerViewAdapter extends RecyclerView
 
     private static final String TAG = SwitchTransactionRecyclerViewAdapter.class.getSimpleName();
     private OnItemClickListener mOnItemClickListener;
-    private List<WalletBean> mWalletBeans;
+    private List<NeoWallet> mNeoWallets;
 
     public interface OnItemClickListener {
         void onItemClick(int position);
     }
 
-    public SwitchTransactionRecyclerViewAdapter(List<WalletBean> walletBeans) {
-        mWalletBeans = walletBeans;
+    public SwitchTransactionRecyclerViewAdapter(List<NeoWallet> neoWallets) {
+        mNeoWallets = neoWallets;
     }
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
@@ -63,15 +62,15 @@ public class SwitchTransactionRecyclerViewAdapter extends RecyclerView
 
     @Override
     public void onBindViewHolder(@NonNull SwitchTransactionAdapterHolder holder, int position) {
-        WalletBean walletBean = mWalletBeans.get(position);
-        if (null == walletBean) {
-            CpLog.e(TAG, "walletBean is null!");
+        NeoWallet neoWallet = mNeoWallets.get(position);
+        if (null == neoWallet) {
+            CpLog.e(TAG, "neoWallet is null!");
             return;
         }
 
-        holder.walletName.setText(walletBean.getWalletName());
+        holder.walletName.setText(neoWallet.getWalletName());
 
-        if (walletBean.isSelected()) {
+        if (neoWallet.isSelected()) {
             holder.walletName.setBackgroundColor(ApexWalletApplication.getInstance().getResources
                     ().getColor(R.color.c_1253BF));
             holder.walletName.setTextColor(Color.WHITE);
@@ -86,7 +85,7 @@ public class SwitchTransactionRecyclerViewAdapter extends RecyclerView
 
     @Override
     public int getItemCount() {
-        return null == mWalletBeans ? 0 : mWalletBeans.size();
+        return null == mNeoWallets ? 0 : mNeoWallets.size();
     }
 
     class SwitchTransactionAdapterHolder extends RecyclerView.ViewHolder {

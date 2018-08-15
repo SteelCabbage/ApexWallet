@@ -31,7 +31,7 @@ public class ApexWalletDbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(Constant.SQL_CREATE_APEX_WALLET);
+        db.execSQL(Constant.SQL_CREATE_NEO_WALLET);
         db.execSQL(Constant.SQL_CREATE_TRANSACTION_RECORD);
         db.execSQL(Constant.SQL_CREATE_TX_CACHE);
         db.execSQL(Constant.SQL_CREATE_ASSETS);

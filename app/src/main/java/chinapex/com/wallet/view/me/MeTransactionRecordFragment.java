@@ -24,7 +24,7 @@ import chinapex.com.wallet.adapter.EmptyAdapter;
 import chinapex.com.wallet.adapter.TransactionRecordRecyclerViewAdapter;
 import chinapex.com.wallet.base.BaseFragment;
 import chinapex.com.wallet.bean.TransactionRecord;
-import chinapex.com.wallet.bean.WalletBean;
+import chinapex.com.wallet.bean.NeoWallet;
 import chinapex.com.wallet.changelistener.ApexListeners;
 import chinapex.com.wallet.changelistener.OnTxStateUpdateListener;
 import chinapex.com.wallet.executor.TaskController;
@@ -38,7 +38,6 @@ import chinapex.com.wallet.utils.CpLog;
 import chinapex.com.wallet.utils.PhoneUtils;
 import chinapex.com.wallet.utils.ToastUtils;
 import chinapex.com.wallet.view.dialog.SwitchWallet2Dialog;
-import chinapex.com.wallet.view.dialog.SwitchWalletDialog;
 
 /**
  * Created by SteelCabbage on 2018/5/31 0031.
@@ -54,7 +53,7 @@ public class MeTransactionRecordFragment extends BaseFragment implements View.On
     private TextView mTv_me_transaction_record_title;
     private TextView mTv_me_transaction_record_address;
     private ImageButton mIb_me_transaction_record_switch;
-    private WalletBean mCurrentClickedWalletBean;
+    private NeoWallet mCurrentClickedNeoWallet;
     private SwipeRefreshLayout mSl_transaction_record;
     private RecyclerView mRv_transaction_record;
     private List<TransactionRecord> mTransactionRecords;
@@ -119,14 +118,14 @@ public class MeTransactionRecordFragment extends BaseFragment implements View.On
 
     private void initData() {
         Me3Activity me3Activity = (Me3Activity) getActivity();
-        mCurrentClickedWalletBean = me3Activity.getWalletBean();
-        if (null == mCurrentClickedWalletBean) {
+        mCurrentClickedNeoWallet = me3Activity.getNeoWallet();
+        if (null == mCurrentClickedNeoWallet) {
             CpLog.e(TAG, "currentClickedWalletBean is null!");
             return;
         }
 
-        mTv_me_transaction_record_title.setText(mCurrentClickedWalletBean.getWalletName());
-        mTv_me_transaction_record_address.setText(mCurrentClickedWalletBean.getWalletAddr());
+        mTv_me_transaction_record_title.setText(mCurrentClickedNeoWallet.getWalletName());
+        mTv_me_transaction_record_address.setText(mCurrentClickedNeoWallet.getWalletAddr());
         ApexListeners.getInstance().addOnTxStateUpdateListener(this);
     }
 
@@ -222,21 +221,21 @@ public class MeTransactionRecordFragment extends BaseFragment implements View.On
 
     private void showDialog() {
         SwitchWallet2Dialog switchWallet2Dialog = SwitchWallet2Dialog.newInstance();
-        switchWallet2Dialog.setCurrentWalletBean(mCurrentClickedWalletBean);
+        switchWallet2Dialog.setCurrentNeoWallet(mCurrentClickedNeoWallet);
         switchWallet2Dialog.setOnSelectedWalletListener(this);
         switchWallet2Dialog.show(getFragmentManager(), "SwitchWallet2Dialog");
     }
 
     @Override
-    public void onSelectedWallet(WalletBean walletBean) {
-        if (null == walletBean) {
-            CpLog.e(TAG, "walletBean is null!");
+    public void onSelectedWallet(NeoWallet neoWallet) {
+        if (null == neoWallet) {
+            CpLog.e(TAG, "neoWallet is null!");
             return;
         }
 
-        mCurrentClickedWalletBean = walletBean;
-        mTv_me_transaction_record_title.setText(walletBean.getWalletName());
-        mTv_me_transaction_record_address.setText(walletBean.getWalletAddr());
+        mCurrentClickedNeoWallet = neoWallet;
+        mTv_me_transaction_record_title.setText(neoWallet.getWalletName());
+        mTv_me_transaction_record_address.setText(neoWallet.getWalletAddr());
 
         // update transactionRecord
         loadTxsFromDb();

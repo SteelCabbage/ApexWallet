@@ -17,7 +17,6 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -30,7 +29,7 @@ import chinapex.com.wallet.adapter.EmptyAdapter;
 import chinapex.com.wallet.adapter.SpacesItemDecoration;
 import chinapex.com.wallet.base.BaseFragment;
 import chinapex.com.wallet.bean.DrawerMenu;
-import chinapex.com.wallet.bean.WalletBean;
+import chinapex.com.wallet.bean.NeoWallet;
 import chinapex.com.wallet.changelistener.ApexListeners;
 import chinapex.com.wallet.changelistener.OnAssetsUpdateListener;
 import chinapex.com.wallet.changelistener.OnItemAddListener;
@@ -56,7 +55,7 @@ public class AssetsFragment extends BaseFragment implements AssetsRecyclerViewAd
 
     private static final String TAG = AssetsFragment.class.getSimpleName();
     private RecyclerView mRv_assets;
-    private List<WalletBean> mWalletBeans;
+    private List<NeoWallet> mNeoWallets;
     private SwipeRefreshLayout mSl_assets_rv;
     private AssetsRecyclerViewAdapter mAssetsRecyclerViewAdapter;
     private DrawerLayout mDl_assets;
@@ -65,7 +64,7 @@ public class AssetsFragment extends BaseFragment implements AssetsRecyclerViewAd
     private ImageButton mIb_assets_ellipsis;
     private LinearLayout mLl_assets_drawer;
     private EditText mEt_assets_search;
-    private List<WalletBean> mSearchTmpWalletBeans;
+    private List<NeoWallet> mSearchTmpNeoWallets;
     private ImageButton mIb_assets_cancel;
     private EmptyAdapter mEmptyAdapter;
 
@@ -98,8 +97,8 @@ public class AssetsFragment extends BaseFragment implements AssetsRecyclerViewAd
 
         mRv_assets.setLayoutManager(new LinearLayoutManager(ApexWalletApplication.getInstance(),
                 LinearLayoutManager.VERTICAL, false));
-        mWalletBeans = getData();
-        mAssetsRecyclerViewAdapter = new AssetsRecyclerViewAdapter(mWalletBeans);
+        mNeoWallets = getData();
+        mAssetsRecyclerViewAdapter = new AssetsRecyclerViewAdapter(mNeoWallets);
         mAssetsRecyclerViewAdapter.setOnItemClickListener(this);
         mAssetsRecyclerViewAdapter.setOnItemLongClickListener(this);
 
@@ -142,14 +141,14 @@ public class AssetsFragment extends BaseFragment implements AssetsRecyclerViewAd
         ApexListeners.getInstance().addOnItemNameUpdateListener(this);
         ApexListeners.getInstance().addOnAssetsUpdateListener(this);
 
-        mSearchTmpWalletBeans = new ArrayList<>();
-        mSearchTmpWalletBeans.addAll(mWalletBeans);
+        mSearchTmpNeoWallets = new ArrayList<>();
+        mSearchTmpNeoWallets.addAll(mNeoWallets);
     }
 
     @Override
     public void onItemClick(int position) {
         startActivityParcelable(AssetsOverviewActivity.class, false, Constant.WALLET_BEAN,
-                mWalletBeans.get(position));
+                mNeoWallets.get(position));
     }
 
     @Override
@@ -158,17 +157,17 @@ public class AssetsFragment extends BaseFragment implements AssetsRecyclerViewAd
         // 预留长按左滑删除逻辑
     }
 
-    private List<WalletBean> getData() {
-        List<WalletBean> walletBeans = new ArrayList<>();
+    private List<NeoWallet> getData() {
+        List<NeoWallet> neoWallets = new ArrayList<>();
         ApexWalletDbDao apexWalletDbDao = ApexWalletDbDao.getInstance(ApexWalletApplication
                 .getInstance());
         if (null == apexWalletDbDao) {
             CpLog.e(TAG, "apexWalletDbDao is null！");
-            return walletBeans;
+            return neoWallets;
         }
 
-        walletBeans.addAll(apexWalletDbDao.queryWalletBeans(Constant.TABLE_APEX_WALLET));
-        return walletBeans;
+        neoWallets.addAll(apexWalletDbDao.queryWalletBeans(Constant.TABLE_NEO_WALLET));
+        return neoWallets;
     }
 
 
@@ -184,37 +183,37 @@ public class AssetsFragment extends BaseFragment implements AssetsRecyclerViewAd
     }
 
     @Override
-    public void onItemDelete(WalletBean walletBean) {
-        if (null == walletBean) {
-            CpLog.e(TAG, "onItemDelete() -> walletBean is null!");
+    public void onItemDelete(NeoWallet neoWallet) {
+        if (null == neoWallet) {
+            CpLog.e(TAG, "onItemDelete() -> neoWallet is null!");
             return;
         }
 
-        if (!mWalletBeans.contains(walletBean)) {
+        if (!mNeoWallets.contains(neoWallet)) {
             CpLog.e(TAG, "onItemDelete() -> this wallet not exist!");
             return;
         }
-        mWalletBeans.remove(walletBean);
-        mSearchTmpWalletBeans.remove(walletBean);
+        mNeoWallets.remove(neoWallet);
+        mSearchTmpNeoWallets.remove(neoWallet);
         mAssetsRecyclerViewAdapter.notifyDataSetChanged();
         mEmptyAdapter.notifyDataSetChanged();
     }
 
     @Override
-    public void onItemAdd(WalletBean walletBean) {
+    public void onItemAdd(NeoWallet neoWallet) {
         CpLog.i(TAG, "onItemAdd");
-        if (null == walletBean) {
-            CpLog.e(TAG, "onItemAdd() -> walletBean is null!");
+        if (null == neoWallet) {
+            CpLog.e(TAG, "onItemAdd() -> neoWallet is null!");
             return;
         }
 
-        if (mWalletBeans.contains(walletBean)) {
+        if (mNeoWallets.contains(neoWallet)) {
             CpLog.e(TAG, "onItemAdd() -> this wallet has existed!");
             return;
         }
 
-        mWalletBeans.add(walletBean);
-        mSearchTmpWalletBeans.add(walletBean);
+        mNeoWallets.add(neoWallet);
+        mSearchTmpNeoWallets.add(neoWallet);
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -304,28 +303,28 @@ public class AssetsFragment extends BaseFragment implements AssetsRecyclerViewAd
     }
 
     @Override
-    public void OnItemNameUpdate(WalletBean walletBean) {
-        if (null == walletBean) {
-            CpLog.e(TAG, "walletBean is null!");
+    public void OnItemNameUpdate(NeoWallet neoWallet) {
+        if (null == neoWallet) {
+            CpLog.e(TAG, "neoWallet is null!");
             return;
         }
 
-        for (WalletBean walletBeanTmp : mWalletBeans) {
-            if (null == walletBeanTmp) {
-                CpLog.e(TAG, "walletBeanTmp is null!");
+        for (NeoWallet neoWalletTmp : mNeoWallets) {
+            if (null == neoWalletTmp) {
+                CpLog.e(TAG, "neoWalletTmp is null!");
                 continue;
             }
 
-            if (walletBeanTmp.equals(walletBean)) {
-                walletBeanTmp.setWalletName(walletBean.getWalletName());
-                WalletBean searchTmpWalletBean = mSearchTmpWalletBeans.get(mWalletBeans.indexOf
-                        (walletBeanTmp));
-                if (null == searchTmpWalletBean) {
-                    CpLog.e(TAG, "searchTmpWalletBean is null!");
+            if (neoWalletTmp.equals(neoWallet)) {
+                neoWalletTmp.setWalletName(neoWallet.getWalletName());
+                NeoWallet searchTmpNeoWallet = mSearchTmpNeoWallets.get(mNeoWallets.indexOf
+                        (neoWalletTmp));
+                if (null == searchTmpNeoWallet) {
+                    CpLog.e(TAG, "searchTmpNeoWallet is null!");
                     continue;
                 }
 
-                searchTmpWalletBean.setWalletName(walletBean.getWalletName());
+                searchTmpNeoWallet.setWalletName(neoWallet.getWalletName());
             }
         }
 
@@ -334,26 +333,26 @@ public class AssetsFragment extends BaseFragment implements AssetsRecyclerViewAd
     }
 
     @Override
-    public void onAssetsUpdate(WalletBean walletBean) {
-        if (null == walletBean) {
-            CpLog.e(TAG, "walletBean is null!");
+    public void onAssetsUpdate(NeoWallet neoWallet) {
+        if (null == neoWallet) {
+            CpLog.e(TAG, "neoWallet is null!");
             return;
         }
 
-        if (null == mWalletBeans || mWalletBeans.isEmpty()) {
-            CpLog.e(TAG, "mWalletBeans is null or empty!");
+        if (null == mNeoWallets || mNeoWallets.isEmpty()) {
+            CpLog.e(TAG, "mNeoWallets is null or empty!");
             return;
         }
 
-        for (WalletBean walletBeanTmp : mWalletBeans) {
-            if (null == walletBeanTmp) {
-                CpLog.e(TAG, "walletBeanTmp is null!");
+        for (NeoWallet neoWalletTmp : mNeoWallets) {
+            if (null == neoWalletTmp) {
+                CpLog.e(TAG, "neoWalletTmp is null!");
                 continue;
             }
 
-            if (walletBeanTmp.equals(walletBean)) {
-                walletBeanTmp.setAssetsNep5Json(walletBean.getAssetsNep5Json());
-                walletBeanTmp.setAssetsJson(walletBean.getAssetsJson());
+            if (neoWalletTmp.equals(neoWallet)) {
+                neoWalletTmp.setAssetsNep5Json(neoWallet.getAssetsNep5Json());
+                neoWalletTmp.setAssetsJson(neoWallet.getAssetsJson());
             }
         }
 
@@ -367,8 +366,8 @@ public class AssetsFragment extends BaseFragment implements AssetsRecyclerViewAd
 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
-        mWalletBeans.clear();
-        mWalletBeans.addAll(mSearchTmpWalletBeans);
+        mNeoWallets.clear();
+        mNeoWallets.addAll(mSearchTmpNeoWallets);
 
         if (TextUtils.isEmpty(s)) {
             CpLog.w(TAG, "onTextChanged() -> is empty!");
@@ -379,15 +378,15 @@ public class AssetsFragment extends BaseFragment implements AssetsRecyclerViewAd
         }
 
         mIb_assets_cancel.setVisibility(View.VISIBLE);
-        Iterator<WalletBean> iterator = mWalletBeans.iterator();
+        Iterator<NeoWallet> iterator = mNeoWallets.iterator();
         while (iterator.hasNext()) {
-            WalletBean walletBean = iterator.next();
-            if (null == walletBean) {
-                CpLog.e(TAG, "walletBean is null!");
+            NeoWallet neoWallet = iterator.next();
+            if (null == neoWallet) {
+                CpLog.e(TAG, "neoWallet is null!");
                 continue;
             }
 
-            if (!walletBean.getWalletAddr().contains(s)) {
+            if (!neoWallet.getWalletAddr().contains(s)) {
                 iterator.remove();
             }
         }

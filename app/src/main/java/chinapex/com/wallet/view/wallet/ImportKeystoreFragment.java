@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 import chinapex.com.wallet.R;
 import chinapex.com.wallet.base.BaseFragment;
-import chinapex.com.wallet.bean.WalletBean;
+import chinapex.com.wallet.bean.NeoWallet;
 import chinapex.com.wallet.changelistener.ApexListeners;
 import chinapex.com.wallet.executor.TaskController;
 import chinapex.com.wallet.executor.callback.IFromKeystoreToWalletCallback;
@@ -165,10 +165,10 @@ public class ImportKeystoreFragment extends BaseFragment implements View.OnClick
         }
 
         String walletAddress = wallet.address();
-        WalletBean walletBeanTmp = apexWalletDbDao.queryByWalletAddress(Constant.TABLE_APEX_WALLET,
+        NeoWallet neoWalletTmp = apexWalletDbDao.queryByWalletAddress(Constant.TABLE_NEO_WALLET,
                 walletAddress);
-        if (null != walletBeanTmp) {
-            CpLog.e(TAG, "this walletBeanTmp from keystore has existed!");
+        if (null != neoWalletTmp) {
+            CpLog.e(TAG, "this neoWalletTmp from keystore has existed!");
             getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
@@ -187,17 +187,17 @@ public class ImportKeystoreFragment extends BaseFragment implements View.OnClick
         ArrayList<String> assetsNep5 = new ArrayList<>();
         assetsNep5.add(Constant.ASSETS_CPX);
 
-        WalletBean walletBean = new WalletBean();
-        walletBean.setWalletName(Constant.WALLET_NAME_IMPORT_DEFAULT);
-        walletBean.setWalletAddr(walletAddress);
-        walletBean.setBackupState(Constant.BACKUP_UNFINISHED);
-        walletBean.setKeyStore(keystore);
-        walletBean.setAssetsJson(GsonUtils.toJsonStr(assets));
-        walletBean.setAssetsNep5Json(GsonUtils.toJsonStr(assetsNep5));
+        NeoWallet neoWallet = new NeoWallet();
+        neoWallet.setWalletName(Constant.WALLET_NAME_IMPORT_DEFAULT);
+        neoWallet.setWalletAddr(walletAddress);
+        neoWallet.setBackupState(Constant.BACKUP_UNFINISHED);
+        neoWallet.setKeyStore(keystore);
+        neoWallet.setAssetsJson(GsonUtils.toJsonStr(assets));
+        neoWallet.setAssetsNep5Json(GsonUtils.toJsonStr(assetsNep5));
 
-        apexWalletDbDao.insert(Constant.TABLE_APEX_WALLET, walletBean);
+        apexWalletDbDao.insert(Constant.TABLE_NEO_WALLET, neoWallet);
         CpLog.i(TAG, "ApexListeners.getInstance().notifyItemAdd");
-        ApexListeners.getInstance().notifyItemAdd(walletBean);
+        ApexListeners.getInstance().notifyItemAdd(neoWallet);
 
         isFirstEnter();
     }

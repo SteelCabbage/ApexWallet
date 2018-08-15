@@ -8,7 +8,9 @@ import android.widget.TextView;
 
 import chinapex.com.wallet.R;
 import chinapex.com.wallet.base.BaseActivity;
+import chinapex.com.wallet.bean.NeoWallet;
 import chinapex.com.wallet.bean.WalletBean;
+import chinapex.com.wallet.bean.eth.EthWallet;
 import chinapex.com.wallet.global.Constant;
 import chinapex.com.wallet.utils.CpLog;
 import chinapex.com.wallet.utils.FragmentFactory;
