@@ -139,7 +139,7 @@ public class SwitchWallet2Dialog extends DialogFragment implements View.OnClickL
             return;
         }
 
-        mNeoWallets = apexWalletDbDao.queryWalletBeans(Constant.TABLE_NEO_WALLET);
+        mNeoWallets = apexWalletDbDao.queryNeoWallets();
         if (null == mNeoWallets || mNeoWallets.isEmpty()) {
             CpLog.e(TAG, "mNeoWallets is null or empty!");
             return;

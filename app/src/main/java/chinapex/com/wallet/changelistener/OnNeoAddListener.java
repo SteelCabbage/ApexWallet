@@ -6,6 +6,6 @@ import chinapex.com.wallet.bean.NeoWallet;
  * Created by SteelCabbage on 2018/6/6 0006.
  */
 
-public interface OnItemAddListener {
-    void onItemAdd(NeoWallet neoWallet);
+public interface OnNeoAddListener {
+    void onNeoAdd(NeoWallet neoWallet);
 }

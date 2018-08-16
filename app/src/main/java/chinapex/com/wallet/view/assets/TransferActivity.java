@@ -119,7 +119,7 @@ public class TransferActivity extends BaseActivity implements View.OnClickListen
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_transfer_send:
-                String addressFrom = mNeoWallet.getWalletAddr();
+                String addressFrom = mNeoWallet.getAddress();
                 String addressTo = mEt_transfer_to_wallet_addr.getText().toString().trim();
                 if (TextUtils.isEmpty(addressFrom) || TextUtils.isEmpty(addressTo)) {
                     CpLog.e(TAG, "addressFrom or addressTo is null or empty!");

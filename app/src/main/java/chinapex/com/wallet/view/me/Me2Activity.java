@@ -16,7 +16,7 @@ import chinapex.com.wallet.adapter.SpacesItemDecoration;
 import chinapex.com.wallet.base.BaseActivity;
 import chinapex.com.wallet.bean.NeoWallet;
 import chinapex.com.wallet.changelistener.ApexListeners;
-import chinapex.com.wallet.changelistener.OnItemDeleteListener;
+import chinapex.com.wallet.changelistener.OnNeoDeleteListener;
 import chinapex.com.wallet.changelistener.OnItemNameUpdateListener;
 import chinapex.com.wallet.changelistener.OnItemStateUpdateListener;
 import chinapex.com.wallet.global.ApexWalletApplication;
@@ -27,7 +27,7 @@ import chinapex.com.wallet.utils.DensityUtil;
 
 public class Me2Activity extends BaseActivity implements MeRecyclerViewAdapter
         .OnItemClickListener, OnItemNameUpdateListener, OnItemStateUpdateListener,
-        OnItemDeleteListener {
+        OnNeoDeleteListener {
     private static final String TAG = Me2Activity.class.getSimpleName();
     private List<NeoWallet> mNeoWallets;
     private RecyclerView mRv_me2;
@@ -99,7 +99,7 @@ public class Me2Activity extends BaseActivity implements MeRecyclerViewAdapter
             return neoWallets;
         }
 
-        neoWallets.addAll(apexWalletDbDao.queryWalletBeans(Constant.TABLE_NEO_WALLET));
+        neoWallets.addAll(apexWalletDbDao.queryNeoWallets());
         if (neoWallets.isEmpty()) {
             CpLog.w(TAG, "local have no wallet");
             return neoWallets;
@@ -187,14 +187,14 @@ public class Me2Activity extends BaseActivity implements MeRecyclerViewAdapter
 
     // 删除钱包时回调
     @Override
-    public void onItemDelete(NeoWallet neoWallet) {
+    public void onNeoDelete(NeoWallet neoWallet) {
         if (null == neoWallet) {
-            CpLog.e(TAG, "onItemDelete() -> neoWallet is null!");
+            CpLog.e(TAG, "onNeoDelete() -> neoWallet is null!");
             return;
         }
 
         if (!mNeoWallets.contains(neoWallet)) {
-            CpLog.e(TAG, "onItemDelete() -> this wallet not exist!");
+            CpLog.e(TAG, "onNeoDelete() -> this wallet not exist!");
             return;
         }
 
@@ -222,7 +222,7 @@ public class Me2Activity extends BaseActivity implements MeRecyclerViewAdapter
             }
 
             if (neoWalletTmp.equals(neoWallet)) {
-                neoWalletTmp.setWalletName(neoWallet.getWalletName());
+                neoWalletTmp.setName(neoWallet.getName());
             }
         }
 

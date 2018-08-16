@@ -146,7 +146,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener,
             return null;
         }
 
-        List<NeoWallet> neoWallets = apexWalletDbDao.queryWalletBeans(Constant.TABLE_NEO_WALLET);
+        List<NeoWallet> neoWallets = apexWalletDbDao.queryNeoWallets();
         if (null == neoWallets || neoWallets.isEmpty()) {
             CpLog.e(TAG, "neoWallets is null or empty!");
             return null;

@@ -85,10 +85,10 @@ public class MeManageDetailFragment extends BaseFragment implements View.OnClick
             return;
         }
 
-        mTv_me_manager_detail_title.setText(mCurrentClickedNeoWallet.getWalletName());
-        mTv_me_manager_detail_address.setText(mCurrentClickedNeoWallet.getWalletAddr());
+        mTv_me_manager_detail_title.setText(mCurrentClickedNeoWallet.getName());
+        mTv_me_manager_detail_address.setText(mCurrentClickedNeoWallet.getAddress());
         mEt_me_manager_detail_bottom_wallet_name.setText(String.valueOf(mCurrentClickedNeoWallet
-                .getWalletName()));
+                .getName()));
 
         setIsShowBackupKey(mCurrentClickedNeoWallet.getBackupState());
     }
@@ -129,9 +129,9 @@ public class MeManageDetailFragment extends BaseFragment implements View.OnClick
 
         String newWalletName = mEt_me_manager_detail_bottom_wallet_name.getText().toString().trim();
         apexWalletDbDao.updateWalletName(Constant.TABLE_NEO_WALLET, mCurrentClickedNeoWallet
-                .getWalletAddr(), newWalletName);
+                .getAddress(), newWalletName);
         mTv_me_manager_detail_title.setText(newWalletName);
-        mCurrentClickedNeoWallet.setWalletName(newWalletName);
+        mCurrentClickedNeoWallet.setName(newWalletName);
         ApexListeners.getInstance().notifyItemNameUpdate(mCurrentClickedNeoWallet);
         ToastUtils.getInstance().showToast(ApexWalletApplication.getInstance().getResources()
                 .getString(R.string.wallet_name_save_success));

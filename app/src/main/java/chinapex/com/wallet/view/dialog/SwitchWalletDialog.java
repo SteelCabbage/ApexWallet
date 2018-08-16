@@ -97,7 +97,7 @@ public class SwitchWalletDialog extends DialogFragment implements View.OnClickLi
         }
 
 
-        mNeoWallets = apexWalletDbDao.queryWalletBeans(Constant.TABLE_NEO_WALLET);
+        mNeoWallets = apexWalletDbDao.queryNeoWallets();
         for (NeoWallet neoWallet : mNeoWallets) {
             if (null == neoWallet) {
                 CpLog.e(TAG, "neoWallet is null!");

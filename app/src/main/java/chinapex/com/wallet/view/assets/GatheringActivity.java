@@ -60,11 +60,11 @@ public class GatheringActivity extends BaseActivity implements View.OnClickListe
             CpLog.e(TAG, "mNeoWallet is null!");
             return;
         }
-        mTv_gathering_wallet_name.setText(mNeoWallet.getWalletName());
-        mTv_gathering_wallet_addr.setText(mNeoWallet.getWalletAddr());
+        mTv_gathering_wallet_name.setText(mNeoWallet.getName());
+        mTv_gathering_wallet_addr.setText(mNeoWallet.getAddress());
 
         //生成二维码
-        String walletAddr = mNeoWallet.getWalletAddr();
+        String walletAddr = mNeoWallet.getAddress();
         Bitmap bitmap;
         try {
             bitmap = BitmapUtils.create2DCode(walletAddr);
@@ -81,7 +81,7 @@ public class GatheringActivity extends BaseActivity implements View.OnClickListe
             case R.id.bt_gathering_copy_addr:
                 CpLog.i(TAG, "bt_gathering_copy_addr is click！");
                 PhoneUtils.copy2Clipboard(ApexWalletApplication.getInstance(), mNeoWallet
-                        .getWalletAddr());
+                        .getAddress());
                 ToastUtils.getInstance().showToast(ApexWalletApplication.getInstance()
                         .getResources().getString(R.string.wallet_copied_share));
                 break;

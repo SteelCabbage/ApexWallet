@@ -7,6 +7,6 @@ import chinapex.com.wallet.bean.NeoWallet;
  * E-Mail：liuyi_61@163.com
  */
 
-public interface OnAssetsUpdateListener {
-    void onAssetsUpdate(NeoWallet neoWallet);
+public interface OnNeoAssetsUpdateListener {
+    void onNeoAssetsUpdate(NeoWallet neoWallet);
 }

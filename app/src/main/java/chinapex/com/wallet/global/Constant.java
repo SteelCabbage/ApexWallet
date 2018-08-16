@@ -30,7 +30,6 @@ public class Constant {
     public static final long ASSETS_POLLING_TIME = 10 * 1000;
     public static final String UPDATE_ASSETS_OK = "updateAssetsOk";
 
-
     // Portrait type
     public static final int TYPE_GENERA_LIST = 1;
     public static final int TYPE_GENERA_TAGS = 2;
@@ -44,6 +43,15 @@ public class Constant {
     public static final String EXTRA_TYPE_INPUT_CONTENT = "extraTypeInputContent";
     public static final String EXTRA_TYPE_INPUT_POSITION = "extraTypeInputPosition";
 
+    // wallet type
+    public static final int WALLET_TYPE_NEO = 0;
+    public static final int WALLET_TYPE_ETH = 1;
+    public static final int WALLET_TYPE_CPX = 2;
+
+    // wallet type name
+    public static final String WALLET_TYPE_NAME_NEO = "NEO";
+    public static final String WALLET_TYPE_NAME_ETH = "ETH";
+    public static final String WALLET_TYPE_NAME_CPX = "CPX";
 
     // 交易记录
     public static final String URL_TRANSACTION_HISTORY = "https://tracker.chinapex.com" +

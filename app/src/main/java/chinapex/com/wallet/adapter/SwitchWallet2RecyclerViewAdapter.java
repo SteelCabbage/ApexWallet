@@ -85,8 +85,8 @@ public class SwitchWallet2RecyclerViewAdapter extends RecyclerView
             return;
         }
 
-        holder.walletName.setText(neoWallet.getWalletName());
-        holder.walletAddress.setText(neoWallet.getWalletAddr());
+        holder.walletName.setText(neoWallet.getName());
+        holder.walletAddress.setText(neoWallet.getAddress());
         if (neoWallet.isSelected()) {
             holder.checkState.setVisibility(View.VISIBLE);
         } else {

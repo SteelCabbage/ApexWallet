@@ -10,7 +10,7 @@ import chinapex.com.wallet.bean.WalletBean;
  * E-Mail：liuyi_61@163.com
  */
 
-public class EthWallet implements Parcelable, WalletBean {
+public class EthWallet extends WalletBean {
     private String name;
     private String address;
     private int backupState;
@@ -140,4 +140,39 @@ public class EthWallet implements Parcelable, WalletBean {
             return new EthWallet[size];
         }
     };
+
+    @Override
+    public void setWalletName(String walletName) {
+        setName(walletName);
+    }
+
+    @Override
+    public String getWalletName() {
+        return getName();
+    }
+
+    @Override
+    public String getWalletAddress() {
+        return getAddress();
+    }
+
+    @Override
+    public void setAssets(String assetsJson) {
+        setAssetsJson(assetsJson);
+    }
+
+    @Override
+    public String getAssets() {
+        return getAssetsJson();
+    }
+
+    @Override
+    public void setColorAssets(String colorAssetsJson) {
+        setAssetsErc20Json(colorAssetsJson);
+    }
+
+    @Override
+    public String getColorAssets() {
+        return getAssetsErc20Json();
+    }
 }

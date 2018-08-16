@@ -188,16 +188,16 @@ public class ImportKeystoreFragment extends BaseFragment implements View.OnClick
         assetsNep5.add(Constant.ASSETS_CPX);
 
         NeoWallet neoWallet = new NeoWallet();
-        neoWallet.setWalletName(Constant.WALLET_NAME_IMPORT_DEFAULT);
-        neoWallet.setWalletAddr(walletAddress);
+        neoWallet.setName(Constant.WALLET_NAME_IMPORT_DEFAULT);
+        neoWallet.setAddress(walletAddress);
         neoWallet.setBackupState(Constant.BACKUP_UNFINISHED);
         neoWallet.setKeyStore(keystore);
         neoWallet.setAssetsJson(GsonUtils.toJsonStr(assets));
         neoWallet.setAssetsNep5Json(GsonUtils.toJsonStr(assetsNep5));
 
         apexWalletDbDao.insert(Constant.TABLE_NEO_WALLET, neoWallet);
-        CpLog.i(TAG, "ApexListeners.getInstance().notifyItemAdd");
-        ApexListeners.getInstance().notifyItemAdd(neoWallet);
+        CpLog.i(TAG, "ApexListeners.getInstance().notifyNeoAdd");
+        ApexListeners.getInstance().notifyNeoAdd(neoWallet);
 
         isFirstEnter();
     }

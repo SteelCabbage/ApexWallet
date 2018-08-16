@@ -225,7 +225,7 @@ public class ConfirmMnemonicFragment extends BaseFragment implements View.OnClic
         switch (walletBean.getClass().getSimpleName()) {
             case "NeoWallet":
                 NeoWallet neoWallet = (NeoWallet) walletBean;
-                apexWalletDbDao.updateBackupState(Constant.TABLE_NEO_WALLET, neoWallet.getWalletAddr(), Constant.BACKUP_FINISH);
+                apexWalletDbDao.updateBackupState(Constant.TABLE_NEO_WALLET, neoWallet.getAddress(), Constant.BACKUP_FINISH);
                 neoWallet.setBackupState(Constant.BACKUP_FINISH);
                 ApexListeners.getInstance().notifyItemStateUpdate(neoWallet);
                 break;

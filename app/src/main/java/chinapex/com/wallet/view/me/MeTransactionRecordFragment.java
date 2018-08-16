@@ -124,8 +124,8 @@ public class MeTransactionRecordFragment extends BaseFragment implements View.On
             return;
         }
 
-        mTv_me_transaction_record_title.setText(mCurrentClickedNeoWallet.getWalletName());
-        mTv_me_transaction_record_address.setText(mCurrentClickedNeoWallet.getWalletAddr());
+        mTv_me_transaction_record_title.setText(mCurrentClickedNeoWallet.getName());
+        mTv_me_transaction_record_address.setText(mCurrentClickedNeoWallet.getAddress());
         ApexListeners.getInstance().addOnTxStateUpdateListener(this);
     }
 
@@ -234,8 +234,8 @@ public class MeTransactionRecordFragment extends BaseFragment implements View.On
         }
 
         mCurrentClickedNeoWallet = neoWallet;
-        mTv_me_transaction_record_title.setText(neoWallet.getWalletName());
-        mTv_me_transaction_record_address.setText(neoWallet.getWalletAddr());
+        mTv_me_transaction_record_title.setText(neoWallet.getName());
+        mTv_me_transaction_record_address.setText(neoWallet.getAddress());
 
         // update transactionRecord
         loadTxsFromDb();

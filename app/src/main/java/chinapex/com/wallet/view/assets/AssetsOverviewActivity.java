@@ -92,8 +92,8 @@ public class AssetsOverviewActivity extends BaseActivity implements
 
         mNeoWallet = (NeoWallet) intent.getParcelableExtra(Constant.WALLET_BEAN);
 
-        mTv_assets_overview_wallet_name.setText(mNeoWallet.getWalletName());
-        mTv_assets_overview_wallet_address.setText(mNeoWallet.getWalletAddr());
+        mTv_assets_overview_wallet_name.setText(mNeoWallet.getName());
+        mTv_assets_overview_wallet_address.setText(mNeoWallet.getAddress());
 
         mRv_assets_overview.setLayoutManager(new LinearLayoutManager(ApexWalletApplication
                 .getInstance(), LinearLayoutManager.VERTICAL, false));
@@ -109,7 +109,7 @@ public class AssetsOverviewActivity extends BaseActivity implements
     }
 
     private void getAssetsBalance() {
-        TaskController.getInstance().submit(new GetAccountState(mNeoWallet.getWalletAddr(), this));
+        TaskController.getInstance().submit(new GetAccountState(mNeoWallet.getAddress(), this));
 
         if (null == mCurrentAssets || mCurrentAssets.isEmpty()) {
             CpLog.e(TAG, "mCurrentAssets is null or empty!");
@@ -129,7 +129,7 @@ public class AssetsOverviewActivity extends BaseActivity implements
             }
 
             TaskController.getInstance().submit(new GetNep5Balance(currentAsset, mNeoWallet
-                    .getWalletAddr(), this));
+                    .getAddress(), this));
         }
 
     }
@@ -426,9 +426,9 @@ public class AssetsOverviewActivity extends BaseActivity implements
             return;
         }
 
-        TaskController.getInstance().submit(new GetAccountState(mNeoWallet.getWalletAddr(), this));
+        TaskController.getInstance().submit(new GetAccountState(mNeoWallet.getAddress(), this));
         TaskController.getInstance().submit(new GetNep5Balance(Constant.ASSETS_CPX, mNeoWallet
-                .getWalletAddr(), this));
+                .getAddress(), this));
     }
 
     @Override

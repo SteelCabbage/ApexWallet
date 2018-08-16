@@ -75,8 +75,8 @@ public class CreateWallet implements Runnable {
         assetsNep5.add(Constant.ASSETS_CPX);
 
         NeoWallet neoWallet = new NeoWallet();
-        neoWallet.setWalletName(mWalletName);
-        neoWallet.setWalletAddr(wallet.address());
+        neoWallet.setName(mWalletName);
+        neoWallet.setAddress(wallet.address());
         neoWallet.setBackupState(Constant.BACKUP_UNFINISHED);
         neoWallet.setKeyStore(toKeyStore);
         neoWallet.setAssetsJson(GsonUtils.toJsonStr(assets));
@@ -90,7 +90,7 @@ public class CreateWallet implements Runnable {
         }
 
         apexWalletDbDao.insert(Constant.TABLE_NEO_WALLET, neoWallet);
-        ApexListeners.getInstance().notifyItemAdd(neoWallet);
+        ApexListeners.getInstance().notifyNeoAdd(neoWallet);
         mICreateWalletCallback.newWallet(wallet);
     }
 }

@@ -68,7 +68,7 @@ public class SwitchTransactionRecyclerViewAdapter extends RecyclerView
             return;
         }
 
-        holder.walletName.setText(neoWallet.getWalletName());
+        holder.walletName.setText(neoWallet.getName());
 
         if (neoWallet.isSelected()) {
             holder.walletName.setBackgroundColor(ApexWalletApplication.getInstance().getResources

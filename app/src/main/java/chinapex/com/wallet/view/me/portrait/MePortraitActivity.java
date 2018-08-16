@@ -63,7 +63,7 @@ public class MePortraitActivity extends BaseActivity implements View.OnClickList
             return;
         }
 
-        mNeoWallets = apexWalletDbDao.queryWalletBeans(Constant.TABLE_NEO_WALLET);
+        mNeoWallets = apexWalletDbDao.queryNeoWallets();
         if (null == mNeoWallets || mNeoWallets.isEmpty()) {
             CpLog.e(TAG, "walletBeans is null or empty!");
             return;
@@ -76,7 +76,7 @@ public class MePortraitActivity extends BaseActivity implements View.OnClickList
         }
 
         mCurrentClickedNeoWallet = neoWallet;
-        mTv_portrait_address.setText(neoWallet.getWalletAddr());
+        mTv_portrait_address.setText(neoWallet.getAddress());
 
         mTl_portrait.setupWithViewPager(mVp_portrait);
 
@@ -135,6 +135,6 @@ public class MePortraitActivity extends BaseActivity implements View.OnClickList
         }
 
         mCurrentClickedNeoWallet = neoWallet;
-        mTv_portrait_address.setText(neoWallet.getWalletAddr());
+        mTv_portrait_address.setText(neoWallet.getAddress());
     }
 }

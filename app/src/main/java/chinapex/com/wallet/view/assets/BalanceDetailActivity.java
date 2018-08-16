@@ -81,7 +81,7 @@ public class BalanceDetailActivity extends BaseActivity implements View.OnClickL
         mLl_balance_detail_map.setVisibility(View.INVISIBLE);
         mTv_balance_detail_assets_name.setText(mBalanceBean.getAssetSymbol());
         mTv_balance_detail_assets_value.setText(mBalanceBean.getAssetsValue());
-        mTv_balance_detail_wallet_name.setText(mNeoWallet.getWalletName());
+        mTv_balance_detail_wallet_name.setText(mNeoWallet.getName());
     }
 
     @Override

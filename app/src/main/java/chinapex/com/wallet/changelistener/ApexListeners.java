@@ -17,12 +17,12 @@ public class ApexListeners {
 
     private static final String TAG = ApexListeners.class.getSimpleName();
 
-    private List<OnItemDeleteListener> mOnItemDeleteListeners;
-    private List<OnItemAddListener> mOnItemAddListeners;
+    private List<OnNeoDeleteListener> mOnNeoDeleteListeners;
+    private List<OnNeoAddListener> mOnNeoAddListeners;
     private List<OnItemStateUpdateListener> mOnItemStateUpdateListeners;
     private List<OnItemNameUpdateListener> mOnItemNameUpdateListeners;
     private List<OnTxStateUpdateListener> mOnTxStateUpdateListeners;
-    private List<OnAssetsUpdateListener> mOnAssetsUpdateListeners;
+    private List<OnNeoAssetsUpdateListener> mOnNeoAssetsUpdateListeners;
     // eth
     private List<OnEthAddListener> mOnEthAddListeners;
     private List<OnEthStateUpdateListener> mOnEthStateUpdateListeners;
@@ -40,70 +40,70 @@ public class ApexListeners {
     }
 
     public void doInit() {
-        mOnItemDeleteListeners = new ArrayList<>();
-        mOnItemAddListeners = new ArrayList<>();
+        mOnNeoDeleteListeners = new ArrayList<>();
+        mOnNeoAddListeners = new ArrayList<>();
         mOnItemStateUpdateListeners = new ArrayList<>();
         mOnItemNameUpdateListeners = new ArrayList<>();
         mOnTxStateUpdateListeners = new ArrayList<>();
-        mOnAssetsUpdateListeners = new ArrayList<>();
+        mOnNeoAssetsUpdateListeners = new ArrayList<>();
         mOnEthAddListeners = new ArrayList<>();
         mOnEthStateUpdateListeners = new ArrayList<>();
     }
 
     public void onDestroy() {
-        mOnItemDeleteListeners.clear();
-        mOnItemAddListeners.clear();
+        mOnNeoDeleteListeners.clear();
+        mOnNeoAddListeners.clear();
         mOnItemStateUpdateListeners.clear();
         mOnItemNameUpdateListeners.clear();
         mOnTxStateUpdateListeners.clear();
-        mOnAssetsUpdateListeners.clear();
+        mOnNeoAssetsUpdateListeners.clear();
         mOnEthAddListeners.clear();
         mOnEthStateUpdateListeners.clear();
 
-        mOnItemDeleteListeners = null;
-        mOnItemAddListeners = null;
+        mOnNeoDeleteListeners = null;
+        mOnNeoAddListeners = null;
         mOnItemStateUpdateListeners = null;
         mOnItemNameUpdateListeners = null;
         mOnTxStateUpdateListeners = null;
-        mOnAssetsUpdateListeners = null;
+        mOnNeoAssetsUpdateListeners = null;
         mOnEthAddListeners = null;
         mOnEthStateUpdateListeners = null;
     }
 
-    public void addOnItemDeleteListener(OnItemDeleteListener onItemDeleteListener) {
-        if (null == mOnItemDeleteListeners || null == onItemDeleteListener) {
-            CpLog.e(TAG, "1:mOnItemDeleteListeners or OnItemDeleteListener is null!");
+    public void addOnItemDeleteListener(OnNeoDeleteListener onNeoDeleteListener) {
+        if (null == mOnNeoDeleteListeners || null == onNeoDeleteListener) {
+            CpLog.e(TAG, "1:mOnNeoDeleteListeners or OnNeoDeleteListener is null!");
             return;
         }
 
-        mOnItemDeleteListeners.add(onItemDeleteListener);
+        mOnNeoDeleteListeners.add(onNeoDeleteListener);
     }
 
-    public void removeOnItemDeleteListener(OnItemDeleteListener onItemDeleteListener) {
-        if (null == mOnItemDeleteListeners || null == onItemDeleteListener) {
-            CpLog.e(TAG, "0:mOnItemDeleteListeners or OnItemDeleteListener is null!");
+    public void removeOnItemDeleteListener(OnNeoDeleteListener onNeoDeleteListener) {
+        if (null == mOnNeoDeleteListeners || null == onNeoDeleteListener) {
+            CpLog.e(TAG, "0:mOnNeoDeleteListeners or OnNeoDeleteListener is null!");
             return;
         }
 
-        mOnItemDeleteListeners.remove(onItemDeleteListener);
+        mOnNeoDeleteListeners.remove(onNeoDeleteListener);
     }
 
-    public void addOnItemAddListener(OnItemAddListener onItemAddListener) {
-        if (null == mOnItemAddListeners || null == onItemAddListener) {
-            CpLog.e(TAG, "1:mOnItemAddListeners or onItemAddListener is null!");
+    public void addOnItemAddListener(OnNeoAddListener onNeoAddListener) {
+        if (null == mOnNeoAddListeners || null == onNeoAddListener) {
+            CpLog.e(TAG, "1:mOnNeoAddListeners or onNeoAddListener is null!");
             return;
         }
 
-        mOnItemAddListeners.add(onItemAddListener);
+        mOnNeoAddListeners.add(onNeoAddListener);
     }
 
-    public void removeOnItemAddListener(OnItemAddListener onItemAddListener) {
-        if (null == mOnItemAddListeners || null == onItemAddListener) {
-            CpLog.e(TAG, "0:mOnItemAddListeners or onItemAddListener is null!");
+    public void removeOnItemAddListener(OnNeoAddListener onNeoAddListener) {
+        if (null == mOnNeoAddListeners || null == onNeoAddListener) {
+            CpLog.e(TAG, "0:mOnNeoAddListeners or onNeoAddListener is null!");
             return;
         }
 
-        mOnItemAddListeners.remove(onItemAddListener);
+        mOnNeoAddListeners.remove(onNeoAddListener);
     }
 
     public void addOnItemStateUpdateListener(OnItemStateUpdateListener onItemStateUpdateListener) {
@@ -161,22 +161,22 @@ public class ApexListeners {
         mOnTxStateUpdateListeners.remove(onTxStateUpdateListener);
     }
 
-    public void addOnAssetsUpdateListener(OnAssetsUpdateListener onAssetsUpdateListener) {
-        if (null == mOnAssetsUpdateListeners || null == onAssetsUpdateListener) {
-            CpLog.e(TAG, "1:mOnAssetsUpdateListeners or onAssetsUpdateListener is null!");
+    public void addOnAssetsUpdateListener(OnNeoAssetsUpdateListener onNeoAssetsUpdateListener) {
+        if (null == mOnNeoAssetsUpdateListeners || null == onNeoAssetsUpdateListener) {
+            CpLog.e(TAG, "1:mOnNeoAssetsUpdateListeners or onNeoAssetsUpdateListener is null!");
             return;
         }
 
-        mOnAssetsUpdateListeners.add(onAssetsUpdateListener);
+        mOnNeoAssetsUpdateListeners.add(onNeoAssetsUpdateListener);
     }
 
-    public void removeOnAssetsUpdateListener(OnAssetsUpdateListener onAssetsUpdateListener) {
-        if (null == mOnAssetsUpdateListeners || null == onAssetsUpdateListener) {
-            CpLog.e(TAG, "0:mOnAssetsUpdateListeners or onAssetsUpdateListener is null!");
+    public void removeOnAssetsUpdateListener(OnNeoAssetsUpdateListener onNeoAssetsUpdateListener) {
+        if (null == mOnNeoAssetsUpdateListeners || null == onNeoAssetsUpdateListener) {
+            CpLog.e(TAG, "0:mOnNeoAssetsUpdateListeners or onNeoAssetsUpdateListener is null!");
             return;
         }
 
-        mOnAssetsUpdateListeners.remove(onAssetsUpdateListener);
+        mOnNeoAssetsUpdateListeners.remove(onNeoAssetsUpdateListener);
     }
 
     public void addOnEthAddListener(OnEthAddListener onEthAddListener) {
@@ -216,34 +216,34 @@ public class ApexListeners {
     }
 
     public void notifyItemDelete(NeoWallet neoWallet) {
-        if (null == mOnItemDeleteListeners) {
-            CpLog.e(TAG, "mOnItemDeleteListeners is null!");
+        if (null == mOnNeoDeleteListeners) {
+            CpLog.e(TAG, "mOnNeoDeleteListeners is null!");
             return;
         }
 
-        for (OnItemDeleteListener onItemDeleteListener : mOnItemDeleteListeners) {
-            if (null == onItemDeleteListener) {
-                CpLog.e(TAG, "OnItemDeleteListener is null!");
+        for (OnNeoDeleteListener onNeoDeleteListener : mOnNeoDeleteListeners) {
+            if (null == onNeoDeleteListener) {
+                CpLog.e(TAG, "OnNeoDeleteListener is null!");
                 continue;
             }
 
-            onItemDeleteListener.onItemDelete(neoWallet);
+            onNeoDeleteListener.onNeoDelete(neoWallet);
         }
     }
 
-    public void notifyItemAdd(NeoWallet neoWallet) {
-        if (null == mOnItemAddListeners) {
-            CpLog.e(TAG, "mOnItemAddListeners is null!");
+    public void notifyNeoAdd(NeoWallet neoWallet) {
+        if (null == mOnNeoAddListeners) {
+            CpLog.e(TAG, "mOnNeoAddListeners is null!");
             return;
         }
 
-        for (OnItemAddListener onItemAddListener : mOnItemAddListeners) {
-            if (null == onItemAddListener) {
-                CpLog.e(TAG, "onItemAddListener is null!");
+        for (OnNeoAddListener onNeoAddListener : mOnNeoAddListeners) {
+            if (null == onNeoAddListener) {
+                CpLog.e(TAG, "onNeoAddListener is null!");
                 continue;
             }
 
-            onItemAddListener.onItemAdd(neoWallet);
+            onNeoAddListener.onNeoAdd(neoWallet);
         }
     }
 
@@ -296,18 +296,18 @@ public class ApexListeners {
     }
 
     public void notifyAssetsUpdate(NeoWallet neoWallet) {
-        if (null == mOnAssetsUpdateListeners) {
-            CpLog.e(TAG, "mOnAssetsUpdateListeners is null!");
+        if (null == mOnNeoAssetsUpdateListeners) {
+            CpLog.e(TAG, "mOnNeoAssetsUpdateListeners is null!");
             return;
         }
 
-        for (OnAssetsUpdateListener onAssetsUpdateListener : mOnAssetsUpdateListeners) {
-            if (null == onAssetsUpdateListener) {
-                CpLog.e(TAG, "onAssetsUpdateListener is null!");
+        for (OnNeoAssetsUpdateListener onNeoAssetsUpdateListener : mOnNeoAssetsUpdateListeners) {
+            if (null == onNeoAssetsUpdateListener) {
+                CpLog.e(TAG, "onNeoAssetsUpdateListener is null!");
                 continue;
             }
 
-            onAssetsUpdateListener.onAssetsUpdate(neoWallet);
+            onNeoAssetsUpdateListener.onNeoAssetsUpdate(neoWallet);
         }
     }
 

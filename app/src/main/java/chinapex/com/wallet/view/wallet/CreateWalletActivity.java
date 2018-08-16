@@ -268,7 +268,7 @@ public class CreateWalletActivity extends BaseActivity implements View.OnClickLi
         }
 
         NeoWallet neoWallet = new NeoWallet();
-        neoWallet.setWalletAddr(wallet.address());
+        neoWallet.setAddress(wallet.address());
         neoWallet.setBackupState(Constant.BACKUP_UNFINISHED);
         Intent intent = new Intent(this, BackupWalletActivity.class);
         intent.putExtra(Constant.BACKUP_MNEMONIC, mnemonicEnUs);

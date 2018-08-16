@@ -62,8 +62,8 @@ public class MeRecyclerViewAdapter extends RecyclerView.Adapter<MeRecyclerViewAd
             return;
         }
 
-        holder.walletName.setText(neoWallet.getWalletName());
-        holder.walletAddr.setText(neoWallet.getWalletAddr());
+        holder.walletName.setText(neoWallet.getName());
+        holder.walletAddr.setText(neoWallet.getAddress());
 
         int selectedTag = neoWallet.getSelectedTag();
 

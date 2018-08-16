@@ -10,7 +10,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import chinapex.com.wallet.R;
-import chinapex.com.wallet.bean.NeoWallet;
+import chinapex.com.wallet.bean.WalletBean;
 import chinapex.com.wallet.utils.CpLog;
 
 public class AssetsRecyclerViewAdapter extends RecyclerView.Adapter<AssetsRecyclerViewAdapter
@@ -20,7 +20,7 @@ public class AssetsRecyclerViewAdapter extends RecyclerView.Adapter<AssetsRecycl
     private static final String TAG = AssetsRecyclerViewAdapter.class.getSimpleName();
     private OnItemClickListener mOnItemClickListener;
     private OnItemLongClickListener mOnItemLongClickListener;
-    private List<NeoWallet> mNeoWallets;
+    private List<WalletBean> mWalletBeans;
 
 
     public interface OnItemClickListener {
@@ -31,8 +31,8 @@ public class AssetsRecyclerViewAdapter extends RecyclerView.Adapter<AssetsRecycl
         void onItemLongClick(int position);
     }
 
-    public AssetsRecyclerViewAdapter(List<NeoWallet> neoWallets) {
-        mNeoWallets = neoWallets;
+    public AssetsRecyclerViewAdapter(List<WalletBean> walletBeans) {
+        mWalletBeans = walletBeans;
     }
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
@@ -76,14 +76,14 @@ public class AssetsRecyclerViewAdapter extends RecyclerView.Adapter<AssetsRecycl
 
     @Override
     public void onBindViewHolder(@NonNull AssetsAdapterHolder holder, int position) {
-        holder.walletName.setText(mNeoWallets.get(position).getWalletName());
-        holder.walletAddr.setText(mNeoWallets.get(position).getWalletAddr());
+        holder.walletName.setText(mWalletBeans.get(position).getWalletName());
+        holder.walletAddr.setText(mWalletBeans.get(position).getWalletAddress());
         holder.itemView.setTag(position);
     }
 
     @Override
     public int getItemCount() {
-        return null == mNeoWallets ? 0 : mNeoWallets.size();
+        return null == mWalletBeans ? 0 : mWalletBeans.size();
     }
 
     class AssetsAdapterHolder extends RecyclerView.ViewHolder {

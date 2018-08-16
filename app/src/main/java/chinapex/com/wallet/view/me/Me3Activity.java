@@ -10,12 +10,12 @@ import chinapex.com.wallet.base.BaseActivity;
 import chinapex.com.wallet.base.BaseFragment;
 import chinapex.com.wallet.bean.NeoWallet;
 import chinapex.com.wallet.changelistener.ApexListeners;
-import chinapex.com.wallet.changelistener.OnItemDeleteListener;
+import chinapex.com.wallet.changelistener.OnNeoDeleteListener;
 import chinapex.com.wallet.global.Constant;
 import chinapex.com.wallet.utils.CpLog;
 import chinapex.com.wallet.utils.FragmentFactory;
 
-public class Me3Activity extends BaseActivity implements OnItemDeleteListener {
+public class Me3Activity extends BaseActivity implements OnNeoDeleteListener {
 
     private static final String TAG = Me3Activity.class.getSimpleName();
     private NeoWallet mNeoWallet;
@@ -74,7 +74,7 @@ public class Me3Activity extends BaseActivity implements OnItemDeleteListener {
     }
 
     @Override
-    public void onItemDelete(NeoWallet neoWallet) {
+    public void onNeoDelete(NeoWallet neoWallet) {
         finish();
     }
 

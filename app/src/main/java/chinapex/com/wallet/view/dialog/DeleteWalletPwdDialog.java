@@ -138,9 +138,9 @@ public class DeleteWalletPwdDialog extends DialogFragment implements View.OnClic
             return;
         }
 
-        String walletAddress = mCurrentNeoWallet.getWalletAddr();
+        String walletAddress = mCurrentNeoWallet.getAddress();
         apexWalletDbDao.deleteByWalletNameAndAddr(Constant.TABLE_NEO_WALLET, mCurrentNeoWallet
-                .getWalletName(), walletAddress);
+                .getName(), walletAddress);
         apexWalletDbDao.delTxsByAddress(Constant.TABLE_TRANSACTION_RECORD, walletAddress);
         apexWalletDbDao.delTxsByAddress(Constant.TABLE_TX_CACHE, walletAddress);
         SharedPreferencesUtils.remove(ApexWalletApplication.getInstance(), walletAddress);

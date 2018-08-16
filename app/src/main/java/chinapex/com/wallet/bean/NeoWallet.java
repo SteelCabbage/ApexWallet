@@ -3,12 +3,10 @@ package chinapex.com.wallet.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import chinapex.com.wallet.utils.WalletUtils;
+public class NeoWallet extends WalletBean {
 
-public class NeoWallet implements Parcelable, WalletBean {
-
-    private String mWalletName;
-    private String mWalletAddr;
+    private String name;
+    private String address;
     private int backupState;
     private String keyStore;
     private String assetsJson;
@@ -19,20 +17,20 @@ public class NeoWallet implements Parcelable, WalletBean {
     public NeoWallet() {
     }
 
-    public String getWalletName() {
-        return mWalletName;
+    public String getName() {
+        return name;
     }
 
-    public void setWalletName(String walletName) {
-        mWalletName = walletName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getWalletAddr() {
-        return mWalletAddr;
+    public String getAddress() {
+        return address;
     }
 
-    public void setWalletAddr(String walletAddr) {
-        mWalletAddr = walletAddr;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public int getBackupState() {
@@ -90,12 +88,12 @@ public class NeoWallet implements Parcelable, WalletBean {
 
         NeoWallet that = (NeoWallet) o;
 
-        return mWalletAddr.equals(that.mWalletAddr);
+        return address.equals(that.address);
     }
 
     @Override
     public int hashCode() {
-        return mWalletAddr.hashCode();
+        return address.hashCode();
     }
 
     @Override
@@ -105,8 +103,8 @@ public class NeoWallet implements Parcelable, WalletBean {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.mWalletName);
-        dest.writeString(this.mWalletAddr);
+        dest.writeString(this.name);
+        dest.writeString(this.address);
         dest.writeInt(this.backupState);
         dest.writeString(this.keyStore);
         dest.writeString(this.assetsJson);
@@ -114,8 +112,8 @@ public class NeoWallet implements Parcelable, WalletBean {
     }
 
     protected NeoWallet(Parcel in) {
-        this.mWalletName = in.readString();
-        this.mWalletAddr = in.readString();
+        this.name = in.readString();
+        this.address = in.readString();
         this.backupState = in.readInt();
         this.keyStore = in.readString();
         this.assetsJson = in.readString();
@@ -134,4 +132,38 @@ public class NeoWallet implements Parcelable, WalletBean {
         }
     };
 
+    @Override
+    public void setWalletName(String walletName) {
+        setName(walletName);
+    }
+
+    @Override
+    public String getWalletName() {
+        return getName();
+    }
+
+    @Override
+    public String getWalletAddress() {
+        return getAddress();
+    }
+
+    @Override
+    public void setAssets(String assetsJson) {
+        setAssetsJson(assetsJson);
+    }
+
+    @Override
+    public String getAssets() {
+        return getAssetsJson();
+    }
+
+    @Override
+    public void setColorAssets(String colorAssetsJson) {
+        setAssetsNep5Json(colorAssetsJson);
+    }
+
+    @Override
+    public String getColorAssets() {
+        return getAssetsNep5Json();
+    }
 }

@@ -81,8 +81,8 @@ public class ApexWalletDbDao {
         }
 
         ContentValues contentValues = new ContentValues();
-        contentValues.put(Constant.FIELD_WALLET_NAME, neoWallet.getWalletName());
-        contentValues.put(Constant.FIELD_WALLET_ADDRESS, neoWallet.getWalletAddr());
+        contentValues.put(Constant.FIELD_WALLET_NAME, neoWallet.getName());
+        contentValues.put(Constant.FIELD_WALLET_ADDRESS, neoWallet.getAddress());
         contentValues.put(Constant.FIELD_BACKUP_STATE, neoWallet.getBackupState());
         contentValues.put(Constant.FIELD_WALLET_KEYSTORE, neoWallet.getKeyStore());
         contentValues.put(Constant.FIELD_WALLET_ASSETS_JSON, neoWallet.getAssetsJson());
@@ -94,7 +94,7 @@ public class ApexWalletDbDao {
             db.beginTransaction();
             db.insertOrThrow(tableName, null, contentValues);
             db.setTransactionSuccessful();
-            CpLog.i(TAG, "insert() -> insert " + neoWallet.getWalletName() + " ok!");
+            CpLog.i(TAG, "insert() -> insert " + neoWallet.getName() + " ok!");
         } catch (SQLException e) {
             CpLog.e(TAG, "insert exception:" + e.getMessage());
         } finally {
@@ -129,16 +129,11 @@ public class ApexWalletDbDao {
         closeDatabase();
     }
 
-    public List<NeoWallet> queryWalletBeans(String tableName) {
-        if (TextUtils.isEmpty(tableName)) {
-            CpLog.e(TAG, "queryAll() -> tableName is null!");
-            return null;
-        }
-
+    public List<NeoWallet> queryNeoWallets() {
         ArrayList<NeoWallet> neoWallets = new ArrayList<>();
 
         SQLiteDatabase db = openDatabase();
-        Cursor cursor = db.query(tableName, null, null, null, null, null, null);
+        Cursor cursor = db.query(Constant.TABLE_NEO_WALLET, null, null, null, null, null, null);
         if (null != cursor) {
             while (cursor.moveToNext()) {
                 int walletNameIndex = cursor.getColumnIndex(Constant.FIELD_WALLET_NAME);
@@ -158,8 +153,8 @@ public class ApexWalletDbDao {
                 String walletAssetsNep5Json = cursor.getString(walletAssetsNep5JsonIndex);
 
                 NeoWallet neoWallet = new NeoWallet();
-                neoWallet.setWalletName(walletName);
-                neoWallet.setWalletAddr(walletAddress);
+                neoWallet.setName(walletName);
+                neoWallet.setAddress(walletAddress);
                 neoWallet.setBackupState(backupState);
                 neoWallet.setKeyStore(walletKeystore);
                 neoWallet.setAssetsJson(walletAssetsJson);
@@ -207,8 +202,8 @@ public class ApexWalletDbDao {
                 String walletAssetsNep5Json = cursor.getString(walletAssetsNep5JsonIndex);
 
                 NeoWallet neoWallet = new NeoWallet();
-                neoWallet.setWalletName(walletName);
-                neoWallet.setWalletAddr(walletAddr);
+                neoWallet.setName(walletName);
+                neoWallet.setAddress(walletAddr);
                 neoWallet.setBackupState(backupState);
                 neoWallet.setKeyStore(walletKeystore);
                 neoWallet.setAssetsJson(walletAssetsJson);
@@ -279,7 +274,7 @@ public class ApexWalletDbDao {
             return;
         }
 
-        String walletAddress = neoWallet.getWalletAddr();
+        String walletAddress = neoWallet.getAddress();
         if (TextUtils.isEmpty(walletAddress)) {
             CpLog.e(TAG, "walletAddress is null!");
             return;
@@ -985,6 +980,45 @@ public class ApexWalletDbDao {
             db.endTransaction();
         }
         closeDatabase();
+    }
+
+    public List<EthWallet> queryEthWallets() {
+        ArrayList<EthWallet> ethWallets = new ArrayList<>();
+
+        SQLiteDatabase db = openDatabase();
+        Cursor cursor = db.query(Constant.TABLE_ETH_WALLET, null, null, null, null, null, null);
+        if (null != cursor) {
+            while (cursor.moveToNext()) {
+                int walletNameIndex = cursor.getColumnIndex(Constant.FIELD_WALLET_NAME);
+                int walletAddressIndex = cursor.getColumnIndex(Constant.FIELD_WALLET_ADDRESS);
+                int backupStateIndex = cursor.getColumnIndex(Constant.FIELD_BACKUP_STATE);
+                int walletKeystoreIndex = cursor.getColumnIndex(Constant.FIELD_WALLET_KEYSTORE);
+                int walletAssetsJsonIndex = cursor.getColumnIndex(Constant
+                        .FIELD_WALLET_ASSETS_JSON);
+                int walletAssetsErc20JsonIndex = cursor.getColumnIndex(Constant
+                        .FIELD_WALLET_ASSETS_ERC20_JSON);
+
+                String walletName = cursor.getString(walletNameIndex);
+                String walletAddress = cursor.getString(walletAddressIndex);
+                int backupState = cursor.getInt(backupStateIndex);
+                String walletKeystore = cursor.getString(walletKeystoreIndex);
+                String walletAssetsJson = cursor.getString(walletAssetsJsonIndex);
+                String walletAssetsErcJson = cursor.getString(walletAssetsErc20JsonIndex);
+
+                EthWallet ethWallet = new EthWallet();
+                ethWallet.setName(walletName);
+                ethWallet.setAddress(walletAddress);
+                ethWallet.setBackupState(backupState);
+                ethWallet.setKeyStore(walletKeystore);
+                ethWallet.setAssetsJson(walletAssetsJson);
+                ethWallet.setAssetsErc20Json(walletAssetsErcJson);
+
+                ethWallets.add(ethWallet);
+            }
+            cursor.close();
+        }
+        closeDatabase();
+        return ethWallets;
     }
 
 }
