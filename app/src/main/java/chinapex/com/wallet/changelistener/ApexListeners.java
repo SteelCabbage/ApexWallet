@@ -3,7 +3,8 @@ package chinapex.com.wallet.changelistener;
 import java.util.ArrayList;
 import java.util.List;
 
-import chinapex.com.wallet.bean.NeoWallet;
+import chinapex.com.wallet.bean.WalletBean;
+import chinapex.com.wallet.bean.neo.NeoWallet;
 import chinapex.com.wallet.bean.eth.EthWallet;
 import chinapex.com.wallet.changelistener.eth.OnEthAddListener;
 import chinapex.com.wallet.changelistener.eth.OnEthStateUpdateListener;
@@ -295,7 +296,7 @@ public class ApexListeners {
         }
     }
 
-    public void notifyAssetsUpdate(NeoWallet neoWallet) {
+    public void notifyAssetsUpdate(WalletBean walletBean) {
         if (null == mOnNeoAssetsUpdateListeners) {
             CpLog.e(TAG, "mOnNeoAssetsUpdateListeners is null!");
             return;

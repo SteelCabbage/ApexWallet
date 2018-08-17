@@ -23,7 +23,7 @@ import chinapex.com.wallet.adapter.BackupShowMnemonicAdapter;
 import chinapex.com.wallet.adapter.SpacesItemDecorationHorizontal;
 import chinapex.com.wallet.base.BaseFragment;
 import chinapex.com.wallet.bean.MnemonicState;
-import chinapex.com.wallet.bean.NeoWallet;
+import chinapex.com.wallet.bean.neo.NeoWallet;
 import chinapex.com.wallet.bean.WalletBean;
 import chinapex.com.wallet.bean.eth.EthWallet;
 import chinapex.com.wallet.changelistener.ApexListeners;

@@ -14,7 +14,7 @@ import chinapex.com.wallet.R;
 import chinapex.com.wallet.adapter.MeRecyclerViewAdapter;
 import chinapex.com.wallet.adapter.SpacesItemDecoration;
 import chinapex.com.wallet.base.BaseActivity;
-import chinapex.com.wallet.bean.NeoWallet;
+import chinapex.com.wallet.bean.neo.NeoWallet;
 import chinapex.com.wallet.changelistener.ApexListeners;
 import chinapex.com.wallet.changelistener.OnNeoDeleteListener;
 import chinapex.com.wallet.changelistener.OnItemNameUpdateListener;
@@ -99,7 +99,7 @@ public class Me2Activity extends BaseActivity implements MeRecyclerViewAdapter
             return neoWallets;
         }
 
-        neoWallets.addAll(apexWalletDbDao.queryNeoWallets());
+        neoWallets.addAll(apexWalletDbDao.queryWallets());
         if (neoWallets.isEmpty()) {
             CpLog.w(TAG, "local have no wallet");
             return neoWallets;

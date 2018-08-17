@@ -16,8 +16,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 import chinapex.com.wallet.bean.AssetBean;
 import chinapex.com.wallet.bean.PortraitShow;
 import chinapex.com.wallet.bean.TransactionRecord;
-import chinapex.com.wallet.bean.NeoWallet;
+import chinapex.com.wallet.bean.WalletBean;
 import chinapex.com.wallet.bean.eth.EthWallet;
+import chinapex.com.wallet.bean.neo.NeoWallet;
 import chinapex.com.wallet.global.Constant;
 import chinapex.com.wallet.utils.CpLog;
 
@@ -73,20 +74,19 @@ public class ApexWalletDbDao {
         }
     }
 
-
-    public synchronized void insert(String tableName, NeoWallet neoWallet) {
-        if (TextUtils.isEmpty(tableName) || null == neoWallet) {
-            CpLog.e(TAG, "insert() -> tableName or neoWallet is null!");
+    public synchronized void insert(String tableName, WalletBean walletBean) {
+        if (TextUtils.isEmpty(tableName) || null == walletBean) {
+            CpLog.e(TAG, "insert() -> tableName or walletBean is null!");
             return;
         }
 
         ContentValues contentValues = new ContentValues();
-        contentValues.put(Constant.FIELD_WALLET_NAME, neoWallet.getName());
-        contentValues.put(Constant.FIELD_WALLET_ADDRESS, neoWallet.getAddress());
-        contentValues.put(Constant.FIELD_BACKUP_STATE, neoWallet.getBackupState());
-        contentValues.put(Constant.FIELD_WALLET_KEYSTORE, neoWallet.getKeyStore());
-        contentValues.put(Constant.FIELD_WALLET_ASSETS_JSON, neoWallet.getAssetsJson());
-        contentValues.put(Constant.FIELD_WALLET_ASSETS_NEP5_JSON, neoWallet.getAssetsNep5Json());
+        contentValues.put(Constant.FIELD_WALLET_NAME, walletBean.getName());
+        contentValues.put(Constant.FIELD_WALLET_ADDRESS, walletBean.getAddress());
+        contentValues.put(Constant.FIELD_BACKUP_STATE, walletBean.getBackupState());
+        contentValues.put(Constant.FIELD_WALLET_KEYSTORE, walletBean.getKeyStore());
+        contentValues.put(Constant.FIELD_WALLET_ASSET_JSON, walletBean.getAssetJson());
+        contentValues.put(Constant.FIELD_WALLET_COLOR_ASSET_JSON, walletBean.getColorAssetJson());
         contentValues.put(Constant.FIELD_CREATE_TIME, SystemClock.currentThreadTimeMillis());
 
         SQLiteDatabase db = openDatabase();
@@ -94,7 +94,7 @@ public class ApexWalletDbDao {
             db.beginTransaction();
             db.insertOrThrow(tableName, null, contentValues);
             db.setTransactionSuccessful();
-            CpLog.i(TAG, "insert() -> insert " + neoWallet.getName() + " ok!");
+            CpLog.i(TAG, "insert() -> insert " + walletBean.getName() + " ok!");
         } catch (SQLException e) {
             CpLog.e(TAG, "insert exception:" + e.getMessage());
         } finally {
@@ -129,56 +129,70 @@ public class ApexWalletDbDao {
         closeDatabase();
     }
 
-    public List<NeoWallet> queryNeoWallets() {
-        ArrayList<NeoWallet> neoWallets = new ArrayList<>();
+    public List<WalletBean> queryWallets(String tableName) {
+        if (TextUtils.isEmpty(tableName)) {
+            CpLog.e(TAG, "tableName is null!");
+            return null;
+        }
+        ArrayList<WalletBean> walletBeans = new ArrayList<>();
 
         SQLiteDatabase db = openDatabase();
-        Cursor cursor = db.query(Constant.TABLE_NEO_WALLET, null, null, null, null, null, null);
+        Cursor cursor = db.query(tableName, null, null, null, null, null, null);
         if (null != cursor) {
             while (cursor.moveToNext()) {
                 int walletNameIndex = cursor.getColumnIndex(Constant.FIELD_WALLET_NAME);
                 int walletAddressIndex = cursor.getColumnIndex(Constant.FIELD_WALLET_ADDRESS);
                 int backupStateIndex = cursor.getColumnIndex(Constant.FIELD_BACKUP_STATE);
                 int walletKeystoreIndex = cursor.getColumnIndex(Constant.FIELD_WALLET_KEYSTORE);
-                int walletAssetsJsonIndex = cursor.getColumnIndex(Constant
-                        .FIELD_WALLET_ASSETS_JSON);
-                int walletAssetsNep5JsonIndex = cursor.getColumnIndex(Constant
-                        .FIELD_WALLET_ASSETS_NEP5_JSON);
+                int walletAssetJsonIndex = cursor.getColumnIndex(Constant.FIELD_WALLET_ASSET_JSON);
+                int walletColorAssetJsonIndex = cursor.getColumnIndex(Constant
+                        .FIELD_WALLET_COLOR_ASSET_JSON);
 
                 String walletName = cursor.getString(walletNameIndex);
                 String walletAddress = cursor.getString(walletAddressIndex);
                 int backupState = cursor.getInt(backupStateIndex);
                 String walletKeystore = cursor.getString(walletKeystoreIndex);
-                String walletAssetsJson = cursor.getString(walletAssetsJsonIndex);
-                String walletAssetsNep5Json = cursor.getString(walletAssetsNep5JsonIndex);
+                String walletAssetJson = cursor.getString(walletAssetJsonIndex);
+                String walletColorAssetJson = cursor.getString(walletColorAssetJsonIndex);
 
-                NeoWallet neoWallet = new NeoWallet();
-                neoWallet.setName(walletName);
-                neoWallet.setAddress(walletAddress);
-                neoWallet.setBackupState(backupState);
-                neoWallet.setKeyStore(walletKeystore);
-                neoWallet.setAssetsJson(walletAssetsJson);
-                neoWallet.setAssetsNep5Json(walletAssetsNep5Json);
+                WalletBean walletBean;
+                switch (tableName) {
+                    case Constant.TABLE_NEO_WALLET:
+                        walletBean = new NeoWallet();
+                        break;
+                    case Constant.TABLE_ETH_WALLET:
+                        walletBean = new EthWallet();
+                        break;
+                    default:
+                        walletBean = new WalletBean();
+                        break;
+                }
+                walletBean.setName(walletName);
+                walletBean.setAddress(walletAddress);
+                walletBean.setBackupState(backupState);
+                walletBean.setKeyStore(walletKeystore);
+                walletBean.setAssetJson(walletAssetJson);
+                walletBean.setColorAssetJson(walletColorAssetJson);
 
-                neoWallets.add(neoWallet);
+                walletBeans.add(walletBean);
             }
             cursor.close();
         }
         closeDatabase();
-        return neoWallets;
+        return walletBeans;
     }
 
     private static final String WHERE_CLAUSE_WALLET_ADDRESS_EQ = Constant.FIELD_WALLET_ADDRESS +
             " = ?";
 
-    public NeoWallet queryByWalletAddress(String tableName, String walletAddress) {
+    public WalletBean queryByWalletAddress(String tableName, String walletAddress) {
         if (TextUtils.isEmpty(tableName)
                 || TextUtils.isEmpty(walletAddress)) {
             CpLog.e(TAG, "queryByWalletName() -> tableName or walletAddress is null!");
             return null;
         }
 
-        ArrayList<NeoWallet> neoWallets = new ArrayList<>();
+        ArrayList<WalletBean> walletBeans = new ArrayList<>();
 
         SQLiteDatabase db = openDatabase();
         Cursor cursor = db.query(tableName, null, WHERE_CLAUSE_WALLET_ADDRESS_EQ, new
@@ -189,32 +203,31 @@ public class ApexWalletDbDao {
                 int walletAddrIndex = cursor.getColumnIndex(Constant.FIELD_WALLET_ADDRESS);
                 int backupStateIndex = cursor.getColumnIndex(Constant.FIELD_BACKUP_STATE);
                 int walletKeystoreIndex = cursor.getColumnIndex(Constant.FIELD_WALLET_KEYSTORE);
-                int walletAssetsJsonIndex = cursor.getColumnIndex(Constant
-                        .FIELD_WALLET_ASSETS_JSON);
-                int walletAssetsNep5JsonIndex = cursor.getColumnIndex(Constant
-                        .FIELD_WALLET_ASSETS_NEP5_JSON);
+                int walletAssetJsonIndex = cursor.getColumnIndex(Constant.FIELD_WALLET_ASSET_JSON);
+                int walletColorAssetJsonIndex = cursor.getColumnIndex(Constant
+                        .FIELD_WALLET_COLOR_ASSET_JSON);
 
                 String walletName = cursor.getString(walletNameIndex);
                 String walletAddr = cursor.getString(walletAddrIndex);
                 int backupState = cursor.getInt(backupStateIndex);
                 String walletKeystore = cursor.getString(walletKeystoreIndex);
-                String walletAssetsJson = cursor.getString(walletAssetsJsonIndex);
-                String walletAssetsNep5Json = cursor.getString(walletAssetsNep5JsonIndex);
+                String walletAssetJson = cursor.getString(walletAssetJsonIndex);
+                String walletColorAssetJson = cursor.getString(walletColorAssetJsonIndex);
 
-                NeoWallet neoWallet = new NeoWallet();
-                neoWallet.setName(walletName);
-                neoWallet.setAddress(walletAddr);
-                neoWallet.setBackupState(backupState);
-                neoWallet.setKeyStore(walletKeystore);
-                neoWallet.setAssetsJson(walletAssetsJson);
-                neoWallet.setAssetsNep5Json(walletAssetsNep5Json);
+                WalletBean walletBean = new WalletBean();
+                walletBean.setName(walletName);
+                walletBean.setAddress(walletAddr);
+                walletBean.setBackupState(backupState);
+                walletBean.setKeyStore(walletKeystore);
+                walletBean.setAssetJson(walletAssetJson);
+                walletBean.setColorAssetJson(walletColorAssetJson);
 
-                neoWallets.add(neoWallet);
+                walletBeans.add(walletBean);
             }
             cursor.close();
         }
         closeDatabase();
-        return neoWallets.isEmpty() ? null : neoWallets.get(0);
+        return walletBeans.isEmpty() ? null : walletBeans.get(0);
     }
 
     public void updateBackupState(String tableName, String walletAddress, int backupState) {
@@ -268,26 +281,26 @@ public class ApexWalletDbDao {
         closeDatabase();
     }
 
-    public void updateCheckedAssets(NeoWallet neoWallet) {
-        if (null == neoWallet) {
-            CpLog.e(TAG, "neoWallet is null!");
+    public void updateCheckedAssets(String tableName, WalletBean walletBean) {
+        if (TextUtils.isEmpty(tableName) || null == walletBean) {
+            CpLog.e(TAG, "tableName or walletBean is null!");
             return;
         }
 
-        String walletAddress = neoWallet.getAddress();
+        String walletAddress = walletBean.getAddress();
         if (TextUtils.isEmpty(walletAddress)) {
             CpLog.e(TAG, "walletAddress is null!");
             return;
         }
 
         ContentValues contentValues = new ContentValues();
-        contentValues.put(Constant.FIELD_WALLET_ASSETS_NEP5_JSON, neoWallet.getAssetsNep5Json());
-        contentValues.put(Constant.FIELD_WALLET_ASSETS_JSON, neoWallet.getAssetsJson());
+        contentValues.put(Constant.FIELD_WALLET_ASSET_JSON, walletBean.getAssetJson());
+        contentValues.put(Constant.FIELD_WALLET_COLOR_ASSET_JSON, walletBean.getColorAssetJson());
 
         SQLiteDatabase db = openDatabase();
         try {
             db.beginTransaction();
-            db.update(Constant.TABLE_NEO_WALLET, contentValues, WHERE_CLAUSE_WALLET_ADDRESS_EQ, new
+            db.update(tableName, contentValues, WHERE_CLAUSE_WALLET_ADDRESS_EQ, new
                     String[]{walletAddress});
             db.setTransactionSuccessful();
             CpLog.i(TAG, "updateCheckedAssets is ok!");
@@ -950,75 +963,6 @@ public class ApexWalletDbDao {
         }
         closeDatabase();
         return hm;
-    }
-
-    // ETH
-    public synchronized void insertEth(EthWallet ethWallet) {
-        if (null == ethWallet) {
-            CpLog.e(TAG, "insert() -> ethWallet is null!");
-            return;
-        }
-
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(Constant.FIELD_WALLET_NAME, ethWallet.getName());
-        contentValues.put(Constant.FIELD_WALLET_ADDRESS, ethWallet.getAddress());
-        contentValues.put(Constant.FIELD_BACKUP_STATE, ethWallet.getBackupState());
-        contentValues.put(Constant.FIELD_WALLET_KEYSTORE, ethWallet.getKeyStore());
-        contentValues.put(Constant.FIELD_WALLET_ASSETS_JSON, ethWallet.getAssetsJson());
-        contentValues.put(Constant.FIELD_WALLET_ASSETS_ERC20_JSON, ethWallet.getAssetsErc20Json());
-        contentValues.put(Constant.FIELD_CREATE_TIME, SystemClock.currentThreadTimeMillis());
-
-        SQLiteDatabase db = openDatabase();
-        try {
-            db.beginTransaction();
-            db.insertOrThrow(Constant.TABLE_ETH_WALLET, null, contentValues);
-            db.setTransactionSuccessful();
-            CpLog.i(TAG, "insert() -> insert " + ethWallet.getName() + " ok!");
-        } catch (SQLException e) {
-            CpLog.e(TAG, "insert exception:" + e.getMessage());
-        } finally {
-            db.endTransaction();
-        }
-        closeDatabase();
-    }
-
-    public List<EthWallet> queryEthWallets() {
-        ArrayList<EthWallet> ethWallets = new ArrayList<>();
-
-        SQLiteDatabase db = openDatabase();
-        Cursor cursor = db.query(Constant.TABLE_ETH_WALLET, null, null, null, null, null, null);
-        if (null != cursor) {
-            while (cursor.moveToNext()) {
-                int walletNameIndex = cursor.getColumnIndex(Constant.FIELD_WALLET_NAME);
-                int walletAddressIndex = cursor.getColumnIndex(Constant.FIELD_WALLET_ADDRESS);
-                int backupStateIndex = cursor.getColumnIndex(Constant.FIELD_BACKUP_STATE);
-                int walletKeystoreIndex = cursor.getColumnIndex(Constant.FIELD_WALLET_KEYSTORE);
-                int walletAssetsJsonIndex = cursor.getColumnIndex(Constant
-                        .FIELD_WALLET_ASSETS_JSON);
-                int walletAssetsErc20JsonIndex = cursor.getColumnIndex(Constant
-                        .FIELD_WALLET_ASSETS_ERC20_JSON);
-
-                String walletName = cursor.getString(walletNameIndex);
-                String walletAddress = cursor.getString(walletAddressIndex);
-                int backupState = cursor.getInt(backupStateIndex);
-                String walletKeystore = cursor.getString(walletKeystoreIndex);
-                String walletAssetsJson = cursor.getString(walletAssetsJsonIndex);
-                String walletAssetsErcJson = cursor.getString(walletAssetsErc20JsonIndex);
-
-                EthWallet ethWallet = new EthWallet();
-                ethWallet.setName(walletName);
-                ethWallet.setAddress(walletAddress);
-                ethWallet.setBackupState(backupState);
-                ethWallet.setKeyStore(walletKeystore);
-                ethWallet.setAssetsJson(walletAssetsJson);
-                ethWallet.setAssetsErc20Json(walletAssetsErcJson);
-
-                ethWallets.add(ethWallet);
-            }
-            cursor.close();
-        }
-        closeDatabase();
-        return ethWallets;
     }
 
 }

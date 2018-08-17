@@ -19,7 +19,7 @@ import chinapex.com.wallet.adapter.MeFunctionRecyclerViewAdapter;
 import chinapex.com.wallet.adapter.SpacesItemDecorationTopBottom;
 import chinapex.com.wallet.base.BaseFragment;
 import chinapex.com.wallet.bean.MeFunction;
-import chinapex.com.wallet.bean.NeoWallet;
+import chinapex.com.wallet.bean.neo.NeoWallet;
 import chinapex.com.wallet.global.ApexWalletApplication;
 import chinapex.com.wallet.global.Constant;
 import chinapex.com.wallet.model.ApexWalletDbDao;
@@ -146,7 +146,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener,
             return null;
         }
 
-        List<NeoWallet> neoWallets = apexWalletDbDao.queryNeoWallets();
+        List<NeoWallet> neoWallets = apexWalletDbDao.queryWallets();
         if (null == neoWallets || neoWallets.isEmpty()) {
             CpLog.e(TAG, "neoWallets is null or empty!");
             return null;

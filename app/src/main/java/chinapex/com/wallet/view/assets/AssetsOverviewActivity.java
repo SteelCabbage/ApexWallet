@@ -22,7 +22,8 @@ import chinapex.com.wallet.adapter.SpacesItemDecoration;
 import chinapex.com.wallet.base.BaseActivity;
 import chinapex.com.wallet.bean.AssetBean;
 import chinapex.com.wallet.bean.BalanceBean;
-import chinapex.com.wallet.bean.NeoWallet;
+import chinapex.com.wallet.bean.WalletBean;
+import chinapex.com.wallet.bean.neo.NeoWallet;
 import chinapex.com.wallet.changelistener.ApexListeners;
 import chinapex.com.wallet.executor.TaskController;
 import chinapex.com.wallet.executor.callback.IGetAccountStateCallback;
@@ -47,13 +48,14 @@ public class AssetsOverviewActivity extends BaseActivity implements
     private static final String TAG = AssetsOverviewActivity.class.getSimpleName();
     private TextView mTv_assets_overview_wallet_name;
     private TextView mTv_assets_overview_wallet_address;
-    private NeoWallet mNeoWallet;
+    private WalletBean mWalletBean;
     private RecyclerView mRv_assets_overview;
     private List<BalanceBean> mBalanceBeans;
     private AssetsOverviewRecyclerViewAdapter mAssetsOverviewRecyclerViewAdapter;
     private SwipeRefreshLayout mSl_assets_overview_rv;
     private ImageButton mIb_assets_overview_ellipsis;
     private List<String> mCurrentAssets;
+    private int mCurrentWalletType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,10 +92,21 @@ public class AssetsOverviewActivity extends BaseActivity implements
             return;
         }
 
-        mNeoWallet = (NeoWallet) intent.getParcelableExtra(Constant.WALLET_BEAN);
+        mWalletBean = intent.getParcelableExtra(Constant.WALLET_BEAN);
+        switch (mWalletBean.getClass().getSimpleName()) {
+            case "NeoWallet":
+                mCurrentWalletType = Constant.WALLET_TYPE_NEO;
+                break;
+            case "EthWallet":
+                mCurrentWalletType = Constant.WALLET_TYPE_ETH;
+                break;
+            default:
+                CpLog.e(TAG, "mWalletBean is unknown type!");
+                return;
+        }
 
-        mTv_assets_overview_wallet_name.setText(mNeoWallet.getName());
-        mTv_assets_overview_wallet_address.setText(mNeoWallet.getAddress());
+        mTv_assets_overview_wallet_name.setText(mWalletBean.getName());
+        mTv_assets_overview_wallet_address.setText(mWalletBean.getAddress());
 
         mRv_assets_overview.setLayoutManager(new LinearLayoutManager(ApexWalletApplication
                 .getInstance(), LinearLayoutManager.VERTICAL, false));
@@ -143,10 +156,9 @@ public class AssetsOverviewActivity extends BaseActivity implements
         }
 
         HashMap<String, Parcelable> parcelables = new HashMap<>();
-        parcelables.put(Constant.WALLET_BEAN, mNeoWallet);
+        parcelables.put(Constant.WALLET_BEAN, mWalletBean);
         parcelables.put(Constant.BALANCE_BEAN, balanceBean);
         startActivityParcelables(BalanceDetailActivity.class, false, parcelables);
-
     }
 
     // 设置默认添加的资产
@@ -156,9 +168,9 @@ public class AssetsOverviewActivity extends BaseActivity implements
             return;
         }
 
-        List<BalanceBean> nep5Assets = getNep5Assets();
-        if (null != nep5Assets && !nep5Assets.isEmpty()) {
-            mBalanceBeans.addAll(nep5Assets);
+        List<BalanceBean> colorAssets = getColorAssets();
+        if (null != colorAssets && !colorAssets.isEmpty()) {
+            mBalanceBeans.addAll(colorAssets);
         }
 
         List<BalanceBean> globalAssets = getGlobalAssets();
@@ -167,16 +179,16 @@ public class AssetsOverviewActivity extends BaseActivity implements
         }
     }
 
-    private List<BalanceBean> getNep5Assets() {
-        if (null == mNeoWallet) {
-            CpLog.e(TAG, "getNep5Assets() -> mNeoWallet is null!");
+    private List<BalanceBean> getColorAssets() {
+        if (null == mWalletBean) {
+            CpLog.e(TAG, "getColorAssets() -> mWalletBean is null!");
             return null;
         }
 
-        String assetsNep5Json = mNeoWallet.getAssetsNep5Json();
-        List<String> assetsNep5 = GsonUtils.json2List(assetsNep5Json, String.class);
-        if (null == assetsNep5 || assetsNep5.isEmpty()) {
-            CpLog.e(TAG, "assetsNep5 is null or empty!");
+        String colorAssetJson = mWalletBean.getColorAssetJson();
+        List<String> colorAssets = GsonUtils.json2List(colorAssetJson, String.class);
+        if (null == colorAssets || colorAssets.isEmpty()) {
+            CpLog.e(TAG, "colorAssets is null or empty!");
             return null;
         }
 
@@ -188,8 +200,8 @@ public class AssetsOverviewActivity extends BaseActivity implements
         }
 
         ArrayList<BalanceBean> balanceBeans = new ArrayList<>();
-        for (String assetNep5 : assetsNep5) {
-            AssetBean assetBean = apexWalletDbDao.queryAssetByHash(assetNep5);
+        for (String colorAsset : colorAssets) {
+            AssetBean assetBean = apexWalletDbDao.queryAssetByHash(colorAsset);
             if (null == assetBean) {
                 CpLog.e(TAG, "assetBean is null!");
                 continue;
@@ -197,27 +209,27 @@ public class AssetsOverviewActivity extends BaseActivity implements
 
             BalanceBean balanceBean = new BalanceBean();
             balanceBean.setMapState(Constant.MAP_STATE_UNFINISHED);
-            balanceBean.setAssetsID(assetNep5);
+            balanceBean.setAssetsID(colorAsset);
             balanceBean.setAssetSymbol(assetBean.getSymbol());
             balanceBean.setAssetType(Constant.ASSET_TYPE_NEP5);
-            balanceBean.setAssetDecimal(8);
+            balanceBean.setAssetDecimal(Integer.valueOf(assetBean.getPrecision()));
             balanceBean.setAssetsValue("0");
             balanceBeans.add(balanceBean);
-            mCurrentAssets.add(assetNep5);
+            mCurrentAssets.add(colorAsset);
         }
         return balanceBeans;
     }
 
     private List<BalanceBean> getGlobalAssets() {
-        if (null == mNeoWallet) {
-            CpLog.e(TAG, "getGlobalAssets() -> mNeoWallet is null!");
+        if (null == mWalletBean) {
+            CpLog.e(TAG, "getGlobalAssets() -> mWalletBean is null!");
             return null;
         }
 
-        String assetsJson = mNeoWallet.getAssetsJson();
-        List<String> assets = GsonUtils.json2List(assetsJson, String.class);
-        if (null == assets || assets.isEmpty()) {
-            CpLog.e(TAG, "assets is null or empty!");
+        String assetJson = mWalletBean.getAssetJson();
+        List<String> globalAssets = GsonUtils.json2List(assetJson, String.class);
+        if (null == globalAssets || globalAssets.isEmpty()) {
+            CpLog.e(TAG, "globalAssets is null or empty!");
             return null;
         }
 
@@ -229,8 +241,8 @@ public class AssetsOverviewActivity extends BaseActivity implements
         }
 
         ArrayList<BalanceBean> balanceBeans = new ArrayList<>();
-        for (String asset : assets) {
-            AssetBean assetBean = apexWalletDbDao.queryAssetByHash(asset);
+        for (String globalAsset : globalAssets) {
+            AssetBean assetBean = apexWalletDbDao.queryAssetByHash(globalAsset);
             if (null == assetBean) {
                 CpLog.e(TAG, "assetBean is null!");
                 continue;
@@ -238,13 +250,17 @@ public class AssetsOverviewActivity extends BaseActivity implements
 
             BalanceBean balanceBean = new BalanceBean();
             balanceBean.setMapState(Constant.MAP_STATE_UNFINISHED);
-            balanceBean.setAssetsID(asset);
+            balanceBean.setAssetsID(globalAsset);
             balanceBean.setAssetSymbol(assetBean.getSymbol());
             balanceBean.setAssetType(Constant.ASSET_TYPE_GLOBAL);
-            balanceBean.setAssetDecimal(8);
+            balanceBean.setAssetDecimal(Integer.valueOf(assetBean.getPrecision()));
             balanceBean.setAssetsValue("0");
             balanceBeans.add(balanceBean);
-            mCurrentAssets.add(asset);
+            if (mCurrentAssets.size() >= 1) {
+                mCurrentAssets.add(1, globalAsset);
+            } else {
+                mCurrentAssets.add(globalAsset);
+            }
         }
         return balanceBeans;
     }
@@ -290,70 +306,8 @@ public class AssetsOverviewActivity extends BaseActivity implements
         });
     }
 
-    // 保留，服务器更新接口后，应用此逻辑
-//    @Override
-//    public void getNep5Balance(Map<String, BalanceBean> balanceBeans) {
-//        runOnUiThread(new Runnable() {
-//            @Override
-//            public void run() {
-//                mSl_assets_overview_rv.setRefreshing(false);
-//            }
-//        });
-//
-//        if (null == mBalanceBeans || mBalanceBeans.isEmpty()) {
-//            CpLog.e(TAG, "mBalanceBeans is null or empty!");
-//            return;
-//        }
-//
-//        if (null == balanceBeans || balanceBeans.isEmpty()) {
-//            CpLog.w(TAG, "getNep5Balance() -> the current assets is null!");
-//            for (BalanceBean balanceBean0 : mBalanceBeans) {
-//                if (null == balanceBean0) {
-//                    CpLog.e(TAG, "balanceBean0 is null!");
-//                    continue;
-//                }
-//
-//                if (Constant.ASSET_TYPE_NEP5.equals(balanceBean0.getAssetType())) {
-//                    balanceBean0.setAssetsValue("0");
-//                }
-//            }
-//
-//            runOnUiThread(new Runnable() {
-//                @Override
-//                public void run() {
-//                    mAssetsOverviewRecyclerViewAdapter.notifyDataSetChanged();
-//                }
-//            });
-//
-//            return;
-//        }
-//
-//        for (BalanceBean balanceBean : mBalanceBeans) {
-//            if (null == balanceBean) {
-//                CpLog.e(TAG, "balanceBean is null!");
-//                continue;
-//            }
-//
-//            String assetsID = balanceBean.getAssetsID();
-//            if (balanceBeans.containsKey(assetsID)) {
-//                balanceBean.setAssetsValue(balanceBeans.get(assetsID).getAssetsValue());
-//            } else {
-//                if (Constant.ASSET_TYPE_NEP5.equals(balanceBean.getAssetType())) {
-//                    balanceBean.setAssetsValue("0");
-//                }
-//            }
-//        }
-//
-//        runOnUiThread(new Runnable() {
-//            @Override
-//            public void run() {
-//                mAssetsOverviewRecyclerViewAdapter.notifyDataSetChanged();
-//            }
-//        });
-//    }
-
     @Override
-    public void assetsBalance(Map<String, BalanceBean> balanceBeans) {
+    public void getNeoGlobalAssetBalance(Map<String, BalanceBean> balanceBeans) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -367,7 +321,7 @@ public class AssetsOverviewActivity extends BaseActivity implements
         }
 
         if (null == balanceBeans || balanceBeans.isEmpty()) {
-            CpLog.w(TAG, "assetsBalance() -> the current assets is null!");
+            CpLog.w(TAG, "getNeoGlobalAssetBalance() -> the current assets is null!");
             for (BalanceBean balanceBean0 : mBalanceBeans) {
                 if (null == balanceBean0) {
                     CpLog.e(TAG, "balanceBean0 is null!");
@@ -415,7 +369,7 @@ public class AssetsOverviewActivity extends BaseActivity implements
 
     @Override
     public void onRefresh() {
-        if (null == mNeoWallet) {
+        if (null == mWalletBean) {
             CpLog.e(TAG, "mNeoWallet");
             runOnUiThread(new Runnable() {
                 @Override
@@ -426,9 +380,19 @@ public class AssetsOverviewActivity extends BaseActivity implements
             return;
         }
 
-        TaskController.getInstance().submit(new GetAccountState(mNeoWallet.getAddress(), this));
-        TaskController.getInstance().submit(new GetNep5Balance(Constant.ASSETS_CPX, mNeoWallet
-                .getAddress(), this));
+        switch (mCurrentWalletType) {
+            case Constant.WALLET_TYPE_NEO:
+                TaskController.getInstance().submit(new GetAccountState(mWalletBean.getAddress(),
+                        this));
+                TaskController.getInstance().submit(new GetNep5Balance(Constant.ASSETS_CPX,
+                        mWalletBean.getAddress(), this));
+                break;
+            case Constant.WALLET_TYPE_ETH:
+                // TODO: 2018/8/16 0016 eth逻辑
+                break;
+            default:
+                break;
+        }
     }
 
     @Override
@@ -461,7 +425,7 @@ public class AssetsOverviewActivity extends BaseActivity implements
             return;
         }
 
-        List<String> nep5Assets = new ArrayList<>();
+        List<String> colorAssets = new ArrayList<>();
         List<String> globalAssets = new ArrayList<>();
 
         for (String checkedAsset : checkedAssets) {
@@ -473,14 +437,13 @@ public class AssetsOverviewActivity extends BaseActivity implements
             if (Constant.ASSETS_NEO.equals(checkedAsset)
                     || Constant.ASSETS_NEO_GAS.equals(checkedAsset)) {
                 globalAssets.add(checkedAsset);
-
             } else {
-                nep5Assets.add(checkedAsset);
+                colorAssets.add(checkedAsset);
             }
         }
 
-        mNeoWallet.setAssetsJson(GsonUtils.toJsonStr(globalAssets));
-        mNeoWallet.setAssetsNep5Json(GsonUtils.toJsonStr(nep5Assets));
+        mWalletBean.setAssetJson(GsonUtils.toJsonStr(globalAssets));
+        mWalletBean.setColorAssetJson(GsonUtils.toJsonStr(colorAssets));
         ApexWalletDbDao apexWalletDbDao = ApexWalletDbDao.getInstance(ApexWalletApplication
                 .getInstance());
         if (null == apexWalletDbDao) {
@@ -488,8 +451,16 @@ public class AssetsOverviewActivity extends BaseActivity implements
             return;
         }
 
-        apexWalletDbDao.updateCheckedAssets(mNeoWallet);
-        ApexListeners.getInstance().notifyAssetsUpdate(mNeoWallet);
+        switch (mCurrentWalletType) {
+            case Constant.WALLET_TYPE_NEO:
+                apexWalletDbDao.updateCheckedAssets(Constant.TABLE_NEO_WALLET, mWalletBean);
+                break;
+            case Constant.WALLET_TYPE_ETH:
+                apexWalletDbDao.updateCheckedAssets(Constant.TABLE_ETH_WALLET, mWalletBean);
+                break;
+        }
+
+        ApexListeners.getInstance().notifyAssetsUpdate(mWalletBean);
 
         if (null == mBalanceBeans || null == mCurrentAssets) {
             CpLog.e(TAG, "mBalanceBeans or mCurrentAssets is null!");

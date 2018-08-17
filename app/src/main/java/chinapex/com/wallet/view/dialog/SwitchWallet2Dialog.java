@@ -21,9 +21,8 @@ import java.util.List;
 
 import chinapex.com.wallet.R;
 import chinapex.com.wallet.adapter.SwitchWallet2RecyclerViewAdapter;
-import chinapex.com.wallet.bean.NeoWallet;
+import chinapex.com.wallet.bean.neo.NeoWallet;
 import chinapex.com.wallet.global.ApexWalletApplication;
-import chinapex.com.wallet.global.Constant;
 import chinapex.com.wallet.model.ApexWalletDbDao;
 import chinapex.com.wallet.utils.CpLog;
 
@@ -139,7 +138,7 @@ public class SwitchWallet2Dialog extends DialogFragment implements View.OnClickL
             return;
         }
 
-        mNeoWallets = apexWalletDbDao.queryNeoWallets();
+        mNeoWallets = apexWalletDbDao.queryWallets();
         if (null == mNeoWallets || mNeoWallets.isEmpty()) {
             CpLog.e(TAG, "mNeoWallets is null or empty!");
             return;

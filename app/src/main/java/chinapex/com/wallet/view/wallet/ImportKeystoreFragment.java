@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 import chinapex.com.wallet.R;
 import chinapex.com.wallet.base.BaseFragment;
-import chinapex.com.wallet.bean.NeoWallet;
+import chinapex.com.wallet.bean.neo.NeoWallet;
 import chinapex.com.wallet.changelistener.ApexListeners;
 import chinapex.com.wallet.executor.TaskController;
 import chinapex.com.wallet.executor.callback.IFromKeystoreToWalletCallback;

@@ -31,7 +31,7 @@ import chinapex.com.wallet.adapter.EmptyAdapter;
 import chinapex.com.wallet.adapter.SpacesItemDecoration;
 import chinapex.com.wallet.base.BaseFragment;
 import chinapex.com.wallet.bean.DrawerMenu;
-import chinapex.com.wallet.bean.NeoWallet;
+import chinapex.com.wallet.bean.neo.NeoWallet;
 import chinapex.com.wallet.bean.WalletBean;
 import chinapex.com.wallet.bean.eth.EthWallet;
 import chinapex.com.wallet.changelistener.ApexListeners;
@@ -64,8 +64,8 @@ public class AssetsFragment extends BaseFragment implements AssetsRecyclerViewAd
     private int mWalletType;
     private List<WalletBean> mWalletBeans;
     private List<WalletBean> mSearchWalletBeans;
-    private List<NeoWallet> mNeoWallets;
-    private List<EthWallet> mEthWallets;
+    private List<WalletBean> mNeoWallets;
+    private List<WalletBean> mEthWallets;
     private SwipeRefreshLayout mSl_assets_rv;
     private AssetsRecyclerViewAdapter mAssetsRecyclerViewAdapter;
     private DrawerLayout mDl_assets;
@@ -193,8 +193,8 @@ public class AssetsFragment extends BaseFragment implements AssetsRecyclerViewAd
             return mWalletBeans;
         }
 
-        mNeoWallets.addAll(apexWalletDbDao.queryNeoWallets());
-        mEthWallets.addAll(apexWalletDbDao.queryEthWallets());
+        mNeoWallets.addAll(apexWalletDbDao.queryWallets(Constant.TABLE_NEO_WALLET));
+        mEthWallets.addAll(apexWalletDbDao.queryWallets(Constant.TABLE_ETH_WALLET));
         mWalletBeans.addAll(mNeoWallets);
         return mWalletBeans;
     }
@@ -397,6 +397,7 @@ public class AssetsFragment extends BaseFragment implements AssetsRecyclerViewAd
         mSearchWalletBeans.addAll(walletBeans);
         mAssetsRecyclerViewAdapter.notifyItemRangeInserted(0, walletBeans.size());
         mEmptyAdapter.notifyDataSetChanged();
+        mEt_assets_search.getText().clear();
     }
 
     @Override
@@ -439,7 +440,7 @@ public class AssetsFragment extends BaseFragment implements AssetsRecyclerViewAd
             }
 
             if (walletBeanTmp.equals(neoWallet)) {
-                walletBeanTmp.setWalletName(neoWallet.getWalletName());
+                walletBeanTmp.setName(neoWallet.getName());
                 WalletBean searchTmpWallet = mSearchWalletBeans.get(mWalletBeans.indexOf
                         (walletBeanTmp));
                 if (null == searchTmpWallet) {
@@ -447,7 +448,7 @@ public class AssetsFragment extends BaseFragment implements AssetsRecyclerViewAd
                     continue;
                 }
 
-                searchTmpWallet.setWalletName(neoWallet.getWalletName());
+                searchTmpWallet.setName(neoWallet.getName());
             }
         }
 
@@ -474,8 +475,8 @@ public class AssetsFragment extends BaseFragment implements AssetsRecyclerViewAd
             }
 
             if (walletBeanTmp.equals(neoWallet)) {
-                walletBeanTmp.setColorAssets(neoWallet.getColorAssets());
-                walletBeanTmp.setAssets(neoWallet.getAssets());
+                walletBeanTmp.setColorAssetJson(neoWallet.getColorAssetJson());
+                walletBeanTmp.setAssetJson(neoWallet.getAssetJson());
             }
         }
 
@@ -509,7 +510,7 @@ public class AssetsFragment extends BaseFragment implements AssetsRecyclerViewAd
                 continue;
             }
 
-            if (!walletBean.getWalletAddress().contains(s)) {
+            if (!walletBean.getAddress().contains(s)) {
                 iterator.remove();
             }
         }

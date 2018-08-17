@@ -170,8 +170,8 @@ public class Constant {
     public static final String FIELD_WALLET_ADDRESS = "wallet_address";
     public static final String FIELD_BACKUP_STATE = "backup_state";
     public static final String FIELD_WALLET_KEYSTORE = "wallet_keystore";
-    public static final String FIELD_WALLET_ASSETS_JSON = "wallet_assets_json";
-    public static final String FIELD_WALLET_ASSETS_NEP5_JSON = "wallet_assets_nep5_json";
+    public static final String FIELD_WALLET_ASSET_JSON = "wallet_asset_json";
+    public static final String FIELD_WALLET_COLOR_ASSET_JSON = "wallet_color_asset_json";
     public static final String FIELD_CREATE_TIME = "create_time";
 
     public static final String SQL_CREATE_NEO_WALLET = "create table " + TABLE_NEO_WALLET
@@ -180,8 +180,8 @@ public class Constant {
             + FIELD_WALLET_ADDRESS + " text, "
             + FIELD_BACKUP_STATE + " integer, "
             + FIELD_WALLET_KEYSTORE + " text, "
-            + FIELD_WALLET_ASSETS_JSON + " text, "
-            + FIELD_WALLET_ASSETS_NEP5_JSON + " text, "
+            + FIELD_WALLET_ASSET_JSON + " text, "
+            + FIELD_WALLET_COLOR_ASSET_JSON + " text, "
             + FIELD_CREATE_TIME + " integer)";
 
 
@@ -275,7 +275,6 @@ public class Constant {
     // ETH
     // table wallet
     public static final String TABLE_ETH_WALLET = "eth_wallet";
-    public static final String FIELD_WALLET_ASSETS_ERC20_JSON = "wallet_assets_erc20_json";
 
     public static final String SQL_CREATE_ETH_WALLET = "create table " + TABLE_ETH_WALLET
             + " (" + FIELD_ID + " integer primary key autoincrement, "
@@ -283,8 +282,8 @@ public class Constant {
             + FIELD_WALLET_ADDRESS + " text, "
             + FIELD_BACKUP_STATE + " integer, "
             + FIELD_WALLET_KEYSTORE + " text, "
-            + FIELD_WALLET_ASSETS_JSON + " text, "
-            + FIELD_WALLET_ASSETS_ERC20_JSON + " text, "
+            + FIELD_WALLET_ASSET_JSON + " text, "
+            + FIELD_WALLET_COLOR_ASSET_JSON + " text, "
             + FIELD_CREATE_TIME + " integer)";
 
 

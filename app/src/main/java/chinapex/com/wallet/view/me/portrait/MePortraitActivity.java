@@ -15,7 +15,7 @@ import chinapex.com.wallet.R;
 import chinapex.com.wallet.adapter.viewpager.FragmentUpdateAdapter;
 import chinapex.com.wallet.base.BaseActivity;
 import chinapex.com.wallet.base.BaseFragment;
-import chinapex.com.wallet.bean.NeoWallet;
+import chinapex.com.wallet.bean.neo.NeoWallet;
 import chinapex.com.wallet.global.ApexWalletApplication;
 import chinapex.com.wallet.global.Constant;
 import chinapex.com.wallet.model.ApexWalletDbDao;
@@ -63,7 +63,7 @@ public class MePortraitActivity extends BaseActivity implements View.OnClickList
             return;
         }
 
-        mNeoWallets = apexWalletDbDao.queryNeoWallets();
+        mNeoWallets = apexWalletDbDao.queryWallets();
         if (null == mNeoWallets || mNeoWallets.isEmpty()) {
             CpLog.e(TAG, "walletBeans is null or empty!");
             return;

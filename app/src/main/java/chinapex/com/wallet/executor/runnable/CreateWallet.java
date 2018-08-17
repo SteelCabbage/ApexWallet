@@ -5,7 +5,7 @@ import android.text.TextUtils;
 
 import java.util.ArrayList;
 
-import chinapex.com.wallet.bean.NeoWallet;
+import chinapex.com.wallet.bean.neo.NeoWallet;
 import chinapex.com.wallet.changelistener.ApexListeners;
 import chinapex.com.wallet.executor.callback.ICreateWalletCallback;
 import chinapex.com.wallet.global.ApexWalletApplication;

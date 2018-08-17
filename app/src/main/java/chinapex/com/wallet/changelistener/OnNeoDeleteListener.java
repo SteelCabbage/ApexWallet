@@ -1,6 +1,6 @@
 package chinapex.com.wallet.changelistener;
 
-import chinapex.com.wallet.bean.NeoWallet;
+import chinapex.com.wallet.bean.neo.NeoWallet;
 
 /**
  * Created by SteelCabbage on 2018/4/9 0009.
