@@ -79,8 +79,8 @@ public class CreateWallet implements Runnable {
         neoWallet.setAddress(wallet.address());
         neoWallet.setBackupState(Constant.BACKUP_UNFINISHED);
         neoWallet.setKeyStore(toKeyStore);
-        neoWallet.setAssetsJson(GsonUtils.toJsonStr(assets));
-        neoWallet.setAssetsNep5Json(GsonUtils.toJsonStr(assetsNep5));
+        neoWallet.setAssetJson(GsonUtils.toJsonStr(assets));
+        neoWallet.setColorAssetJson(GsonUtils.toJsonStr(assetsNep5));
 
         ApexWalletDbDao apexWalletDbDao = ApexWalletDbDao.getInstance(ApexWalletApplication
                 .getInstance());

@@ -10,7 +10,7 @@ import chinapex.com.wallet.bean.BalanceBean;
  */
 
 public interface IGetBalanceView {
-    void getColorAssetBalance(List<BalanceBean> balanceBeans);
-
     void getGlobalAssetBalance(List<BalanceBean> balanceBeans);
+
+    void getColorAssetBalance(List<BalanceBean> balanceBeans);
 }

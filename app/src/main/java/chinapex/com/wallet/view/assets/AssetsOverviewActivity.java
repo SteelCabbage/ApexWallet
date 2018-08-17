@@ -14,7 +14,6 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import chinapex.com.wallet.R;
 import chinapex.com.wallet.adapter.AssetsOverviewRecyclerViewAdapter;
@@ -23,16 +22,12 @@ import chinapex.com.wallet.base.BaseActivity;
 import chinapex.com.wallet.bean.AssetBean;
 import chinapex.com.wallet.bean.BalanceBean;
 import chinapex.com.wallet.bean.WalletBean;
-import chinapex.com.wallet.bean.neo.NeoWallet;
 import chinapex.com.wallet.changelistener.ApexListeners;
-import chinapex.com.wallet.executor.TaskController;
-import chinapex.com.wallet.executor.callback.IGetAccountStateCallback;
-import chinapex.com.wallet.executor.callback.IGetNep5BalanceCallback;
-import chinapex.com.wallet.executor.runnable.GetAccountState;
-import chinapex.com.wallet.executor.runnable.GetNep5Balance;
 import chinapex.com.wallet.global.ApexWalletApplication;
 import chinapex.com.wallet.global.Constant;
 import chinapex.com.wallet.model.ApexWalletDbDao;
+import chinapex.com.wallet.presenter.balance.GetBalancePresenter;
+import chinapex.com.wallet.presenter.balance.IGetBalancePresenter;
 import chinapex.com.wallet.utils.CpLog;
 import chinapex.com.wallet.utils.DensityUtil;
 import chinapex.com.wallet.utils.GsonUtils;
@@ -40,10 +35,8 @@ import chinapex.com.wallet.utils.PhoneUtils;
 import chinapex.com.wallet.utils.ToastUtils;
 import chinapex.com.wallet.view.dialog.AddAssetsDialog;
 
-public class AssetsOverviewActivity extends BaseActivity implements
-        AssetsOverviewRecyclerViewAdapter.OnItemClickListener, IGetAccountStateCallback,
-        SwipeRefreshLayout.OnRefreshListener, View.OnClickListener, IGetNep5BalanceCallback,
-        AddAssetsDialog.onCheckedAssetsListener {
+public class AssetsOverviewActivity extends BaseActivity implements AssetsOverviewRecyclerViewAdapter.OnItemClickListener,
+        SwipeRefreshLayout.OnRefreshListener, View.OnClickListener, AddAssetsDialog.onCheckedAssetsListener, IGetBalanceView {
 
     private static final String TAG = AssetsOverviewActivity.class.getSimpleName();
     private TextView mTv_assets_overview_wallet_name;
@@ -56,6 +49,7 @@ public class AssetsOverviewActivity extends BaseActivity implements
     private ImageButton mIb_assets_overview_ellipsis;
     private List<String> mCurrentAssets;
     private int mCurrentWalletType;
+    private IGetBalancePresenter mIGetBalancePresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,22 +58,20 @@ public class AssetsOverviewActivity extends BaseActivity implements
 
         initView();
         initData();
-        getAssetsBalance();
+        getBalance();
     }
 
     private void initView() {
-        mTv_assets_overview_wallet_name = (TextView) findViewById(R.id
-                .tv_assets_overview_wallet_name);
-        mTv_assets_overview_wallet_address = (TextView) findViewById(R.id
-                .tv_assets_overview_wallet_address);
-        mRv_assets_overview = (RecyclerView) findViewById(R.id.rv_assets_overview);
-        mSl_assets_overview_rv = (SwipeRefreshLayout) findViewById(R.id.sl_assets_overview_rv);
+        mTv_assets_overview_wallet_name = (TextView) findViewById(R.id.tv_assets_overview_wallet_name);
+        mTv_assets_overview_wallet_address = (TextView) findViewById(R.id.tv_assets_overview_wallet_address);
         mIb_assets_overview_ellipsis = (ImageButton) findViewById(R.id.ib_assets_overview_ellipsis);
 
-        mSl_assets_overview_rv.setColorSchemeColors(this.getResources().getColor(R.color
-                .c_1253BF));
-        mSl_assets_overview_rv.setOnRefreshListener(this);
+        mRv_assets_overview = (RecyclerView) findViewById(R.id.rv_assets_overview);
+        mSl_assets_overview_rv = (SwipeRefreshLayout) findViewById(R.id.sl_assets_overview_rv);
+
         mIb_assets_overview_ellipsis.setOnClickListener(this);
+        mSl_assets_overview_rv.setColorSchemeColors(this.getResources().getColor(R.color.c_1253BF));
+        mSl_assets_overview_rv.setOnRefreshListener(this);
 
         // 复制地址
         mTv_assets_overview_wallet_address.setOnClickListener(this);
@@ -108,8 +100,8 @@ public class AssetsOverviewActivity extends BaseActivity implements
         mTv_assets_overview_wallet_name.setText(mWalletBean.getName());
         mTv_assets_overview_wallet_address.setText(mWalletBean.getAddress());
 
-        mRv_assets_overview.setLayoutManager(new LinearLayoutManager(ApexWalletApplication
-                .getInstance(), LinearLayoutManager.VERTICAL, false));
+        mRv_assets_overview.setLayoutManager(new LinearLayoutManager(ApexWalletApplication.getInstance(), LinearLayoutManager
+                .VERTICAL, false));
         mCurrentAssets = new ArrayList<>();
         mBalanceBeans = new ArrayList<>();
         getBalanceBeans();
@@ -121,30 +113,39 @@ public class AssetsOverviewActivity extends BaseActivity implements
         mRv_assets_overview.setAdapter(mAssetsOverviewRecyclerViewAdapter);
     }
 
-    private void getAssetsBalance() {
-        TaskController.getInstance().submit(new GetAccountState(mNeoWallet.getAddress(), this));
+    private void getBalance() {
+        mIGetBalancePresenter = new GetBalancePresenter(this);
+        mIGetBalancePresenter.init(mCurrentWalletType);
+        mIGetBalancePresenter.getGlobalAssetBalance(mWalletBean);
+        mIGetBalancePresenter.getColorAssetBalance(mWalletBean);
+    }
 
-        if (null == mCurrentAssets || mCurrentAssets.isEmpty()) {
-            CpLog.e(TAG, "mCurrentAssets is null or empty!");
-            return;
-        }
-
-        for (String currentAsset : mCurrentAssets) {
-            if (TextUtils.isEmpty(currentAsset)) {
-                CpLog.e(TAG, "currentAsset is null or empty!");
-                continue;
+    @Override
+    public void getGlobalAssetBalance(List<BalanceBean> balanceBeans) {
+        mBalanceBeans.addAll(balanceBeans);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (mSl_assets_overview_rv.isRefreshing()) {
+                    mSl_assets_overview_rv.setRefreshing(false);
+                }
+                mAssetsOverviewRecyclerViewAdapter.notifyDataSetChanged();
             }
+        });
+    }
 
-            if (Constant.ASSETS_NEO.equals(currentAsset)
-                    || Constant.ASSETS_NEO_GAS.equals(currentAsset)) {
-                CpLog.w(TAG, "currentAsset is not nep5");
-                continue;
+    @Override
+    public void getColorAssetBalance(List<BalanceBean> balanceBeans) {
+        mBalanceBeans.addAll(balanceBeans);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (mSl_assets_overview_rv.isRefreshing()) {
+                    mSl_assets_overview_rv.setRefreshing(false);
+                }
+                mAssetsOverviewRecyclerViewAdapter.notifyDataSetChanged();
             }
-
-            TaskController.getInstance().submit(new GetNep5Balance(currentAsset, mNeoWallet
-                    .getAddress(), this));
-        }
-
+        });
     }
 
     @Override
@@ -266,133 +267,10 @@ public class AssetsOverviewActivity extends BaseActivity implements
     }
 
     @Override
-    public void getNep5Balance(Map<String, BalanceBean> balanceBeans) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (mSl_assets_overview_rv.isRefreshing()) {
-                    mSl_assets_overview_rv.setRefreshing(false);
-                }
-            }
-        });
-
-        if (null == mBalanceBeans || mBalanceBeans.isEmpty()) {
-            CpLog.e(TAG, "mBalanceBeans is null or empty!");
-            return;
-        }
-
-        if (null == balanceBeans || balanceBeans.isEmpty()) {
-            CpLog.w(TAG, "balanceBeans is null or empty!");
-            return;
-        }
-
-        for (BalanceBean balanceBean : mBalanceBeans) {
-            if (null == balanceBean) {
-                CpLog.e(TAG, "balanceBean is null!");
-                continue;
-            }
-
-            String assetsID = balanceBean.getAssetsID();
-            if (balanceBeans.containsKey(assetsID)) {
-                balanceBean.setAssetsValue(balanceBeans.get(assetsID).getAssetsValue());
-            }
-        }
-
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mAssetsOverviewRecyclerViewAdapter.notifyDataSetChanged();
-            }
-        });
-    }
-
-    @Override
-    public void getNeoGlobalAssetBalance(Map<String, BalanceBean> balanceBeans) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mSl_assets_overview_rv.setRefreshing(false);
-            }
-        });
-
-        if (null == mBalanceBeans || mBalanceBeans.isEmpty()) {
-            CpLog.e(TAG, "mBalanceBeans is null or empty!");
-            return;
-        }
-
-        if (null == balanceBeans || balanceBeans.isEmpty()) {
-            CpLog.w(TAG, "getNeoGlobalAssetBalance() -> the current assets is null!");
-            for (BalanceBean balanceBean0 : mBalanceBeans) {
-                if (null == balanceBean0) {
-                    CpLog.e(TAG, "balanceBean0 is null!");
-                    continue;
-                }
-
-                if (Constant.ASSET_TYPE_GLOBAL.equals(balanceBean0.getAssetType())) {
-                    balanceBean0.setAssetsValue("0");
-                }
-            }
-
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    mAssetsOverviewRecyclerViewAdapter.notifyDataSetChanged();
-                }
-            });
-
-            return;
-        }
-
-        for (BalanceBean balanceBean : mBalanceBeans) {
-            if (null == balanceBean) {
-                CpLog.e(TAG, "balanceBean is null!");
-                continue;
-            }
-
-            String assetsID = balanceBean.getAssetsID();
-            if (balanceBeans.containsKey(assetsID)) {
-                balanceBean.setAssetsValue(balanceBeans.get(assetsID).getAssetsValue());
-            } else {
-                if (Constant.ASSET_TYPE_GLOBAL.equals(balanceBean.getAssetType())) {
-                    balanceBean.setAssetsValue("0");
-                }
-            }
-        }
-
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mAssetsOverviewRecyclerViewAdapter.notifyDataSetChanged();
-            }
-        });
-    }
-
-    @Override
     public void onRefresh() {
-        if (null == mWalletBean) {
-            CpLog.e(TAG, "mNeoWallet");
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    mSl_assets_overview_rv.setRefreshing(false);
-                }
-            });
-            return;
-        }
-
-        switch (mCurrentWalletType) {
-            case Constant.WALLET_TYPE_NEO:
-                TaskController.getInstance().submit(new GetAccountState(mWalletBean.getAddress(),
-                        this));
-                TaskController.getInstance().submit(new GetNep5Balance(Constant.ASSETS_CPX,
-                        mWalletBean.getAddress(), this));
-                break;
-            case Constant.WALLET_TYPE_ETH:
-                // TODO: 2018/8/16 0016 eth逻辑
-                break;
-            default:
-                break;
-        }
+        mBalanceBeans.clear();
+        mIGetBalancePresenter.getGlobalAssetBalance(mWalletBean);
+        mIGetBalancePresenter.getColorAssetBalance(mWalletBean);
     }
 
     @Override
@@ -420,10 +298,13 @@ public class AssetsOverviewActivity extends BaseActivity implements
 
     @Override
     public void onCheckedAssets(List<String> checkedAssets) {
-        if (null == checkedAssets) {
+        if (null == checkedAssets || checkedAssets.isEmpty()) {
             CpLog.w(TAG, "checkedAssets is null or empty!");
             return;
         }
+
+        mCurrentAssets.clear();
+        mCurrentAssets.addAll(checkedAssets);
 
         List<String> colorAssets = new ArrayList<>();
         List<String> globalAssets = new ArrayList<>();
@@ -444,8 +325,7 @@ public class AssetsOverviewActivity extends BaseActivity implements
 
         mWalletBean.setAssetJson(GsonUtils.toJsonStr(globalAssets));
         mWalletBean.setColorAssetJson(GsonUtils.toJsonStr(colorAssets));
-        ApexWalletDbDao apexWalletDbDao = ApexWalletDbDao.getInstance(ApexWalletApplication
-                .getInstance());
+        ApexWalletDbDao apexWalletDbDao = ApexWalletDbDao.getInstance(ApexWalletApplication.getInstance());
         if (null == apexWalletDbDao) {
             CpLog.e(TAG, "apexWalletDbDao is null!");
             return;
@@ -460,22 +340,11 @@ public class AssetsOverviewActivity extends BaseActivity implements
                 break;
         }
 
-        ApexListeners.getInstance().notifyAssetsUpdate(mWalletBean);
-
-        if (null == mBalanceBeans || null == mCurrentAssets) {
-            CpLog.e(TAG, "mBalanceBeans or mCurrentAssets is null!");
-            return;
-        }
+        ApexListeners.getInstance().notifyAssetJsonUpdate(mWalletBean);
 
         mBalanceBeans.clear();
-        mCurrentAssets.clear();
-
-        if (checkedAssets.isEmpty()) {
-            mAssetsOverviewRecyclerViewAdapter.notifyDataSetChanged();
-            return;
-        }
-
-        getBalanceBeans();
-        getAssetsBalance();
+        mIGetBalancePresenter.getGlobalAssetBalance(mWalletBean);
+        mIGetBalancePresenter.getColorAssetBalance(mWalletBean);
     }
+
 }

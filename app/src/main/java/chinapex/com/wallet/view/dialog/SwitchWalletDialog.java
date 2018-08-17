@@ -16,8 +16,10 @@ import java.util.List;
 
 import chinapex.com.wallet.R;
 import chinapex.com.wallet.adapter.SwitchTransactionRecyclerViewAdapter;
+import chinapex.com.wallet.bean.WalletBean;
 import chinapex.com.wallet.bean.neo.NeoWallet;
 import chinapex.com.wallet.global.ApexWalletApplication;
+import chinapex.com.wallet.global.Constant;
 import chinapex.com.wallet.model.ApexWalletDbDao;
 import chinapex.com.wallet.utils.CpLog;
 import chinapex.com.wallet.utils.DensityUtil;
@@ -32,7 +34,7 @@ public class SwitchWalletDialog extends DialogFragment implements View.OnClickLi
     private static final String TAG = SwitchWalletDialog.class.getSimpleName();
     private ImageButton mIb_switch_wallet_close;
     private RecyclerView mRv_me_switch_wallet;
-    private List<NeoWallet> mNeoWallets;
+    private List<WalletBean> mWalletBeans;
     private NeoWallet mCurrentNeoWallet;
     private int mPreIndex;
     private int mCurrentIndex;
@@ -48,7 +50,7 @@ public class SwitchWalletDialog extends DialogFragment implements View.OnClickLi
     }
 
     public interface onItemSelectedListener {
-        void onItemSelected(NeoWallet neoWallet);
+        void onItemSelected(WalletBean walletBean);
     }
 
     public void setOnItemSelectedListener(onItemSelectedListener onItemSelectedListener) {
@@ -96,16 +98,16 @@ public class SwitchWalletDialog extends DialogFragment implements View.OnClickLi
         }
 
 
-        mNeoWallets = apexWalletDbDao.queryWallets();
-        for (NeoWallet neoWallet : mNeoWallets) {
-            if (null == neoWallet) {
-                CpLog.e(TAG, "neoWallet is null!");
+        mWalletBeans = apexWalletDbDao.queryWallets(Constant.TABLE_NEO_WALLET);
+        for (WalletBean walletBean : mWalletBeans) {
+            if (null == walletBean) {
+                CpLog.e(TAG, "walletBean is null!");
                 continue;
             }
 
-            if (mCurrentNeoWallet.equals(neoWallet)) {
-                neoWallet.setSelected(true);
-                mCurrentIndex = mNeoWallets.indexOf(neoWallet);
+            if (mCurrentNeoWallet.equals(walletBean)) {
+                walletBean.setSelected(true);
+                mCurrentIndex = mWalletBeans.indexOf(walletBean);
             }
         }
     }
@@ -118,8 +120,7 @@ public class SwitchWalletDialog extends DialogFragment implements View.OnClickLi
 
         mRv_me_switch_wallet.setLayoutManager(new LinearLayoutManager(ApexWalletApplication
                 .getInstance(), LinearLayoutManager.VERTICAL, false));
-        mSwitchTransactionRecyclerViewAdapter = new SwitchTransactionRecyclerViewAdapter
-                (mNeoWallets);
+        mSwitchTransactionRecyclerViewAdapter = new SwitchTransactionRecyclerViewAdapter(mWalletBeans);
         mSwitchTransactionRecyclerViewAdapter.setOnItemClickListener(this);
         mRv_me_switch_wallet.setAdapter(mSwitchTransactionRecyclerViewAdapter);
     }
@@ -137,21 +138,21 @@ public class SwitchWalletDialog extends DialogFragment implements View.OnClickLi
 
     @Override
     public void onItemClick(int position) {
-        NeoWallet neoWallet = mNeoWallets.get(position);
-        if (null == neoWallet) {
-            CpLog.e(TAG, "neoWallet is null!");
+        WalletBean walletBean = mWalletBeans.get(position);
+        if (null == walletBean) {
+            CpLog.e(TAG, "walletBean is null!");
             return;
         }
 
-        mOnItemSelectedListener.onItemSelected(neoWallet);
-        neoWallet.setSelected(true);
+        mOnItemSelectedListener.onItemSelected(walletBean);
+        walletBean.setSelected(true);
 
         mPreIndex = mCurrentIndex;
-        mCurrentIndex = mNeoWallets.indexOf(neoWallet);
+        mCurrentIndex = mWalletBeans.indexOf(walletBean);
 
         //当前所选与上次不同
-        if (!neoWallet.equals(mNeoWallets.get(mPreIndex))) {
-            mNeoWallets.get(mPreIndex).setSelected(false);
+        if (!walletBean.equals(mWalletBeans.get(mPreIndex))) {
+            mWalletBeans.get(mPreIndex).setSelected(false);
         }
 
         mSwitchTransactionRecyclerViewAdapter.notifyDataSetChanged();

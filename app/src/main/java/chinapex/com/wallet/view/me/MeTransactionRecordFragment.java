@@ -24,7 +24,7 @@ import chinapex.com.wallet.adapter.EmptyAdapter;
 import chinapex.com.wallet.adapter.TransactionRecordRecyclerViewAdapter;
 import chinapex.com.wallet.base.BaseFragment;
 import chinapex.com.wallet.bean.TransactionRecord;
-import chinapex.com.wallet.bean.neo.NeoWallet;
+import chinapex.com.wallet.bean.WalletBean;
 import chinapex.com.wallet.changelistener.ApexListeners;
 import chinapex.com.wallet.changelistener.OnTxStateUpdateListener;
 import chinapex.com.wallet.executor.TaskController;
@@ -53,7 +53,7 @@ public class MeTransactionRecordFragment extends BaseFragment implements View.On
     private TextView mTv_me_transaction_record_title;
     private TextView mTv_me_transaction_record_address;
     private ImageButton mIb_me_transaction_record_switch;
-    private NeoWallet mCurrentClickedNeoWallet;
+    private WalletBean mCurrentClickedWallet;
     private SwipeRefreshLayout mSl_transaction_record;
     private RecyclerView mRv_transaction_record;
     private List<TransactionRecord> mTransactionRecords;
@@ -118,14 +118,14 @@ public class MeTransactionRecordFragment extends BaseFragment implements View.On
 
     private void initData() {
         Me3Activity me3Activity = (Me3Activity) getActivity();
-        mCurrentClickedNeoWallet = me3Activity.getNeoWallet();
-        if (null == mCurrentClickedNeoWallet) {
+        mCurrentClickedWallet = me3Activity.getNeoWallet();
+        if (null == mCurrentClickedWallet) {
             CpLog.e(TAG, "currentClickedWalletBean is null!");
             return;
         }
 
-        mTv_me_transaction_record_title.setText(mCurrentClickedNeoWallet.getName());
-        mTv_me_transaction_record_address.setText(mCurrentClickedNeoWallet.getAddress());
+        mTv_me_transaction_record_title.setText(mCurrentClickedWallet.getName());
+        mTv_me_transaction_record_address.setText(mCurrentClickedWallet.getAddress());
         ApexListeners.getInstance().addOnTxStateUpdateListener(this);
     }
 
@@ -221,21 +221,21 @@ public class MeTransactionRecordFragment extends BaseFragment implements View.On
 
     private void showDialog() {
         SwitchWallet2Dialog switchWallet2Dialog = SwitchWallet2Dialog.newInstance();
-        switchWallet2Dialog.setCurrentNeoWallet(mCurrentClickedNeoWallet);
+        switchWallet2Dialog.setCurrentWallet(mCurrentClickedWallet);
         switchWallet2Dialog.setOnSelectedWalletListener(this);
         switchWallet2Dialog.show(getFragmentManager(), "SwitchWallet2Dialog");
     }
 
     @Override
-    public void onSelectedWallet(NeoWallet neoWallet) {
-        if (null == neoWallet) {
+    public void onSelectedWallet(WalletBean walletBean) {
+        if (null == walletBean) {
             CpLog.e(TAG, "neoWallet is null!");
             return;
         }
 
-        mCurrentClickedNeoWallet = neoWallet;
-        mTv_me_transaction_record_title.setText(neoWallet.getName());
-        mTv_me_transaction_record_address.setText(neoWallet.getAddress());
+        mCurrentClickedWallet = walletBean;
+        mTv_me_transaction_record_title.setText(walletBean.getName());
+        mTv_me_transaction_record_address.setText(walletBean.getAddress());
 
         // update transactionRecord
         loadTxsFromDb();

@@ -17,6 +17,7 @@ import java.util.ArrayList;
 
 import chinapex.com.wallet.R;
 import chinapex.com.wallet.base.BaseFragment;
+import chinapex.com.wallet.bean.WalletBean;
 import chinapex.com.wallet.bean.neo.NeoWallet;
 import chinapex.com.wallet.changelistener.ApexListeners;
 import chinapex.com.wallet.executor.TaskController;
@@ -233,8 +234,7 @@ public class ImportMnemonicFragment extends BaseFragment implements View.OnClick
         }
 
         String walletAddress = wallet.address();
-        NeoWallet queryByWalletAddress = apexWalletDbDao.queryByWalletAddress(Constant
-                .TABLE_NEO_WALLET, walletAddress);
+        WalletBean queryByWalletAddress = apexWalletDbDao.queryByWalletAddress(Constant.TABLE_NEO_WALLET, walletAddress);
         if (null != queryByWalletAddress) {
             CpLog.e(TAG, "this wallet from mnemonic has existed!");
             getActivity().runOnUiThread(new Runnable() {
@@ -258,8 +258,8 @@ public class ImportMnemonicFragment extends BaseFragment implements View.OnClick
         neoWallet.setName(Constant.WALLET_NAME_IMPORT_DEFAULT);
         neoWallet.setAddress(walletAddress);
         neoWallet.setBackupState(Constant.BACKUP_UNFINISHED);
-        neoWallet.setAssetsJson(GsonUtils.toJsonStr(assets));
-        neoWallet.setAssetsNep5Json(GsonUtils.toJsonStr(assetsNep5));
+        neoWallet.setAssetJson(GsonUtils.toJsonStr(assets));
+        neoWallet.setColorAssetJson(GsonUtils.toJsonStr(assetsNep5));
 
         String pwd = mEt_import_wallet_repeat_pwd.getText().toString().trim();
         try {

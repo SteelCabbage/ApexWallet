@@ -23,7 +23,7 @@ public class ApexListeners {
     private List<OnItemStateUpdateListener> mOnItemStateUpdateListeners;
     private List<OnItemNameUpdateListener> mOnItemNameUpdateListeners;
     private List<OnTxStateUpdateListener> mOnTxStateUpdateListeners;
-    private List<OnNeoAssetsUpdateListener> mOnNeoAssetsUpdateListeners;
+    private List<OnAssetJsonUpdateListener> mOnAssetJsonUpdateListeners;
     // eth
     private List<OnEthAddListener> mOnEthAddListeners;
     private List<OnEthStateUpdateListener> mOnEthStateUpdateListeners;
@@ -46,7 +46,7 @@ public class ApexListeners {
         mOnItemStateUpdateListeners = new ArrayList<>();
         mOnItemNameUpdateListeners = new ArrayList<>();
         mOnTxStateUpdateListeners = new ArrayList<>();
-        mOnNeoAssetsUpdateListeners = new ArrayList<>();
+        mOnAssetJsonUpdateListeners = new ArrayList<>();
         mOnEthAddListeners = new ArrayList<>();
         mOnEthStateUpdateListeners = new ArrayList<>();
     }
@@ -57,7 +57,7 @@ public class ApexListeners {
         mOnItemStateUpdateListeners.clear();
         mOnItemNameUpdateListeners.clear();
         mOnTxStateUpdateListeners.clear();
-        mOnNeoAssetsUpdateListeners.clear();
+        mOnAssetJsonUpdateListeners.clear();
         mOnEthAddListeners.clear();
         mOnEthStateUpdateListeners.clear();
 
@@ -66,7 +66,7 @@ public class ApexListeners {
         mOnItemStateUpdateListeners = null;
         mOnItemNameUpdateListeners = null;
         mOnTxStateUpdateListeners = null;
-        mOnNeoAssetsUpdateListeners = null;
+        mOnAssetJsonUpdateListeners = null;
         mOnEthAddListeners = null;
         mOnEthStateUpdateListeners = null;
     }
@@ -162,22 +162,22 @@ public class ApexListeners {
         mOnTxStateUpdateListeners.remove(onTxStateUpdateListener);
     }
 
-    public void addOnAssetsUpdateListener(OnNeoAssetsUpdateListener onNeoAssetsUpdateListener) {
-        if (null == mOnNeoAssetsUpdateListeners || null == onNeoAssetsUpdateListener) {
-            CpLog.e(TAG, "1:mOnNeoAssetsUpdateListeners or onNeoAssetsUpdateListener is null!");
+    public void addOnAssetsUpdateListener(OnAssetJsonUpdateListener onAssetJsonUpdateListener) {
+        if (null == mOnAssetJsonUpdateListeners || null == onAssetJsonUpdateListener) {
+            CpLog.e(TAG, "1:mOnAssetJsonUpdateListeners or onAssetJsonUpdateListener is null!");
             return;
         }
 
-        mOnNeoAssetsUpdateListeners.add(onNeoAssetsUpdateListener);
+        mOnAssetJsonUpdateListeners.add(onAssetJsonUpdateListener);
     }
 
-    public void removeOnAssetsUpdateListener(OnNeoAssetsUpdateListener onNeoAssetsUpdateListener) {
-        if (null == mOnNeoAssetsUpdateListeners || null == onNeoAssetsUpdateListener) {
-            CpLog.e(TAG, "0:mOnNeoAssetsUpdateListeners or onNeoAssetsUpdateListener is null!");
+    public void removeOnAssetsUpdateListener(OnAssetJsonUpdateListener onAssetJsonUpdateListener) {
+        if (null == mOnAssetJsonUpdateListeners || null == onAssetJsonUpdateListener) {
+            CpLog.e(TAG, "0:mOnAssetJsonUpdateListeners or onAssetJsonUpdateListener is null!");
             return;
         }
 
-        mOnNeoAssetsUpdateListeners.remove(onNeoAssetsUpdateListener);
+        mOnAssetJsonUpdateListeners.remove(onAssetJsonUpdateListener);
     }
 
     public void addOnEthAddListener(OnEthAddListener onEthAddListener) {
@@ -296,19 +296,19 @@ public class ApexListeners {
         }
     }
 
-    public void notifyAssetsUpdate(WalletBean walletBean) {
-        if (null == mOnNeoAssetsUpdateListeners) {
-            CpLog.e(TAG, "mOnNeoAssetsUpdateListeners is null!");
+    public void notifyAssetJsonUpdate(WalletBean walletBean) {
+        if (null == mOnAssetJsonUpdateListeners) {
+            CpLog.e(TAG, "mOnAssetJsonUpdateListeners is null!");
             return;
         }
 
-        for (OnNeoAssetsUpdateListener onNeoAssetsUpdateListener : mOnNeoAssetsUpdateListeners) {
-            if (null == onNeoAssetsUpdateListener) {
-                CpLog.e(TAG, "onNeoAssetsUpdateListener is null!");
+        for (OnAssetJsonUpdateListener onAssetJsonUpdateListener : mOnAssetJsonUpdateListeners) {
+            if (null == onAssetJsonUpdateListener) {
+                CpLog.e(TAG, "onAssetJsonUpdateListener is null!");
                 continue;
             }
 
-            onNeoAssetsUpdateListener.onNeoAssetsUpdate(neoWallet);
+            onAssetJsonUpdateListener.onAssetJsonUpdate(walletBean);
         }
     }
 

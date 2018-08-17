@@ -14,6 +14,7 @@ import chinapex.com.wallet.R;
 import chinapex.com.wallet.adapter.MeRecyclerViewAdapter;
 import chinapex.com.wallet.adapter.SpacesItemDecoration;
 import chinapex.com.wallet.base.BaseActivity;
+import chinapex.com.wallet.bean.WalletBean;
 import chinapex.com.wallet.bean.neo.NeoWallet;
 import chinapex.com.wallet.changelistener.ApexListeners;
 import chinapex.com.wallet.changelistener.OnNeoDeleteListener;
@@ -29,11 +30,11 @@ public class Me2Activity extends BaseActivity implements MeRecyclerViewAdapter
         .OnItemClickListener, OnItemNameUpdateListener, OnItemStateUpdateListener,
         OnNeoDeleteListener {
     private static final String TAG = Me2Activity.class.getSimpleName();
-    private List<NeoWallet> mNeoWallets;
+    private List<WalletBean> mWalletBeans;
     private RecyclerView mRv_me2;
     private MeRecyclerViewAdapter mMeRecyclerViewAdapter;
     private TextView mTv_me2_title;
-    private NeoWallet mCurrentClickedNeoWallet;
+    private WalletBean mCurrentClickedWallet;
     private String mShowTag;
 
     @Override
@@ -76,12 +77,12 @@ public class Me2Activity extends BaseActivity implements MeRecyclerViewAdapter
                 break;
         }
 
-        mNeoWallets = initWalletBeans();
+        mWalletBeans = initWalletBeans();
         mRv_me2.setLayoutManager(new LinearLayoutManager(ApexWalletApplication.getInstance(),
                 LinearLayoutManager.VERTICAL, false));
         int space = DensityUtil.dip2px(ApexWalletApplication.getInstance(), 8);
         mRv_me2.addItemDecoration(new SpacesItemDecoration(space));
-        mMeRecyclerViewAdapter = new MeRecyclerViewAdapter(mNeoWallets);
+        mMeRecyclerViewAdapter = new MeRecyclerViewAdapter(mWalletBeans);
         mMeRecyclerViewAdapter.setOnItemClickListener(this);
         mRv_me2.setAdapter(mMeRecyclerViewAdapter);
 
@@ -90,47 +91,46 @@ public class Me2Activity extends BaseActivity implements MeRecyclerViewAdapter
         ApexListeners.getInstance().addOnItemNameUpdateListener(this);
     }
 
-    private List<NeoWallet> initWalletBeans() {
-        List<NeoWallet> neoWallets = new ArrayList<>();
-        ApexWalletDbDao apexWalletDbDao = ApexWalletDbDao.getInstance(ApexWalletApplication
-                .getInstance());
+    private List<WalletBean> initWalletBeans() {
+        List<WalletBean> walletBeans = new ArrayList<>();
+        ApexWalletDbDao apexWalletDbDao = ApexWalletDbDao.getInstance(ApexWalletApplication.getInstance());
         if (null == apexWalletDbDao) {
             CpLog.e(TAG, "apexWalletDbDao is null!");
-            return neoWallets;
+            return walletBeans;
         }
 
-        neoWallets.addAll(apexWalletDbDao.queryWallets());
-        if (neoWallets.isEmpty()) {
+        walletBeans.addAll(apexWalletDbDao.queryWallets(Constant.TABLE_NEO_WALLET));
+        if (walletBeans.isEmpty()) {
             CpLog.w(TAG, "local have no wallet");
-            return neoWallets;
+            return walletBeans;
         }
 
-        for (NeoWallet neoWallet : neoWallets) {
-            if (null == neoWallet) {
-                CpLog.e(TAG, "neoWallet is null!");
+        for (WalletBean walletBean : walletBeans) {
+            if (null == walletBean) {
+                CpLog.e(TAG, "walletBean is null!");
                 continue;
             }
 
             switch (mShowTag) {
                 case Constant.ME_2_SHOULD_BE_SHOW_MANAGE_WALLET:
-                    neoWallet.setSelectedTag(Constant.SELECTED_TAG_MANAGER_WALLET);
+                    walletBean.setSelectedTag(Constant.SELECTED_TAG_MANAGER_WALLET);
                     break;
                 case Constant.ME_2_SHOULD_BE_SHOW_TX_RECORDS:
-                    neoWallet.setSelectedTag(Constant.SELECTED_TAG_TRANSACTION_RECORED);
+                    walletBean.setSelectedTag(Constant.SELECTED_TAG_TRANSACTION_RECORED);
                     break;
                 default:
                     break;
             }
         }
 
-        return neoWallets;
+        return walletBeans;
     }
 
     @Override
     public void onItemClick(int position) {
-        mCurrentClickedNeoWallet = mNeoWallets.get(position);
-        if (null == mCurrentClickedNeoWallet) {
-            CpLog.e(TAG, "mCurrentClickedNeoWallet is null!");
+        mCurrentClickedWallet = mWalletBeans.get(position);
+        if (null == mCurrentClickedWallet) {
+            CpLog.e(TAG, "mCurrentClickedWallet is null!");
             return;
         }
 
@@ -151,7 +151,7 @@ public class Me2Activity extends BaseActivity implements MeRecyclerViewAdapter
                 false,
                 Constant.ME_MANAGER_DETAIL_BUNDLE,
                 Constant.ME_SKIP_ACTIVITY_FRAGMENT_TAG, Constant.FRAGMENT_TAG_ME_MANAGE_DETAIL,
-                Constant.PARCELABLE_WALLET_BEAN_MANAGE_DETAIL, mCurrentClickedNeoWallet);
+                Constant.PARCELABLE_WALLET_BEAN_MANAGE_DETAIL, mCurrentClickedWallet);
     }
 
     private void toMeTransactionRecordFragment() {
@@ -160,7 +160,7 @@ public class Me2Activity extends BaseActivity implements MeRecyclerViewAdapter
                 Constant.ME_MANAGER_DETAIL_BUNDLE,
                 Constant.ME_SKIP_ACTIVITY_FRAGMENT_TAG,
                 Constant.FRAGMENT_TAG_ME_TRANSACTION_RECORD,
-                Constant.PARCELABLE_WALLET_BEAN_MANAGE_DETAIL, mCurrentClickedNeoWallet);
+                Constant.PARCELABLE_WALLET_BEAN_MANAGE_DETAIL, mCurrentClickedWallet);
     }
 
     // 备份钱包后回调
@@ -171,14 +171,14 @@ public class Me2Activity extends BaseActivity implements MeRecyclerViewAdapter
             return;
         }
 
-        for (NeoWallet neoWalletTmp : mNeoWallets) {
-            if (null == neoWalletTmp) {
-                CpLog.e(TAG, "neoWalletTmp is null!");
+        for (WalletBean walletBeanTmp : mWalletBeans) {
+            if (null == walletBeanTmp) {
+                CpLog.e(TAG, "walletBeanTmp is null!");
                 continue;
             }
 
-            if (neoWalletTmp.equals(neoWallet)) {
-                neoWalletTmp.setBackupState(neoWallet.getBackupState());
+            if (walletBeanTmp.equals(neoWallet)) {
+                walletBeanTmp.setBackupState(neoWallet.getBackupState());
             }
         }
 
@@ -193,12 +193,12 @@ public class Me2Activity extends BaseActivity implements MeRecyclerViewAdapter
             return;
         }
 
-        if (!mNeoWallets.contains(neoWallet)) {
+        if (!mWalletBeans.contains(neoWallet)) {
             CpLog.e(TAG, "onNeoDelete() -> this wallet not exist!");
             return;
         }
 
-        mNeoWallets.remove(neoWallet);
+        mWalletBeans.remove(neoWallet);
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -215,14 +215,14 @@ public class Me2Activity extends BaseActivity implements MeRecyclerViewAdapter
             return;
         }
 
-        for (NeoWallet neoWalletTmp : mNeoWallets) {
-            if (null == neoWalletTmp) {
-                CpLog.e(TAG, "neoWalletTmp is null!");
+        for (WalletBean walletBeanTmp : mWalletBeans) {
+            if (null == walletBeanTmp) {
+                CpLog.e(TAG, "walletBeanTmp is null!");
                 continue;
             }
 
-            if (neoWalletTmp.equals(neoWallet)) {
-                neoWalletTmp.setName(neoWallet.getName());
+            if (walletBeanTmp.equals(neoWallet)) {
+                walletBeanTmp.setName(neoWallet.getName());
             }
         }
 

@@ -35,7 +35,7 @@ import chinapex.com.wallet.bean.neo.NeoWallet;
 import chinapex.com.wallet.bean.WalletBean;
 import chinapex.com.wallet.bean.eth.EthWallet;
 import chinapex.com.wallet.changelistener.ApexListeners;
-import chinapex.com.wallet.changelistener.OnNeoAssetsUpdateListener;
+import chinapex.com.wallet.changelistener.OnAssetJsonUpdateListener;
 import chinapex.com.wallet.changelistener.OnNeoDeleteListener;
 import chinapex.com.wallet.changelistener.OnItemNameUpdateListener;
 import chinapex.com.wallet.changelistener.OnNeoAddListener;
@@ -56,7 +56,7 @@ public class AssetsFragment extends BaseFragment implements AssetsRecyclerViewAd
         .OnItemClickListener, SwipeRefreshLayout.OnRefreshListener, AssetsRecyclerViewAdapter
         .OnItemLongClickListener, OnNeoDeleteListener, OnNeoAddListener, DrawerLayout
         .DrawerListener, DrawerMenu1RecyclerViewAdapter.DrawerMenu1OnItemClickListener, View
-        .OnClickListener, OnItemNameUpdateListener, TextWatcher, OnNeoAssetsUpdateListener,
+        .OnClickListener, OnItemNameUpdateListener, TextWatcher, OnAssetJsonUpdateListener,
         OnEthAddListener, DrawerMenu2RecyclerViewAdapter.DrawerMenu2OnItemClickListener {
 
     private static final String TAG = AssetsFragment.class.getSimpleName();
@@ -457,9 +457,9 @@ public class AssetsFragment extends BaseFragment implements AssetsRecyclerViewAd
     }
 
     @Override
-    public void onNeoAssetsUpdate(NeoWallet neoWallet) {
-        if (null == neoWallet) {
-            CpLog.e(TAG, "neoWallet is null!");
+    public void onAssetJsonUpdate(WalletBean walletBean) {
+        if (null == walletBean) {
+            CpLog.e(TAG, "walletBean is null!");
             return;
         }
 
@@ -474,9 +474,9 @@ public class AssetsFragment extends BaseFragment implements AssetsRecyclerViewAd
                 continue;
             }
 
-            if (walletBeanTmp.equals(neoWallet)) {
-                walletBeanTmp.setColorAssetJson(neoWallet.getColorAssetJson());
-                walletBeanTmp.setAssetJson(neoWallet.getAssetJson());
+            if (walletBeanTmp.equals(walletBean)) {
+                walletBeanTmp.setColorAssetJson(walletBean.getColorAssetJson());
+                walletBeanTmp.setAssetJson(walletBean.getAssetJson());
             }
         }
 

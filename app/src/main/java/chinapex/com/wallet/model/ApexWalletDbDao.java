@@ -204,8 +204,7 @@ public class ApexWalletDbDao {
                 int backupStateIndex = cursor.getColumnIndex(Constant.FIELD_BACKUP_STATE);
                 int walletKeystoreIndex = cursor.getColumnIndex(Constant.FIELD_WALLET_KEYSTORE);
                 int walletAssetJsonIndex = cursor.getColumnIndex(Constant.FIELD_WALLET_ASSET_JSON);
-                int walletColorAssetJsonIndex = cursor.getColumnIndex(Constant
-                        .FIELD_WALLET_COLOR_ASSET_JSON);
+                int walletColorAssetJsonIndex = cursor.getColumnIndex(Constant.FIELD_WALLET_COLOR_ASSET_JSON);
 
                 String walletName = cursor.getString(walletNameIndex);
                 String walletAddr = cursor.getString(walletAddrIndex);

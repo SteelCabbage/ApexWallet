@@ -17,6 +17,7 @@ import java.util.ArrayList;
 
 import chinapex.com.wallet.R;
 import chinapex.com.wallet.base.BaseFragment;
+import chinapex.com.wallet.bean.WalletBean;
 import chinapex.com.wallet.bean.neo.NeoWallet;
 import chinapex.com.wallet.changelistener.ApexListeners;
 import chinapex.com.wallet.executor.TaskController;
@@ -165,10 +166,9 @@ public class ImportKeystoreFragment extends BaseFragment implements View.OnClick
         }
 
         String walletAddress = wallet.address();
-        NeoWallet neoWalletTmp = apexWalletDbDao.queryByWalletAddress(Constant.TABLE_NEO_WALLET,
-                walletAddress);
-        if (null != neoWalletTmp) {
-            CpLog.e(TAG, "this neoWalletTmp from keystore has existed!");
+        WalletBean walletBeanTmp = apexWalletDbDao.queryByWalletAddress(Constant.TABLE_NEO_WALLET, walletAddress);
+        if (null != walletBeanTmp) {
+            CpLog.e(TAG, "this walletBeanTmp from keystore has existed!");
             getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
@@ -192,8 +192,8 @@ public class ImportKeystoreFragment extends BaseFragment implements View.OnClick
         neoWallet.setAddress(walletAddress);
         neoWallet.setBackupState(Constant.BACKUP_UNFINISHED);
         neoWallet.setKeyStore(keystore);
-        neoWallet.setAssetsJson(GsonUtils.toJsonStr(assets));
-        neoWallet.setAssetsNep5Json(GsonUtils.toJsonStr(assetsNep5));
+        neoWallet.setAssetJson(GsonUtils.toJsonStr(assets));
+        neoWallet.setColorAssetJson(GsonUtils.toJsonStr(assetsNep5));
 
         apexWalletDbDao.insert(Constant.TABLE_NEO_WALLET, neoWallet);
         CpLog.i(TAG, "ApexListeners.getInstance().notifyNeoAdd");

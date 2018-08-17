@@ -79,7 +79,7 @@ public class CreateEthWallet implements Runnable {
         ethWallet.setAddress(wallet.address());
         ethWallet.setBackupState(Constant.BACKUP_UNFINISHED);
         ethWallet.setKeyStore(toKeyStore);
-        ethWallet.setAssetsJson(GsonUtils.toJsonStr(assets));
+        ethWallet.setAssetJson(GsonUtils.toJsonStr(assets));
 //        walletBean.setAssetsErc20Json(GsonUtils.toJsonStr(assetsNep5));
 
         ApexWalletDbDao apexWalletDbDao = ApexWalletDbDao.getInstance(ApexWalletApplication
@@ -89,7 +89,7 @@ public class CreateEthWallet implements Runnable {
             return;
         }
 
-        apexWalletDbDao.insertEth(ethWallet);
+        apexWalletDbDao.insert(Constant.TABLE_ETH_WALLET, ethWallet);
         ApexListeners.getInstance().notifyEthAdd(ethWallet);
         mICreateEthWalletCallback.createEthWallet(wallet);
     }

@@ -5,7 +5,6 @@ import android.text.TextUtils;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import chinapex.com.wallet.bean.AssetBean;
 import chinapex.com.wallet.bean.BalanceBean;
