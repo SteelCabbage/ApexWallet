@@ -85,6 +85,7 @@ public class AssetsOverviewActivity extends BaseActivity implements AssetsOvervi
         }
 
         mWalletBean = intent.getParcelableExtra(Constant.WALLET_BEAN);
+        CpLog.e(TAG, mWalletBean.getClass().getSimpleName());
         switch (mWalletBean.getClass().getSimpleName()) {
             case "NeoWallet":
                 mCurrentWalletType = Constant.WALLET_TYPE_NEO;
