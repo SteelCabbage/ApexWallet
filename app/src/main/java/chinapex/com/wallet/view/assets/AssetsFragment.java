@@ -382,20 +382,11 @@ public class AssetsFragment extends BaseFragment implements AssetsRecyclerViewAd
     }
 
     private void changeWalletType(List<? extends WalletBean> walletBeans) {
-        if (null == walletBeans || walletBeans.isEmpty()) {
-            CpLog.e(TAG, "walletBeans is null or empty!");
-            return;
-        }
-
-        int preClearSize = walletBeans.size();
         mWalletBeans.clear();
         mSearchWalletBeans.clear();
-        mAssetsRecyclerViewAdapter.notifyItemRangeRemoved(0, preClearSize);
-        mEmptyAdapter.notifyDataSetChanged();
-
         mWalletBeans.addAll(walletBeans);
         mSearchWalletBeans.addAll(walletBeans);
-        mAssetsRecyclerViewAdapter.notifyItemRangeInserted(0, walletBeans.size());
+        mAssetsRecyclerViewAdapter.notifyDataSetChanged();
         mEmptyAdapter.notifyDataSetChanged();
         mEt_assets_search.getText().clear();
     }
