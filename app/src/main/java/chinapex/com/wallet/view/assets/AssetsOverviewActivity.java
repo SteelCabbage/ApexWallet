@@ -84,19 +84,9 @@ public class AssetsOverviewActivity extends BaseActivity implements AssetsOvervi
             return;
         }
 
+        // 确定钱包类型 NEO/ETH/CPX
+        mCurrentWalletType = intent.getIntExtra(Constant.PARCELABLE_WALLET_TYPE, Constant.WALLET_TYPE_NEO);
         mWalletBean = intent.getParcelableExtra(Constant.WALLET_BEAN);
-        CpLog.e(TAG, mWalletBean.getClass().getSimpleName());
-        switch (mWalletBean.getClass().getSimpleName()) {
-            case "NeoWallet":
-                mCurrentWalletType = Constant.WALLET_TYPE_NEO;
-                break;
-            case "EthWallet":
-                mCurrentWalletType = Constant.WALLET_TYPE_ETH;
-                break;
-            default:
-                CpLog.e(TAG, "mWalletBean is unknown type!");
-                return;
-        }
 
         mTv_assets_overview_wallet_name.setText(mWalletBean.getName());
         mTv_assets_overview_wallet_address.setText(mWalletBean.getAddress());
@@ -105,7 +95,7 @@ public class AssetsOverviewActivity extends BaseActivity implements AssetsOvervi
                 .VERTICAL, false));
         mCurrentAssets = new ArrayList<>();
         mBalanceBeans = new ArrayList<>();
-        getBalanceBeans();
+        getDefaultAssets();
         mAssetsOverviewRecyclerViewAdapter = new AssetsOverviewRecyclerViewAdapter(mBalanceBeans);
         mAssetsOverviewRecyclerViewAdapter.setOnItemClickListener(this);
 
@@ -117,8 +107,7 @@ public class AssetsOverviewActivity extends BaseActivity implements AssetsOvervi
     private void getBalance() {
         mIGetBalancePresenter = new GetBalancePresenter(this);
         mIGetBalancePresenter.init(mCurrentWalletType);
-        mIGetBalancePresenter.getGlobalAssetBalance(mWalletBean);
-        mIGetBalancePresenter.getColorAssetBalance(mWalletBean);
+        mIGetBalancePresenter.getAssetBalance(mWalletBean);
     }
 
     @Override
@@ -164,7 +153,7 @@ public class AssetsOverviewActivity extends BaseActivity implements AssetsOvervi
     }
 
     // 设置默认添加的资产
-    private void getBalanceBeans() {
+    private void getDefaultAssets() {
         if (null == mBalanceBeans) {
             CpLog.e(TAG, "mBalanceBeans is null!");
             return;
@@ -235,8 +224,7 @@ public class AssetsOverviewActivity extends BaseActivity implements AssetsOvervi
             return null;
         }
 
-        ApexWalletDbDao apexWalletDbDao = ApexWalletDbDao.getInstance(ApexWalletApplication
-                .getInstance());
+        ApexWalletDbDao apexWalletDbDao = ApexWalletDbDao.getInstance(ApexWalletApplication.getInstance());
         if (null == apexWalletDbDao) {
             CpLog.e(TAG, "apexWalletDbDao is null");
             return null;
@@ -269,9 +257,7 @@ public class AssetsOverviewActivity extends BaseActivity implements AssetsOvervi
 
     @Override
     public void onRefresh() {
-        mBalanceBeans.clear();
-        mIGetBalancePresenter.getGlobalAssetBalance(mWalletBean);
-        mIGetBalancePresenter.getColorAssetBalance(mWalletBean);
+        mIGetBalancePresenter.getAssetBalance(mWalletBean);
     }
 
     @Override
@@ -343,9 +329,28 @@ public class AssetsOverviewActivity extends BaseActivity implements AssetsOvervi
 
         ApexListeners.getInstance().notifyAssetJsonUpdate(mWalletBean);
 
+        mIGetBalancePresenter.getAssetBalance(mWalletBean);
+    }
+
+    @Override
+    public void getAssetBalance(final List<BalanceBean> balanceBeans) {
+        if (null == balanceBeans || balanceBeans.isEmpty()) {
+            CpLog.e(TAG, "balanceBeans is null or emtpy!");
+            return;
+        }
+
         mBalanceBeans.clear();
-        mIGetBalancePresenter.getGlobalAssetBalance(mWalletBean);
-        mIGetBalancePresenter.getColorAssetBalance(mWalletBean);
+        mBalanceBeans.addAll(balanceBeans);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (mSl_assets_overview_rv.isRefreshing()) {
+                    mSl_assets_overview_rv.setRefreshing(false);
+                }
+
+                mAssetsOverviewRecyclerViewAdapter.notifyDataSetChanged();
+            }
+        });
     }
 
 }

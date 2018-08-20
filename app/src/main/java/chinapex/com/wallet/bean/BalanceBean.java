@@ -104,4 +104,16 @@ public class BalanceBean implements Parcelable {
             return new BalanceBean[size];
         }
     };
+
+    @Override
+    public String toString() {
+        return "BalanceBean{" +
+                "mapState=" + mapState +
+                ", assetsID='" + assetsID + '\'' +
+                ", assetSymbol='" + assetSymbol + '\'' +
+                ", assetType='" + assetType + '\'' +
+                ", assetDecimal=" + assetDecimal +
+                ", assetsValue='" + assetsValue + '\'' +
+                '}';
+    }
 }
