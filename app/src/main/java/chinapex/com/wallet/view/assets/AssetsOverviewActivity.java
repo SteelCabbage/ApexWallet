@@ -146,10 +146,11 @@ public class AssetsOverviewActivity extends BaseActivity implements AssetsOvervi
             return;
         }
 
-        HashMap<String, Parcelable> parcelables = new HashMap<>();
-        parcelables.put(Constant.WALLET_BEAN, mWalletBean);
-        parcelables.put(Constant.BALANCE_BEAN, balanceBean);
-        startActivityParcelables(BalanceDetailActivity.class, false, parcelables);
+        Intent intent = new Intent(ApexWalletApplication.getInstance(), BalanceDetailActivity.class);
+        intent.putExtra(Constant.WALLET_BEAN, mWalletBean);
+        intent.putExtra(Constant.BALANCE_BEAN, balanceBean);
+        intent.putExtra(Constant.PARCELABLE_WALLET_TYPE, mCurrentWalletType);
+        startActivity(intent);
     }
 
     // 设置默认添加的资产
