@@ -152,8 +152,8 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="30dp"
             android:layout_marginStart="30dp"
-            android:max="1000"
-            android:progress="200" />
+            android:max="100"
+            android:progress="20" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -165,12 +165,12 @@
             android:textSize="@dimen/paratext_14sp" />
 
         <TextView
+            android:id="@+id/tv_transfer_gas"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/sb_transfer"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="5dp"
-            android:text="0.000015120 ether"
             android:textSize="@dimen/paratext_14sp" />
 
         <TextView

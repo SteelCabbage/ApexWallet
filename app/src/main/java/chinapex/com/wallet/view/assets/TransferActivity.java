@@ -60,6 +60,7 @@ public class TransferActivity extends BaseActivity implements View.OnClickListen
     private TextView mTv_amount_all;
     private int mCurrentWalletType;
     private SeekBar mSb_transfer;
+    private TextView mTv_transfer_gas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +80,7 @@ public class TransferActivity extends BaseActivity implements View.OnClickListen
         mTv_available_amount = (TextView) findViewById(R.id.tv_available_amount);
         mTv_amount_all = (TextView) findViewById(R.id.tv_amount_all);
         mSb_transfer = (SeekBar) findViewById(R.id.sb_transfer);
+        mTv_transfer_gas = (TextView) findViewById(R.id.tv_transfer_gas);
 
         mBt_transfer_send = (Button) findViewById(R.id.bt_transfer_send);
         mBt_transfer_send.setOnClickListener(this);
@@ -110,6 +112,7 @@ public class TransferActivity extends BaseActivity implements View.OnClickListen
 
         mTv_transfer_unit.setText(mBalanceBean.getAssetSymbol().toUpperCase());
         mTv_available_amount.setText(mBalanceBean.getAssetsValue());
+        mTv_transfer_gas.setText(String.valueOf(mSb_transfer.getProgress() / 100.0 + " ether"));
 
         String qrCode = intent.getStringExtra(Constant.PARCELABLE_QR_CODE_TRANSFER);
         if (TextUtils.isEmpty(qrCode)) {
@@ -379,16 +382,16 @@ public class TransferActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-        CpLog.i(TAG, "onProgressChanged:" + progress);
+        mTv_transfer_gas.setText(String.valueOf(progress / 100.0 + " ether"));
     }
 
     @Override
     public void onStartTrackingTouch(SeekBar seekBar) {
-        CpLog.i(TAG, "onStartTrackingTouch:" + seekBar.getProgress());
+
     }
 
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) {
-        CpLog.i(TAG, "onStopTrackingTouch" + seekBar.getProgress());
+
     }
 }

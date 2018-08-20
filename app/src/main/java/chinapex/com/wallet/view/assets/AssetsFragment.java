@@ -212,18 +212,18 @@ public class AssetsFragment extends BaseFragment implements AssetsRecyclerViewAd
     }
 
     @Override
-    public void onNeoDelete(NeoWallet neoWallet) {
-        if (null == neoWallet) {
-            CpLog.e(TAG, "onNeoDelete() -> neoWallet is null!");
+    public void onNeoDelete(WalletBean walletBean) {
+        if (null == walletBean) {
+            CpLog.e(TAG, "onNeoDelete() -> walletBean is null!");
             return;
         }
 
-        if (!mWalletBeans.contains(neoWallet)) {
+        if (!mWalletBeans.contains(walletBean)) {
             CpLog.e(TAG, "onNeoDelete() -> this wallet not exist!");
             return;
         }
-        mWalletBeans.remove(neoWallet);
-        mSearchWalletBeans.remove(neoWallet);
+        mWalletBeans.remove(walletBean);
+        mSearchWalletBeans.remove(walletBean);
         mAssetsRecyclerViewAdapter.notifyDataSetChanged();
         mEmptyAdapter.notifyDataSetChanged();
     }
@@ -418,9 +418,9 @@ public class AssetsFragment extends BaseFragment implements AssetsRecyclerViewAd
     }
 
     @Override
-    public void OnItemNameUpdate(NeoWallet neoWallet) {
-        if (null == neoWallet) {
-            CpLog.e(TAG, "neoWallet is null!");
+    public void OnItemNameUpdate(WalletBean walletBean) {
+        if (null == walletBean) {
+            CpLog.e(TAG, "walletBean is null!");
             return;
         }
 
@@ -430,8 +430,8 @@ public class AssetsFragment extends BaseFragment implements AssetsRecyclerViewAd
                 continue;
             }
 
-            if (walletBeanTmp.equals(neoWallet)) {
-                walletBeanTmp.setName(neoWallet.getName());
+            if (walletBeanTmp.equals(walletBean)) {
+                walletBeanTmp.setName(walletBean.getName());
                 WalletBean searchTmpWallet = mSearchWalletBeans.get(mWalletBeans.indexOf
                         (walletBeanTmp));
                 if (null == searchTmpWallet) {
@@ -439,7 +439,7 @@ public class AssetsFragment extends BaseFragment implements AssetsRecyclerViewAd
                     continue;
                 }
 
-                searchTmpWallet.setName(neoWallet.getName());
+                searchTmpWallet.setName(walletBean.getName());
             }
         }
 
