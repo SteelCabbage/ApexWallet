@@ -195,12 +195,7 @@ public class GetNeoBalanceModel implements IGetBalanceModel, IGetAccountStateCal
         }
 
         if (mColorAssetCounter >= mColorAssetNum) {
-            CpLog.i(TAG, "mColorAssetCounter=" + mColorAssetCounter);
-            CpLog.i(TAG, "mColorAssetNum=" + mColorAssetNum);
             mIGetBalanceModelCallback.getColorBalanceModel(mColorAssetBalanceBeans);
-            for (BalanceBean colorAssetBalanceBean : mColorAssetBalanceBeans) {
-                CpLog.i(TAG, "colorAssetBalanceBean:" + colorAssetBalanceBean);
-            }
         }
     }
 }
