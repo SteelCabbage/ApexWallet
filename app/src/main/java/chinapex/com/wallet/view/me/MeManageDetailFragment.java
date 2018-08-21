@@ -15,7 +15,7 @@ import chinapex.com.wallet.base.BaseFragment;
 import chinapex.com.wallet.bean.WalletBean;
 import chinapex.com.wallet.bean.neo.NeoWallet;
 import chinapex.com.wallet.changelistener.ApexListeners;
-import chinapex.com.wallet.changelistener.OnItemStateUpdateListener;
+import chinapex.com.wallet.changelistener.OnWalletBackupStateUpdateListener;
 import chinapex.com.wallet.global.ApexWalletApplication;
 import chinapex.com.wallet.global.Constant;
 import chinapex.com.wallet.model.ApexWalletDbDao;
@@ -31,7 +31,7 @@ import chinapex.com.wallet.view.dialog.ExportKeystorePwdDialogNeo;
  */
 
 public class MeManageDetailFragment extends BaseFragment implements View.OnClickListener,
-        OnItemStateUpdateListener {
+        OnWalletBackupStateUpdateListener {
 
     private static final String TAG = MeManageDetailFragment.class.getSimpleName();
     private TextView mTv_me_manager_detail_title;
@@ -167,13 +167,13 @@ public class MeManageDetailFragment extends BaseFragment implements View.OnClick
     }
 
     @Override
-    public void OnItemStateUpdate(NeoWallet neoWallet) {
-        if (null == neoWallet) {
-            CpLog.e(TAG, "neoWallet is null!");
+    public void onWalletBackupStateUpdate(WalletBean walletBean) {
+        if (null == walletBean) {
+            CpLog.e(TAG, "walletBean is null!");
             return;
         }
 
-        setIsShowBackupKey(neoWallet.getBackupState());
+        setIsShowBackupKey(walletBean.getBackupState());
     }
 
     private void setIsShowBackupKey(int backupState) {
