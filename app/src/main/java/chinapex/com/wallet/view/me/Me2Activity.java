@@ -218,7 +218,7 @@ public class Me2Activity extends BaseActivity implements MeRecyclerViewAdapter
                 continue;
             }
 
-            if (walletBeanTmp.equals(walletBean)) {
+            if (walletBeanTmp.getAddress().equals(walletBean.getAddress())) {
                 walletBeanTmp.setName(walletBean.getName());
             }
         }

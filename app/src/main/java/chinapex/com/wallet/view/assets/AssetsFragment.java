@@ -31,14 +31,14 @@ import chinapex.com.wallet.adapter.EmptyAdapter;
 import chinapex.com.wallet.adapter.SpacesItemDecoration;
 import chinapex.com.wallet.base.BaseFragment;
 import chinapex.com.wallet.bean.DrawerMenu;
-import chinapex.com.wallet.bean.neo.NeoWallet;
 import chinapex.com.wallet.bean.WalletBean;
 import chinapex.com.wallet.bean.eth.EthWallet;
+import chinapex.com.wallet.bean.neo.NeoWallet;
 import chinapex.com.wallet.changelistener.ApexListeners;
 import chinapex.com.wallet.changelistener.OnAssetJsonUpdateListener;
-import chinapex.com.wallet.changelistener.OnNeoDeleteListener;
 import chinapex.com.wallet.changelistener.OnItemNameUpdateListener;
 import chinapex.com.wallet.changelistener.OnNeoAddListener;
+import chinapex.com.wallet.changelistener.OnNeoDeleteListener;
 import chinapex.com.wallet.changelistener.eth.OnEthAddListener;
 import chinapex.com.wallet.global.ApexWalletApplication;
 import chinapex.com.wallet.global.Constant;
@@ -108,8 +108,8 @@ public class AssetsFragment extends BaseFragment implements AssetsRecyclerViewAd
         mEt_assets_search.addTextChangedListener(this);
         mIb_assets_cancel.setOnClickListener(this);
 
-        mRv_assets.setLayoutManager(new LinearLayoutManager(ApexWalletApplication.getInstance(),
-                LinearLayoutManager.VERTICAL, false));
+        mRv_assets.setLayoutManager(new LinearLayoutManager(ApexWalletApplication.getInstance(), LinearLayoutManager.VERTICAL,
+                false));
         mWalletBeans = getData();
         mAssetsRecyclerViewAdapter = new AssetsRecyclerViewAdapter(mWalletBeans);
         mAssetsRecyclerViewAdapter.setOnItemClickListener(this);
@@ -123,8 +123,7 @@ public class AssetsFragment extends BaseFragment implements AssetsRecyclerViewAd
                 .getInstance(), R.layout.recyclerview_empty_wallet);
         mRv_assets.setAdapter(mEmptyAdapter);
 
-        mSl_assets_rv.setColorSchemeColors(this.getActivity().getResources().getColor(R.color
-                .c_1253BF));
+        mSl_assets_rv.setColorSchemeColors(this.getActivity().getResources().getColor(R.color.c_1253BF));
         mSl_assets_rv.setOnRefreshListener(this);
 
         // 侧滑布局
@@ -140,10 +139,8 @@ public class AssetsFragment extends BaseFragment implements AssetsRecyclerViewAd
         mRv_assets_drawer_menu2 = view.findViewById(R.id.rv_assets_drawer_menu2);
 
         mDl_assets.addDrawerListener(this);
-        mRv_assets_drawer_menu1.setLayoutManager(new LinearLayoutManager(getActivity(),
-                LinearLayoutManager.VERTICAL, false));
-        mRv_assets_drawer_menu2.setLayoutManager(new LinearLayoutManager(getActivity(),
-                LinearLayoutManager.VERTICAL, false));
+        mRv_assets_drawer_menu1.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+        mRv_assets_drawer_menu2.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
 
         mDrawerMenu1RecyclerViewAdapter = new DrawerMenu1RecyclerViewAdapter(getDrawerMenu1());
         mDrawerMenu2RecyclerViewAdapter = new DrawerMenu2RecyclerViewAdapter(getDrawerMenu2());
@@ -172,8 +169,7 @@ public class AssetsFragment extends BaseFragment implements AssetsRecyclerViewAd
 
     @Override
     public void onItemClick(int position) {
-        startActivityParcelable(AssetsOverviewActivity.class, false, Constant.WALLET_BEAN,
-                mWalletBeans.get(position));
+        startActivityParcelable(AssetsOverviewActivity.class, false, Constant.WALLET_BEAN, mWalletBeans.get(position));
     }
 
     @Override
@@ -186,8 +182,7 @@ public class AssetsFragment extends BaseFragment implements AssetsRecyclerViewAd
         mWalletBeans = new ArrayList<>();
         mNeoWallets = new ArrayList<>();
         mEthWallets = new ArrayList<>();
-        ApexWalletDbDao apexWalletDbDao = ApexWalletDbDao.getInstance(ApexWalletApplication
-                .getInstance());
+        ApexWalletDbDao apexWalletDbDao = ApexWalletDbDao.getInstance(ApexWalletApplication.getInstance());
         if (null == apexWalletDbDao) {
             CpLog.e(TAG, "apexWalletDbDao is null！");
             return mWalletBeans;
@@ -430,10 +425,9 @@ public class AssetsFragment extends BaseFragment implements AssetsRecyclerViewAd
                 continue;
             }
 
-            if (walletBeanTmp.equals(walletBean)) {
+            if (walletBeanTmp.getAddress().equals(walletBean.getAddress())) {
                 walletBeanTmp.setName(walletBean.getName());
-                WalletBean searchTmpWallet = mSearchWalletBeans.get(mWalletBeans.indexOf
-                        (walletBeanTmp));
+                WalletBean searchTmpWallet = mSearchWalletBeans.get(mWalletBeans.indexOf(walletBeanTmp));
                 if (null == searchTmpWallet) {
                     CpLog.e(TAG, "searchTmpWallet is null!");
                     continue;

@@ -20,14 +20,14 @@ import neomobile.Wallet;
  * Created by SteelCabbage on 2018/6/1 0001.
  */
 
-public class CreateWallet implements Runnable {
+public class CreateNeoWallet implements Runnable {
 
-    private static final String TAG = CreateWallet.class.getSimpleName();
+    private static final String TAG = CreateNeoWallet.class.getSimpleName();
     private String mWalletName;
     private String mPwd;
     private ICreateWalletCallback mICreateWalletCallback;
 
-    public CreateWallet(String walletName, String pwd, ICreateWalletCallback
+    public CreateNeoWallet(String walletName, String pwd, ICreateWalletCallback
             iCreateWalletCallback) {
         mWalletName = walletName;
         mPwd = pwd;
@@ -75,6 +75,7 @@ public class CreateWallet implements Runnable {
         assetsNep5.add(Constant.ASSETS_CPX);
 
         NeoWallet neoWallet = new NeoWallet();
+        neoWallet.setWalletType(Constant.WALLET_TYPE_NEO);
         neoWallet.setName(mWalletName);
         neoWallet.setAddress(wallet.address());
         neoWallet.setBackupState(Constant.BACKUP_UNFINISHED);
