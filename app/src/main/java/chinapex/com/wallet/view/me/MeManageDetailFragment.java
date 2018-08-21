@@ -13,7 +13,6 @@ import android.widget.TextView;
 import chinapex.com.wallet.R;
 import chinapex.com.wallet.base.BaseFragment;
 import chinapex.com.wallet.bean.WalletBean;
-import chinapex.com.wallet.bean.neo.NeoWallet;
 import chinapex.com.wallet.changelistener.ApexListeners;
 import chinapex.com.wallet.changelistener.OnWalletBackupStateUpdateListener;
 import chinapex.com.wallet.global.ApexWalletApplication;
@@ -22,9 +21,9 @@ import chinapex.com.wallet.model.ApexWalletDbDao;
 import chinapex.com.wallet.utils.CpLog;
 import chinapex.com.wallet.utils.PhoneUtils;
 import chinapex.com.wallet.utils.ToastUtils;
-import chinapex.com.wallet.view.dialog.BackupNeoWalletPwdDialog;
-import chinapex.com.wallet.view.dialog.DeleteNeoWalletPwdDialog;
-import chinapex.com.wallet.view.dialog.ExportKeystorePwdDialogNeo;
+import chinapex.com.wallet.view.dialog.BackupWalletPwdDialog;
+import chinapex.com.wallet.view.dialog.DeleteWalletPwdDialog;
+import chinapex.com.wallet.view.dialog.ExportKeystorePwdDialog;
 
 /**
  * Created by SteelCabbage on 2018/5/31 0031.
@@ -149,21 +148,21 @@ public class MeManageDetailFragment extends BaseFragment implements View.OnClick
     }
 
     public void showDeleteWalletPwdDialog() {
-        DeleteNeoWalletPwdDialog deleteWalletPwdDialog = DeleteNeoWalletPwdDialog.newInstance();
+        DeleteWalletPwdDialog deleteWalletPwdDialog = DeleteWalletPwdDialog.newInstance();
         deleteWalletPwdDialog.setCurrentWalletBean(mCurrentWalletBean);
-        deleteWalletPwdDialog.show(getFragmentManager(), "DeleteNeoWalletPwdDialog");
+        deleteWalletPwdDialog.show(getFragmentManager(), "DeleteWalletPwdDialog");
     }
 
     public void showBackupWalletPwdDialog() {
-        BackupNeoWalletPwdDialog backupWalletPwdDialog = BackupNeoWalletPwdDialog.newInstance();
+        BackupWalletPwdDialog backupWalletPwdDialog = BackupWalletPwdDialog.newInstance();
         backupWalletPwdDialog.setCurrentWalletBean(mCurrentWalletBean);
-        backupWalletPwdDialog.show(getFragmentManager(), "BackupNeoWalletPwdDialog");
+        backupWalletPwdDialog.show(getFragmentManager(), "BackupWalletPwdDialog");
     }
 
     public void showExportKeystorePwdDialog() {
-        ExportKeystorePwdDialogNeo exportKeystorePwdDialog = ExportKeystorePwdDialogNeo.newInstance();
+        ExportKeystorePwdDialog exportKeystorePwdDialog = ExportKeystorePwdDialog.newInstance();
         exportKeystorePwdDialog.setCurrentWalletBean(mCurrentWalletBean);
-        exportKeystorePwdDialog.show(getFragmentManager(), "ExportKeystorePwdDialogNeo");
+        exportKeystorePwdDialog.show(getFragmentManager(), "ExportKeystorePwdDialog");
     }
 
     @Override

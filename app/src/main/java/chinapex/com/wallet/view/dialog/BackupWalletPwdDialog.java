@@ -32,18 +32,18 @@ import neomobile.Wallet;
  * Created by SteelCabbage on 2018/5/31 0031.
  */
 
-public class BackupNeoWalletPwdDialog extends DialogFragment implements View.OnClickListener,
+public class BackupWalletPwdDialog extends DialogFragment implements View.OnClickListener,
         IFromKeystoreToNeoWalletCallback, IFromKeystoreToEthWalletCallback {
 
-    private static final String TAG = BackupNeoWalletPwdDialog.class.getSimpleName();
+    private static final String TAG = BackupWalletPwdDialog.class.getSimpleName();
     private WalletBean mCurrentWalletBean;
     private Button mBt_dialog_pwd_backup_cancel;
     private Button mBt_dialog_pwd_backup_confirm;
     private EditText mEt_dialog_pwd_backup;
 
 
-    public static BackupNeoWalletPwdDialog newInstance() {
-        return new BackupNeoWalletPwdDialog();
+    public static BackupWalletPwdDialog newInstance() {
+        return new BackupWalletPwdDialog();
     }
 
     public void setCurrentWalletBean(WalletBean walletBean) {
