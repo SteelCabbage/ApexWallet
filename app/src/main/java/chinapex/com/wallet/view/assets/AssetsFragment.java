@@ -64,8 +64,6 @@ public class AssetsFragment extends BaseFragment implements AssetsRecyclerViewAd
     private int mWalletType;
     private List<WalletBean> mWalletBeans;
     private List<WalletBean> mSearchWalletBeans;
-    private List<WalletBean> mNeoWallets;
-    private List<WalletBean> mEthWallets;
     private SwipeRefreshLayout mSl_assets_rv;
     private AssetsRecyclerViewAdapter mAssetsRecyclerViewAdapter;
     private DrawerLayout mDl_assets;
@@ -180,17 +178,13 @@ public class AssetsFragment extends BaseFragment implements AssetsRecyclerViewAd
 
     private List<WalletBean> getData() {
         mWalletBeans = new ArrayList<>();
-        mNeoWallets = new ArrayList<>();
-        mEthWallets = new ArrayList<>();
         ApexWalletDbDao apexWalletDbDao = ApexWalletDbDao.getInstance(ApexWalletApplication.getInstance());
         if (null == apexWalletDbDao) {
             CpLog.e(TAG, "apexWalletDbDao is null！");
             return mWalletBeans;
         }
 
-        mNeoWallets.addAll(apexWalletDbDao.queryWallets(Constant.TABLE_NEO_WALLET));
-        mEthWallets.addAll(apexWalletDbDao.queryWallets(Constant.TABLE_ETH_WALLET));
-        mWalletBeans.addAll(mNeoWallets);
+        mWalletBeans.addAll(apexWalletDbDao.queryWallets(Constant.TABLE_NEO_WALLET));
         return mWalletBeans;
     }
 
@@ -230,13 +224,6 @@ public class AssetsFragment extends BaseFragment implements AssetsRecyclerViewAd
             return;
         }
 
-        if (mNeoWallets.contains(neoWallet)) {
-            CpLog.e(TAG, "onNeoAdd() -> this wallet has existed!");
-            return;
-        }
-
-        mNeoWallets.add(neoWallet);
-
         if (mWalletType != Constant.WALLET_TYPE_NEO) {
             CpLog.w(TAG, "mWalletType:" + mWalletType + ",no need to update UI!");
             return;
@@ -260,13 +247,6 @@ public class AssetsFragment extends BaseFragment implements AssetsRecyclerViewAd
             CpLog.e(TAG, "onEthAdd() -> ethWallet is null!");
             return;
         }
-
-        if (mEthWallets.contains(ethWallet)) {
-            CpLog.e(TAG, "onEthAdd() -> this wallet has existed!");
-            return;
-        }
-
-        mEthWallets.add(ethWallet);
 
         if (mWalletType != Constant.WALLET_TYPE_ETH) {
             CpLog.w(TAG, "mWalletType:" + mWalletType + ",no need to update UI!");
@@ -345,14 +325,26 @@ public class AssetsFragment extends BaseFragment implements AssetsRecyclerViewAd
                 mWalletType = Constant.WALLET_TYPE_NEO;
                 mTv_assets_wallet_type.setText(Constant.WALLET_TYPE_NAME_NEO);
 
-                changeWalletType(mNeoWallets);
+                ApexWalletDbDao apexWalletDbDaoNeo = ApexWalletDbDao.getInstance(ApexWalletApplication.getInstance());
+                if (null == apexWalletDbDaoNeo) {
+                    CpLog.e(TAG, "apexWalletDbDaoNeo is null!");
+                    return;
+                }
+
+                changeWalletType(apexWalletDbDaoNeo.queryWallets(Constant.TABLE_NEO_WALLET));
                 break;
             case 1:
                 // eth
                 mWalletType = Constant.WALLET_TYPE_ETH;
                 mTv_assets_wallet_type.setText(Constant.WALLET_TYPE_NAME_ETH);
 
-                changeWalletType(mEthWallets);
+                ApexWalletDbDao apexWalletDbDaoEth = ApexWalletDbDao.getInstance(ApexWalletApplication.getInstance());
+                if (null == apexWalletDbDaoEth) {
+                    CpLog.e(TAG, "apexWalletDbDaoEth is null!");
+                    return;
+                }
+
+                changeWalletType(apexWalletDbDaoEth.queryWallets(Constant.TABLE_ETH_WALLET));
                 break;
             default:
                 break;
