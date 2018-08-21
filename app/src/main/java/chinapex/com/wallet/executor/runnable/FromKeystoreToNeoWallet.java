@@ -2,7 +2,7 @@ package chinapex.com.wallet.executor.runnable;
 
 import android.text.TextUtils;
 
-import chinapex.com.wallet.executor.callback.IFromKeystoreToWalletCallback;
+import chinapex.com.wallet.executor.callback.IFromKeystoreToNeoWalletCallback;
 import chinapex.com.wallet.utils.CpLog;
 import neomobile.Neomobile;
 import neomobile.Wallet;
@@ -11,26 +11,26 @@ import neomobile.Wallet;
  * Created by SteelCabbage on 2018/6/8 00:34
  * E-Mail：liuyi_61@163.com
  */
-public class FromKeystoreToWallet implements Runnable {
+public class FromKeystoreToNeoWallet implements Runnable {
 
-    private static final String TAG = FromKeystoreToWallet.class.getSimpleName();
+    private static final String TAG = FromKeystoreToNeoWallet.class.getSimpleName();
     private String mKeystore;
     private String mPwd;
-    private IFromKeystoreToWalletCallback mIFromKeystoreToWalletCallback;
+    private IFromKeystoreToNeoWalletCallback mIFromKeystoreToNeoWalletCallback;
 
-    public FromKeystoreToWallet(String keystore, String pwd, IFromKeystoreToWalletCallback
-            IFromKeystoreToWalletCallback) {
+    public FromKeystoreToNeoWallet(String keystore, String pwd, IFromKeystoreToNeoWalletCallback
+            IFromKeystoreToNeoWalletCallback) {
         mKeystore = keystore;
         mPwd = pwd;
-        mIFromKeystoreToWalletCallback = IFromKeystoreToWalletCallback;
+        mIFromKeystoreToNeoWalletCallback = IFromKeystoreToNeoWalletCallback;
     }
 
     @Override
     public void run() {
         if (TextUtils.isEmpty(mKeystore)
                 || TextUtils.isEmpty(mPwd)
-                || null == mIFromKeystoreToWalletCallback) {
-            CpLog.e(TAG, "mKeystore or mPwd or mIFromKeystoreToWalletCallback is null！");
+                || null == mIFromKeystoreToNeoWalletCallback) {
+            CpLog.e(TAG, "mKeystore or mPwd or mIFromKeystoreToNeoWalletCallback is null！");
             return;
         }
 
@@ -41,6 +41,6 @@ public class FromKeystoreToWallet implements Runnable {
         } catch (Exception e) {
             CpLog.e(TAG, "fromKeyStore exception:" + e.getMessage());
         }
-        mIFromKeystoreToWalletCallback.fromKeystoreWallet(wallet);
+        mIFromKeystoreToNeoWalletCallback.fromKeystoreToNeoWallet(wallet);
     }
 }

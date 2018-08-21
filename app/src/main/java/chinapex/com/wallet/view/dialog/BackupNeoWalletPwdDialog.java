@@ -1,9 +1,11 @@
 package chinapex.com.wallet.view.dialog;
 
 import android.app.DialogFragment;
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,34 +15,33 @@ import android.widget.EditText;
 
 import chinapex.com.wallet.R;
 import chinapex.com.wallet.bean.WalletBean;
-import chinapex.com.wallet.changelistener.ApexListeners;
 import chinapex.com.wallet.executor.TaskController;
-import chinapex.com.wallet.executor.callback.IFromKeystoreToWalletCallback;
-import chinapex.com.wallet.executor.runnable.FromKeystoreToWallet;
+import chinapex.com.wallet.executor.callback.IFromKeystoreToNeoWalletCallback;
+import chinapex.com.wallet.executor.runnable.FromKeystoreToNeoWallet;
 import chinapex.com.wallet.global.ApexWalletApplication;
 import chinapex.com.wallet.global.Constant;
-import chinapex.com.wallet.model.ApexWalletDbDao;
 import chinapex.com.wallet.utils.CpLog;
 import chinapex.com.wallet.utils.DensityUtil;
-import chinapex.com.wallet.utils.SharedPreferencesUtils;
 import chinapex.com.wallet.utils.ToastUtils;
+import chinapex.com.wallet.view.wallet.BackupWalletActivity;
 import neomobile.Wallet;
 
 /**
  * Created by SteelCabbage on 2018/5/31 0031.
  */
 
-public class DeleteWalletPwdDialog extends DialogFragment implements View.OnClickListener,
-        IFromKeystoreToWalletCallback {
+public class BackupNeoWalletPwdDialog extends DialogFragment implements View.OnClickListener,
+        IFromKeystoreToNeoWalletCallback {
 
-    private static final String TAG = DeleteWalletPwdDialog.class.getSimpleName();
+    private static final String TAG = BackupNeoWalletPwdDialog.class.getSimpleName();
     private WalletBean mCurrentWalletBean;
-    private Button mBt_dialog_pwd_del_cancel;
-    private Button mBt_dialog_pwd_del_confirm;
-    private EditText mEt_dialog_pwd_del;
+    private Button mBt_dialog_pwd_backup_cancel;
+    private Button mBt_dialog_pwd_backup_confirm;
+    private EditText mEt_dialog_pwd_backup;
 
-    public static DeleteWalletPwdDialog newInstance() {
-        return new DeleteWalletPwdDialog();
+
+    public static BackupNeoWalletPwdDialog newInstance() {
+        return new BackupNeoWalletPwdDialog();
     }
 
     public void setCurrentWalletBean(WalletBean walletBean) {
@@ -61,7 +62,7 @@ public class DeleteWalletPwdDialog extends DialogFragment implements View.OnClic
         // 点击空白区域不可取消
         setCancelable(false);
 
-        return inflater.inflate(R.layout.dialog_delete_wallet_pwd, container, false);
+        return inflater.inflate(R.layout.dialog_backup_wallet_pwd, container, false);
     }
 
     @Override
@@ -83,30 +84,30 @@ public class DeleteWalletPwdDialog extends DialogFragment implements View.OnClic
     }
 
     private void initView(View view) {
-        mBt_dialog_pwd_del_cancel = view.findViewById(R.id.bt_dialog_pwd_del_cancel);
-        mBt_dialog_pwd_del_confirm = view.findViewById(R.id.bt_dialog_pwd_del_confirm);
-        mEt_dialog_pwd_del = view.findViewById(R.id.et_dialog_pwd_del);
+        mBt_dialog_pwd_backup_cancel = view.findViewById(R.id.bt_dialog_pwd_backup_cancel);
+        mBt_dialog_pwd_backup_confirm = view.findViewById(R.id.bt_dialog_pwd_backup_confirm);
+        mEt_dialog_pwd_backup = view.findViewById(R.id.et_dialog_pwd_backup);
 
-        mBt_dialog_pwd_del_cancel.setOnClickListener(this);
-        mBt_dialog_pwd_del_confirm.setOnClickListener(this);
+        mBt_dialog_pwd_backup_cancel.setOnClickListener(this);
+        mBt_dialog_pwd_backup_confirm.setOnClickListener(this);
     }
 
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.bt_dialog_pwd_del_cancel:
+            case R.id.bt_dialog_pwd_backup_cancel:
                 dismiss();
                 break;
-            case R.id.bt_dialog_pwd_del_confirm:
-                String pwd = mEt_dialog_pwd_del.getText().toString().trim();
-                TaskController.getInstance().submit(new FromKeystoreToWallet(mCurrentWalletBean.getKeyStore(), pwd, this));
+            case R.id.bt_dialog_pwd_backup_confirm:
+                String pwd = mEt_dialog_pwd_backup.getText().toString().trim();
+                TaskController.getInstance().submit(new FromKeystoreToNeoWallet(mCurrentWalletBean.getKeyStore(), pwd, this));
                 break;
         }
     }
 
     @Override
-    public void fromKeystoreWallet(Wallet wallet) {
+    public void fromKeystoreToNeoWallet(Wallet wallet) {
         if (null == wallet) {
             CpLog.e(TAG, "pwd is not match keystore");
             getActivity().runOnUiThread(new Runnable() {
@@ -119,29 +120,24 @@ public class DeleteWalletPwdDialog extends DialogFragment implements View.OnClic
             return;
         }
 
-        deleteWalletByNameAndAddr();
-    }
+        String mnemonicEnUs = null;
+        try {
+            mnemonicEnUs = wallet.mnemonic("en_US");
+            CpLog.i(TAG, "mnemonicEnUs:" + mnemonicEnUs);
+        } catch (Exception e) {
+            CpLog.e(TAG, "mnemonicEnUs exception:" + e.getMessage());
+        }
 
-    private void deleteWalletByNameAndAddr() {
-        if (null == mCurrentWalletBean) {
-            CpLog.e(TAG, "mCurrentWalletBean is null!");
+        if (TextUtils.isEmpty(mnemonicEnUs)) {
+            CpLog.e(TAG, "mnemonicEnUs is null！");
             return;
         }
 
-        ApexWalletDbDao apexWalletDbDao = ApexWalletDbDao.getInstance(ApexWalletApplication
-                .getInstance());
-        if (null == apexWalletDbDao) {
-            CpLog.e(TAG, "apexWalletDbDao is null!");
-            return;
-        }
-
-        String walletAddress = mCurrentWalletBean.getAddress();
-        apexWalletDbDao.deleteByWalletNameAndAddr(Constant.TABLE_NEO_WALLET, mCurrentWalletBean.getName(), walletAddress);
-        apexWalletDbDao.delTxsByAddress(Constant.TABLE_TRANSACTION_RECORD, walletAddress);
-        apexWalletDbDao.delTxsByAddress(Constant.TABLE_TX_CACHE, walletAddress);
-        SharedPreferencesUtils.remove(ApexWalletApplication.getInstance(), walletAddress);
-
-        ApexListeners.getInstance().notifyItemDelete(mCurrentWalletBean);
+        Intent intent = new Intent(ApexWalletApplication.getInstance(), BackupWalletActivity.class);
+        intent.putExtra(Constant.BACKUP_MNEMONIC, mnemonicEnUs);
+        intent.putExtra(Constant.WALLET_BEAN, mCurrentWalletBean);
+        startActivity(intent);
         dismiss();
     }
+
 }

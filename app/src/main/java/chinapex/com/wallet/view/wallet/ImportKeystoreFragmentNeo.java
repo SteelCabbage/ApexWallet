@@ -21,8 +21,8 @@ import chinapex.com.wallet.bean.WalletBean;
 import chinapex.com.wallet.bean.neo.NeoWallet;
 import chinapex.com.wallet.changelistener.ApexListeners;
 import chinapex.com.wallet.executor.TaskController;
-import chinapex.com.wallet.executor.callback.IFromKeystoreToWalletCallback;
-import chinapex.com.wallet.executor.runnable.FromKeystoreToWallet;
+import chinapex.com.wallet.executor.callback.IFromKeystoreToNeoWalletCallback;
+import chinapex.com.wallet.executor.runnable.FromKeystoreToNeoWallet;
 import chinapex.com.wallet.global.ApexWalletApplication;
 import chinapex.com.wallet.global.Constant;
 import chinapex.com.wallet.model.ApexWalletDbDao;
@@ -37,10 +37,10 @@ import neomobile.Wallet;
  * Created by SteelCabbage on 2018/6/10 22:31
  * E-Mail：liuyi_61@163.com
  */
-public class ImportKeystoreFragment extends BaseFragment implements View.OnClickListener,
-        IFromKeystoreToWalletCallback {
+public class ImportKeystoreFragmentNeo extends BaseFragment implements View.OnClickListener,
+        IFromKeystoreToNeoWalletCallback {
 
-    private static final String TAG = ImportKeystoreFragment.class.getSimpleName();
+    private static final String TAG = ImportKeystoreFragmentNeo.class.getSimpleName();
     private EditText mEt_import_wallet_keystore;
     private ImageButton mIb_import_wallet_keystore_privacy_point;
     private Button mBt_import_wallet_keystore;
@@ -118,7 +118,7 @@ public class ImportKeystoreFragment extends BaseFragment implements View.OnClick
 
                 String keystore = mEt_import_wallet_keystore.getText().toString().trim();
                 String keystorePwd = mEt_import_wallet_keystore_pwd.getText().toString().trim();
-                TaskController.getInstance().submit(new FromKeystoreToWallet(keystore,
+                TaskController.getInstance().submit(new FromKeystoreToNeoWallet(keystore,
                         keystorePwd, this));
                 break;
 
@@ -145,7 +145,7 @@ public class ImportKeystoreFragment extends BaseFragment implements View.OnClick
     }
 
     @Override
-    public void fromKeystoreWallet(Wallet wallet) {
+    public void fromKeystoreToNeoWallet(Wallet wallet) {
         if (null == wallet) {
             CpLog.e(TAG, "wallet is null!");
             getActivity().runOnUiThread(new Runnable() {

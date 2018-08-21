@@ -109,7 +109,7 @@ public class ApexWalletDbDao {
 
     public void deleteByWalletNameAndAddr(String tableName, String walletName, String walletAddress) {
         if (TextUtils.isEmpty(walletName) || TextUtils.isEmpty(walletAddress)) {
-            CpLog.e(TAG, "deleteByWalletName() -> walletName or walletAddress is null!");
+            CpLog.e(TAG, "deleteByWalletNameAndAddr() -> walletName or walletAddress is null!");
             return;
         }
 
@@ -118,9 +118,9 @@ public class ApexWalletDbDao {
             db.beginTransaction();
             db.delete(tableName, WHERE_CLAUSE_WALLET_NAME_EQ_AND_ADDRESS_EQ, new String[]{walletName, walletAddress});
             db.setTransactionSuccessful();
-            CpLog.i(TAG, "deleteByWalletName() -> delete " + walletName + ":" + walletAddress + " ok!");
+            CpLog.i(TAG, "deleteByWalletNameAndAddr() -> delete " + walletName + ":" + walletAddress + " ok!");
         } catch (Exception e) {
-            CpLog.e(TAG, "deleteByWalletName exception:" + e.getMessage());
+            CpLog.e(TAG, "deleteByWalletNameAndAddr exception:" + e.getMessage());
         } finally {
             db.endTransaction();
         }

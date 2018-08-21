@@ -2,7 +2,6 @@ package chinapex.com.wallet.view.me;
 
 import android.app.FragmentTransaction;
 import android.content.Intent;
-import android.nfc.Tag;
 import android.os.Bundle;
 import android.text.TextUtils;
 
@@ -10,15 +9,13 @@ import chinapex.com.wallet.R;
 import chinapex.com.wallet.base.BaseActivity;
 import chinapex.com.wallet.base.BaseFragment;
 import chinapex.com.wallet.bean.WalletBean;
-import chinapex.com.wallet.bean.eth.EthWallet;
-import chinapex.com.wallet.bean.neo.NeoWallet;
 import chinapex.com.wallet.changelistener.ApexListeners;
-import chinapex.com.wallet.changelistener.OnNeoDeleteListener;
+import chinapex.com.wallet.changelistener.OnWalletDeleteListener;
 import chinapex.com.wallet.global.Constant;
 import chinapex.com.wallet.utils.CpLog;
 import chinapex.com.wallet.utils.FragmentFactory;
 
-public class Me3Activity extends BaseActivity implements OnNeoDeleteListener {
+public class Me3Activity extends BaseActivity implements OnWalletDeleteListener {
 
     private static final String TAG = Me3Activity.class.getSimpleName();
     private WalletBean mWalletBean;
@@ -69,7 +66,7 @@ public class Me3Activity extends BaseActivity implements OnNeoDeleteListener {
     }
 
     @Override
-    public void onNeoDelete(WalletBean walletBean) {
+    public void onWalletDelete(WalletBean walletBean) {
         finish();
     }
 

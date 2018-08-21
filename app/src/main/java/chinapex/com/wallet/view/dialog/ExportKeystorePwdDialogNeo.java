@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,32 +15,32 @@ import android.widget.EditText;
 import chinapex.com.wallet.R;
 import chinapex.com.wallet.bean.WalletBean;
 import chinapex.com.wallet.executor.TaskController;
-import chinapex.com.wallet.executor.callback.IFromKeystoreToWalletCallback;
-import chinapex.com.wallet.executor.runnable.FromKeystoreToWallet;
+import chinapex.com.wallet.executor.callback.IFromKeystoreToNeoWalletCallback;
+import chinapex.com.wallet.executor.runnable.FromKeystoreToNeoWallet;
 import chinapex.com.wallet.global.ApexWalletApplication;
 import chinapex.com.wallet.global.Constant;
 import chinapex.com.wallet.utils.CpLog;
 import chinapex.com.wallet.utils.DensityUtil;
 import chinapex.com.wallet.utils.ToastUtils;
-import chinapex.com.wallet.view.wallet.BackupWalletActivity;
+import chinapex.com.wallet.view.wallet.ExportKeystoreActivity;
 import neomobile.Wallet;
 
 /**
  * Created by SteelCabbage on 2018/5/31 0031.
  */
 
-public class BackupWalletPwdDialog extends DialogFragment implements View.OnClickListener,
-        IFromKeystoreToWalletCallback {
+public class ExportKeystorePwdDialogNeo extends DialogFragment implements View.OnClickListener,
+        IFromKeystoreToNeoWalletCallback {
 
-    private static final String TAG = BackupWalletPwdDialog.class.getSimpleName();
+    private static final String TAG = ExportKeystorePwdDialogNeo.class.getSimpleName();
     private WalletBean mCurrentWalletBean;
-    private Button mBt_dialog_pwd_backup_cancel;
-    private Button mBt_dialog_pwd_backup_confirm;
-    private EditText mEt_dialog_pwd_backup;
+    private Button mBt_dialog_pwd_export_keystore_cancel;
+    private Button mBt_dialog_pwd_export_keystore_confirm;
+    private EditText mEt_dialog_pwd_export_keystore;
 
 
-    public static BackupWalletPwdDialog newInstance() {
-        return new BackupWalletPwdDialog();
+    public static ExportKeystorePwdDialogNeo newInstance() {
+        return new ExportKeystorePwdDialogNeo();
     }
 
     public void setCurrentWalletBean(WalletBean walletBean) {
@@ -62,7 +61,7 @@ public class BackupWalletPwdDialog extends DialogFragment implements View.OnClic
         // 点击空白区域不可取消
         setCancelable(false);
 
-        return inflater.inflate(R.layout.dialog_backup_wallet_pwd, container, false);
+        return inflater.inflate(R.layout.dialog_export_keystore_pwd, container, false);
     }
 
     @Override
@@ -76,7 +75,8 @@ public class BackupWalletPwdDialog extends DialogFragment implements View.OnClic
     @Override
     public void onResume() {
         super.onResume();
-        getDialog().getWindow().setLayout(DensityUtil.dip2px(getActivity(), 257), DensityUtil.dip2px(getActivity(), 159));
+        getDialog().getWindow().setLayout(DensityUtil.dip2px(getActivity(), 257), DensityUtil
+                .dip2px(getActivity(), 159));
     }
 
     private void initData() {
@@ -84,30 +84,30 @@ public class BackupWalletPwdDialog extends DialogFragment implements View.OnClic
     }
 
     private void initView(View view) {
-        mBt_dialog_pwd_backup_cancel = view.findViewById(R.id.bt_dialog_pwd_backup_cancel);
-        mBt_dialog_pwd_backup_confirm = view.findViewById(R.id.bt_dialog_pwd_backup_confirm);
-        mEt_dialog_pwd_backup = view.findViewById(R.id.et_dialog_pwd_backup);
+        mBt_dialog_pwd_export_keystore_cancel = view.findViewById(R.id.bt_dialog_pwd_export_keystore_cancel);
+        mBt_dialog_pwd_export_keystore_confirm = view.findViewById(R.id.bt_dialog_pwd_export_keystore_confirm);
+        mEt_dialog_pwd_export_keystore = view.findViewById(R.id.et_dialog_pwd_export_keystore);
 
-        mBt_dialog_pwd_backup_cancel.setOnClickListener(this);
-        mBt_dialog_pwd_backup_confirm.setOnClickListener(this);
+        mBt_dialog_pwd_export_keystore_cancel.setOnClickListener(this);
+        mBt_dialog_pwd_export_keystore_confirm.setOnClickListener(this);
     }
 
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.bt_dialog_pwd_backup_cancel:
+            case R.id.bt_dialog_pwd_export_keystore_cancel:
                 dismiss();
                 break;
-            case R.id.bt_dialog_pwd_backup_confirm:
-                String pwd = mEt_dialog_pwd_backup.getText().toString().trim();
-                TaskController.getInstance().submit(new FromKeystoreToWallet(mCurrentWalletBean.getKeyStore(), pwd, this));
+            case R.id.bt_dialog_pwd_export_keystore_confirm:
+                String pwd = mEt_dialog_pwd_export_keystore.getText().toString().trim();
+                TaskController.getInstance().submit(new FromKeystoreToNeoWallet(mCurrentWalletBean.getKeyStore(), pwd, this));
                 break;
         }
     }
 
     @Override
-    public void fromKeystoreWallet(Wallet wallet) {
+    public void fromKeystoreToNeoWallet(Wallet wallet) {
         if (null == wallet) {
             CpLog.e(TAG, "pwd is not match keystore");
             getActivity().runOnUiThread(new Runnable() {
@@ -120,22 +120,8 @@ public class BackupWalletPwdDialog extends DialogFragment implements View.OnClic
             return;
         }
 
-        String mnemonicEnUs = null;
-        try {
-            mnemonicEnUs = wallet.mnemonic("en_US");
-            CpLog.i(TAG, "mnemonicEnUs:" + mnemonicEnUs);
-        } catch (Exception e) {
-            CpLog.e(TAG, "mnemonicEnUs exception:" + e.getMessage());
-        }
-
-        if (TextUtils.isEmpty(mnemonicEnUs)) {
-            CpLog.e(TAG, "mnemonicEnUs is null！");
-            return;
-        }
-
-        Intent intent = new Intent(ApexWalletApplication.getInstance(), BackupWalletActivity.class);
-        intent.putExtra(Constant.BACKUP_MNEMONIC, mnemonicEnUs);
-        intent.putExtra(Constant.WALLET_BEAN, mCurrentWalletBean);
+        Intent intent = new Intent(ApexWalletApplication.getInstance(), ExportKeystoreActivity.class);
+        intent.putExtra(Constant.BACKUP_KEYSTORE, mCurrentWalletBean.getKeyStore());
         startActivity(intent);
         dismiss();
     }

@@ -18,7 +18,7 @@ public class ApexListeners {
 
     private static final String TAG = ApexListeners.class.getSimpleName();
 
-    private List<OnNeoDeleteListener> mOnNeoDeleteListeners;
+    private List<OnWalletDeleteListener> mOnWalletDeleteListeners;
     private List<OnNeoAddListener> mOnNeoAddListeners;
     private List<OnItemStateUpdateListener> mOnItemStateUpdateListeners;
     private List<OnItemNameUpdateListener> mOnItemNameUpdateListeners;
@@ -41,7 +41,7 @@ public class ApexListeners {
     }
 
     public void doInit() {
-        mOnNeoDeleteListeners = new ArrayList<>();
+        mOnWalletDeleteListeners = new ArrayList<>();
         mOnNeoAddListeners = new ArrayList<>();
         mOnItemStateUpdateListeners = new ArrayList<>();
         mOnItemNameUpdateListeners = new ArrayList<>();
@@ -52,7 +52,7 @@ public class ApexListeners {
     }
 
     public void onDestroy() {
-        mOnNeoDeleteListeners.clear();
+        mOnWalletDeleteListeners.clear();
         mOnNeoAddListeners.clear();
         mOnItemStateUpdateListeners.clear();
         mOnItemNameUpdateListeners.clear();
@@ -61,7 +61,7 @@ public class ApexListeners {
         mOnEthAddListeners.clear();
         mOnEthStateUpdateListeners.clear();
 
-        mOnNeoDeleteListeners = null;
+        mOnWalletDeleteListeners = null;
         mOnNeoAddListeners = null;
         mOnItemStateUpdateListeners = null;
         mOnItemNameUpdateListeners = null;
@@ -71,22 +71,22 @@ public class ApexListeners {
         mOnEthStateUpdateListeners = null;
     }
 
-    public void addOnItemDeleteListener(OnNeoDeleteListener onNeoDeleteListener) {
-        if (null == mOnNeoDeleteListeners || null == onNeoDeleteListener) {
-            CpLog.e(TAG, "1:mOnNeoDeleteListeners or OnNeoDeleteListener is null!");
+    public void addOnItemDeleteListener(OnWalletDeleteListener onWalletDeleteListener) {
+        if (null == mOnWalletDeleteListeners || null == onWalletDeleteListener) {
+            CpLog.e(TAG, "1:mOnWalletDeleteListeners or OnWalletDeleteListener is null!");
             return;
         }
 
-        mOnNeoDeleteListeners.add(onNeoDeleteListener);
+        mOnWalletDeleteListeners.add(onWalletDeleteListener);
     }
 
-    public void removeOnItemDeleteListener(OnNeoDeleteListener onNeoDeleteListener) {
-        if (null == mOnNeoDeleteListeners || null == onNeoDeleteListener) {
-            CpLog.e(TAG, "0:mOnNeoDeleteListeners or OnNeoDeleteListener is null!");
+    public void removeOnItemDeleteListener(OnWalletDeleteListener onWalletDeleteListener) {
+        if (null == mOnWalletDeleteListeners || null == onWalletDeleteListener) {
+            CpLog.e(TAG, "0:mOnWalletDeleteListeners or OnWalletDeleteListener is null!");
             return;
         }
 
-        mOnNeoDeleteListeners.remove(onNeoDeleteListener);
+        mOnWalletDeleteListeners.remove(onWalletDeleteListener);
     }
 
     public void addOnItemAddListener(OnNeoAddListener onNeoAddListener) {
@@ -216,19 +216,19 @@ public class ApexListeners {
         mOnEthStateUpdateListeners.remove(onEthStateUpdateListener);
     }
 
-    public void notifyItemDelete(WalletBean walletBean) {
-        if (null == mOnNeoDeleteListeners) {
-            CpLog.e(TAG, "mOnNeoDeleteListeners is null!");
+    public void notifyWalletDelete(WalletBean walletBean) {
+        if (null == mOnWalletDeleteListeners) {
+            CpLog.e(TAG, "mOnWalletDeleteListeners is null!");
             return;
         }
 
-        for (OnNeoDeleteListener onNeoDeleteListener : mOnNeoDeleteListeners) {
-            if (null == onNeoDeleteListener) {
-                CpLog.e(TAG, "OnNeoDeleteListener is null!");
+        for (OnWalletDeleteListener onWalletDeleteListener : mOnWalletDeleteListeners) {
+            if (null == onWalletDeleteListener) {
+                CpLog.e(TAG, "OnWalletDeleteListener is null!");
                 continue;
             }
 
-            onNeoDeleteListener.onNeoDelete(walletBean);
+            onWalletDeleteListener.onWalletDelete(walletBean);
         }
     }
 

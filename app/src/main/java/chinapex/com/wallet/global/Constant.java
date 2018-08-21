@@ -64,7 +64,7 @@ public class Constant {
 
     // fragmentTag
     public static final String FRAGMENT_TAG_IMPORT_MNEMONIC = "ImportMnemonicFragment";
-    public static final String FRAGMENT_TAG_IMPORT_KEYSTORE = "ImportKeystoreFragment";
+    public static final String FRAGMENT_TAG_IMPORT_KEYSTORE = "ImportKeystoreFragmentNeo";
     public static final String FRAGMENT_TAG_BACKUP = "BackupFragment";
     public static final String FRAGMENT_TAG_COPY_MNEMONIC = "CopyMnemonicFragment";
     public static final String FRAGMENT_TAG_CONFIRM_MNEMONIC = "ConfirmMnemonicFragment";
