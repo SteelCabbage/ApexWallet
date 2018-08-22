@@ -75,4 +75,10 @@
         <item>@string/create_wallet_type_neo</item>
         <item>@string/create_wallet_type_eth</item>
     </string-array>
+
+    <!--wallet import method，钱包导入方式-->
+    <string-array name="Wallet_import_method">
+        <item>@string/mnemonic</item>
+        <item>@string/keystore</item>
+    </string-array>
 </resources>
