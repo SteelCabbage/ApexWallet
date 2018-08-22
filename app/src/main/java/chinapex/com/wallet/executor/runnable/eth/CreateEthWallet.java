@@ -69,7 +69,7 @@ public class CreateEthWallet implements Runnable {
         }
 
         ArrayList<String> assets = new ArrayList<>();
-        assets.add(Constant.ASSET_ETH);
+        assets.add(Constant.ASSETS_ETH);
 
 //        ArrayList<String> assetsNep5 = new ArrayList<>();
 //        assetsNep5.add(Constant.ASSETS_CPX);

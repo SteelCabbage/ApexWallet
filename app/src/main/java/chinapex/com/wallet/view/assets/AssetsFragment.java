@@ -37,7 +37,7 @@ import chinapex.com.wallet.bean.neo.NeoWallet;
 import chinapex.com.wallet.changelistener.ApexListeners;
 import chinapex.com.wallet.changelistener.OnAssetJsonUpdateListener;
 import chinapex.com.wallet.changelistener.OnItemNameUpdateListener;
-import chinapex.com.wallet.changelistener.OnNeoAddListener;
+import chinapex.com.wallet.changelistener.OnWalletAddListener;
 import chinapex.com.wallet.changelistener.OnWalletDeleteListener;
 import chinapex.com.wallet.changelistener.eth.OnEthAddListener;
 import chinapex.com.wallet.global.ApexWalletApplication;
@@ -54,7 +54,7 @@ import chinapex.com.wallet.view.wallet.ImportWalletActivity;
 
 public class AssetsFragment extends BaseFragment implements AssetsRecyclerViewAdapter
         .OnItemClickListener, SwipeRefreshLayout.OnRefreshListener, AssetsRecyclerViewAdapter
-        .OnItemLongClickListener, OnWalletDeleteListener, OnNeoAddListener, DrawerLayout
+        .OnItemLongClickListener, OnWalletDeleteListener, OnWalletAddListener, DrawerLayout
         .DrawerListener, DrawerMenu1RecyclerViewAdapter.DrawerMenu1OnItemClickListener, View
         .OnClickListener, OnItemNameUpdateListener, TextWatcher, OnAssetJsonUpdateListener,
         OnEthAddListener, DrawerMenu2RecyclerViewAdapter.DrawerMenu2OnItemClickListener {
@@ -155,7 +155,7 @@ public class AssetsFragment extends BaseFragment implements AssetsRecyclerViewAd
 
         // neo
         ApexListeners.getInstance().addOnItemDeleteListener(this);
-        ApexListeners.getInstance().addOnItemAddListener(this);
+        ApexListeners.getInstance().addOnWalletAddListener(this);
         ApexListeners.getInstance().addOnItemNameUpdateListener(this);
         ApexListeners.getInstance().addOnAssetsUpdateListener(this);
         // eth
@@ -219,9 +219,9 @@ public class AssetsFragment extends BaseFragment implements AssetsRecyclerViewAd
     }
 
     @Override
-    public void onNeoAdd(NeoWallet neoWallet) {
-        if (null == neoWallet) {
-            CpLog.e(TAG, "onNeoAdd() -> neoWallet is null!");
+    public void onWalletAdd(WalletBean walletBean) {
+        if (null == walletBean) {
+            CpLog.e(TAG, "onWalletAdd() -> walletBean is null!");
             return;
         }
 
@@ -230,8 +230,8 @@ public class AssetsFragment extends BaseFragment implements AssetsRecyclerViewAd
             return;
         }
 
-        mWalletBeans.add(neoWallet);
-        mSearchWalletBeans.add(neoWallet);
+        mWalletBeans.add(walletBean);
+        mSearchWalletBeans.add(walletBean);
 
         getActivity().runOnUiThread(new Runnable() {
             @Override
@@ -506,7 +506,7 @@ public class AssetsFragment extends BaseFragment implements AssetsRecyclerViewAd
     public void onDestroy() {
         super.onDestroy();
         ApexListeners.getInstance().removeOnItemDeleteListener(this);
-        ApexListeners.getInstance().removeOnItemAddListener(this);
+        ApexListeners.getInstance().removeOnWalletAddListener(this);
         ApexListeners.getInstance().removeOnItemNameUpdateListener(this);
         ApexListeners.getInstance().removeOnAssetsUpdateListener(this);
 

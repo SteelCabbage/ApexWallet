@@ -270,8 +270,8 @@ public class ImportMnemonicFragment extends BaseFragment implements View.OnClick
         }
 
         apexWalletDbDao.insert(Constant.TABLE_NEO_WALLET, neoWallet);
-        CpLog.i(TAG, "ApexListeners.getInstance().notifyNeoAdd");
-        ApexListeners.getInstance().notifyNeoAdd(neoWallet);
+        CpLog.i(TAG, "ApexListeners.getInstance().notifyWalletAdd");
+        ApexListeners.getInstance().notifyWalletAdd(neoWallet);
 
         isFirstEnter();
     }

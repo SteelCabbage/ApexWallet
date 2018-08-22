@@ -122,6 +122,8 @@
     <string name="keystore_copied">The keystore has been copied to the clipboard</string>
     <string name="mnemonic_incorrect">The mnemonic is incorrect</string>
     <string name="password_incorrect">Password Incorrect!</string>
+    <string name="select_wallet_type">Please Select The Wallet Type!</string>
+    <string name="keystore_can_not_be_empty">Keystore can not be empty</string>
 
     <!--语言-->
     <string name="language_zh_cn">简体中文</string>
@@ -130,8 +132,6 @@
     <!--画像类型-->
     <string name="portrait_type_common">Basic</string>
     <string name="portrait_type_enterprise">Enterprise</string>
-    <string name="select_wallet_type">Please Select The Wallet Type!</string>
-
 
 
 </resources>

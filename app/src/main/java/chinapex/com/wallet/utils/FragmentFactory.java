@@ -13,7 +13,7 @@ import chinapex.com.wallet.view.me.portrait.MeEnterprisePortraitFragment;
 import chinapex.com.wallet.view.wallet.BackupFragment;
 import chinapex.com.wallet.view.wallet.ConfirmMnemonicFragment;
 import chinapex.com.wallet.view.wallet.CopyMnemonicFragment;
-import chinapex.com.wallet.view.wallet.ImportKeystoreFragmentNeo;
+import chinapex.com.wallet.view.wallet.ImportKeystoreFragment;
 import chinapex.com.wallet.view.wallet.ImportMnemonicFragment;
 
 public class FragmentFactory {
@@ -33,7 +33,7 @@ public class FragmentFactory {
     private static MeEnterpriseKeyFragment sMeEnterpriseKeyFragment;
 
     private static ImportMnemonicFragment sImportMnemonicFragment;
-    private static ImportKeystoreFragmentNeo sImportKeystoreFragment;
+    private static ImportKeystoreFragment sImportKeystoreFragment;
 
     public static BaseFragment getFragment(int position) {
         BaseFragment baseFragment = null;
@@ -103,7 +103,7 @@ public class FragmentFactory {
                 break;
             case Constant.FRAGMENT_TAG_IMPORT_KEYSTORE:
                 if (null == sImportKeystoreFragment) {
-                    sImportKeystoreFragment = new ImportKeystoreFragmentNeo();
+                    sImportKeystoreFragment = new ImportKeystoreFragment();
                 }
                 baseFragment = sImportKeystoreFragment;
                 break;
