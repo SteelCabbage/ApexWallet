@@ -80,8 +80,7 @@ public class AssetsFragment extends BaseFragment implements AssetsRecyclerViewAd
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle
             savedInstanceState) {
 
-        View fragment_assets = inflater.inflate(R.layout.fragment_assets, container, false);
-        return fragment_assets;
+        return inflater.inflate(R.layout.fragment_assets, container, false);
     }
 
     @Override

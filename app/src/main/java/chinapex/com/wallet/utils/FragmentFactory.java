@@ -3,7 +3,7 @@ package chinapex.com.wallet.utils;
 import chinapex.com.wallet.base.BaseFragment;
 import chinapex.com.wallet.global.Constant;
 import chinapex.com.wallet.view.assets.AssetsFragment;
-import chinapex.com.wallet.view.discover.DiscoverFragment;
+import chinapex.com.wallet.view.excitation.ExcitationFragment;
 import chinapex.com.wallet.view.me.MeFragment;
 import chinapex.com.wallet.view.me.MeManageDetailFragment;
 import chinapex.com.wallet.view.me.MeTransactionRecordFragment;
@@ -18,9 +18,9 @@ import chinapex.com.wallet.view.wallet.ImportMnemonicFragment;
 
 public class FragmentFactory {
 
-    private static DiscoverFragment sDiscoverFragment; //0
     private static AssetsFragment sAssetsFragment; //0
     private static MeFragment sMeFragment; //1
+    private static ExcitationFragment sExcitationFragment; //2
 
     private static BackupFragment sBackupFragment;
     private static CopyMnemonicFragment sCopyMnemonicFragment;
@@ -38,12 +38,6 @@ public class FragmentFactory {
     public static BaseFragment getFragment(int position) {
         BaseFragment baseFragment = null;
         switch (position) {
-//            case 0:
-//                if (null == sDiscoverFragment) {
-//                    sDiscoverFragment = new DiscoverFragment();
-//                }
-//                baseFragment = sDiscoverFragment;
-//                break;
             case 0:
                 if (null == sAssetsFragment) {
                     sAssetsFragment = new AssetsFragment();
@@ -55,6 +49,12 @@ public class FragmentFactory {
                     sMeFragment = new MeFragment();
                 }
                 baseFragment = sMeFragment;
+                break;
+            case 2:
+                if (null == sExcitationFragment) {
+                    sExcitationFragment = new ExcitationFragment();
+                }
+                baseFragment = sExcitationFragment;
                 break;
             default:
                 break;

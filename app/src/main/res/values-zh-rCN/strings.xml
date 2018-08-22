@@ -88,6 +88,8 @@
     <string name="wallet_type">钱包类型</string>
     <string name="seek_bar_slow">慢</string>
     <string name="seek_bar_fast">快</string>
+    <string name="excitation">激励</string>
+    <string name="latest_activity">最新活动</string>
 
     <!--Me页面，功能菜单文字-->
     <string name="personal_portrait">个人画像</string>

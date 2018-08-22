@@ -2,9 +2,9 @@
 <resources>
     <!--主页底部导航-->
     <string-array name="main_bn_item_title">
-        <!--<item>发现</item>-->
         <item>@string/asset</item>
         <item>@string/me</item>
+        <item>@string/excitation</item>
     </string-array>
 
     <!--资产页，1侧滑菜单图片-->
