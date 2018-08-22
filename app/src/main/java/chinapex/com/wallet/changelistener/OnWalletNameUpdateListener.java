@@ -7,6 +7,6 @@ import chinapex.com.wallet.bean.WalletBean;
  * E-Mail：liuyi_61@163.com
  */
 
-public interface OnItemNameUpdateListener {
-    void OnItemNameUpdate(WalletBean walletBean);
+public interface OnWalletNameUpdateListener {
+    void OnWalletNameUpdate(WalletBean walletBean);
 }

@@ -151,6 +151,8 @@ public class ImportKeystoreFragment extends BaseFragment implements View.OnClick
                         break;
                 }
                 break;
+            default:
+                break;
         }
     }
 
@@ -161,7 +163,7 @@ public class ImportKeystoreFragment extends BaseFragment implements View.OnClick
         if (TextUtils.isEmpty(keystore)) {
             ToastUtils.getInstance().showToast(ApexWalletApplication.getInstance().getResources().getString(R.string
                     .keystore_can_not_be_empty));
-            CpLog.w(TAG, "pwd is null!");
+            CpLog.w(TAG, "keystore is null!");
             return false;
         }
 

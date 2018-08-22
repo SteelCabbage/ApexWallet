@@ -32,14 +32,11 @@ import chinapex.com.wallet.adapter.SpacesItemDecoration;
 import chinapex.com.wallet.base.BaseFragment;
 import chinapex.com.wallet.bean.DrawerMenu;
 import chinapex.com.wallet.bean.WalletBean;
-import chinapex.com.wallet.bean.eth.EthWallet;
-import chinapex.com.wallet.bean.neo.NeoWallet;
 import chinapex.com.wallet.changelistener.ApexListeners;
 import chinapex.com.wallet.changelistener.OnAssetJsonUpdateListener;
-import chinapex.com.wallet.changelistener.OnItemNameUpdateListener;
+import chinapex.com.wallet.changelistener.OnWalletNameUpdateListener;
 import chinapex.com.wallet.changelistener.OnWalletAddListener;
 import chinapex.com.wallet.changelistener.OnWalletDeleteListener;
-import chinapex.com.wallet.changelistener.eth.OnEthAddListener;
 import chinapex.com.wallet.global.ApexWalletApplication;
 import chinapex.com.wallet.global.Constant;
 import chinapex.com.wallet.model.ApexWalletDbDao;
@@ -56,8 +53,8 @@ public class AssetsFragment extends BaseFragment implements AssetsRecyclerViewAd
         .OnItemClickListener, SwipeRefreshLayout.OnRefreshListener, AssetsRecyclerViewAdapter
         .OnItemLongClickListener, OnWalletDeleteListener, OnWalletAddListener, DrawerLayout
         .DrawerListener, DrawerMenu1RecyclerViewAdapter.DrawerMenu1OnItemClickListener, View
-        .OnClickListener, OnItemNameUpdateListener, TextWatcher, OnAssetJsonUpdateListener,
-        OnEthAddListener, DrawerMenu2RecyclerViewAdapter.DrawerMenu2OnItemClickListener {
+        .OnClickListener, OnWalletNameUpdateListener, TextWatcher, OnAssetJsonUpdateListener, DrawerMenu2RecyclerViewAdapter
+        .DrawerMenu2OnItemClickListener {
 
     private static final String TAG = AssetsFragment.class.getSimpleName();
     private RecyclerView mRv_assets;
@@ -153,13 +150,10 @@ public class AssetsFragment extends BaseFragment implements AssetsRecyclerViewAd
         // set title: wallet type
         mTv_assets_wallet_type.setText(Constant.WALLET_TYPE_NAME_NEO);
 
-        // neo
         ApexListeners.getInstance().addOnItemDeleteListener(this);
         ApexListeners.getInstance().addOnWalletAddListener(this);
         ApexListeners.getInstance().addOnItemNameUpdateListener(this);
         ApexListeners.getInstance().addOnAssetsUpdateListener(this);
-        // eth
-        ApexListeners.getInstance().addOnEthAddListener(this);
 
         mSearchWalletBeans = new ArrayList<>();
         mSearchWalletBeans.addAll(mWalletBeans);
@@ -225,37 +219,13 @@ public class AssetsFragment extends BaseFragment implements AssetsRecyclerViewAd
             return;
         }
 
-        if (mWalletType != Constant.WALLET_TYPE_NEO) {
+        if (mWalletType != walletBean.getWalletType()) {
             CpLog.w(TAG, "mWalletType:" + mWalletType + ",no need to update UI!");
             return;
         }
 
         mWalletBeans.add(walletBean);
         mSearchWalletBeans.add(walletBean);
-
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mAssetsRecyclerViewAdapter.notifyDataSetChanged();
-                mEmptyAdapter.notifyDataSetChanged();
-            }
-        });
-    }
-
-    @Override
-    public void onEthAdd(EthWallet ethWallet) {
-        if (null == ethWallet) {
-            CpLog.e(TAG, "onEthAdd() -> ethWallet is null!");
-            return;
-        }
-
-        if (mWalletType != Constant.WALLET_TYPE_ETH) {
-            CpLog.w(TAG, "mWalletType:" + mWalletType + ",no need to update UI!");
-            return;
-        }
-
-        mWalletBeans.add(ethWallet);
-        mSearchWalletBeans.add(ethWallet);
 
         getActivity().runOnUiThread(new Runnable() {
             @Override
@@ -406,7 +376,7 @@ public class AssetsFragment extends BaseFragment implements AssetsRecyclerViewAd
     }
 
     @Override
-    public void OnItemNameUpdate(WalletBean walletBean) {
+    public void OnWalletNameUpdate(WalletBean walletBean) {
         if (null == walletBean) {
             CpLog.e(TAG, "walletBean is null!");
             return;
@@ -509,10 +479,6 @@ public class AssetsFragment extends BaseFragment implements AssetsRecyclerViewAd
         ApexListeners.getInstance().removeOnWalletAddListener(this);
         ApexListeners.getInstance().removeOnItemNameUpdateListener(this);
         ApexListeners.getInstance().removeOnAssetsUpdateListener(this);
-
-        // eth
-        ApexListeners.getInstance().removeOnEthAddListener(this);
     }
-
 
 }

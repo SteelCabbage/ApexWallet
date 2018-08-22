@@ -296,7 +296,6 @@ public class CreateWalletActivity extends BaseActivity implements View.OnClickLi
             return;
         }
 
-        CpLog.i(TAG, "mnemonicEnUs eth:" + mnemonicEnUs);
         EthWallet ethWallet = new EthWallet();
         ethWallet.setAddress(wallet.address());
         ethWallet.setBackupState(Constant.BACKUP_UNFINISHED);

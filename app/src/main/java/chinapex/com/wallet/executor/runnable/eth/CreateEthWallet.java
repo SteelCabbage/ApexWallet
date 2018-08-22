@@ -91,7 +91,7 @@ public class CreateEthWallet implements Runnable {
         }
 
         apexWalletDbDao.insert(Constant.TABLE_ETH_WALLET, ethWallet);
-        ApexListeners.getInstance().notifyEthAdd(ethWallet);
+        ApexListeners.getInstance().notifyWalletAdd(ethWallet);
         mICreateEthWalletCallback.createEthWallet(wallet);
     }
 }
