@@ -224,8 +224,7 @@ public class TransferActivity extends BaseActivity implements View.OnClickListen
         assertTxBean.setAssetsID(mBalanceBean.getAssetsID());
         assertTxBean.setAddrFrom(mWalletFrom.address());
         assertTxBean.setAddrTo(mEt_transfer_to_wallet_addr.getText().toString().trim());
-        assertTxBean.setTransferAmount(Double.valueOf(mEt_transfer_amount.getText().toString()
-                .trim()));
+        assertTxBean.setTransferAmount(Double.valueOf(mEt_transfer_amount.getText().toString().trim()));
         assertTxBean.setUtxos(utxos);
 
         TaskController.getInstance().submit(new CreateAssertTx(mWalletFrom, assertTxBean, this));
@@ -309,8 +308,7 @@ public class TransferActivity extends BaseActivity implements View.OnClickListen
 
         TransactionRecord transactionRecord = new TransactionRecord();
         transactionRecord.setWalletAddress(mWalletFrom.address());
-        transactionRecord.setTxAmount(String.valueOf("-" + mEt_transfer_amount.getText().toString
-                ().trim()));
+        transactionRecord.setTxAmount(String.valueOf("-" + mEt_transfer_amount.getText().toString().trim()));
         transactionRecord.setTxFrom(mWalletFrom.address());
         transactionRecord.setTxTo(mEt_transfer_to_wallet_addr.getText().toString().trim());
         transactionRecord.setTxTime(0);
