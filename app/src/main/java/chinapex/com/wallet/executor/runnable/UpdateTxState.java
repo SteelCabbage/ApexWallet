@@ -25,8 +25,7 @@ public class UpdateTxState implements Runnable, INetCallback {
     private String mWalletAddress;
     private IUpdateTxStateCallback mIUpdateTxStateCallback;
 
-    public UpdateTxState(String txId, String walletAddress, IUpdateTxStateCallback
-            IUpdateTxStateCallback) {
+    public UpdateTxState(String txId, String walletAddress, IUpdateTxStateCallback IUpdateTxStateCallback) {
         mTxId = txId;
         mWalletAddress = walletAddress;
         mIUpdateTxStateCallback = IUpdateTxStateCallback;
@@ -60,16 +59,14 @@ public class UpdateTxState implements Runnable, INetCallback {
                 ResponseGetRawTransaction.class);
         if (null == responseGetRawTransaction) {
             CpLog.e(TAG, "responseGetRawTransaction is null!");
-            mIUpdateTxStateCallback.updateTxState(mTxId, mWalletAddress, Constant
-                    .TX_CONFIRM_EXCEPTION);
+            mIUpdateTxStateCallback.updateTxState(mTxId, mWalletAddress, Constant.TX_CONFIRM_EXCEPTION);
             return;
         }
 
         ResponseGetRawTransaction.ResultBean resultBean = responseGetRawTransaction.getResult();
         if (null == resultBean) {
-            CpLog.e(TAG, "resultBean");
-            mIUpdateTxStateCallback.updateTxState(mTxId, mWalletAddress, Constant
-                    .TX_CONFIRM_EXCEPTION);
+            CpLog.e(TAG, "resultBean is null!");
+            mIUpdateTxStateCallback.updateTxState(mTxId, mWalletAddress, Constant.TX_CONFIRM_EXCEPTION);
             return;
         }
 

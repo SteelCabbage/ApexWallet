@@ -187,7 +187,7 @@ public class TransferActivity extends BaseActivity implements View.OnClickListen
                 neoTxBean.setAssetDecimal(mBalanceBean.getAssetDecimal());
                 neoTxBean.setFromAddress(wallet.address());
                 neoTxBean.setToAddress(mEt_transfer_to_wallet_addr.getText().toString().trim());
-                neoTxBean.setAmount(Double.valueOf(mEt_transfer_amount.getText().toString().trim()));
+                neoTxBean.setAmount(mEt_transfer_amount.getText().toString().trim());
                 iTxBean = neoTxBean;
                 break;
             case Constant.WALLET_TYPE_ETH:

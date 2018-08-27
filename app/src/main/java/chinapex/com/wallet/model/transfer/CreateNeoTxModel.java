@@ -85,7 +85,7 @@ public class CreateNeoTxModel implements ICreateTxModel, IGetUtxosCallback, ICre
         assertTxBean.setAssetsID(mNeoTxBean.getAssetID());
         assertTxBean.setAddrFrom(mNeoTxBean.getFromAddress());
         assertTxBean.setAddrTo(mNeoTxBean.getToAddress());
-        assertTxBean.setTransferAmount(mNeoTxBean.getAmount());
+        assertTxBean.setTransferAmount(Double.valueOf(mNeoTxBean.getAmount()));
         assertTxBean.setUtxos(utxos);
 
         TaskController.getInstance().submit(new CreateAssertTx(mNeoTxBean.getWallet(), assertTxBean, this));
@@ -131,7 +131,7 @@ public class CreateNeoTxModel implements ICreateTxModel, IGetUtxosCallback, ICre
         nep5TxBean.setAssetDecimal(mNeoTxBean.getAssetDecimal());
         nep5TxBean.setAddrFrom(mNeoTxBean.getFromAddress());
         nep5TxBean.setAddrTo(mNeoTxBean.getToAddress());
-        nep5TxBean.setTransferAmount(String.valueOf(mNeoTxBean.getAmount()));
+        nep5TxBean.setTransferAmount(mNeoTxBean.getAmount());
         nep5TxBean.setUtxos("[]");
 
         TaskController.getInstance().submit(new CreateNep5Tx(mNeoTxBean.getWallet(), nep5TxBean, this));
@@ -165,7 +165,7 @@ public class CreateNeoTxModel implements ICreateTxModel, IGetUtxosCallback, ICre
 
         TransactionRecord transactionRecord = new TransactionRecord();
         transactionRecord.setWalletAddress(mNeoTxBean.getFromAddress());
-        transactionRecord.setTxAmount(String.valueOf("-" + mNeoTxBean.getAmount()));
+        transactionRecord.setTxAmount("-" + mNeoTxBean.getAmount());
         transactionRecord.setTxFrom(mNeoTxBean.getFromAddress());
         transactionRecord.setTxTo(mNeoTxBean.getToAddress());
         transactionRecord.setTxTime(0);

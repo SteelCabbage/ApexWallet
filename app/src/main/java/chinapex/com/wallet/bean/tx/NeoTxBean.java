@@ -12,7 +12,7 @@ public class NeoTxBean implements ITxBean {
     private int assetDecimal;
     private String fromAddress;
     private String toAddress;
-    private double amount;
+    private String amount;
 
 
     public NeoTxBean() {
@@ -59,11 +59,11 @@ public class NeoTxBean implements ITxBean {
         this.toAddress = toAddress;
     }
 
-    public double getAmount() {
+    public String getAmount() {
         return amount;
     }
 
-    public void setAmount(double amount) {
+    public void setAmount(String amount) {
         this.amount = amount;
     }
 }
