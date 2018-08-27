@@ -147,9 +147,9 @@ public class Constant {
     public static final String ASSETS_ZPT = "0xac116d4b8d4ca55e6b6d4ecce2192039b51cccc5";
 
 
-    // asset type
-    public static final String ASSET_TYPE_GLOBAL = "GLOBAL";
-    public static final String ASSET_TYPE_NEP5 = "NEP5";
+    // asset typec
+    public static final String ASSET_TYPE_GLOBAL = "assetGlobal";
+    public static final String ASSET_TYPE_COLOR = "assetColor";
     public static final String ASSET_TYPE_UTILITY = "UtilityToken";
     public static final String ASSET_TYPE_GOVERNING = "GoverningToken";
 

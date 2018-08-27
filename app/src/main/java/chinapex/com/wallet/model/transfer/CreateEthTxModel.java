@@ -1,6 +1,7 @@
 package chinapex.com.wallet.model.transfer;
 
 import chinapex.com.wallet.bean.WalletBean;
+import chinapex.com.wallet.bean.tx.ITxBean;
 
 /**
  * Created by SteelCabbage on 2018/8/24 0024 15:56.
@@ -15,12 +16,12 @@ public class CreateEthTxModel implements ICreateTxModel {
     }
 
     @Override
-    public void createGlobalTx(WalletBean walletBean) {
+    public void createGlobalTx(ITxBean iTxBean) {
 
     }
 
     @Override
-    public void createColorTx(WalletBean walletBean) {
+    public void createColorTx(ITxBean iTxBean) {
 
     }
 }

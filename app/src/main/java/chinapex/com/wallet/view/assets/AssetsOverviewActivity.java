@@ -197,7 +197,7 @@ public class AssetsOverviewActivity extends BaseActivity implements AssetsOvervi
             balanceBean.setMapState(Constant.MAP_STATE_UNFINISHED);
             balanceBean.setAssetsID(colorAsset);
             balanceBean.setAssetSymbol(assetBean.getSymbol());
-            balanceBean.setAssetType(Constant.ASSET_TYPE_NEP5);
+            balanceBean.setAssetType(Constant.ASSET_TYPE_COLOR);
             balanceBean.setAssetDecimal(Integer.valueOf(assetBean.getPrecision()));
             balanceBean.setAssetsValue("0");
             balanceBeans.add(balanceBean);

@@ -9,8 +9,11 @@ import neomobile.Wallet;
 public class NeoTxBean implements ITxBean {
     private Wallet wallet;
     private String assetID;
+    private int assetDecimal;
+    private String fromAddress;
     private String toAddress;
     private double amount;
+
 
     public NeoTxBean() {
 
@@ -30,6 +33,22 @@ public class NeoTxBean implements ITxBean {
 
     public void setAssetID(String assetID) {
         this.assetID = assetID;
+    }
+
+    public int getAssetDecimal() {
+        return assetDecimal;
+    }
+
+    public void setAssetDecimal(int assetDecimal) {
+        this.assetDecimal = assetDecimal;
+    }
+
+    public String getFromAddress() {
+        return fromAddress;
+    }
+
+    public void setFromAddress(String fromAddress) {
+        this.fromAddress = fromAddress;
     }
 
     public String getToAddress() {

@@ -5,5 +5,5 @@ package chinapex.com.wallet.model.transfer;
  * E-Mail：liuyi_61@163.com
  */
 public interface ICreateTxModelCallback {
-    void CreateTxModel(String toastMsg);
+    void CreateTxModel(String toastMsg, boolean isFinish);
 }

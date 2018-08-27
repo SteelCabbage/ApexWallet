@@ -20,7 +20,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -160,7 +159,7 @@ public class AddAssetsDialog extends DialogFragment implements View.OnClickListe
             return;
         }
 
-        mAssetBeans = apexWalletDbDao.queryAssetsByType(Constant.ASSET_TYPE_NEP5);
+        mAssetBeans = apexWalletDbDao.queryAssetsByType(Constant.ASSET_TYPE_COLOR);
         if (null == mAssetBeans || mAssetBeans.isEmpty()) {
             CpLog.e(TAG, "assetBeans is null or empty!");
             return;

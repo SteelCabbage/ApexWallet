@@ -5,5 +5,5 @@ package chinapex.com.wallet.view.assets;
  * E-Mail：liuyi_61@163.com
  */
 public interface ICreateTxView {
-    void createTxMsg(String toastMsg);
+    void createTxMsg(String toastMsg, boolean isFinish);
 }

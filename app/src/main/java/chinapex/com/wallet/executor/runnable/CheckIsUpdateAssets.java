@@ -35,7 +35,7 @@ public class CheckIsUpdateAssets implements Runnable {
             return;
         }
 
-        List<AssetBean> assetBeans = apexWalletDbDao.queryAssetsByType(Constant.ASSET_TYPE_NEP5);
+        List<AssetBean> assetBeans = apexWalletDbDao.queryAssetsByType(Constant.ASSET_TYPE_COLOR);
         if (null == assetBeans || assetBeans.isEmpty()) {
             mICheckIsUpdateAssetsCallback.checkIsUpdateAssets(true);
             return;

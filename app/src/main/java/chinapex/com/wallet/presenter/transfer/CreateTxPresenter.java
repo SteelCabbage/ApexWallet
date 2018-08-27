@@ -47,12 +47,12 @@ public class CreateTxPresenter implements ICreateTxPresenter, ICreateTxModelCall
     }
 
     @Override
-    public void CreateTxModel(String toastMsg) {
+    public void CreateTxModel(String toastMsg, boolean isFinish) {
         if (null == mICreateTxView) {
             CpLog.e(TAG, "mICreateTxView is null!");
             return;
         }
 
-        mICreateTxView.createTxMsg(toastMsg);
+        mICreateTxView.createTxMsg(toastMsg, isFinish);
     }
 }

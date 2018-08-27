@@ -126,7 +126,7 @@ public class GetTransactionHistory implements Runnable, INetCallback {
                 apexWalletDbDao.delCacheByTxIDAndAddr(Constant.TABLE_TX_CACHE, txID, mAddress);
             } else {
                 switch (txType) {
-                    case Constant.ASSET_TYPE_NEP5:
+                    case Constant.ASSET_TYPE_COLOR:
                         String vmstate = (String) resultBean.getVmstate();
                         if (!TextUtils.isEmpty(vmstate) && !vmstate.contains("FAULT")) {
                             transactionRecord.setTxState(Constant.TRANSACTION_STATE_SUCCESS);
