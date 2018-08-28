@@ -68,8 +68,11 @@ public class ImpUpdateTxStateCallback implements IUpdateTxStateCallback, IGetTra
             return;
         }
 
-        ApexWalletDbDao apexWalletDbDao = ApexWalletDbDao.getInstance(ApexWalletApplication
-                .getInstance());
+        handleFailedTx();
+    }
+
+    private void handleFailedTx() {
+        ApexWalletDbDao apexWalletDbDao = ApexWalletDbDao.getInstance(ApexWalletApplication.getInstance());
         if (null == apexWalletDbDao) {
             CpLog.e(TAG, "apexWalletDbDao is null!");
             return;
@@ -77,10 +80,9 @@ public class ImpUpdateTxStateCallback implements IUpdateTxStateCallback, IGetTra
 
         List<TransactionRecord> cacheTxs = apexWalletDbDao.queryTxCacheByTxId(mTxId);
         if (null == cacheTxs || cacheTxs.isEmpty()) {
-            apexWalletDbDao.updateTxState(Constant.TABLE_TRANSACTION_RECORD, mTxId, Constant
-                    .TRANSACTION_STATE_SUCCESS);
-            ApexListeners.getInstance().notifyTxStateUpdate(mTxId, Constant
-                    .TRANSACTION_STATE_SUCCESS, Constant.NO_NEED_MODIFY_TX_TIME);
+            apexWalletDbDao.updateTxState(Constant.TABLE_TRANSACTION_RECORD, mTxId, Constant.TRANSACTION_STATE_SUCCESS);
+            ApexListeners.getInstance().notifyTxStateUpdate(mTxId, Constant.TRANSACTION_STATE_SUCCESS, Constant
+                    .NO_NEED_MODIFY_TX_TIME);
             return;
         }
 

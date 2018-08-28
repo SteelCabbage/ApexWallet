@@ -55,8 +55,7 @@ public class UpdateTxState implements Runnable, INetCallback {
 
     @Override
     public void onSuccess(int statusCode, String msg, String result) {
-        ResponseGetRawTransaction responseGetRawTransaction = GsonUtils.json2Bean(result,
-                ResponseGetRawTransaction.class);
+        ResponseGetRawTransaction responseGetRawTransaction = GsonUtils.json2Bean(result, ResponseGetRawTransaction.class);
         if (null == responseGetRawTransaction) {
             CpLog.e(TAG, "responseGetRawTransaction is null!");
             mIUpdateTxStateCallback.updateTxState(mTxId, mWalletAddress, Constant.TX_CONFIRM_EXCEPTION);

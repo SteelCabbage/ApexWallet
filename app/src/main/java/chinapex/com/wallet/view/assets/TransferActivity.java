@@ -214,7 +214,7 @@ public class TransferActivity extends BaseActivity implements View.OnClickListen
             case Constant.ASSET_TYPE_GLOBAL:
                 mICreateTxPresenter.createGlobalTx(iTxBean);
                 break;
-            case Constant.ASSET_TYPE_COLOR:
+            case Constant.ASSET_TYPE_NEP5:
                 mICreateTxPresenter.createColorTx(iTxBean);
                 break;
             default:

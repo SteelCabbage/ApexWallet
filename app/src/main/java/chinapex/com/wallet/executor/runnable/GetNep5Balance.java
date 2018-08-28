@@ -134,7 +134,7 @@ public class GetNep5Balance implements Runnable, INetCallback {
             BalanceBean balanceBean = new BalanceBean();
             balanceBean.setMapState(Constant.MAP_STATE_UNFINISHED);
             balanceBean.setAssetsID(mAssetID);
-            balanceBean.setAssetType(Constant.ASSET_TYPE_COLOR);
+            balanceBean.setAssetType(Constant.ASSET_TYPE_NEP5);
             balanceBean.setAssetDecimal(8);
             balanceBean.setAssetsValue(null == value ? "0" : value.toPlainString());
             balanceBeans.put(mAssetID, balanceBean);

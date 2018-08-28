@@ -177,7 +177,7 @@ public class GetNeoBalanceModel implements IGetBalanceModel, IGetAccountStateCal
             balanceBean.setMapState(Constant.MAP_STATE_UNFINISHED);
             balanceBean.setAssetsID(assetBean.getHexHash());
             balanceBean.setAssetSymbol(assetBean.getSymbol());
-            balanceBean.setAssetType(Constant.ASSET_TYPE_COLOR);
+            balanceBean.setAssetType(Constant.ASSET_TYPE_NEP5);
             balanceBean.setAssetDecimal(Integer.valueOf(assetBean.getPrecision()));
 
             BalanceBean value = balanceBeanEntry.getValue();

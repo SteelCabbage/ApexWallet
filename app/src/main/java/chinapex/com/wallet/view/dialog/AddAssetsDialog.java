@@ -159,7 +159,7 @@ public class AddAssetsDialog extends DialogFragment implements View.OnClickListe
             return;
         }
 
-        mAssetBeans = apexWalletDbDao.queryAssetsByType(Constant.ASSET_TYPE_COLOR);
+        mAssetBeans = apexWalletDbDao.queryAssetsByType(Constant.ASSET_TYPE_NEP5);
         if (null == mAssetBeans || mAssetBeans.isEmpty()) {
             CpLog.e(TAG, "assetBeans is null or empty!");
             return;

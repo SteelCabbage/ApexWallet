@@ -82,6 +82,7 @@ public class AssetsOverviewActivity extends BaseActivity implements AssetsOvervi
         }
 
         mWalletBean = intent.getParcelableExtra(Constant.WALLET_BEAN);
+        CpLog.i(TAG, "mWalletBean class:" + mWalletBean.getClass().getSimpleName());
 
         mTv_assets_overview_wallet_name.setText(mWalletBean.getName());
         mTv_assets_overview_wallet_address.setText(mWalletBean.getAddress());
@@ -197,7 +198,7 @@ public class AssetsOverviewActivity extends BaseActivity implements AssetsOvervi
             balanceBean.setMapState(Constant.MAP_STATE_UNFINISHED);
             balanceBean.setAssetsID(colorAsset);
             balanceBean.setAssetSymbol(assetBean.getSymbol());
-            balanceBean.setAssetType(Constant.ASSET_TYPE_COLOR);
+            balanceBean.setAssetType(Constant.ASSET_TYPE_NEP5);
             balanceBean.setAssetDecimal(Integer.valueOf(assetBean.getPrecision()));
             balanceBean.setAssetsValue("0");
             balanceBeans.add(balanceBean);
