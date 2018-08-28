@@ -25,10 +25,10 @@ public class UpdateTxState implements Runnable, INetCallback {
     private String mWalletAddress;
     private IUpdateTxStateCallback mIUpdateTxStateCallback;
 
-    public UpdateTxState(String txId, String walletAddress, IUpdateTxStateCallback IUpdateTxStateCallback) {
+    public UpdateTxState(String txId, String walletAddress, IUpdateTxStateCallback iUpdateTxStateCallback) {
         mTxId = txId;
         mWalletAddress = walletAddress;
-        mIUpdateTxStateCallback = IUpdateTxStateCallback;
+        mIUpdateTxStateCallback = iUpdateTxStateCallback;
     }
 
     @Override
@@ -49,8 +49,7 @@ public class UpdateTxState implements Runnable, INetCallback {
         requestGetRawTransaction.setParams(params);
         requestGetRawTransaction.setId(1);
 
-        OkHttpClientManager.getInstance().postJson(Constant.URL_CLI, GsonUtils.toJsonStr
-                (requestGetRawTransaction), this);
+        OkHttpClientManager.getInstance().postJson(Constant.URL_CLI, GsonUtils.toJsonStr(requestGetRawTransaction), this);
     }
 
     @Override

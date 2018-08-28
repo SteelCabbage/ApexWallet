@@ -4,7 +4,7 @@ import java.util.List;
 
 import chinapex.com.wallet.bean.AssetBean;
 import chinapex.com.wallet.bean.response.ResponseGetAssets;
-import chinapex.com.wallet.executor.callback.IGetAssetsCallback;
+import chinapex.com.wallet.executor.callback.IGetNeoAssetsCallback;
 import chinapex.com.wallet.global.ApexWalletApplication;
 import chinapex.com.wallet.global.Constant;
 import chinapex.com.wallet.model.ApexWalletDbDao;
@@ -17,18 +17,19 @@ import chinapex.com.wallet.utils.GsonUtils;
  * Created by SteelCabbage on 2018/7/8 13:57
  * E-Mail：liuyi_61@163.com
  */
-public class GetAssets implements Runnable, INetCallback {
-    private static final String TAG = GetAssets.class.getSimpleName();
-    private IGetAssetsCallback mIGetAssetsCallback;
+public class GetNeoAssets implements Runnable, INetCallback {
+    private static final String TAG = GetNeoAssets.class.getSimpleName();
+    private IGetNeoAssetsCallback mIGetNeoAssetsCallback;
 
-    public GetAssets(IGetAssetsCallback IGetAssetsCallback) {
-        mIGetAssetsCallback = IGetAssetsCallback;
+    public GetNeoAssets(IGetNeoAssetsCallback IGetNeoAssetsCallback) {
+        mIGetNeoAssetsCallback = IGetNeoAssetsCallback;
     }
 
     @Override
     public void run() {
-        if (null == mIGetAssetsCallback) {
-            CpLog.e(TAG, "");
+        if (null == mIGetNeoAssetsCallback) {
+            CpLog.e(TAG, "mIGetNeoAssetsCallback is null!");
+            return;
         }
 
         OkHttpClientManager.getInstance().get(Constant.URL_ASSETS, this);
@@ -70,10 +71,10 @@ public class GetAssets implements Runnable, INetCallback {
             assetBean.setHexHash(resultBean.getHex_hash());
             assetBean.setHash(resultBean.getHash());
 
-            apexWalletDbDao.insertAsset(assetBean);
+            apexWalletDbDao.insertAsset(Constant.TABLE_NEO_ASSETS, assetBean);
         }
 
-        mIGetAssetsCallback.getAssets(Constant.UPDATE_ASSETS_OK);
+        mIGetNeoAssetsCallback.getNeoAssets(Constant.UPDATE_ASSETS_OK);
     }
 
     @Override

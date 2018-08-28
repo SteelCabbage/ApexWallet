@@ -128,7 +128,7 @@ public class Constant {
     public static final String ASSETS_CPX = "0x45d493a6f73fa5f404244a5fb8472fc014ca5885";
 
     // ETH
-    public static final String ASSETS_ETH = "ether123";
+    public static final String ASSETS_ETH = "ether666";
 
 
     // tmp 后台更新后删除
@@ -147,11 +147,15 @@ public class Constant {
     public static final String ASSETS_ZPT = "0xac116d4b8d4ca55e6b6d4ecce2192039b51cccc5";
 
 
-    // asset typec
+    // neo asset type
     public static final String ASSET_TYPE_GLOBAL = "GLOBAL";
     public static final String ASSET_TYPE_NEP5 = "NEP5";
     public static final String ASSET_TYPE_UTILITY = "UtilityToken";
     public static final String ASSET_TYPE_GOVERNING = "GoverningToken";
+
+    // eth asset type
+    public static final String ASSET_TYPE_ETH = "Eth";
+    public static final String ASSET_TYPE_ERC20 = "Erc20";
 
     public static final String SYMBOL_NEO = "NEO";
     public static final String SYMBOL_NEO_GAS = "GAS";
@@ -242,7 +246,7 @@ public class Constant {
             + FIELD_CREATE_TIME + " integer)";
 
     // table assets
-    public static final String TABLE_ASSETS = "assets";
+    public static final String TABLE_NEO_ASSETS = "neo_assets";
 
     public static final String FIELD_ASSET_TYPE = "asset_type";
     public static final String FIELD_ASSET_PRECISION = "asset_precision";
@@ -251,7 +255,33 @@ public class Constant {
     public static final String FIELD_ASSET_HEX_HASH = "asset_hex_hash";
     public static final String FIELD_ASSET_HASH = "asset_hash";
 
-    public static final String SQL_CREATE_ASSETS = "create table " + TABLE_ASSETS
+    public static final String SQL_CREATE_NEO_ASSETS = "create table " + TABLE_NEO_ASSETS
+            + " (" + FIELD_ID + " integer primary key autoincrement, "
+            + FIELD_ASSET_TYPE + " text, "
+            + FIELD_ASSET_SYMBOL + " text, "
+            + FIELD_ASSET_PRECISION + " text, "
+            + FIELD_ASSET_NAME + " text, "
+            + FIELD_ASSET_IMAGE_URL + " text, "
+            + FIELD_ASSET_HEX_HASH + " text, "
+            + FIELD_ASSET_HASH + " text, "
+            + FIELD_CREATE_TIME + " integer)";
+
+    public static final String TABLE_ETH_ASSETS = "eth_assets";
+
+    public static final String SQL_CREATE_ETH_ASSETS = "create table " + TABLE_ETH_ASSETS
+            + " (" + FIELD_ID + " integer primary key autoincrement, "
+            + FIELD_ASSET_TYPE + " text, "
+            + FIELD_ASSET_SYMBOL + " text, "
+            + FIELD_ASSET_PRECISION + " text, "
+            + FIELD_ASSET_NAME + " text, "
+            + FIELD_ASSET_IMAGE_URL + " text, "
+            + FIELD_ASSET_HEX_HASH + " text, "
+            + FIELD_ASSET_HASH + " text, "
+            + FIELD_CREATE_TIME + " integer)";
+
+    public static final String TABLE_CPX_ASSETS = "cpx_assets";
+
+    public static final String SQL_CREATE_CPX_ASSETS = "create table " + TABLE_CPX_ASSETS
             + " (" + FIELD_ID + " integer primary key autoincrement, "
             + FIELD_ASSET_TYPE + " text, "
             + FIELD_ASSET_SYMBOL + " text, "
@@ -276,8 +306,7 @@ public class Constant {
             + FIELD_PORTRAIT_VALUE + " text, "
             + FIELD_CREATE_TIME + " integer)";
 
-    // ETH
-    // table wallet
+    // table eth wallet
     public static final String TABLE_ETH_WALLET = "eth_wallet";
 
     public static final String SQL_CREATE_ETH_WALLET = "create table " + TABLE_ETH_WALLET
@@ -291,5 +320,18 @@ public class Constant {
             + FIELD_WALLET_COLOR_ASSET_JSON + " text, "
             + FIELD_CREATE_TIME + " integer)";
 
+    // table cpx wallet
+    public static final String TABLE_CPX_WALLET = "cpx_wallet";
+
+    public static final String SQL_CREATE_CPX_WALLET = "create table " + TABLE_CPX_WALLET
+            + " (" + FIELD_ID + " integer primary key autoincrement, "
+            + FIELD_WALLET_TYPE + " integer, "
+            + FIELD_WALLET_NAME + " text, "
+            + FIELD_WALLET_ADDRESS + " text, "
+            + FIELD_BACKUP_STATE + " integer, "
+            + FIELD_WALLET_KEYSTORE + " text, "
+            + FIELD_WALLET_ASSET_JSON + " text, "
+            + FIELD_WALLET_COLOR_ASSET_JSON + " text, "
+            + FIELD_CREATE_TIME + " integer)";
 
 }

@@ -171,7 +171,7 @@ public class CreateNeoTxModel implements ICreateTxModel, IGetUtxosCallback, ICre
         transactionRecord.setTxTime(0);
         transactionRecord.setTxID(mOrder);
 
-        AssetBean assetBean = apexWalletDbDao.queryAssetByHash(mNeoTxBean.getAssetID());
+        AssetBean assetBean = apexWalletDbDao.queryAssetByHash(Constant.TABLE_NEO_ASSETS, mNeoTxBean.getAssetID());
         if (null == assetBean) {
             CpLog.e(TAG, "assetBean is null!");
             return;
