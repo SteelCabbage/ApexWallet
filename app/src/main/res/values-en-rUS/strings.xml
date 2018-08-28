@@ -137,6 +137,16 @@
     <string name="portrait_type_common">Basic</string>
     <string name="portrait_type_enterprise">Enterprise</string>
 
-
+    <!--激励界面-->
+    <string name="excitation_new_activity">New</string>
+    <string name="excitation_about_to_begin">About to begin</string>
+    <string name="excitation_in_progress">In progress</string>
+    <string name="excitation_closed">Closed</string>
+    <string name="excitation_detail_cpx_address">CPX Address (achieved T1/ Genesis level)</string>
+    <string name="excitation_detail_wrong_address_note">Please enter the correct wallet address</string>
+    <string name="excitation_detail_eth_address">ETH Address</string>
+    <string name="excitation_detail_submit">Submit</string>
+    <string name="excitation_detail_condition_tip">Please be sure you have local NEO wallet, and the total amount of CPX should be equal or more than 100.</string>
+    <string name="excitation_detail_copyright">The final interpretation of this activity belongs to APEX TECHNOLOGIES</string>
 
 </resources>
