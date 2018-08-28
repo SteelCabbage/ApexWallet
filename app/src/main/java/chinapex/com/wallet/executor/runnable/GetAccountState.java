@@ -46,7 +46,7 @@ public class GetAccountState implements Runnable, INetCallback {
         arrayList.add(mAddress);
         requestGetAccountState.setParams(arrayList);
 
-        OkHttpClientManager.getInstance().postJson(Constant.URL_CLI, GsonUtils.toJsonStr
+        OkHttpClientManager.getInstance().postJson(Constant.URL_CLI_NEO, GsonUtils.toJsonStr
                 (requestGetAccountState), this);
     }
 

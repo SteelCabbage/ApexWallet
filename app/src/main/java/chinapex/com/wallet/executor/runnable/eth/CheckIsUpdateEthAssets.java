@@ -35,13 +35,14 @@ public class CheckIsUpdateEthAssets implements Runnable {
             return;
         }
 
-        List<AssetBean> assetBeans = apexWalletDbDao.queryAssetsByType(Constant.TABLE_ETH_ASSETS, Constant.ASSET_TYPE_ERC20);
+        // TODO: 2018/8/28 0028  Constant.ASSET_TYPE_ERC20
+        List<AssetBean> assetBeans = apexWalletDbDao.queryAssetsByType(Constant.TABLE_ETH_ASSETS, Constant.ASSET_TYPE_ETH);
         if (null == assetBeans || assetBeans.isEmpty()) {
             mICheckIsUpdateEthAssetsCallback.checkIsUpdateEthAssets(true);
             return;
         }
 
-        CpLog.i(TAG, "no need to update assets!");
+        CpLog.i(TAG, "no need to update eth assets!");
         mICheckIsUpdateEthAssetsCallback.checkIsUpdateEthAssets(false);
     }
 }

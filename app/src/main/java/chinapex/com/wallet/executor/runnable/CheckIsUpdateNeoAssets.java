@@ -41,7 +41,7 @@ public class CheckIsUpdateNeoAssets implements Runnable {
             return;
         }
 
-        CpLog.i(TAG, "no need to update assets!");
+        CpLog.i(TAG, "no need to update neo assets!");
         mICheckIsUpdateNeoAssetsCallback.checkIsUpdateNeoAssets(false);
     }
 }

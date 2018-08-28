@@ -110,34 +110,6 @@ public class AssetsOverviewActivity extends BaseActivity implements AssetsOvervi
     }
 
     @Override
-    public void getGlobalAssetBalance(List<BalanceBean> balanceBeans) {
-        mBalanceBeans.addAll(balanceBeans);
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (mSl_assets_overview_rv.isRefreshing()) {
-                    mSl_assets_overview_rv.setRefreshing(false);
-                }
-                mAssetsOverviewRecyclerViewAdapter.notifyDataSetChanged();
-            }
-        });
-    }
-
-    @Override
-    public void getColorAssetBalance(List<BalanceBean> balanceBeans) {
-        mBalanceBeans.addAll(balanceBeans);
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (mSl_assets_overview_rv.isRefreshing()) {
-                    mSl_assets_overview_rv.setRefreshing(false);
-                }
-                mAssetsOverviewRecyclerViewAdapter.notifyDataSetChanged();
-            }
-        });
-    }
-
-    @Override
     public void onItemClick(int position) {
         BalanceBean balanceBean = mBalanceBeans.get(position);
         if (null == balanceBean) {
@@ -380,10 +352,18 @@ public class AssetsOverviewActivity extends BaseActivity implements AssetsOvervi
 
     @Override
     public void getAssetBalance(final List<BalanceBean> balanceBeans) {
+        CpLog.i(TAG, "getAssetBalance()");
         if (null == balanceBeans || balanceBeans.isEmpty()) {
             CpLog.e(TAG, "balanceBeans is null or emtpy!");
             return;
         }
+
+        for (BalanceBean balanceBean : balanceBeans) {
+            CpLog.i(TAG, "balanceBean type:" + balanceBean.getWalletType());
+            CpLog.i(TAG, "balanceBean id:" + balanceBean.getAssetsID());
+            CpLog.i(TAG, "balanceBean value:" + balanceBean.getAssetsValue());
+        }
+
 
         mBalanceBeans.clear();
         mBalanceBeans.addAll(balanceBeans);

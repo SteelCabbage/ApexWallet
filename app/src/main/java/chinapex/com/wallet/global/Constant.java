@@ -20,11 +20,15 @@ public class Constant {
     public static final int NET_SUCCESS = 1;
     public static final int NET_BODY_NULL = 0;
 
-    // neo正式网
-    public static final String HOSTNAME_VERIFIER = "tracker.chinapex.com.cn";
-    public static final String URL_CLI = "https://tracker.chinapex.com.cn/neo-cli/";
+    // neo node
+    public static final String HOSTNAME_VERIFIER_NEO = "tracker.chinapex.com.cn";
+    public static final String URL_CLI_NEO = "https://tracker.chinapex.com.cn/neo-cli/";
     public static final String URL_UTXOS = "https://tracker.chinapex.com.cn/tool/utxos/";
     public static final String URL_ASSETS = "https://tracker.chinapex.com.cn/tool/assets";
+
+    // eth node
+    public static final String HOSTNAME_VERIFIER_ETH = "42.159.95.191";
+    public static final String URL_CLI_ETH = "http://42.159.95.191:8545";
 
     // ApexGlobalTask
     public static final long ASSETS_POLLING_TIME = 10 * 1000;

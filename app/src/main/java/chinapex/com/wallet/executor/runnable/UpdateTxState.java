@@ -49,7 +49,7 @@ public class UpdateTxState implements Runnable, INetCallback {
         requestGetRawTransaction.setParams(params);
         requestGetRawTransaction.setId(1);
 
-        OkHttpClientManager.getInstance().postJson(Constant.URL_CLI, GsonUtils.toJsonStr(requestGetRawTransaction), this);
+        OkHttpClientManager.getInstance().postJson(Constant.URL_CLI_NEO, GsonUtils.toJsonStr(requestGetRawTransaction), this);
     }
 
     @Override
