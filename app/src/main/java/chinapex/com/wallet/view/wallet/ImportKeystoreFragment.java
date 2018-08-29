@@ -355,27 +355,22 @@ public class ImportKeystoreFragment extends BaseFragment implements View.OnClick
         picker.setDividerRatio(WheelView.DividerConfig.FILL);
         picker.setHeight(DensityUtil.dip2px(ApexWalletApplication.getInstance(), 200));
         picker.setTopHeight(40);
-        picker.setDividerColor(ApexWalletApplication.getInstance().getResources().getColor(R
-                .color.c_DDDDDD));
-        picker.setTopLineColor(ApexWalletApplication.getInstance().getResources().getColor(R
-                .color.c_DDDDDD));
-        picker.setTextColor(Color.BLACK, ApexWalletApplication.getInstance().getResources()
-                .getColor(R.color.c_999999));
+        picker.setDividerColor(ApexWalletApplication.getInstance().getResources().getColor(R.color.c_DDDDDD));
+        picker.setTopLineColor(ApexWalletApplication.getInstance().getResources().getColor(R.color.c_DDDDDD));
+        picker.setTextColor(Color.BLACK, ApexWalletApplication.getInstance().getResources().getColor(R.color.c_999999));
         picker.setSelectedIndex(1);
         picker.setTextSize(16);
 
         // set cancel
         picker.setCancelText(ApexWalletApplication.getInstance().getResources().getString(R
                 .string.cancel));
-        picker.setCancelTextColor(ApexWalletApplication.getInstance().getResources().getColor(R
-                .color.c_1253BF));
+        picker.setCancelTextColor(ApexWalletApplication.getInstance().getResources().getColor(R.color.c_1253BF));
         picker.setCancelTextSize(14);
 
         // set confirm
         picker.setSubmitText(ApexWalletApplication.getInstance().getResources().getString(R
                 .string.confirm));
-        picker.setSubmitTextColor(ApexWalletApplication.getInstance().getResources().getColor(R
-                .color.c_1253BF));
+        picker.setSubmitTextColor(ApexWalletApplication.getInstance().getResources().getColor(R.color.c_1253BF));
         picker.setSubmitTextSize(14);
 
         picker.setOnOptionPickListener(new OptionPicker.OnOptionPickListener() {
