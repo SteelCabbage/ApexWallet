@@ -1,26 +1,19 @@
 package chinapex.com.wallet.adapter;
 
-import android.content.res.Resources;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
-import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import java.io.IOException;
-import java.net.URL;
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.ResourceBundle;
 
 import chinapex.com.wallet.R;
 import chinapex.com.wallet.bean.ExcitationBean;
@@ -107,21 +100,7 @@ public class ExcitationAdapter extends RecyclerView.Adapter<ExcitationAdapter.Ex
         if (TextUtils.isEmpty(bean.getNewEventPic())) {
             holder.newEventPic.setVisibility(View.GONE);
         } else {
-            Drawable drawable = null;
-            try {
-                drawable = Drawable.createFromStream(
-                        new URL(bean.getNewEventPic()).openStream(), "new_event_pic.png");
-            } catch (IOException e) {
-                CpLog.d(TAG, e.getMessage());
-            }
-            if (drawable == null) {
-                CpLog.d(TAG, "null drawable");
-            } else {
-                CpLog.d(TAG, "not null drawable");
-            }
-
-            holder.newEventPic.setImageDrawable(ResourcesCompat.getDrawable(ApexWalletApplication.getInstance().getResources(), R.mipmap.new_event_pic, null));
-
+            Glide.with(ApexWalletApplication.getInstance()).load(bean.getNewEventPic()).into(holder.newEventPic);
         }
 
         if (!TextUtils.isEmpty(bean.getNewEventText())) {
@@ -129,7 +108,7 @@ public class ExcitationAdapter extends RecyclerView.Adapter<ExcitationAdapter.Ex
         }
 
         int newEventStatus = bean.getNewEventStatus();
-        if (newEventStatus == 0) {
+        if (newEventStatus == -1) {
             holder.newEventStatus.setText(ApexWalletApplication.getInstance().getResources().getText(R.string.excitation_about_to_begin));
             holder.newEventStatus.setBackground(ApexWalletApplication.getInstance().getResources().getDrawable(new_event_status_end));
         } else if (newEventStatus == 1) {

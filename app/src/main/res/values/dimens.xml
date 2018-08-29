@@ -125,6 +125,8 @@
     <dimen name="d_63dp">63dp</dimen>
     <dimen name="d_77dp">77dp</dimen>
     <dimen name="d_85dp">85dp</dimen>
+    <dimen name="d_116dp">116dp</dimen>
+    <dimen name="d_189dp">189dp</dimen>
 
     <dimen name="d_9sp">9sp</dimen>
     <dimen name="d_10sp">10sp</dimen>

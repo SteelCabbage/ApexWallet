@@ -20,13 +20,16 @@ import chinapex.com.wallet.adapter.SpacesItemDecorationBottom;
 import chinapex.com.wallet.base.BaseFragment;
 import chinapex.com.wallet.bean.ExcitationBean;
 import chinapex.com.wallet.global.ApexWalletApplication;
+import chinapex.com.wallet.global.Constant;
+import chinapex.com.wallet.utils.CpLog;
 import chinapex.com.wallet.utils.DensityUtil;
+import chinapex.com.wallet.view.excitation.detail.ExcitationDetailActivity;
 
 /**
  * Created by SteelCabbage on 2018/5/21 0021.
  */
 
-public class ExcitationFragment extends BaseFragment implements ExcitationAdapter.OnItemClickListener, SwipeRefreshLayout.OnRefreshListener, View.OnScrollChangeListener {
+public class ExcitationFragment extends BaseFragment implements ExcitationAdapter.OnItemClickListener, SwipeRefreshLayout.OnRefreshListener, View.OnScrollChangeListener, IGetExcitationView {
 
     private static final String TAG = ExcitationFragment.class.getSimpleName();
 
@@ -35,6 +38,8 @@ public class ExcitationFragment extends BaseFragment implements ExcitationAdapte
     private RelativeLayout mExcitationApexHeader;
     private RelativeLayout mExcitationHeader;
     private SwipeRefreshLayout mExcitationRefresh;
+    private IGetExcitationPresenter mIGetExcitationPresenter;
+    private ExcitationAdapter mAdapter;
 
 
     @Nullable
@@ -49,8 +54,8 @@ public class ExcitationFragment extends BaseFragment implements ExcitationAdapte
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        initData();
         initView(view);
+        initData();
     }
 
     private void initView(View view) {
@@ -60,11 +65,12 @@ public class ExcitationFragment extends BaseFragment implements ExcitationAdapte
         mExcitationRefresh = (SwipeRefreshLayout) view.findViewById(R.id.srl_event_refresh);
 
         mExcitationEvnet.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-        ExcitationAdapter adapter = new ExcitationAdapter(mList);
+        mList = new ArrayList<>();
+        mAdapter = new ExcitationAdapter(mList);
         View header = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_excitation_recyclerview_item_header, mExcitationEvnet, false);
-        adapter.addHeaderView(header);
-        adapter.setOnItemClickListener(this);
-        mExcitationEvnet.setAdapter(adapter);
+        mAdapter.addHeaderView(header);
+        mAdapter.setOnItemClickListener(this);
+        mExcitationEvnet.setAdapter(mAdapter);
         mExcitationEvnet.setOnScrollChangeListener(this);
 
         int space = DensityUtil.dip2px(getActivity(), 15);
@@ -85,30 +91,26 @@ public class ExcitationFragment extends BaseFragment implements ExcitationAdapte
     }
 
     private void initData() {
-        mList = new ArrayList<>();
-        //For Test start
-
-        for (int i = 0; i < 3; i++) {
-            ExcitationBean bean = new ExcitationBean();
-            bean.setEventNew(true);
-            bean.setNewEventStatus(1);
-            bean.setNewEventPic("E:\\Project\\ApexWallet\\app\\src\\main\\res\\mipmap-hdpi");
-            bean.setNewEventText("UN红日UC隔日个人才是与停车让分析调查VB怒不予通过课子级用户提供如此发型非常GV红包君就不会v");
-            mList.add(bean);
-        }
-
-        //For Test End
+        mIGetExcitationPresenter = new GetExcitationPresenter(this);
+        mIGetExcitationPresenter.getExcitation();
     }
 
     @Override
     public void onItemClick(int position) {
+        ExcitationBean excitationBean = mList.get(position);
+        if (null == excitationBean) {
+            CpLog.e(TAG, "excitationBean is null!");
+            return;
+        }
+
         Intent intent = new Intent(getActivity(), ExcitationDetailActivity.class);
+        intent.putExtra(Constant.EXCITATION_GAS_LIMIT, excitationBean.getGasLimit());
         startActivity(intent);
     }
 
     @Override
     public void onRefresh() {
-         mExcitationRefresh.setRefreshing(false);
+        mExcitationRefresh.setRefreshing(false);
     }
 
     @Override
@@ -124,5 +126,25 @@ public class ExcitationFragment extends BaseFragment implements ExcitationAdapte
                 mExcitationApexHeader.setVisibility(View.VISIBLE);
             }
         }
+    }
+
+
+    @Override
+    public void getExcitation(List<ExcitationBean> excitationBeans) {
+        if (null == excitationBeans) {
+            CpLog.i(TAG, "excitationBeans is null");
+        } else {
+            CpLog.i(TAG, "excitationBeans : " + excitationBeans.toString());
+
+        }
+        mList.clear();
+        mList.addAll(excitationBeans);
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mAdapter.notifyDataSetChanged();
+            }
+        });
+
     }
 }

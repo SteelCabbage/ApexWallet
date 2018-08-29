@@ -1,13 +1,11 @@
 package chinapex.com.wallet.bean;
 
-import android.graphics.Bitmap;
-import android.widget.ImageView;
-
 public class ExcitationBean {
     private boolean isEventNew;
     private String newEventPic;
     private String newEventText;
     private int newEventStatus;
+    private int gasLimit;
 
     public boolean isEventNew() {
         return isEventNew;
@@ -39,5 +37,23 @@ public class ExcitationBean {
 
     public void setNewEventStatus(int newEventStatus) {
         this.newEventStatus = newEventStatus;
+    }
+
+    public int getGasLimit() {
+        return gasLimit;
+    }
+
+    public void setGasLimit(int gasLimit) {
+        this.gasLimit = gasLimit;
+    }
+
+    @Override
+    public String toString() {
+        return "ExcitationBean{" +
+                "isEventNew=" + isEventNew +
+                ", newEventPic='" + newEventPic + '\'' +
+                ", newEventText='" + newEventText + '\'' +
+                ", newEventStatus=" + newEventStatus +
+                '}';
     }
 }

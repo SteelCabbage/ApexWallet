@@ -148,5 +148,13 @@
     <string name="excitation_detail_submit">Submit</string>
     <string name="excitation_detail_condition_tip">Please be sure you have local NEO wallet, and the total amount of CPX should be equal or more than 100.</string>
     <string name="excitation_detail_copyright">The final interpretation of this activity belongs to APEX TECHNOLOGIES</string>
+    <string name="excitation_detail_save_successfully">Save successfully</string>
+    <string name="excitation_save_ok">Submitted successfully</string>
+    <string name="excitation_save_repeat">This address has already participated please do not submit again</string>
+    <string name="excitation_format_err">Please enter the correct wallet address. </string>
+    <string name="excitation_save_fail">Server error, storage failed</string>
+    <string name="server_request_failed">Server request failed</string>
+    <string name="excitation_detail_sum_dialog_note">Please be sure the amount of CPX in the local wallets more than 100(≥100)</string>
+    <string name="excitation_detail_sum_dialog_confirm">Confirm</string>
 
 </resources>

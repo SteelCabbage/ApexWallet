@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/c_F0F0F0"
-    tools:context=".view.excitation.ExcitationDetailActivity">
+    tools:context=".view.excitation.detail.ExcitationDetailActivity">
 
     <RelativeLayout
         android:id="@+id/excitation_detail_header"
