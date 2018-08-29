@@ -133,6 +133,7 @@ public class Constant {
 
     // ETH
     public static final String ASSETS_ETH = "ether666";
+    public static final String ASSETS_ERC20_NMB = "0xc7773e07adb2642a1eb03c5e340430b6cedc2aa9";
 
 
     // tmp 后台更新后删除
