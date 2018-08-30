@@ -31,14 +31,11 @@ public class GetDetailCode implements Runnable, INetCallback {
             return;
         }
 
-        CpLog.i(TAG, "mRequestSubmitExcitation:" + GsonUtils.toJsonStr(mRequestSubmitExcitation));
         OkHttpClientManager.getInstance().postJson(mAddress, GsonUtils.toJsonStr(mRequestSubmitExcitation), this);
     }
 
     @Override
     public void onSuccess(int statusCode, String msg, String result) {
-        CpLog.i(TAG, "result:" + result);
-
         if (TextUtils.isEmpty(result)) {
             CpLog.i(TAG, "result == null ");
             mIGetDetailCodeCallback.getDetailCode(null);
