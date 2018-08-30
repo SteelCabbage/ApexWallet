@@ -111,12 +111,15 @@ public class ExcitationAdapter extends RecyclerView.Adapter<ExcitationAdapter.Ex
         if (newEventStatus == -1) {
             holder.newEventStatus.setText(ApexWalletApplication.getInstance().getResources().getText(R.string.excitation_about_to_begin));
             holder.newEventStatus.setBackground(ApexWalletApplication.getInstance().getResources().getDrawable(new_event_status_end));
+            holder.newEventStatus.setTextColor(ApexWalletApplication.getInstance().getResources().getColor(R.color.c_ff666666));
         } else if (newEventStatus == 1) {
             holder.newEventStatus.setText(ApexWalletApplication.getInstance().getResources().getText(R.string.excitation_in_progress));
             holder.newEventStatus.setBackground(ApexWalletApplication.getInstance().getResources().getDrawable(new_event_status));
+            holder.newEventStatus.setTextColor(ApexWalletApplication.getInstance().getResources().getColor(R.color.c_FFFFFF));
         } else {
             holder.newEventStatus.setText(ApexWalletApplication.getInstance().getResources().getText(R.string.excitation_closed));
             holder.newEventStatus.setBackground(ApexWalletApplication.getInstance().getResources().getDrawable(new_event_status_end));
+            holder.newEventStatus.setTextColor(ApexWalletApplication.getInstance().getResources().getColor(R.color.c_ff666666));
         }
         if (null != mOnItemClickListener) {
 
