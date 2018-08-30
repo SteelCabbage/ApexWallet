@@ -55,6 +55,7 @@ public class ExcitationDetailActivity extends BaseActivity implements View.OnCli
         }
 
         mGasLimit = intent.getIntExtra(Constant.EXCITATION_GAS_LIMIT, 0);
+        mExcitationId = intent.getIntExtra(Constant.EXCITATION_ACTIVITY_ID, 0);
         cpxCondition();
         mGetAddressResultPresenter = new GetDetailCodePresenter(this);
     }

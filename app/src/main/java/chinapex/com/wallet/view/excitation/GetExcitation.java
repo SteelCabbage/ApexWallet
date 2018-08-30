@@ -74,6 +74,7 @@ public class GetExcitation implements Runnable, INetCallback {
             }
             excitationBean.setNewEventStatus(data.getStatus());
             excitationBean.setGasLimit(data.getGas_limit());
+            excitationBean.setActivityId(data.getId());
 
             excitationBeans.add(excitationBean);
         }

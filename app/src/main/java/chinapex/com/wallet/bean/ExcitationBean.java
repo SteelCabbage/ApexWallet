@@ -6,6 +6,7 @@ public class ExcitationBean {
     private String newEventText;
     private int newEventStatus;
     private int gasLimit;
+    private int activityId;
 
     public boolean isEventNew() {
         return isEventNew;
@@ -47,13 +48,12 @@ public class ExcitationBean {
         this.gasLimit = gasLimit;
     }
 
-    @Override
-    public String toString() {
-        return "ExcitationBean{" +
-                "isEventNew=" + isEventNew +
-                ", newEventPic='" + newEventPic + '\'' +
-                ", newEventText='" + newEventText + '\'' +
-                ", newEventStatus=" + newEventStatus +
-                '}';
+    public int getActivityId() {
+        return activityId;
     }
+
+    public void setActivityId(int activityId) {
+        this.activityId = activityId;
+    }
+
 }

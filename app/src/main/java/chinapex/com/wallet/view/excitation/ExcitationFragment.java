@@ -99,6 +99,7 @@ public class ExcitationFragment extends BaseFragment implements ExcitationAdapte
 
         Intent intent = new Intent(getActivity(), ExcitationDetailActivity.class);
         intent.putExtra(Constant.EXCITATION_GAS_LIMIT, excitationBean.getGasLimit());
+        intent.putExtra(Constant.EXCITATION_ACTIVITY_ID, excitationBean.getActivityId());
         startActivity(intent);
     }
 
