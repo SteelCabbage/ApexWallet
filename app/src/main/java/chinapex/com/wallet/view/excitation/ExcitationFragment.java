@@ -29,7 +29,9 @@ import chinapex.com.wallet.view.excitation.detail.ExcitationDetailActivity;
  * Created by SteelCabbage on 2018/5/21 0021.
  */
 
-public class ExcitationFragment extends BaseFragment implements ExcitationAdapter.OnItemClickListener, SwipeRefreshLayout.OnRefreshListener, View.OnScrollChangeListener, IGetExcitationView {
+public class ExcitationFragment extends BaseFragment implements ExcitationAdapter
+        .OnItemClickListener, SwipeRefreshLayout.OnRefreshListener, /*View.OnScrollChangeListener,*/
+        IGetExcitationView {
 
     private static final String TAG = ExcitationFragment.class.getSimpleName();
 
@@ -64,30 +66,22 @@ public class ExcitationFragment extends BaseFragment implements ExcitationAdapte
         mExcitationEvnet = (RecyclerView) view.findViewById(R.id.new_event);
         mExcitationRefresh = (SwipeRefreshLayout) view.findViewById(R.id.srl_event_refresh);
 
-        mExcitationEvnet.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+        mExcitationEvnet.setLayoutManager(new LinearLayoutManager(getActivity(),
+                LinearLayoutManager.VERTICAL, false));
         mList = new ArrayList<>();
         mAdapter = new ExcitationAdapter(mList);
-        View header = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_excitation_recyclerview_item_header, mExcitationEvnet, false);
+        View header = LayoutInflater.from(getActivity()).inflate(R.layout
+                .fragment_excitation_recyclerview_item_header, mExcitationEvnet, false);
         mAdapter.addHeaderView(header);
         mAdapter.setOnItemClickListener(this);
         mExcitationEvnet.setAdapter(mAdapter);
-        mExcitationEvnet.setOnScrollChangeListener(this);
+//        mExcitationEvnet.setOnScrollChangeListener(this);
 
         int space = DensityUtil.dip2px(getActivity(), 15);
         mExcitationEvnet.addItemDecoration(new SpacesItemDecorationBottom(space));
-        mExcitationRefresh.setColorSchemeColors(ApexWalletApplication.getInstance().getResources().getColor(R.color.c_1253BF));
+        mExcitationRefresh.setColorSchemeColors(ApexWalletApplication.getInstance().getResources
+                ().getColor(R.color.c_1253BF));
         mExcitationRefresh.setOnRefreshListener(this);
-       /* mExcitationRefresh.setOnChildScrollUpCallback(new SwipeRefreshLayout.OnChildScrollUpCallback() {
-            @Override
-            public boolean canChildScrollUp(SwipeRefreshLayout parent, @Nullable View child) {
-                if (mExcitationEvnet == null) {
-                    return false;
-                }
-                LinearLayoutManager linearLayoutManager = (LinearLayoutManager) mExcitationEvnet.getLayoutManager();
-                return linearLayoutManager.findFirstCompletelyVisibleItemPosition() != 0;
-            }
-        });*/
-
     }
 
     private void initData() {
@@ -110,33 +104,41 @@ public class ExcitationFragment extends BaseFragment implements ExcitationAdapte
 
     @Override
     public void onRefresh() {
-        mExcitationRefresh.setRefreshing(false);
+        mIGetExcitationPresenter.getExcitation();
     }
 
-    @Override
-    public void onScrollChange(View view, int i, int i1, int i2, int i3) {
-        if (null == view) return;
-        RecyclerView.LayoutManager layoutManager = mExcitationEvnet.getLayoutManager();
-        if (layoutManager instanceof LinearLayoutManager) {
-            LinearLayoutManager linearManager = (LinearLayoutManager) layoutManager;
-            int firstItemPosition = linearManager.findFirstVisibleItemPosition();
-            if (firstItemPosition != 0) {
-                mExcitationApexHeader.setVisibility(View.INVISIBLE);
-            } else {
-                mExcitationApexHeader.setVisibility(View.VISIBLE);
-            }
-        }
-    }
+//    @Override
+//    public void onScrollChange(View view, int i, int i1, int i2, int i3) {
+//        if (null == view) return;
+//        RecyclerView.LayoutManager layoutManager = mExcitationEvnet.getLayoutManager();
+//        if (layoutManager instanceof LinearLayoutManager) {
+//            LinearLayoutManager linearManager = (LinearLayoutManager) layoutManager;
+//            int firstItemPosition = linearManager.findFirstVisibleItemPosition();
+//            if (firstItemPosition != 0) {
+//                mExcitationApexHeader.setVisibility(View.INVISIBLE);
+//            } else {
+//                mExcitationApexHeader.setVisibility(View.VISIBLE);
+//            }
+//        }
+//    }
 
 
     @Override
     public void getExcitation(List<ExcitationBean> excitationBeans) {
-        if (null == excitationBeans) {
-            CpLog.i(TAG, "excitationBeans is null");
-        } else {
-            CpLog.i(TAG, "excitationBeans : " + excitationBeans.toString());
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (mExcitationRefresh.isRefreshing()) {
+                    mExcitationRefresh.setRefreshing(false);
+                }
+            }
+        });
 
+        if (null == excitationBeans) {
+            CpLog.e(TAG, "excitationBeans is null");
+            return;
         }
+
         mList.clear();
         mList.addAll(excitationBeans);
         getActivity().runOnUiThread(new Runnable() {
@@ -145,6 +147,5 @@ public class ExcitationFragment extends BaseFragment implements ExcitationAdapte
                 mAdapter.notifyDataSetChanged();
             }
         });
-
     }
 }

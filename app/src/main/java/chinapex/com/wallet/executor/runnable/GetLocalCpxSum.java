@@ -32,7 +32,8 @@ public class GetLocalCpxSum implements Runnable, IGetNep5BalanceCallback {
             return;
         }
 
-        ApexWalletDbDao apexWalletDbDao = ApexWalletDbDao.getInstance(ApexWalletApplication.getInstance());
+        ApexWalletDbDao apexWalletDbDao = ApexWalletDbDao.getInstance(ApexWalletApplication
+                .getInstance());
         if (null == apexWalletDbDao) {
             CpLog.e(TAG, "apexWalletDbDao is null!");
             return;
@@ -53,7 +54,8 @@ public class GetLocalCpxSum implements Runnable, IGetNep5BalanceCallback {
                 continue;
             }
 
-            TaskController.getInstance().submit(new GetNep5Balance(Constant.ASSETS_CPX, walletBean.getAddress(), this));
+            TaskController.getInstance().submit(new GetNep5Balance(Constant.ASSETS_CPX,
+                    walletBean.getAddress(), this));
         }
     }
 
@@ -68,11 +70,10 @@ public class GetLocalCpxSum implements Runnable, IGetNep5BalanceCallback {
 
         BalanceBean balanceBean = balanceBeans.get(Constant.ASSETS_CPX);
         if (null == balanceBean) {
-            CpLog.e(TAG, "balanceBean is null!");
-            return;
+            CpLog.w(TAG, "balanceBean is null!");
+        } else {
+            cpxSum = cpxSum.add(new BigDecimal(balanceBean.getAssetsValue()));
         }
-
-        cpxSum = cpxSum.add(new BigDecimal(balanceBean.getAssetsValue()));
 
         if (cpxWalletCounter == cpxWalletNum) {
             iGetLocalCpxSumCallback.getLocalCpxSum(cpxSum.toPlainString());

@@ -24,7 +24,8 @@ import chinapex.com.wallet.utils.ToastUtils;
 import chinapex.com.wallet.view.dialog.ExcitationDialog;
 import chinapex.com.wallet.view.excitation.ExcitationFragment;
 
-public class ExcitationDetailActivity extends BaseActivity implements View.OnClickListener, IDetailView, IGetLocalCpxSumCallback {
+public class ExcitationDetailActivity extends BaseActivity implements View.OnClickListener,
+        IDetailView, IGetLocalCpxSumCallback {
 
     private static final String TAG = ExcitationFragment.class.getSimpleName();
 
@@ -112,9 +113,9 @@ public class ExcitationDetailActivity extends BaseActivity implements View.OnCli
                 @Override
                 public void run() {
                     ToastUtils.getInstance().showToast(getString(R.string.server_request_failed));
-                    return;
                 }
             });
+            return;
         }
 
         runOnUiThread(new Runnable() {

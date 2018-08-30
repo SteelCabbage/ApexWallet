@@ -22,9 +22,6 @@ public class GetExcitationModel implements IGetExcitationModel, IGetExcitationCa
 
     @Override
     public void getExcitation(List<ExcitationBean> excitationBeans) {
-        if (null == excitationBeans) {
-            CpLog.i(TAG, "excitationBeans is null");
-        }
         mIGetExcitationModelCallback.getExcitation(excitationBeans);
     }
 }
