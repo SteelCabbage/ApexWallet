@@ -4,6 +4,7 @@ import java.util.List;
 
 import chinapex.com.wallet.bean.AddressResultCode;
 import chinapex.com.wallet.bean.ExcitationBean;
+import chinapex.com.wallet.bean.request.RequestSubmitExcitation;
 import chinapex.com.wallet.view.excitation.GetExcitationModel;
 import chinapex.com.wallet.view.excitation.IGetExcitationModel;
 import chinapex.com.wallet.view.excitation.IGetExcitationModelCallback;
@@ -18,9 +19,9 @@ public class GetDetailCodePresenter implements IGetDetailCodePresenter, IGetResu
     }
 
     @Override
-    public void getDetailCode(List<String> addressList) {
+    public void getDetailCode(RequestSubmitExcitation requestSubmitExcitation) {
         mIDetailCodeModel = new GetDetailCodeModel(this);
-        mIDetailCodeModel.getDetailCode(addressList);
+        mIDetailCodeModel.getDetailCode(requestSubmitExcitation);
     }
 
 

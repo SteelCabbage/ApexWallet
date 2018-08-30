@@ -2,8 +2,6 @@ package chinapex.com.wallet.view.excitation.detail;
 
 import android.text.TextUtils;
 
-import java.util.List;
-
 import chinapex.com.wallet.bean.AddressResultCode;
 import chinapex.com.wallet.bean.request.RequestSubmitExcitation;
 import chinapex.com.wallet.bean.response.ResponseExcitationDetailCode;
@@ -16,32 +14,25 @@ public class GetDetailCode implements Runnable, INetCallback {
 
     private static final String TAG = GetDetailCode.class.getSimpleName();
     private String mAddress;
-    private List<String> mAddressList;
+    private RequestSubmitExcitation mRequestSubmitExcitation;
     private IGetDetailCodeCallback mIGetDetailCodeCallback;
 
-    public GetDetailCode(String address, List<String> addressList, IGetDetailCodeCallback iGetDetailCodeCallback) {
+    public GetDetailCode(String address, RequestSubmitExcitation requestSubmitExcitation, IGetDetailCodeCallback
+            iGetDetailCodeCallback) {
         mAddress = address;
-        mAddressList = addressList;
+        mRequestSubmitExcitation = requestSubmitExcitation;
         mIGetDetailCodeCallback = iGetDetailCodeCallback;
     }
 
     @Override
     public void run() {
-        if (TextUtils.isEmpty(mAddress) || null == mIGetDetailCodeCallback) {
-            CpLog.e(TAG, "run() -> mAddress or mIGetExcitationCallback is null！");
+        if (TextUtils.isEmpty(mAddress) || null == mIGetDetailCodeCallback || null == mRequestSubmitExcitation) {
+            CpLog.e(TAG, "run() -> mAddress or mIGetExcitationCallback or mRequestSubmitExcitation is null！");
             return;
         }
 
-        if (null == mAddressList || mAddressList.size() != 2) {
-            CpLog.e(TAG, "mAddressList is null or size is not 2!");
-            return;
-        }
-
-        RequestSubmitExcitation requestSubmitExcitation = new RequestSubmitExcitation();
-        requestSubmitExcitation.setCPX(mAddressList.get(0));
-        requestSubmitExcitation.setETH(mAddressList.get(1));
-
-        OkHttpClientManager.getInstance().postJson(mAddress, GsonUtils.toJsonStr(requestSubmitExcitation), this);
+        CpLog.i(TAG, "mRequestSubmitExcitation:" + GsonUtils.toJsonStr(mRequestSubmitExcitation));
+        OkHttpClientManager.getInstance().postJson(mAddress, GsonUtils.toJsonStr(mRequestSubmitExcitation), this);
     }
 
     @Override
@@ -54,8 +45,8 @@ public class GetDetailCode implements Runnable, INetCallback {
             return;
         }
 
-
-        ResponseExcitationDetailCode responseExcitationDetailCode = GsonUtils.json2Bean(result, ResponseExcitationDetailCode.class);
+        ResponseExcitationDetailCode responseExcitationDetailCode = GsonUtils.json2Bean(result,
+                ResponseExcitationDetailCode.class);
         if (null == responseExcitationDetailCode) {
             CpLog.e(TAG, "responseExcitationDetailCode is null ");
             mIGetDetailCodeCallback.getDetailCode(null);

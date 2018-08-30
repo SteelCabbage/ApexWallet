@@ -3,12 +3,22 @@ package chinapex.com.wallet.bean.request;
 public class RequestSubmitExcitation {
 
     /**
-     * ETH : ADASD
-     * CPX : DFSDFS
+     * CPX : XXX
+     * ETH : XXX
+     * id : 123
      */
 
-    private String ETH;
     private String CPX;
+    private String ETH;
+    private int id;
+
+    public String getCPX() {
+        return CPX;
+    }
+
+    public void setCPX(String CPX) {
+        this.CPX = CPX;
+    }
 
     public String getETH() {
         return ETH;
@@ -18,11 +28,11 @@ public class RequestSubmitExcitation {
         this.ETH = ETH;
     }
 
-    public String getCPX() {
-        return CPX;
+    public int getId() {
+        return id;
     }
 
-    public void setCPX(String CPX) {
-        this.CPX = CPX;
+    public void setId(int id) {
+        this.id = id;
     }
 }

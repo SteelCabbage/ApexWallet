@@ -1,7 +1,7 @@
 package chinapex.com.wallet.view.excitation.detail;
 
-import java.util.List;
+import chinapex.com.wallet.bean.request.RequestSubmitExcitation;
 
 public interface IGetDetailCodePresenter {
-    void getDetailCode(List<String> addressList);
+    void getDetailCode(RequestSubmitExcitation requestSubmitExcitation);
 }

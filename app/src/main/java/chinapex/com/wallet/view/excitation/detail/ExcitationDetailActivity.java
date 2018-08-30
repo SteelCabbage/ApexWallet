@@ -15,6 +15,7 @@ import java.util.List;
 import chinapex.com.wallet.R;
 import chinapex.com.wallet.base.BaseActivity;
 import chinapex.com.wallet.bean.AddressResultCode;
+import chinapex.com.wallet.bean.request.RequestSubmitExcitation;
 import chinapex.com.wallet.executor.TaskController;
 import chinapex.com.wallet.executor.callback.IGetLocalCpxSumCallback;
 import chinapex.com.wallet.executor.runnable.GetLocalCpxSum;
@@ -35,6 +36,7 @@ public class ExcitationDetailActivity extends BaseActivity implements View.OnCli
     private Button mExcitationCommit;
     private GetDetailCodePresenter mGetAddressResultPresenter;
     private int mGasLimit;
+    private int mExcitationId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +77,6 @@ public class ExcitationDetailActivity extends BaseActivity implements View.OnCli
             CpLog.i(TAG, "less than");
             showExcitationDialog();
         }
-
     }
 
     private void showExcitationDialog() {
@@ -94,16 +95,26 @@ public class ExcitationDetailActivity extends BaseActivity implements View.OnCli
 
     @Override
     public void onClick(View v) {
-        String cpxAddress = String.valueOf(mCpxAddressInput.getText());
-        String ethAddress = String.valueOf(mEthAddressInput.getText());
-
-        List<String> addressList = new ArrayList<>();
-        addressList.add(cpxAddress);
-        addressList.add(ethAddress);
-
-        mGetAddressResultPresenter.getDetailCode(addressList);
+        switch (v.getId()) {
+            case R.id.btn_excitation_submit:
+                submitExcitation();
+                break;
+            default:
+                break;
+        }
     }
 
+    private void submitExcitation() {
+        String cpxAddress = mCpxAddressInput.getText().toString().trim();
+        String ethAddress = mEthAddressInput.getText().toString().trim();
+
+        RequestSubmitExcitation requestSubmitExcitation = new RequestSubmitExcitation();
+        requestSubmitExcitation.setCPX(cpxAddress);
+        requestSubmitExcitation.setETH(ethAddress);
+        requestSubmitExcitation.setId(mExcitationId);
+
+        mGetAddressResultPresenter.getDetailCode(requestSubmitExcitation);
+    }
 
     @Override
     public void getDetailCode(final AddressResultCode addressResultCode) {

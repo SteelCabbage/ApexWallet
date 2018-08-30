@@ -1,11 +1,9 @@
 package chinapex.com.wallet.view.excitation.detail;
 
-import java.util.List;
-
 import chinapex.com.wallet.bean.AddressResultCode;
+import chinapex.com.wallet.bean.request.RequestSubmitExcitation;
 import chinapex.com.wallet.executor.TaskController;
 import chinapex.com.wallet.global.Constant;
-import chinapex.com.wallet.utils.CpLog;
 
 public class GetDetailCodeModel implements IDetailCodeModel, IGetDetailCodeCallback {
     private static final String TAG = GetDetailCodeModel.class.getSimpleName();
@@ -16,8 +14,9 @@ public class GetDetailCodeModel implements IDetailCodeModel, IGetDetailCodeCallb
     }
 
     @Override
-     public void getDetailCode(List<String> addressList) {
-        TaskController.getInstance().submit(new GetDetailCode(Constant.EXCITATION_DETAIL_UPLOAD_ADDRESS, addressList, this));
+    public void getDetailCode(RequestSubmitExcitation requestSubmitExcitation) {
+        TaskController.getInstance().submit(new GetDetailCode(Constant.EXCITATION_DETAIL_UPLOAD_ADDRESS,
+                requestSubmitExcitation, this));
     }
 
 
