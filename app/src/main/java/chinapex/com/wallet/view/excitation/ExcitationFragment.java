@@ -98,11 +98,11 @@ public class ExcitationFragment extends BaseFragment implements ExcitationAdapte
             return;
         }
 
-        if(excitationBean.getNewEventStatus() == Constant.EXCITATION_EXCITATION_AOUBT_TO_BEGIN){
+        if (excitationBean.getNewEventStatus() == Constant.EXCITATION_EXCITATION_AOUBT_TO_BEGIN) {
             ToastUtils.getInstance().showToast(getActivity().getResources().getString(R.string.excitation_about_to_begin_toast));
             return;
         }
-        if(excitationBean.getNewEventStatus() == Constant.EXCITATION_EXCITATION_CLOSED){
+        if (excitationBean.getNewEventStatus() == Constant.EXCITATION_EXCITATION_CLOSED) {
             ToastUtils.getInstance().showToast(getActivity().getResources().getString(R.string.excitation_closed));
             return;
         }
@@ -153,20 +153,6 @@ public class ExcitationFragment extends BaseFragment implements ExcitationAdapte
 
         mList.clear();
         mList.addAll(excitationBeans);
-        ExcitationBean excitationBean = new ExcitationBean();
-        excitationBean.setNewEventStatus(-1);
-        excitationBean.setGasLimit(100);
-        excitationBean.setNewEventPic(null);
-        excitationBean.setNewEventText("hgfcdxcfvgbhjhgvcdxsdxcgvbhjnbhgfv");
-        mList.add(excitationBean);
-
-        ExcitationBean excitationBean1 = new ExcitationBean();
-        excitationBean1.setNewEventStatus(2);
-        excitationBean1.setGasLimit(100);
-        excitationBean1.setNewEventPic(null);
-        excitationBean1.setNewEventText("hgfcdxcfvgbhjhgvcdxsdxcgvbhjnbhgfv");
-        mList.add(excitationBean1);
-
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
