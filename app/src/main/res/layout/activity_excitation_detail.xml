@@ -154,6 +154,7 @@
             android:layout_marginTop="@dimen/d_30dp"
             android:layout_toEndOf="@+id/excitation_note_pic"
             android:textColor="@color/c_666666"
+            android:text="@string/excitation_detail_sum_dialog_note"
             android:textSize="@dimen/d_12sp" />
     </RelativeLayout>
 
