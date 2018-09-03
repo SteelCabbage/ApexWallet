@@ -1,8 +1,10 @@
 package chinapex.com.wallet.view.excitation;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -30,8 +32,9 @@ import chinapex.com.wallet.view.excitation.detail.ExcitationDetailActivity;
  * Created by SteelCabbage on 2018/5/21 0021.
  */
 
+@RequiresApi(api = Build.VERSION_CODES.M)
 public class ExcitationFragment extends BaseFragment implements ExcitationAdapter
-        .OnItemClickListener, SwipeRefreshLayout.OnRefreshListener, /*View.OnScrollChangeListener,*/
+        .OnItemClickListener, SwipeRefreshLayout.OnRefreshListener, View.OnScrollChangeListener,
         IGetExcitationView {
 
     private static final String TAG = ExcitationFragment.class.getSimpleName();
@@ -76,7 +79,7 @@ public class ExcitationFragment extends BaseFragment implements ExcitationAdapte
         mAdapter.addHeaderView(header);
         mAdapter.setOnItemClickListener(this);
         mExcitationEvnet.setAdapter(mAdapter);
-//        mExcitationEvnet.setOnScrollChangeListener(this);
+        mExcitationEvnet.setOnScrollChangeListener(this);
 
         int space = DensityUtil.dip2px(getActivity(), 15);
         mExcitationEvnet.addItemDecoration(new SpacesItemDecorationBottom(space));
@@ -119,20 +122,20 @@ public class ExcitationFragment extends BaseFragment implements ExcitationAdapte
         mIGetExcitationPresenter.getExcitation();
     }
 
-//    @Override
-//    public void onScrollChange(View view, int i, int i1, int i2, int i3) {
-//        if (null == view) return;
-//        RecyclerView.LayoutManager layoutManager = mExcitationEvnet.getLayoutManager();
-//        if (layoutManager instanceof LinearLayoutManager) {
-//            LinearLayoutManager linearManager = (LinearLayoutManager) layoutManager;
-//            int firstItemPosition = linearManager.findFirstVisibleItemPosition();
-//            if (firstItemPosition != 0) {
-//                mExcitationApexHeader.setVisibility(View.INVISIBLE);
-//            } else {
-//                mExcitationApexHeader.setVisibility(View.VISIBLE);
-//            }
-//        }
-//    }
+    @Override
+    public void onScrollChange(View view, int i, int i1, int i2, int i3) {
+        if (null == view) return;
+        RecyclerView.LayoutManager layoutManager = mExcitationEvnet.getLayoutManager();
+        if (layoutManager instanceof LinearLayoutManager) {
+            LinearLayoutManager linearManager = (LinearLayoutManager) layoutManager;
+            int firstItemPosition = linearManager.findFirstVisibleItemPosition();
+            if (firstItemPosition != 0) {
+                mExcitationApexHeader.setVisibility(View.INVISIBLE);
+            } else {
+                mExcitationApexHeader.setVisibility(View.VISIBLE);
+            }
+        }
+    }
 
 
     @Override
