@@ -23,6 +23,7 @@ import chinapex.com.wallet.global.ApexWalletApplication;
 import chinapex.com.wallet.global.Constant;
 import chinapex.com.wallet.utils.CpLog;
 import chinapex.com.wallet.utils.DensityUtil;
+import chinapex.com.wallet.utils.ToastUtils;
 import chinapex.com.wallet.view.excitation.detail.ExcitationDetailActivity;
 
 /**
@@ -97,6 +98,16 @@ public class ExcitationFragment extends BaseFragment implements ExcitationAdapte
             return;
         }
 
+        if(excitationBean.getNewEventStatus() == Constant.EXCITATION_EXCITATION_AOUBT_TO_BEGIN){
+            ToastUtils.getInstance().showToast(getActivity().getResources().getString(R.string.excitation_about_to_begin_toast));
+            return;
+        }
+        if(excitationBean.getNewEventStatus() == Constant.EXCITATION_EXCITATION_CLOSED){
+            ToastUtils.getInstance().showToast(getActivity().getResources().getString(R.string.excitation_closed));
+            return;
+        }
+
+
         Intent intent = new Intent(getActivity(), ExcitationDetailActivity.class);
         intent.putExtra(Constant.EXCITATION_GAS_LIMIT, excitationBean.getGasLimit());
         intent.putExtra(Constant.EXCITATION_ACTIVITY_ID, excitationBean.getActivityId());
@@ -142,6 +153,20 @@ public class ExcitationFragment extends BaseFragment implements ExcitationAdapte
 
         mList.clear();
         mList.addAll(excitationBeans);
+        ExcitationBean excitationBean = new ExcitationBean();
+        excitationBean.setNewEventStatus(-1);
+        excitationBean.setGasLimit(100);
+        excitationBean.setNewEventPic(null);
+        excitationBean.setNewEventText("hgfcdxcfvgbhjhgvcdxsdxcgvbhjnbhgfv");
+        mList.add(excitationBean);
+
+        ExcitationBean excitationBean1 = new ExcitationBean();
+        excitationBean1.setNewEventStatus(2);
+        excitationBean1.setGasLimit(100);
+        excitationBean1.setNewEventPic(null);
+        excitationBean1.setNewEventText("hgfcdxcfvgbhjhgvcdxsdxcgvbhjnbhgfv");
+        mList.add(excitationBean1);
+
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
