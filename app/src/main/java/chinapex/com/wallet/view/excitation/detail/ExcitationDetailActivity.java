@@ -183,25 +183,24 @@ public class ExcitationDetailActivity extends BaseActivity implements View.OnCli
             @Override
             public void run() {
                 int cpxCode = addressResultCode.getCpxCode();
-                int ethCode = addressResultCode.getEthCode();
 
-                if (cpxCode == 5200 || ethCode == 5200) {
+                if (cpxCode == 5200) {
                     ToastUtils.getInstance().showToast(getString(R.string.excitation_save_ok));
                     finish();
                     return;
                 }
 
-                if (cpxCode == 5000 || ethCode == 5000) {
+                if (cpxCode == 5000) {
                     ToastUtils.getInstance().showToast(getString(R.string.excitation_save_repeat));
                     return;
                 }
 
-                if (cpxCode == 5003 || ethCode == 5003) {
+                if (cpxCode == 5003) {
                     ToastUtils.getInstance().showToast(getString(R.string.excitation_format_err));
                     return;
                 }
 
-                if (cpxCode == 5001 || ethCode == 5001) {
+                if (cpxCode == 5001) {
                     ToastUtils.getInstance().showToast(getString(R.string.excitation_save_fail));
                 }
             }
