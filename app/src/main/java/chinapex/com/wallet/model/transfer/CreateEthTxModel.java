@@ -1,6 +1,6 @@
 package chinapex.com.wallet.model.transfer;
 
-import chinapex.com.wallet.bean.WalletBean;
+import chinapex.com.wallet.bean.tx.EthTxBean;
 import chinapex.com.wallet.bean.tx.ITxBean;
 
 /**
@@ -10,6 +10,7 @@ import chinapex.com.wallet.bean.tx.ITxBean;
 public class CreateEthTxModel implements ICreateTxModel {
     private static final String TAG = CreateEthTxModel.class.getSimpleName();
     private ICreateTxModelCallback mICreateTxModelCallback;
+    private EthTxBean mEthTxBean;
 
     public CreateEthTxModel(ICreateTxModelCallback ICreateTxModelCallback) {
         mICreateTxModelCallback = ICreateTxModelCallback;
