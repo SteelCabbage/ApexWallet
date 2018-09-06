@@ -4,7 +4,7 @@ package chinapex.com.wallet.bean.response;
  * Created by SteelCabbage on 2018/8/28 0028 16:48.
  * E-Mail：liuyi_61@163.com
  */
-public class ResponseGetEthBalance {
+public class ResponseGetEthRpcResult {
 
     /**
      * jsonrpc : 2.0

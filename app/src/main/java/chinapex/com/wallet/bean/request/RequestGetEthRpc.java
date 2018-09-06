@@ -6,7 +6,7 @@ import java.util.List;
  * Created by SteelCabbage on 2018/8/28 0028 16:41.
  * E-Mail：liuyi_61@163.com
  */
-public class RequestGetEthBalance {
+public class RequestGetEthRpc {
 
     /**
      * jsonrpc : 2.0

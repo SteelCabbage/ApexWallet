@@ -4,13 +4,11 @@ import android.text.TextUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import chinapex.com.wallet.bean.AssetBean;
 import chinapex.com.wallet.bean.BalanceBean;
-import chinapex.com.wallet.bean.request.RequestGetEthBalance;
-import chinapex.com.wallet.bean.response.ResponseGetAccountState;
-import chinapex.com.wallet.bean.response.ResponseGetEthBalance;
+import chinapex.com.wallet.bean.request.RequestGetEthRpc;
+import chinapex.com.wallet.bean.response.ResponseGetEthRpcResult;
 import chinapex.com.wallet.executor.callback.eth.IGetEthBalanceCallback;
 import chinapex.com.wallet.global.ApexWalletApplication;
 import chinapex.com.wallet.global.Constant;
@@ -42,29 +40,29 @@ public class GetEthBalance implements Runnable, INetCallback {
             return;
         }
 
-        RequestGetEthBalance requestGetEthBalance = new RequestGetEthBalance();
-        requestGetEthBalance.setJsonrpc("2.0");
-        requestGetEthBalance.setMethod("eth_getBalance");
-        requestGetEthBalance.setId(1);
+        RequestGetEthRpc requestGetEthRpc = new RequestGetEthRpc();
+        requestGetEthRpc.setJsonrpc("2.0");
+        requestGetEthRpc.setMethod("eth_getBalance");
+        requestGetEthRpc.setId(1);
         ArrayList<String> arrayList = new ArrayList<>();
         arrayList.add(mAddress);
         arrayList.add("latest");
-        requestGetEthBalance.setParams(arrayList);
+        requestGetEthRpc.setParams(arrayList);
 
-        OkHttpClientManager.getInstance().postJson(Constant.URL_CLI_ETH, GsonUtils.toJsonStr(requestGetEthBalance), this);
+        OkHttpClientManager.getInstance().postJson(Constant.URL_CLI_ETH, GsonUtils.toJsonStr(requestGetEthRpc), this);
     }
 
     @Override
     public void onSuccess(int statusCode, String msg, String result) {
         CpLog.i(TAG, "result:" + result);
-        ResponseGetEthBalance responseGetEthBalance = GsonUtils.json2Bean(result, ResponseGetEthBalance.class);
-        if (null == responseGetEthBalance) {
-            CpLog.e(TAG, "responseGetEthBalance is null!");
+        ResponseGetEthRpcResult responseGetEthRpcResult = GsonUtils.json2Bean(result, ResponseGetEthRpcResult.class);
+        if (null == responseGetEthRpcResult) {
+            CpLog.e(TAG, "responseGetEthRpcResult is null!");
             mIGetEthBalanceCallback.getEthBalance(null);
             return;
         }
 
-        String ethBalanceResult = responseGetEthBalance.getResult();
+        String ethBalanceResult = responseGetEthRpcResult.getResult();
         if (TextUtils.isEmpty(ethBalanceResult)) {
             CpLog.e(TAG, "ethBalanceResult is null!");
             mIGetEthBalanceCallback.getEthBalance(null);
