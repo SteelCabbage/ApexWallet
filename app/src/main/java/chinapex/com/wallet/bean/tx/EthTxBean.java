@@ -15,8 +15,9 @@ public class EthTxBean implements ITxBean {
     private String fromAddress;
     private String toAddress;
     private String amount;
-    private double gasPrice;
-    private BigDecimal gasLimit;
+    private String gasPrice;
+    private String gasLimit;
+    private String nonce;
 
     public EthTxBean() {
 
@@ -70,19 +71,27 @@ public class EthTxBean implements ITxBean {
         this.amount = amount;
     }
 
-    public double getGasPrice() {
+    public String getGasPrice() {
         return gasPrice;
     }
 
-    public void setGasPrice(double gasPrice) {
+    public void setGasPrice(String gasPrice) {
         this.gasPrice = gasPrice;
     }
 
-    public BigDecimal getGasLimit() {
+    public String getGasLimit() {
         return gasLimit;
     }
 
-    public void setGasLimit(BigDecimal gasLimit) {
+    public void setGasLimit(String gasLimit) {
         this.gasLimit = gasLimit;
+    }
+
+    public String getNonce() {
+        return nonce;
+    }
+
+    public void setNonce(String nonce) {
+        this.nonce = nonce;
     }
 }
