@@ -2,6 +2,8 @@ package chinapex.com.wallet.executor.runnable.eth;
 
 import android.text.TextUtils;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -69,6 +71,25 @@ public class GetEthBalance implements Runnable, INetCallback {
             return;
         }
 
+        int length = ethBalanceResult.length();
+        if (length < 3) {
+            CpLog.e(TAG, "ethBalanceResult.length < 3!");
+            mIGetEthBalanceCallback.getEthBalance(null);
+            return;
+        }
+
+        String ethBalance;
+        try {
+            String hexString = ethBalanceResult.substring(2);
+            CpLog.i(TAG, hexString);
+            String dec = new BigInteger(hexString, 16).toString(10);
+            ethBalance = new BigDecimal(dec).divide(new BigDecimal(10).pow(Integer.parseInt("18"))).toPlainString();
+        } catch (Exception e) {
+            CpLog.e(TAG, "balance cast exception:" + e.getMessage());
+            mIGetEthBalanceCallback.getEthBalance(null);
+            return;
+        }
+
         ApexWalletDbDao apexWalletDbDao = ApexWalletDbDao.getInstance(ApexWalletApplication.getInstance());
         if (null == apexWalletDbDao) {
             CpLog.e(TAG, "apexWalletDbDao is null!");
@@ -91,7 +112,7 @@ public class GetEthBalance implements Runnable, INetCallback {
         balanceBean.setAssetSymbol(assetBean.getSymbol());
         balanceBean.setAssetType(Constant.ASSET_TYPE_ETH);
         balanceBean.setAssetDecimal(Integer.valueOf(assetBean.getPrecision()));
-        balanceBean.setAssetsValue(ethBalanceResult);
+        balanceBean.setAssetsValue(ethBalance);
         balanceBeans.put(Constant.ASSETS_ETH, balanceBean);
 
         mIGetEthBalanceCallback.getEthBalance(balanceBeans);
