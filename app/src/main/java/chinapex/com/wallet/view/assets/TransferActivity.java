@@ -240,9 +240,9 @@ public class TransferActivity extends BaseActivity implements View.OnClickListen
         ethTxBean.setToAddress(mEt_transfer_to_wallet_addr.getText().toString().trim());
         // TODO: 2018/9/7 0007  amount,price,limit
 //        ethTxBean.setAmount(mEt_transfer_amount.getText().toString().trim());
-        ethTxBean.setAmount("");
-        ethTxBean.setGasPrice("");
-        ethTxBean.setGasLimit("");
+        ethTxBean.setAmount("0x16345785d8a0000");
+        ethTxBean.setGasPrice("0x3b9aca00");
+        ethTxBean.setGasLimit("0x15f90");
 
         String assetType = mBalanceBean.getAssetType();
         if (TextUtils.isEmpty(assetType)) {
