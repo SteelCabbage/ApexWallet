@@ -113,7 +113,7 @@ public class GetErc20Balance implements Runnable, INetCallback {
         balanceBean.setAssetDecimal(Integer.valueOf(assetBean.getPrecision()));
         balanceBean.setAssetsValue(erc20BalanceValue);
         erc20Balance.put(mAssetID, balanceBean);
-        
+
         mIGetErc20BalanceCallback.getErc20Balance(erc20Balance);
     }
 
