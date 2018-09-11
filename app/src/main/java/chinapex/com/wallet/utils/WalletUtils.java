@@ -28,9 +28,9 @@ public class WalletUtils {
         String decString;
         try {
             String hexString = oxHexString.substring(2);
-            CpLog.i(TAG, hexString);
             String dec = new BigInteger(hexString, 16).toString(10);
-            decString = new BigDecimal(dec).divide(new BigDecimal(10).pow(Integer.parseInt(assetDecimal))).toPlainString();
+            decString = new BigDecimal(dec).divide(new BigDecimal(10).pow(Integer.parseInt(assetDecimal)))
+                    .setScale(8, BigDecimal.ROUND_UP).stripTrailingZeros().toPlainString();
         } catch (Exception e) {
             CpLog.e(TAG, "toDecString exception:" + e.getMessage());
             return null;

@@ -57,7 +57,6 @@ public class GetEthBalance implements Runnable, INetCallback {
 
     @Override
     public void onSuccess(int statusCode, String msg, String result) {
-        CpLog.i(TAG, "result:" + result);
         ResponseGetEthRpcResult responseGetEthRpcResult = GsonUtils.json2Bean(result, ResponseGetEthRpcResult.class);
         if (null == responseGetEthRpcResult) {
             CpLog.e(TAG, "responseGetEthRpcResult is null!");

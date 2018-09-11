@@ -74,7 +74,6 @@ public class GetErc20Balance implements Runnable, INetCallback {
 
     @Override
     public void onSuccess(int statusCode, String msg, String result) {
-        CpLog.i(TAG, "result:" + result);
         ResponseGetEthRpcResult responseGetErc20Balance = GsonUtils.json2Bean(result, ResponseGetEthRpcResult.class);
         if (null == responseGetErc20Balance) {
             CpLog.e(TAG, "responseGetErc20Balance is null!");
