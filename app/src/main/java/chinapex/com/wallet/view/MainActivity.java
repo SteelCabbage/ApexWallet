@@ -43,15 +43,8 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar
 
         initData();
         initView();
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
 
         SharedPreferencesUtils.putParam(ApexWalletApplication.getInstance(), Constant.IS_FIRST_ENTER_MAIN, false);
-
-
         checkPermission();
     }
 
