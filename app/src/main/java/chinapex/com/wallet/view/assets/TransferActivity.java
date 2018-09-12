@@ -302,9 +302,11 @@ public class TransferActivity extends BaseActivity implements View.OnClickListen
 
         switch (assetType) {
             case Constant.ASSET_TYPE_ETH:
+                ethTxBean.setAssetType(Constant.ASSET_TYPE_ETH);
                 mICreateTxPresenter.createGlobalTx(ethTxBean);
                 break;
             case Constant.ASSET_TYPE_ERC20:
+                ethTxBean.setAssetType(Constant.ASSET_TYPE_ERC20);
                 mICreateTxPresenter.createColorTx(ethTxBean);
                 break;
             default:

@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import chinapex.com.wallet.R;
@@ -179,7 +180,20 @@ public class AssetsOverviewRecyclerViewAdapter extends RecyclerView
         }
 
         holder.assetsName.setText(balanceBean.getAssetSymbol());
-        holder.assetsValue.setText(balanceBean.getAssetsValue());
+
+        String assetsValue = balanceBean.getAssetsValue();
+        if (TextUtils.isEmpty(assetsValue)) {
+            holder.assetsValue.setText("0");
+        } else {
+            if ("0".equals(assetsValue)
+                    || "0000000000000000000000000000000000000000000000000000000000000000".equals(assetsValue)) {
+                holder.assetsValue.setText("0");
+            } else {
+                String value = new BigDecimal(assetsValue).setScale(8, BigDecimal.ROUND_HALF_UP).stripTrailingZeros()
+                        .toPlainString();
+                holder.assetsValue.setText(value);
+            }
+        }
 
         holder.itemView.setTag(position);
     }

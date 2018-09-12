@@ -19,6 +19,7 @@ public class WalletUtils {
             return null;
         }
 
+        CpLog.w(TAG, "oxHexString:" + oxHexString);
         int length = oxHexString.length();
         if (length < 3) {
             CpLog.e(TAG, "oxHexString.length < 3!");
@@ -30,7 +31,7 @@ public class WalletUtils {
             String hexString = oxHexString.substring(2);
             String dec = new BigInteger(hexString, 16).toString(10);
             decString = new BigDecimal(dec).divide(new BigDecimal(10).pow(Integer.parseInt(assetDecimal)))
-                    .setScale(8, BigDecimal.ROUND_UP).stripTrailingZeros().toPlainString();
+                    .stripTrailingZeros().toPlainString();
         } catch (Exception e) {
             CpLog.e(TAG, "toDecString exception:" + e.getMessage());
             return null;

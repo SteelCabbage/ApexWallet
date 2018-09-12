@@ -123,8 +123,7 @@ public class AssetsOverviewActivity extends BaseActivity implements AssetsOvervi
             return;
         }
 
-        Intent intent = new Intent(ApexWalletApplication.getInstance(), BalanceDetailActivity
-                .class);
+        Intent intent = new Intent(ApexWalletApplication.getInstance(), BalanceDetailActivity.class);
         intent.putExtra(Constant.WALLET_BEAN, mWalletBean);
         intent.putExtra(Constant.BALANCE_BEAN, balanceBean);
         startActivity(intent);
