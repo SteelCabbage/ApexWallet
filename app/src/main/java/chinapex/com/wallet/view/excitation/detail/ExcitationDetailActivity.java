@@ -216,7 +216,6 @@ public class ExcitationDetailActivity extends BaseActivity implements View.OnCli
 
     }
 
-
     private class DetailTextWatcher implements TextWatcher {
         private EditText mEditText;
 
