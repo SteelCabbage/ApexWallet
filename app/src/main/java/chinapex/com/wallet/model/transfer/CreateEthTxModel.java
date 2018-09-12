@@ -24,7 +24,9 @@ import chinapex.com.wallet.utils.CpLog;
  */
 public class CreateEthTxModel implements ICreateTxModel, ICreateEthTxCallback, IEthSendRawTransactionCallback,
         IGetEthNonceCallback, ICreateErc20TxCallback {
+
     private static final String TAG = CreateEthTxModel.class.getSimpleName();
+
     private ICreateTxModelCallback mICreateTxModelCallback;
     private EthTxBean mEthTxBean;
 

@@ -40,33 +40,47 @@ public class TransferActivity extends BaseActivity implements View.OnClickListen
         SeekBar.OnSeekBarChangeListener, ICreateTxView, IGetEthGasPriceCallback {
 
     private static final String TAG = TransferActivity.class.getSimpleName();
-    private WalletBean mWalletBean;
-    private BalanceBean mBalanceBean;
+
+    private final static int REQ_CODE = 1029;
+
+    private ICreateTxPresenter mICreateTxPresenter;
+
     private Button mBt_transfer_send;
     private EditText mEt_transfer_amount;
     private EditText mEt_transfer_to_wallet_addr;
     private TextView mTv_transfer_unit;
     private ImageButton mIb_transfer_scan;
-    private final static int REQ_CODE = 1029;
     private TextView mTv_available_amount;
     private TextView mTv_amount_all;
     private SeekBar mSb_transfer;
     private TextView mTv_transfer_user_set_gas_price;
-    private ICreateTxPresenter mICreateTxPresenter;
     private RelativeLayout mRl_seek_bar;
     private LinearLayout mLl_transfer_gas_price;
     private RelativeLayout mRl_transfer_gas_fee;
     private TextView mTv_transfer_gas_price;
     private TextView mTv_transfer_gas_fee;
 
+    private WalletBean mWalletBean;
+    private BalanceBean mBalanceBean;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void setContentView() {
+        super.setContentView();
+
         setContentView(R.layout.activity_transfer);
+    }
+
+    @Override
+    protected void init() {
+        super.init();
 
         initView();
         initData();
+    }
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
     }
 
     private void initView() {

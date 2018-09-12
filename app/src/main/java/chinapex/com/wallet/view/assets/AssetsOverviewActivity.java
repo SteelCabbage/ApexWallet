@@ -39,25 +39,40 @@ public class AssetsOverviewActivity extends BaseActivity implements AssetsOvervi
         SwipeRefreshLayout.OnRefreshListener, View.OnClickListener, AddAssetsDialog.onCheckedAssetsListener, IGetBalanceView {
 
     private static final String TAG = AssetsOverviewActivity.class.getSimpleName();
+
+    private IGetBalancePresenter mIGetBalancePresenter;
+
     private TextView mTv_assets_overview_wallet_name;
     private TextView mTv_assets_overview_wallet_address;
-    private WalletBean mWalletBean;
     private RecyclerView mRv_assets_overview;
-    private List<BalanceBean> mBalanceBeans;
-    private AssetsOverviewRecyclerViewAdapter mAssetsOverviewRecyclerViewAdapter;
     private SwipeRefreshLayout mSl_assets_overview_rv;
     private ImageButton mIb_assets_overview_ellipsis;
-    private List<String> mCurrentAssets;
-    private IGetBalancePresenter mIGetBalancePresenter;
     private ImageButton mIb_assets_address_copy;
+    private AssetsOverviewRecyclerViewAdapter mAssetsOverviewRecyclerViewAdapter;
+
+    private WalletBean mWalletBean;
+    private List<BalanceBean> mBalanceBeans;
+    private List<String> mCurrentAssets;
+
+    @Override
+    protected void setContentView() {
+        super.setContentView();
+
+        setContentView(R.layout.activity_assets_overview);
+    }
+
+    @Override
+    protected void init() {
+        super.init();
+
+        initView();
+        initData();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_assets_overview);
 
-        initView();
-        initData();
         getBalance();
     }
 

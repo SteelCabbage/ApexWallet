@@ -27,6 +27,7 @@ public class AssetsOverviewRecyclerViewAdapter extends RecyclerView
         View.OnClickListener {
 
     private static final String TAG = AssetsOverviewRecyclerViewAdapter.class.getSimpleName();
+
     private OnItemClickListener mOnItemClickListener;
     private List<BalanceBean> mBalanceBeans;
 

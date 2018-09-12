@@ -10,7 +10,9 @@ import ethmobile.Wallet;
  * E-Mail：liuyi_61@163.com
  */
 public class CreateEthTx implements Runnable {
+
     private static final String TAG = CreateEthTx.class.getSimpleName();
+
     private EthTxBean mEthTxBean;
     private ICreateEthTxCallback mICreateEthTxCallback;
 

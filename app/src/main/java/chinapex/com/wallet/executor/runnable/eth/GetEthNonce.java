@@ -18,7 +18,9 @@ import chinapex.com.wallet.utils.GsonUtils;
  * E-Mail：liuyi_61@163.com
  */
 public class GetEthNonce implements Runnable, INetCallback {
+
     private static final String TAG = GetEthNonce.class.getSimpleName();
+
     private String mAddress;
     private IGetEthNonceCallback mIGetEthNonceCallback;
 

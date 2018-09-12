@@ -21,13 +21,25 @@ public class BootPageActivity extends BaseActivity {
     private static final String TAG = BootPageActivity.class.getSimpleName();
 
     @Override
+    protected void setContentView() {
+        super.setContentView();
+
+        setContentView(R.layout.activity_boot_page);
+    }
+
+    @Override
+    protected void init() {
+        super.init();
+
+        initView();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         // 设置透明导航键
         setNavigationBarColorTransparent();
-        setContentView(R.layout.activity_boot_page);
-        initView();
     }
 
     private void initView() {
