@@ -37,7 +37,6 @@ public class FromKeystoreToEthWallet implements Runnable {
         Wallet wallet = null;
         try {
             wallet = Ethmobile.fromKeyStore(mKeystore, mPwd);
-            CpLog.i(TAG, "wallet address:" + wallet.address());
         } catch (Exception e) {
             CpLog.e(TAG, "fromKeyStore exception:" + e.getMessage());
         }

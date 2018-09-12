@@ -31,6 +31,7 @@ import chinapex.com.wallet.presenter.transfer.CreateTxPresenter;
 import chinapex.com.wallet.presenter.transfer.ICreateTxPresenter;
 import chinapex.com.wallet.utils.CpLog;
 import chinapex.com.wallet.utils.ToastUtils;
+import chinapex.com.wallet.utils.WalletUtils;
 import chinapex.com.wallet.view.dialog.TransferPwdDialog;
 import neomobile.Wallet;
 
@@ -273,17 +274,24 @@ public class TransferActivity extends BaseActivity implements View.OnClickListen
             return;
         }
 
-
         EthTxBean ethTxBean = new EthTxBean();
         ethTxBean.setWallet(wallet);
         ethTxBean.setAssetID(mBalanceBean.getAssetsID());
         ethTxBean.setAssetDecimal(mBalanceBean.getAssetDecimal());
         ethTxBean.setFromAddress(wallet.address());
         ethTxBean.setToAddress(mEt_transfer_to_wallet_addr.getText().toString().trim());
-        // TODO: 2018/9/7 0007  amount,price,limit
-//        ethTxBean.setAmount(mEt_transfer_amount.getText().toString().trim());
-        ethTxBean.setAmount("0x16345785d8a0000");
-        ethTxBean.setGasPrice("0x3b9aca00");
+
+        // amount 0xHex
+        String amountDec = mEt_transfer_amount.getText().toString().trim();
+        String amountOxHex = WalletUtils.toHexString(amountDec, String.valueOf(mBalanceBean.getAssetDecimal()));
+        ethTxBean.setAmount(amountOxHex);
+
+        // gasPrice 0xHex
+        String gasPriceDec = String.valueOf(mSb_transfer.getProgress() / 10);
+        String gasPriceOxHex = WalletUtils.toHexString(gasPriceDec, String.valueOf(9));
+        ethTxBean.setGasPrice(gasPriceOxHex);
+
+        // gasLimit 90000
         ethTxBean.setGasLimit("0x15f90");
 
         String assetType = mBalanceBean.getAssetType();

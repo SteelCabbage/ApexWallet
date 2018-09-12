@@ -39,6 +39,26 @@ public class WalletUtils {
         return decString;
     }
 
+    public static String toHexString(String decString, String decimal) {
+        if (TextUtils.isEmpty(decString) || TextUtils.isEmpty(decimal)) {
+            CpLog.e(TAG, "decString or decimal is null!");
+            return "";
+        }
+
+        String hexString;
+        try {
+            String bigDecString = new BigDecimal(decString).multiply(new BigDecimal(10).pow(Integer.valueOf(decimal))).setScale(0,
+                    BigDecimal.ROUND_DOWN).toPlainString();
+            CpLog.i(TAG, "bigDecString:" + bigDecString);
+            hexString = new BigInteger(bigDecString, 10).toString(16);
+        } catch (Exception e) {
+            CpLog.e(TAG, "toHexString Exception:" + e.getMessage());
+            return "";
+        }
+
+        return "0x" + hexString;
+    }
+
     public static byte[] reverseArray(String string) {
         if ("0".equals(string)) {
             byte[] zero = new byte[1];
