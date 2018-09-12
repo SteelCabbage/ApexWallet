@@ -41,11 +41,6 @@ public class TypeInputActivity extends BaseActivity implements View.OnClickListe
         initData();
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
     private void initView() {
         mTv_type_input_title = (TextView) findViewById(R.id.tv_type_input_title);
         mTv_type_input_save = (TextView) findViewById(R.id.tv_type_input_save);

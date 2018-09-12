@@ -2,7 +2,6 @@ package chinapex.com.wallet.view;
 
 import android.graphics.Color;
 import android.os.Build;
-import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -34,20 +33,15 @@ public class NewVisitorActivity extends BaseActivity implements View.OnClickList
         initView();
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        // 设置透明导航键
-        setNavigationBarColorTransparent();
-    }
-
     private void initView() {
         mCreate_wallet = (Button) findViewById(R.id.bt_new_visitor_create_wallet);
         mImport_wallet = (Button) findViewById(R.id.bt_new_visitor_import_wallet);
 
         mCreate_wallet.setOnClickListener(this);
         mImport_wallet.setOnClickListener(this);
+
+        // 设置透明导航键
+        setNavigationBarColorTransparent();
     }
 
 

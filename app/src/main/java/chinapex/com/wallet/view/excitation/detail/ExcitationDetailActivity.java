@@ -57,11 +57,6 @@ public class ExcitationDetailActivity extends BaseActivity implements View.OnCli
         initData();
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
     private void initData() {
         Intent intent = getIntent();
         if (null == intent) {

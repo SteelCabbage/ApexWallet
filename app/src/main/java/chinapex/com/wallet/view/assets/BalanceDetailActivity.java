@@ -52,11 +52,6 @@ public class BalanceDetailActivity extends BaseActivity implements View.OnClickL
         initData();
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
     private void initView() {
         mBt_balance_detail_transfer = (Button) findViewById(R.id.bt_balance_detail_transfer);
         mBt_balance_detail_gathering = (Button) findViewById(R.id.bt_balance_detail_gathering);

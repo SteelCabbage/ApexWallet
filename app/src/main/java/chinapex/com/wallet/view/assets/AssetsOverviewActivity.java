@@ -69,13 +69,6 @@ public class AssetsOverviewActivity extends BaseActivity implements AssetsOvervi
         initData();
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        getBalance();
-    }
-
     private void initView() {
         mTv_assets_overview_wallet_name = (TextView) findViewById(R.id.tv_assets_overview_wallet_name);
         mTv_assets_overview_wallet_address = (TextView) findViewById(R.id.tv_assets_overview_wallet_address);
@@ -121,6 +114,8 @@ public class AssetsOverviewActivity extends BaseActivity implements AssetsOvervi
         int space = DensityUtil.dip2px(this, 8);
         mRv_assets_overview.addItemDecoration(new SpacesItemDecoration(space));
         mRv_assets_overview.setAdapter(mAssetsOverviewRecyclerViewAdapter);
+
+        getBalance();
     }
 
     private void getBalance() {

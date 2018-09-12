@@ -38,13 +38,6 @@ public class BackupWalletActivity extends BaseActivity {
         initView();
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        initFragment();
-    }
-
     private void initData() {
         mBackupTitles = getResources().getStringArray(R.array.backup_item_title);
 
@@ -61,6 +54,8 @@ public class BackupWalletActivity extends BaseActivity {
 
     private void initView() {
         mTv_backup_title = (TextView) findViewById(R.id.tv_backup_title);
+
+        initFragment();
     }
 
     private void initFragment() {

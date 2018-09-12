@@ -39,11 +39,6 @@ public class ExportKeystoreActivity extends BaseActivity implements View.OnClick
         initData();
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
     private void initView() {
         mTv_export_wallet_keystore = (TextView) findViewById(R.id.tv_export_wallet_keystore);
         mBt_export_wallet_keystore = (Button) findViewById(R.id.bt_export_wallet_keystore);

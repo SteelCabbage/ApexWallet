@@ -47,11 +47,6 @@ public class MeLanguageSettingsActivity extends BaseActivity implements
         initView();
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
     private void initData() {
         String defLanguage = Locale.getDefault().toString();
         String spLanguage = (String) SharedPreferencesUtils.getParam(ApexWalletApplication

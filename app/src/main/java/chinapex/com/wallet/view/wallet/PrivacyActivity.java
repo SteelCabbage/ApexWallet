@@ -30,11 +30,6 @@ public class PrivacyActivity extends BaseActivity {
         initData();
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
     private void initView() {
         mWv_privacy = (WebView) findViewById(R.id.wv_privacy);
     }

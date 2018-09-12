@@ -47,11 +47,6 @@ public class GatheringActivity extends BaseActivity implements View.OnClickListe
         initData();
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
     private void initView() {
         mTv_gathering_wallet_name = (TextView) findViewById(R.id.tv_gathering_wallet_name);
         mTv_gathering_wallet_addr = (TextView) findViewById(R.id.tv_gathering_wallet_addr);

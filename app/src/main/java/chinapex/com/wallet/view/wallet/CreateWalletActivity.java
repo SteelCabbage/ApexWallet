@@ -69,11 +69,6 @@ public class CreateWalletActivity extends BaseActivity implements View.OnClickLi
         initView();
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
     private void initView() {
         mTv_create_wallet_type = (TextView) findViewById(R.id.tv_create_wallet_type);
         mIv_create_wallet_arrows = (ImageView) findViewById(R.id.iv_create_wallet_arrows);

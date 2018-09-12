@@ -41,11 +41,6 @@ public class ImportWalletActivity extends BaseActivity {
         initData();
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
     private void initView() {
         mTl_import_wallet = (TabLayout) findViewById(R.id.tl_import_wallet);
         mVp_import_wallet = (ViewPager) findViewById(R.id.vp_import_wallet);

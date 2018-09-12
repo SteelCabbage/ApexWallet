@@ -34,11 +34,6 @@ public class MePortraitEmptyActivity extends BaseActivity implements View.OnClic
         initData();
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
     private void initView() {
         mBt_portrait_create_wallet = findViewById(R.id.bt_portrait_create_wallet);
         mBt_portrait_create_wallet.setOnClickListener(this);

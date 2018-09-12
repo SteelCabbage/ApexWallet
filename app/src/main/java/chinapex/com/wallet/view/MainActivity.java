@@ -23,6 +23,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar
         .OnTabSelectedListener {
 
     private static final String TAG = MainActivity.class.getSimpleName();
+
     private static final int REQUEST_PERMISSION = 201;
 
     private BottomNavigationBar mBn_main;
@@ -50,8 +51,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar
 
         SharedPreferencesUtils.putParam(ApexWalletApplication.getInstance(), Constant.IS_FIRST_ENTER_MAIN, false);
 
-        initBottomNavigationBar();
-        initFragment();
+
         checkPermission();
     }
 
@@ -61,6 +61,9 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar
 
     private void initView() {
         mBn_main = (BottomNavigationBar) findViewById(R.id.bn_main);
+
+        initBottomNavigationBar();
+        initFragment();
     }
 
     private void initBottomNavigationBar() {

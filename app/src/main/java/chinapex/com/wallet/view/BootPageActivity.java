@@ -34,14 +34,6 @@ public class BootPageActivity extends BaseActivity {
         initView();
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        // 设置透明导航键
-        setNavigationBarColorTransparent();
-    }
-
     private void initView() {
         ImageView iv_boot_page = (ImageView) findViewById(R.id.iv_boot_page);
         ObjectAnimator animator = ObjectAnimator.ofFloat(iv_boot_page, "alpha", 0, 1, 1);
@@ -68,6 +60,9 @@ public class BootPageActivity extends BaseActivity {
 
             }
         });
+
+        // 设置透明导航键
+        setNavigationBarColorTransparent();
     }
 
     private void setNavigationBarColorTransparent() {

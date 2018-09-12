@@ -78,11 +78,6 @@ public class TransferActivity extends BaseActivity implements View.OnClickListen
         initData();
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
     private void initView() {
         mEt_transfer_to_wallet_addr = (EditText) findViewById(R.id.et_transfer_to_wallet_addr);
         mEt_transfer_amount = (EditText) findViewById(R.id.et_transfer_amount);

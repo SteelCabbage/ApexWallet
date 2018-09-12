@@ -44,7 +44,6 @@ public class Me2Activity extends BaseActivity implements MeRecyclerViewAdapter
         super.setContentView();
 
         setContentView(R.layout.activity_me2);
-
     }
 
     @Override
@@ -53,11 +52,6 @@ public class Me2Activity extends BaseActivity implements MeRecyclerViewAdapter
 
         initView();
         initData();
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
     }
 
     private void initView() {

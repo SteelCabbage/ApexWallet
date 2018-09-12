@@ -31,13 +31,8 @@ public class Me3Activity extends BaseActivity implements OnWalletDeleteListener 
     @Override
     protected void init() {
         super.init();
+
         initData();
-
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
     }
 
     private void initData() {

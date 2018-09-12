@@ -54,11 +54,6 @@ public class MePortraitActivity extends BaseActivity implements View.OnClickList
         initData();
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
     private void initView() {
         mTv_portrait_address = (TextView) findViewById(R.id.tv_portrait_address);
         mIb_portrait_switch_wallet = (ImageButton) findViewById(R.id.ib_portrait_switch_wallet);
