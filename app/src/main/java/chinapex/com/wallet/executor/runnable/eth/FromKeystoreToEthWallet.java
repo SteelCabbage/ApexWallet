@@ -14,6 +14,7 @@ import ethmobile.Wallet;
 public class FromKeystoreToEthWallet implements Runnable {
 
     private static final String TAG = FromKeystoreToEthWallet.class.getSimpleName();
+
     private String mKeystore;
     private String mPwd;
     private IFromKeystoreToEthWalletCallback mIFromKeystoreToEthWalletCallback;

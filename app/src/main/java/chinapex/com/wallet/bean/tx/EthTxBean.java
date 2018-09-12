@@ -1,7 +1,5 @@
 package chinapex.com.wallet.bean.tx;
 
-import java.math.BigDecimal;
-
 import ethmobile.Wallet;
 
 /**

@@ -11,15 +11,28 @@ import chinapex.com.wallet.utils.PhoneUtils;
 
 public class PrivacyActivity extends BaseActivity {
 
+    private static final String TAG = PrivacyActivity.class.getSimpleName();
+
     private WebView mWv_privacy;
+
+    @Override
+    protected void setContentView() {
+        super.setContentView();
+
+        setContentView(R.layout.activity_privacy);
+    }
+
+    @Override
+    protected void init() {
+        super.init();
+
+        initView();
+        initData();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_privacy);
-
-        initView();
-        initData();
     }
 
     private void initView() {

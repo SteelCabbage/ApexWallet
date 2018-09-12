@@ -30,23 +30,36 @@ public class ExcitationDetailActivity extends BaseActivity implements View.OnCli
 
     private static final String TAG = ExcitationDetailActivity.class.getSimpleName();
 
+    private GetDetailCodePresenter mGetAddressResultPresenter;
+
     private EditText mCpxAddressInput;
     private EditText mEthAddressInput;
     private TextView mWrongAddressNote;
     private Button mExcitationCommit;
     private ImageButton mCpxAddressInputCancel;
     private ImageButton mEthAddressInputCancel;
-    private GetDetailCodePresenter mGetAddressResultPresenter;
+
     private int mGasLimit;
     private int mExcitationId;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void setContentView() {
+        super.setContentView();
+
         setContentView(R.layout.activity_excitation_detail);
+    }
+
+    @Override
+    protected void init() {
+        super.init();
 
         initView();
         initData();
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
     }
 
     private void initData() {
