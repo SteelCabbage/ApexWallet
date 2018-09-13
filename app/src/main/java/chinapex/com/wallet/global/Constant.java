@@ -139,7 +139,7 @@ public class Constant {
     public static final String ASSETS_CPX = "0x45d493a6f73fa5f404244a5fb8472fc014ca5885";
 
     // ETH
-    public static final String ASSETS_ETH = "ether666";
+    public static final String ASSETS_ETH = "0xeth99999999";
     public static final String ASSETS_ERC20_NMB = "0xc7773e07adb2642a1eb03c5e340430b6cedc2aa9";
     //Excitation
     public static final String EXCITATION_SHOW_LIST = "https://tracker.chinapex.com.cn/tool/j2/activitys/list/";

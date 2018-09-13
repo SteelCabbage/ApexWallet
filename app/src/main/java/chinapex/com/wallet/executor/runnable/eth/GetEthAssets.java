@@ -78,17 +78,17 @@ public class GetEthAssets implements Runnable, INetCallback {
             apexWalletDbDao.insertAsset(Constant.TABLE_ETH_ASSETS, assetBean);
         }
 
-        // eth
-        AssetBean assetBean = new AssetBean();
-        assetBean.setType(Constant.ASSET_TYPE_ETH);
-        assetBean.setSymbol("ETH");
-        assetBean.setPrecision(18 + "");
-        assetBean.setName("ETH");
-        assetBean.setImageUrl("");
-        assetBean.setHexHash(Constant.ASSETS_ETH);
-        assetBean.setHash(Constant.ASSETS_ETH);
-
-        apexWalletDbDao.insertAsset(Constant.TABLE_ETH_ASSETS, assetBean);
+//        // eth
+//        AssetBean assetBean = new AssetBean();
+//        assetBean.setType(Constant.ASSET_TYPE_ETH);
+//        assetBean.setSymbol("ETH");
+//        assetBean.setPrecision(18 + "");
+//        assetBean.setName("ETH");
+//        assetBean.setImageUrl("");
+//        assetBean.setHexHash(Constant.ASSETS_ETH);
+//        assetBean.setHash(Constant.ASSETS_ETH);
+//
+//        apexWalletDbDao.insertAsset(Constant.TABLE_ETH_ASSETS, assetBean);
 
         // erc20 NMB(Test)
         AssetBean assetBeanErc20 = new AssetBean();
