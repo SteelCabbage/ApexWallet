@@ -24,12 +24,13 @@ public class Constant {
     // neo node
     public static final String HOSTNAME_VERIFIER_NEO = "tracker.chinapex.com.cn";
     public static final String URL_CLI_NEO = "https://tracker.chinapex.com.cn/neo-cli/";
-    public static final String URL_UTXOS = "https://tracker.chinapex.com.cn/tool/utxos/";
-    public static final String URL_ASSETS = "https://tracker.chinapex.com.cn/tool/assets";
+    public static final String URL_UTXOS_NEO = "https://tracker.chinapex.com.cn/tool/utxos/";
+    public static final String URL_ASSETS_NEO = "https://tracker.chinapex.com.cn/tool/assets";
 
     // eth node
     public static final String HOSTNAME_VERIFIER_ETH = "42.159.95.191";
     public static final String URL_CLI_ETH = "http://42.159.95.191:8545";
+    public static final String URL_ASSETS_ETH = "https://tracker.chinapex.com.cn/tool/test/eth-assets";
 
     // ApexGlobalTask
     public static final long ASSETS_POLLING_TIME = 10 * 1000;

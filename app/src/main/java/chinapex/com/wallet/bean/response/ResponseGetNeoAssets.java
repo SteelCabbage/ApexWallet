@@ -6,7 +6,7 @@ import java.util.List;
  * Created by SteelCabbage on 2018/7/8 14:24
  * E-Mail：liuyi_61@163.com
  */
-public class ResponseGetAssets {
+public class ResponseGetNeoAssets {
 
     /**
      * state : 200
