@@ -1,5 +1,6 @@
 package chinapex.com.wallet.adapter;
 
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.RequestBuilder;
 
 import java.util.List;
 
@@ -16,6 +18,7 @@ import chinapex.com.wallet.R;
 import chinapex.com.wallet.bean.AssetBean;
 import chinapex.com.wallet.global.ApexWalletApplication;
 import chinapex.com.wallet.global.Constant;
+import chinapex.com.wallet.global.GlideApp;
 import chinapex.com.wallet.utils.CpLog;
 
 public class AddAssetsRecyclerViewAdapter extends RecyclerView.Adapter<AddAssetsRecyclerViewAdapter
@@ -155,8 +158,23 @@ public class AddAssetsRecyclerViewAdapter extends RecyclerView.Adapter<AddAssets
                         .into(holder.assetLogo);
                 break;
             default:
-                Glide.with(ApexWalletApplication.getInstance()).load(assetBean.getImageUrl())
-                        .into(holder.assetLogo);
+                switch (assetBean.getType()) {
+                    case Constant.ASSET_TYPE_NEP5:
+                        GlideApp.with(ApexWalletApplication.getInstance())
+                                .load(assetBean.getImageUrl())
+                                .error(R.drawable.icon_wallet_type_neo)
+                                .into(holder.assetLogo);
+                        break;
+                    case Constant.ASSET_TYPE_ERC20:
+                        GlideApp.with(ApexWalletApplication.getInstance())
+                                .load(assetBean.getImageUrl())
+                                .error(R.drawable.icon_wallet_type_eth)
+                                .into(holder.assetLogo);
+                        break;
+                    default:
+                        break;
+                }
+
                 break;
         }
 
