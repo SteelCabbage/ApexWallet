@@ -62,7 +62,9 @@ public class AddAssetsRecyclerViewAdapter extends RecyclerView.Adapter<AddAssets
         String assetId = assetBean.getHexHash();
         if (!Constant.ASSETS_CPX.equals(assetId)
                 && !Constant.ASSETS_NEO.equals(assetId)
-                && !Constant.ASSETS_NEO_GAS.equals(assetId)) {
+                && !Constant.ASSETS_NEO_GAS.equals(assetId)
+                && !Constant.ASSETS_ETH.equals(assetId)
+                && !Constant.ASSETS_ERC20_NMB.equals(assetId)) {
             assetBean.setChecked(!checked);
         }
         notifyDataSetChanged();

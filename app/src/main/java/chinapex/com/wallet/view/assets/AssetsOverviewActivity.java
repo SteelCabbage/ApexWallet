@@ -214,6 +214,7 @@ public class AssetsOverviewActivity extends BaseActivity implements AssetsOvervi
                 tableName = Constant.TABLE_CPX_ASSETS;
                 break;
             default:
+                CpLog.e(TAG, "unknown wallet type!");
                 break;
         }
 
@@ -339,6 +340,7 @@ public class AssetsOverviewActivity extends BaseActivity implements AssetsOvervi
     public void showAddAssetsDialog() {
         AddAssetsDialog addAssetsDialog = AddAssetsDialog.newInstance();
         addAssetsDialog.setOnCheckedAssetsListener(this);
+        addAssetsDialog.setWalletType(mWalletBean.getWalletType());
         addAssetsDialog.setCurrentAssets(mCurrentAssets);
         addAssetsDialog.show(getFragmentManager(), "AddAssetsDialog");
     }
@@ -362,7 +364,9 @@ public class AssetsOverviewActivity extends BaseActivity implements AssetsOvervi
                 continue;
             }
 
-            if (Constant.ASSETS_NEO.equals(checkedAsset) || Constant.ASSETS_NEO_GAS.equals(checkedAsset)) {
+            if (Constant.ASSETS_NEO.equals(checkedAsset)
+                    || Constant.ASSETS_NEO_GAS.equals(checkedAsset)
+                    || Constant.ASSETS_ETH.equals(checkedAsset)) {
                 globalAssets.add(checkedAsset);
             } else {
                 colorAssets.add(checkedAsset);

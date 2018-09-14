@@ -67,7 +67,13 @@ public class GetNeoAssets implements Runnable, INetCallback {
             }
 
             AssetBean assetBean = new AssetBean();
-            assetBean.setType(resultBean.getType());
+            String assetType = resultBean.getType();
+            if (Constant.ASSET_TYPE_GOVERNING.equals(assetType) || Constant.ASSET_TYPE_UTILITY.equals(assetType)) {
+                assetBean.setType(Constant.ASSET_TYPE_GLOBAL);
+            } else {
+                assetBean.setType(assetType);
+            }
+
             assetBean.setSymbol(resultBean.getSymbol());
             assetBean.setPrecision(resultBean.getPrecision());
             assetBean.setName(resultBean.getName());

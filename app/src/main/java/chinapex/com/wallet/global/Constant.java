@@ -170,10 +170,10 @@ public class Constant {
 
 
     // neo asset type
-    public static final String ASSET_TYPE_GLOBAL = "GLOBAL";
+    public static final String ASSET_TYPE_GLOBAL = "Global";
     public static final String ASSET_TYPE_NEP5 = "NEP5";
-    public static final String ASSET_TYPE_UTILITY = "UtilityToken";
     public static final String ASSET_TYPE_GOVERNING = "GoverningToken";
+    public static final String ASSET_TYPE_UTILITY = "UtilityToken";
 
     // eth asset type
     public static final String ASSET_TYPE_ETH = "Eth";
