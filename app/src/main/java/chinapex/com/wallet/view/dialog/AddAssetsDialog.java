@@ -189,10 +189,10 @@ public class AddAssetsDialog extends DialogFragment implements View.OnClickListe
                 break;
         }
 
-        mAssetBeans = apexWalletDbDao.queryAssetsByType(tableName, colorAssetType);
-        if (null == mAssetBeans || mAssetBeans.isEmpty()) {
-            CpLog.e(TAG, "assetBeans is null or empty!");
-            return;
+        mAssetBeans = new ArrayList<>();
+        List<AssetBean> colorAssets = apexWalletDbDao.queryAssetsByType(tableName, colorAssetType);
+        if (null != colorAssets && !colorAssets.isEmpty()) {
+            mAssetBeans.addAll(colorAssets);
         }
 
         List<AssetBean> globalAssets = apexWalletDbDao.queryAssetsByType(tableName, globalAssetType);
