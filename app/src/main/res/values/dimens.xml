@@ -100,6 +100,7 @@
 
     <!-- excitation dimension-->
     <dimen name="d_n34dp">-34dp</dimen>
+    <dimen name="d_n18sp">-18sp</dimen>
     <dimen name="d_0dp">0dp</dimen>
     <dimen name="d_1dp">1dp</dimen>
     <dimen name="d_2dp">2dp</dimen>
