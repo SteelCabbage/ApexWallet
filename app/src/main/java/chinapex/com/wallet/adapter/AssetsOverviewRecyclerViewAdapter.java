@@ -175,7 +175,26 @@ public class AssetsOverviewRecyclerViewAdapter extends RecyclerView
                 break;
             default:
                 holder.mapState.setVisibility(View.GONE);
-                GlideApp.with(ApexWalletApplication.getInstance()).load(assetBean.getImageUrl()).into(holder.assetLogo);
+
+                switch (assetBean.getType()) {
+                    case Constant.ASSET_TYPE_NEP5:
+                        GlideApp.with(ApexWalletApplication.getInstance())
+                                .load(assetBean.getImageUrl())
+                                .placeholder(R.drawable.logo_global_neo)
+                                .error(R.drawable.logo_global_neo)
+                                .into(holder.assetLogo);
+                        break;
+                    case Constant.ASSET_TYPE_ERC20:
+                        GlideApp.with(ApexWalletApplication.getInstance())
+                                .load(assetBean.getImageUrl())
+                                .placeholder(R.drawable.icon_wallet_type_eth)
+                                .error(R.drawable.icon_wallet_type_eth)
+                                .into(holder.assetLogo);
+                        break;
+                    default:
+                        break;
+                }
+
                 break;
         }
 
