@@ -6,4 +6,6 @@ package chinapex.com.wallet.model.transfer;
  */
 public interface ICreateTxModelCallback {
     void CreateTxModel(String toastMsg, boolean isFinish);
+
+    void checkTxFee(boolean isEnough);
 }

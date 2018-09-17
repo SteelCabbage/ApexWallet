@@ -2,7 +2,11 @@ package chinapex.com.wallet.model.transfer;
 
 import android.text.TextUtils;
 
+import java.math.BigDecimal;
+
 import chinapex.com.wallet.R;
+import chinapex.com.wallet.bean.gasfee.EthTxFee;
+import chinapex.com.wallet.bean.gasfee.ITxFee;
 import chinapex.com.wallet.bean.tx.EthTxBean;
 import chinapex.com.wallet.bean.tx.ITxBean;
 import chinapex.com.wallet.executor.TaskController;
@@ -28,10 +32,53 @@ public class CreateEthTxModel implements ICreateTxModel, ICreateEthTxCallback, I
     private static final String TAG = CreateEthTxModel.class.getSimpleName();
 
     private ICreateTxModelCallback mICreateTxModelCallback;
+    private EthTxFee mEthTxFee;
     private EthTxBean mEthTxBean;
 
     public CreateEthTxModel(ICreateTxModelCallback ICreateTxModelCallback) {
         mICreateTxModelCallback = ICreateTxModelCallback;
+    }
+
+    @Override
+    public void checkTxFee(ITxFee iTxFee) {
+        if (null == mICreateTxModelCallback) {
+            CpLog.e(TAG, "mICreateTxModelCallback is null!");
+            return;
+        }
+
+        if (null == iTxFee) {
+            CpLog.e(TAG, "iTxFee is null!");
+            return;
+        }
+
+        if (iTxFee instanceof EthTxFee) {
+            mEthTxFee = (EthTxFee) iTxFee;
+        }
+
+        if (null == mEthTxFee) {
+            CpLog.e(TAG, "mEthTxFee is null!");
+            return;
+        }
+
+        try {
+            BigDecimal balance = new BigDecimal(mEthTxFee.getBalance());
+            BigDecimal amount = new BigDecimal(mEthTxFee.getAmount());
+            BigDecimal gasPrice = new BigDecimal(mEthTxFee.getGasPrice());
+            BigDecimal gasLimit = new BigDecimal(mEthTxFee.getGasLimit());
+
+            BigDecimal bigDecimal = gasPrice.multiply(gasLimit).add(amount).subtract(balance);
+
+            int compareTo = BigDecimal.ZERO.compareTo(bigDecimal);
+            if (compareTo == 1 || compareTo == 0) {
+                mICreateTxModelCallback.checkTxFee(true);
+                return;
+            }
+
+            mICreateTxModelCallback.checkTxFee(false);
+        } catch (Exception e) {
+            mICreateTxModelCallback.checkTxFee(false);
+            CpLog.e(TAG, "checkTxFee Exception:" + e.getMessage());
+        }
     }
 
     @Override
