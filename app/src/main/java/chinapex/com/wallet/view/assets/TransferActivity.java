@@ -214,6 +214,7 @@ public class TransferActivity extends BaseActivity implements View.OnClickListen
                     case Constant.WALLET_TYPE_ETH:
                         EthTxFee ethTxFee = new EthTxFee();
                         ethTxFee.setAssetType(mBalanceBean.getAssetType());
+                        ethTxFee.setAddress(mWalletBean.getAddress());
                         ethTxFee.setBalance(mBalanceBean.getAssetsValue());
                         ethTxFee.setAmount(mEt_transfer_amount.getText().toString().trim());
                         ethTxFee.setGasPrice(mTv_transfer_user_set_gas_price.getText().toString().trim());
@@ -372,7 +373,7 @@ public class TransferActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-        mTv_transfer_user_set_gas_price.setText(String.valueOf(progress / 10.0 + " Gwei"));
+        mTv_transfer_user_set_gas_price.setText(String.valueOf(progress / 10.0));
         String gasFee = "0";
         try {
             gasFee = new BigDecimal(progress / 10.0).divide(new BigDecimal(10).pow(5)).multiply(new BigDecimal(9))

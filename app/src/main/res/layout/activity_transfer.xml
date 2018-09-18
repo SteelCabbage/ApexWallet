@@ -202,7 +202,16 @@
             android:layout_below="@+id/sb_transfer"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="5dp"
-            android:text="0.0 Gwei"
+            android:text="0.0"
+            android:textSize="@dimen/paratext_14sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/sb_transfer"
+            android:layout_marginTop="5dp"
+            android:layout_toEndOf="@+id/tv_transfer_user_set_gas_price"
+            android:text=" Gwei"
             android:textSize="@dimen/paratext_14sp" />
 
         <TextView
