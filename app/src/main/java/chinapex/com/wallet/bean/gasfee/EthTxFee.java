@@ -5,10 +5,32 @@ package chinapex.com.wallet.bean.gasfee;
  * E-Mail：liuyi_61@163.com
  */
 public class EthTxFee implements ITxFee {
+    private String assetType;
+    private String address;
     private String balance;
     private String amount;
     private String gasPrice;
     private String gasLimit;
+
+    public EthTxFee() {
+
+    }
+
+    public String getAssetType() {
+        return assetType;
+    }
+
+    public void setAssetType(String assetType) {
+        this.assetType = assetType;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
     public String getBalance() {
         return balance;
@@ -40,5 +62,16 @@ public class EthTxFee implements ITxFee {
 
     public void setGasLimit(String gasLimit) {
         this.gasLimit = gasLimit;
+    }
+
+    @Override
+    public String toString() {
+        return "EthTxFee{" +
+                "address='" + address + '\'' +
+                ", balance='" + balance + '\'' +
+                ", amount='" + amount + '\'' +
+                ", gasPrice='" + gasPrice + '\'' +
+                ", gasLimit='" + gasLimit + '\'' +
+                '}';
     }
 }

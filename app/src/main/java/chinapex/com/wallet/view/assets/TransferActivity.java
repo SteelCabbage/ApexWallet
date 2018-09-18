@@ -19,6 +19,9 @@ import chinapex.com.wallet.R;
 import chinapex.com.wallet.base.BaseActivity;
 import chinapex.com.wallet.bean.BalanceBean;
 import chinapex.com.wallet.bean.WalletBean;
+import chinapex.com.wallet.bean.gasfee.EthTxFee;
+import chinapex.com.wallet.bean.gasfee.ITxFee;
+import chinapex.com.wallet.bean.gasfee.NeoTxFee;
 import chinapex.com.wallet.bean.tx.EthTxBean;
 import chinapex.com.wallet.bean.tx.NeoTxBean;
 import chinapex.com.wallet.executor.TaskController;
@@ -200,24 +203,28 @@ public class TransferActivity extends BaseActivity implements View.OnClickListen
                     return;
                 }
 
-                String balance = mBalanceBean.getAssetsValue();
-                String amount = mEt_transfer_amount.getText().toString().trim();
-                try {
-                    BigDecimal balanceBigDecimal = new BigDecimal(balance);
-                    BigDecimal amountBigDecimal = new BigDecimal(amount);
-                    if (amountBigDecimal.compareTo(balanceBigDecimal) == 1) {
-                        ToastUtils.getInstance().showToast(ApexWalletApplication.getInstance()
-                                .getResources().getString(R.string.insufficient_balance));
-                        return;
-                    }
-                } catch (NumberFormatException e) {
-                    CpLog.e(TAG, "NumberFormatException: " + e.getMessage());
-                    ToastUtils.getInstance().showToast(ApexWalletApplication.getInstance()
-                            .getResources().getString(R.string.illegal_input));
-                    return;
+                int walletType = mWalletBean.getWalletType();
+                switch (walletType) {
+                    case Constant.WALLET_TYPE_NEO:
+                        NeoTxFee neoTxFee = new NeoTxFee();
+                        neoTxFee.setBalance(mBalanceBean.getAssetsValue());
+                        neoTxFee.setAmount(mEt_transfer_amount.getText().toString().trim());
+                        mICreateTxPresenter.checkTxFee(neoTxFee);
+                        break;
+                    case Constant.WALLET_TYPE_ETH:
+                        EthTxFee ethTxFee = new EthTxFee();
+                        ethTxFee.setAssetType(mBalanceBean.getAssetType());
+                        ethTxFee.setBalance(mBalanceBean.getAssetsValue());
+                        ethTxFee.setAmount(mEt_transfer_amount.getText().toString().trim());
+                        ethTxFee.setGasPrice(mTv_transfer_user_set_gas_price.getText().toString().trim());
+                        ethTxFee.setGasLimit("90000");
+                        mICreateTxPresenter.checkTxFee(ethTxFee);
+                        break;
+                    case Constant.WALLET_TYPE_CPX:
+                        break;
+                    default:
+                        break;
                 }
-
-                showTransferPwdDialog();
                 break;
             case R.id.ib_transfer_scan:
                 Intent intent = new Intent(TransferActivity.this, CaptureActivity.class);
@@ -230,6 +237,22 @@ public class TransferActivity extends BaseActivity implements View.OnClickListen
             default:
                 break;
         }
+    }
+
+    @Override
+    public void checkTxFee(final boolean isEnough, final String msg) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (isEnough) {
+                    showTransferPwdDialog();
+                } else {
+                    if (!TextUtils.isEmpty(msg)) {
+                        ToastUtils.getInstance().showToast(msg);
+                    }
+                }
+            }
+        });
     }
 
     public void showTransferPwdDialog() {

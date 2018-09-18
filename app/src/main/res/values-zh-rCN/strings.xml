@@ -131,6 +131,7 @@
     <string name="server_err_txId_null">服务器错误！交易Id生成失败！</string>
     <string name="eth_nonce_null">交易次数查询失败，请检查网络！</string>
     <string name="eth_data_null">交易内容生成失败！</string>
+    <string name="no_this_type_asset">无此种类型的资产!</string>
 
     <!--语言-->
     <string name="language_zh_cn">简体中文</string>
