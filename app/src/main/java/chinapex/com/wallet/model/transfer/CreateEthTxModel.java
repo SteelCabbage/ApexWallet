@@ -150,7 +150,7 @@ public class CreateEthTxModel implements ICreateTxModel, ICreateEthTxCallback, I
 
             if (gasFee.compareTo(ethBalanceFee) == 1) {
                 mICreateTxModelCallback.checkTxFee(false, ApexWalletApplication.getInstance()
-                        .getResources().getString(R.string.insufficient_balance));
+                        .getResources().getString(R.string.insufficient_gas));
                 return;
             }
 
