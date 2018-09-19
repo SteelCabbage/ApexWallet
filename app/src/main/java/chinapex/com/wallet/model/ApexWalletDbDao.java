@@ -341,6 +341,9 @@ public class ApexWalletDbDao {
         contentValues.put(Constant.FIELD_ASSET_SYMBOL, transactionRecord.getAssetSymbol());
         contentValues.put(Constant.FIELD_ASSET_LOGO_URL, transactionRecord.getAssetLogoUrl());
         contentValues.put(Constant.FIELD_ASSET_DECIMAL, transactionRecord.getAssetDecimal());
+        contentValues.put(Constant.FIELD_GAS_PRICE, transactionRecord.getGasPrice());
+        contentValues.put(Constant.FIELD_BLOCK_NUMBER, transactionRecord.getBlockNumber());
+        contentValues.put(Constant.FIELD_GAS_FEE, transactionRecord.getGasFee());
         contentValues.put(Constant.FIELD_CREATE_TIME, transactionRecord.getTxTime());
 
         SQLiteDatabase db = openDatabase();
@@ -383,6 +386,9 @@ public class ApexWalletDbDao {
                 int assetSymbolIndex = cursor.getColumnIndex(Constant.FIELD_ASSET_SYMBOL);
                 int assetLogoUrlIndex = cursor.getColumnIndex(Constant.FIELD_ASSET_LOGO_URL);
                 int assetDecimalIndex = cursor.getColumnIndex(Constant.FIELD_ASSET_DECIMAL);
+                int gasPriceIndex = cursor.getColumnIndex(Constant.FIELD_GAS_PRICE);
+                int blockNumberIndex = cursor.getColumnIndex(Constant.FIELD_BLOCK_NUMBER);
+                int gasFeeIndex = cursor.getColumnIndex(Constant.FIELD_GAS_FEE);
                 int createTimeIndex = cursor.getColumnIndex(Constant.FIELD_CREATE_TIME);
 
 
@@ -398,6 +404,9 @@ public class ApexWalletDbDao {
                 String assetSymbol = cursor.getString(assetSymbolIndex);
                 String assetLogoUrl = cursor.getString(assetLogoUrlIndex);
                 int assetDecimal = cursor.getInt(assetDecimalIndex);
+                String gasPrice = cursor.getString(gasPriceIndex);
+                String blockNumber = cursor.getString(blockNumberIndex);
+                String gasFee = cursor.getString(gasFeeIndex);
                 long createTime = cursor.getLong(createTimeIndex);
 
                 TransactionRecord transactionRecord = new TransactionRecord();
@@ -413,6 +422,9 @@ public class ApexWalletDbDao {
                 transactionRecord.setAssetSymbol(assetSymbol);
                 transactionRecord.setAssetLogoUrl(assetLogoUrl);
                 transactionRecord.setAssetDecimal(assetDecimal);
+                transactionRecord.setGasPrice(gasPrice);
+                transactionRecord.setBlockNumber(blockNumber);
+                transactionRecord.setGasFee(gasFee);
                 transactionRecord.setTxTime(createTime);
 
                 transactionRecords.add(transactionRecord);
@@ -448,6 +460,9 @@ public class ApexWalletDbDao {
                 int assetSymbolIndex = cursor.getColumnIndex(Constant.FIELD_ASSET_SYMBOL);
                 int assetLogoUrlIndex = cursor.getColumnIndex(Constant.FIELD_ASSET_LOGO_URL);
                 int assetDecimalIndex = cursor.getColumnIndex(Constant.FIELD_ASSET_DECIMAL);
+                int gasPriceIndex = cursor.getColumnIndex(Constant.FIELD_GAS_PRICE);
+                int blockNumberIndex = cursor.getColumnIndex(Constant.FIELD_BLOCK_NUMBER);
+                int gasFeeIndex = cursor.getColumnIndex(Constant.FIELD_GAS_FEE);
                 int createTimeIndex = cursor.getColumnIndex(Constant.FIELD_CREATE_TIME);
 
 
@@ -463,6 +478,9 @@ public class ApexWalletDbDao {
                 String assetSymbol = cursor.getString(assetSymbolIndex);
                 String assetLogoUrl = cursor.getString(assetLogoUrlIndex);
                 int assetDecimal = cursor.getInt(assetDecimalIndex);
+                String gasPrice = cursor.getString(gasPriceIndex);
+                String blockNumber = cursor.getString(blockNumberIndex);
+                String gasFee = cursor.getString(gasFeeIndex);
                 long createTime = cursor.getLong(createTimeIndex);
 
                 TransactionRecord transactionRecord = new TransactionRecord();
@@ -478,6 +496,9 @@ public class ApexWalletDbDao {
                 transactionRecord.setAssetSymbol(assetSymbol);
                 transactionRecord.setAssetLogoUrl(assetLogoUrl);
                 transactionRecord.setAssetDecimal(assetDecimal);
+                transactionRecord.setGasPrice(gasPrice);
+                transactionRecord.setBlockNumber(blockNumber);
+                transactionRecord.setGasFee(gasFee);
                 transactionRecord.setTxTime(createTime);
 
                 txHashMap.put(txId, transactionRecord);
@@ -488,16 +509,16 @@ public class ApexWalletDbDao {
         return txHashMap;
     }
 
-    public List<TransactionRecord> queryTxCacheByTxId(String txId) {
+    public List<TransactionRecord> queryTxCacheByTxId(String tableName, String txId) {
         List<TransactionRecord> transactionRecords = new ArrayList<>();
 
-        if (TextUtils.isEmpty(txId)) {
-            CpLog.e(TAG, "queryTxCacheByTxId() -> txId is null!");
+        if (TextUtils.isEmpty(tableName) || TextUtils.isEmpty(txId)) {
+            CpLog.e(TAG, "queryTxCacheByTxId() -> tableName or txId is null!");
             return transactionRecords;
         }
 
         SQLiteDatabase db = openDatabase();
-        Cursor cursor = db.query(Constant.TABLE_TX_CACHE, null, WHERE_CLAUSE_TX_ID_EQ, new
+        Cursor cursor = db.query(tableName, null, WHERE_CLAUSE_TX_ID_EQ, new
                 String[]{txId}, null, null, null);
         if (null != cursor) {
             while (cursor.moveToNext()) {
@@ -513,6 +534,9 @@ public class ApexWalletDbDao {
                 int assetSymbolIndex = cursor.getColumnIndex(Constant.FIELD_ASSET_SYMBOL);
                 int assetLogoUrlIndex = cursor.getColumnIndex(Constant.FIELD_ASSET_LOGO_URL);
                 int assetDecimalIndex = cursor.getColumnIndex(Constant.FIELD_ASSET_DECIMAL);
+                int gasPriceIndex = cursor.getColumnIndex(Constant.FIELD_GAS_PRICE);
+                int blockNumberIndex = cursor.getColumnIndex(Constant.FIELD_BLOCK_NUMBER);
+                int gasFeeIndex = cursor.getColumnIndex(Constant.FIELD_GAS_FEE);
                 int createTimeIndex = cursor.getColumnIndex(Constant.FIELD_CREATE_TIME);
 
 
@@ -528,6 +552,9 @@ public class ApexWalletDbDao {
                 String assetSymbol = cursor.getString(assetSymbolIndex);
                 String assetLogoUrl = cursor.getString(assetLogoUrlIndex);
                 int assetDecimal = cursor.getInt(assetDecimalIndex);
+                String gasPrice = cursor.getString(gasPriceIndex);
+                String blockNumber = cursor.getString(blockNumberIndex);
+                String gasFee = cursor.getString(gasFeeIndex);
                 long createTime = cursor.getLong(createTimeIndex);
 
                 TransactionRecord transactionRecord = new TransactionRecord();
@@ -543,6 +570,9 @@ public class ApexWalletDbDao {
                 transactionRecord.setAssetSymbol(assetSymbol);
                 transactionRecord.setAssetLogoUrl(assetLogoUrl);
                 transactionRecord.setAssetDecimal(assetDecimal);
+                transactionRecord.setGasPrice(gasPrice);
+                transactionRecord.setBlockNumber(blockNumber);
+                transactionRecord.setGasFee(gasFee);
                 transactionRecord.setTxTime(createTime);
 
                 transactionRecords.add(transactionRecord);
@@ -588,6 +618,9 @@ public class ApexWalletDbDao {
                 int assetSymbolIndex = cursor.getColumnIndex(Constant.FIELD_ASSET_SYMBOL);
                 int assetLogoUrlIndex = cursor.getColumnIndex(Constant.FIELD_ASSET_LOGO_URL);
                 int assetDecimalIndex = cursor.getColumnIndex(Constant.FIELD_ASSET_DECIMAL);
+                int gasPriceIndex = cursor.getColumnIndex(Constant.FIELD_GAS_PRICE);
+                int blockNumberIndex = cursor.getColumnIndex(Constant.FIELD_BLOCK_NUMBER);
+                int gasFeeIndex = cursor.getColumnIndex(Constant.FIELD_GAS_FEE);
                 int createTimeIndex = cursor.getColumnIndex(Constant.FIELD_CREATE_TIME);
 
 
@@ -603,6 +636,9 @@ public class ApexWalletDbDao {
                 String assetSymbol = cursor.getString(assetSymbolIndex);
                 String assetLogoUrl = cursor.getString(assetLogoUrlIndex);
                 int assetDecimal = cursor.getInt(assetDecimalIndex);
+                String gasPrice = cursor.getString(gasPriceIndex);
+                String blockNumber = cursor.getString(blockNumberIndex);
+                String gasFee = cursor.getString(gasFeeIndex);
                 long createTime = cursor.getLong(createTimeIndex);
 
                 TransactionRecord transactionRecord = new TransactionRecord();
@@ -618,6 +654,9 @@ public class ApexWalletDbDao {
                 transactionRecord.setAssetSymbol(assetSymbol);
                 transactionRecord.setAssetLogoUrl(assetLogoUrl);
                 transactionRecord.setAssetDecimal(assetDecimal);
+                transactionRecord.setGasPrice(gasPrice);
+                transactionRecord.setBlockNumber(blockNumber);
+                transactionRecord.setGasFee(gasFee);
                 transactionRecord.setTxTime(createTime);
 
                 transactionRecords.add(transactionRecord);
@@ -677,16 +716,16 @@ public class ApexWalletDbDao {
         closeDatabase();
     }
 
-    public void delCacheByTxId(String txId) {
-        if (TextUtils.isEmpty(txId)) {
-            CpLog.e(TAG, "delCacheByTxId() -> txId is null!");
+    public void delCacheByTxId(String tableName, String txId) {
+        if (TextUtils.isEmpty(tableName) || TextUtils.isEmpty(txId)) {
+            CpLog.e(TAG, "delCacheByTxId() -> tableName or txId is null!");
             return;
         }
 
         SQLiteDatabase db = openDatabase();
         try {
             db.beginTransaction();
-            db.delete(Constant.TABLE_TX_CACHE, WHERE_CLAUSE_FIELD_TX_ID_EQ, new String[]{txId});
+            db.delete(tableName, WHERE_CLAUSE_FIELD_TX_ID_EQ, new String[]{txId});
             db.setTransactionSuccessful();
             CpLog.i(TAG, "delCacheByTxId() -> delete:" + txId + " ok!");
         } catch (Exception e) {
@@ -724,6 +763,9 @@ public class ApexWalletDbDao {
                 int assetSymbolIndex = cursor.getColumnIndex(Constant.FIELD_ASSET_SYMBOL);
                 int assetLogoUrlIndex = cursor.getColumnIndex(Constant.FIELD_ASSET_LOGO_URL);
                 int assetDecimalIndex = cursor.getColumnIndex(Constant.FIELD_ASSET_DECIMAL);
+                int gasPriceIndex = cursor.getColumnIndex(Constant.FIELD_GAS_PRICE);
+                int blockNumberIndex = cursor.getColumnIndex(Constant.FIELD_BLOCK_NUMBER);
+                int gasFeeIndex = cursor.getColumnIndex(Constant.FIELD_GAS_FEE);
                 int createTimeIndex = cursor.getColumnIndex(Constant.FIELD_CREATE_TIME);
 
 
@@ -739,6 +781,9 @@ public class ApexWalletDbDao {
                 String assetSymbol = cursor.getString(assetSymbolIndex);
                 String assetLogoUrl = cursor.getString(assetLogoUrlIndex);
                 int assetDecimal = cursor.getInt(assetDecimalIndex);
+                String gasPrice = cursor.getString(gasPriceIndex);
+                String blockNumber = cursor.getString(blockNumberIndex);
+                String gasFee = cursor.getString(gasFeeIndex);
                 long createTime = cursor.getLong(createTimeIndex);
 
                 TransactionRecord transactionRecord = new TransactionRecord();
@@ -754,6 +799,9 @@ public class ApexWalletDbDao {
                 transactionRecord.setAssetSymbol(assetSymbol);
                 transactionRecord.setAssetLogoUrl(assetLogoUrl);
                 transactionRecord.setAssetDecimal(assetDecimal);
+                transactionRecord.setGasPrice(gasPrice);
+                transactionRecord.setBlockNumber(blockNumber);
+                transactionRecord.setGasFee(gasFee);
                 transactionRecord.setTxTime(createTime);
 
                 transactionRecords.add(transactionRecord);

@@ -9,7 +9,6 @@ import chinapex.com.wallet.bean.AssertTxBean;
 import chinapex.com.wallet.bean.AssetBean;
 import chinapex.com.wallet.bean.Nep5TxBean;
 import chinapex.com.wallet.bean.TransactionRecord;
-import chinapex.com.wallet.bean.gasfee.EthTxFee;
 import chinapex.com.wallet.bean.gasfee.ITxFee;
 import chinapex.com.wallet.bean.gasfee.NeoTxFee;
 import chinapex.com.wallet.bean.tx.ITxBean;
@@ -231,10 +230,10 @@ public class CreateNeoTxModel implements ICreateTxModel, IGetUtxosCallback, ICre
 
         if (isSuccess) {
             transactionRecord.setTxState(Constant.TRANSACTION_STATE_PACKAGING);
-            apexWalletDbDao.insertTxRecord(Constant.TABLE_TX_CACHE, transactionRecord);
+            apexWalletDbDao.insertTxRecord(Constant.TABLE_NEO_TX_CACHE, transactionRecord);
         } else {
             transactionRecord.setTxState(Constant.TRANSACTION_STATE_FAIL);
-            apexWalletDbDao.insertTxRecord(Constant.TABLE_TRANSACTION_RECORD, transactionRecord);
+            apexWalletDbDao.insertTxRecord(Constant.TABLE_NEO_TRANSACTION_RECORD, transactionRecord);
         }
 
         // start polling

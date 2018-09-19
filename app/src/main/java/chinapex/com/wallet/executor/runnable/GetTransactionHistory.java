@@ -45,18 +45,11 @@ public class GetTransactionHistory implements Runnable, INetCallback {
             return;
         }
 
-        ApexWalletDbDao apexWalletDbDao = ApexWalletDbDao.getInstance(ApexWalletApplication
-                .getInstance());
-        if (null == apexWalletDbDao) {
-            CpLog.e(TAG, "apexWalletDbDao is null!");
-            return;
-        }
-
         mRecentTime = (long) SharedPreferencesUtils.getParam(ApexWalletApplication.getInstance(),
                 mAddress, 0L);
         CpLog.i(TAG, "mRecentTime:" + mRecentTime);
 
-        String url = Constant.URL_TRANSACTION_HISTORY + mAddress + "?beginTime=" + mRecentTime;
+        String url = Constant.URL_NEO_TRANSACTION_HISTORY + mAddress + "?beginTime=" + mRecentTime;
         OkHttpClientManager.getInstance().get(url, this);
     }
 
@@ -93,7 +86,7 @@ public class GetTransactionHistory implements Runnable, INetCallback {
         }
 
         HashMap<String, TransactionRecord> txCacheByAddress = apexWalletDbDao
-                .queryTxCacheByAddress(Constant.TABLE_TX_CACHE, mAddress);
+                .queryTxCacheByAddress(Constant.TABLE_NEO_TX_CACHE, mAddress);
 
         if (null == txCacheByAddress) {
             CpLog.e(TAG, "txCacheByAddress is null!");
@@ -124,7 +117,7 @@ public class GetTransactionHistory implements Runnable, INetCallback {
                 transactionRecord.setTxState(Constant.TRANSACTION_STATE_CONFIRMING);
                 ApexListeners.getInstance().notifyTxStateUpdate(txID, Constant
                         .TRANSACTION_STATE_CONFIRMING, txTime);
-                apexWalletDbDao.delCacheByTxIDAndAddr(Constant.TABLE_TX_CACHE, txID, mAddress);
+                apexWalletDbDao.delCacheByTxIDAndAddr(Constant.TABLE_NEO_TX_CACHE, txID, mAddress);
             } else {
                 switch (txType) {
                     case Constant.ASSET_TYPE_NEP5:
@@ -165,9 +158,9 @@ public class GetTransactionHistory implements Runnable, INetCallback {
             transactionRecord.setTxTime(txTime);
 
             List<TransactionRecord> txsByTxIdAndAddress = apexWalletDbDao.queryTxByTxIdAndAddress
-                    (Constant.TABLE_TRANSACTION_RECORD, txID, mAddress);
+                    (Constant.TABLE_NEO_TRANSACTION_RECORD, txID, mAddress);
             if (null == txsByTxIdAndAddress || txsByTxIdAndAddress.isEmpty()) {
-                apexWalletDbDao.insertTxRecord(Constant.TABLE_TRANSACTION_RECORD, transactionRecord);
+                apexWalletDbDao.insertTxRecord(Constant.TABLE_NEO_TRANSACTION_RECORD, transactionRecord);
                 transactionRecords.add(transactionRecord);
             }
         }

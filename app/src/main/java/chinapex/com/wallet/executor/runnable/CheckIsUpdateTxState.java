@@ -42,13 +42,13 @@ public class CheckIsUpdateTxState implements Runnable {
         List<TransactionRecord> needUpdateStateTxs = new ArrayList<>();
 
         List<TransactionRecord> packagingTxs = apexWalletDbDao.queryTxByState(Constant
-                .TABLE_TX_CACHE, Constant.TRANSACTION_STATE_PACKAGING);
+                .TABLE_NEO_TX_CACHE, Constant.TRANSACTION_STATE_PACKAGING);
         if (null != packagingTxs && !packagingTxs.isEmpty()) {
             needUpdateStateTxs.addAll(packagingTxs);
         }
 
         List<TransactionRecord> confirmingTxs = apexWalletDbDao.queryTxByState(Constant
-                .TABLE_TRANSACTION_RECORD, Constant.TRANSACTION_STATE_CONFIRMING);
+                .TABLE_NEO_TRANSACTION_RECORD, Constant.TRANSACTION_STATE_CONFIRMING);
         if (null != confirmingTxs && !confirmingTxs.isEmpty()) {
             needUpdateStateTxs.addAll(confirmingTxs);
         }

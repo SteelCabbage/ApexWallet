@@ -49,14 +49,14 @@ public class LoadTransacitonRecord implements Runnable {
         List<TransactionRecord> finalTxs = new ArrayList<>();
 
         List<TransactionRecord> txCache = apexWalletDbDao.queryTxByAddress(Constant
-                .TABLE_TX_CACHE, mAddress);
+                .TABLE_NEO_TX_CACHE, mAddress);
         if (null != txCache && !txCache.isEmpty()) {
             Collections.reverse(txCache);
             finalTxs.addAll(txCache);
         }
 
         List<TransactionRecord> transactionRecords = apexWalletDbDao.queryTxByAddress(Constant
-                .TABLE_TRANSACTION_RECORD, mAddress);
+                .TABLE_NEO_TRANSACTION_RECORD, mAddress);
         if (null != transactionRecords && !transactionRecords.isEmpty()) {
             Collections.reverse(transactionRecords);
             finalTxs.addAll(transactionRecords);

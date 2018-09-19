@@ -79,9 +79,9 @@ public class ImpUpdateTxStateCallback implements IUpdateTxStateCallback, IGetTra
             return;
         }
 
-        List<TransactionRecord> cacheTxs = apexWalletDbDao.queryTxCacheByTxId(mTxId);
+        List<TransactionRecord> cacheTxs = apexWalletDbDao.queryTxCacheByTxId(Constant.TABLE_NEO_TX_CACHE, mTxId);
         if (null == cacheTxs || cacheTxs.isEmpty()) {
-            apexWalletDbDao.updateTxState(Constant.TABLE_TRANSACTION_RECORD, mTxId, Constant.TRANSACTION_STATE_SUCCESS);
+            apexWalletDbDao.updateTxState(Constant.TABLE_NEO_TRANSACTION_RECORD, mTxId, Constant.TRANSACTION_STATE_SUCCESS);
             ApexListeners.getInstance().notifyTxStateUpdate(mTxId, Constant.TRANSACTION_STATE_SUCCESS, Constant
                     .NO_NEED_MODIFY_TX_TIME);
             return;
@@ -94,9 +94,9 @@ public class ImpUpdateTxStateCallback implements IUpdateTxStateCallback, IGetTra
             }
 
             cacheTx.setTxState(Constant.TRANSACTION_STATE_FAIL);
-            apexWalletDbDao.insertTxRecord(Constant.TABLE_TRANSACTION_RECORD, cacheTx);
+            apexWalletDbDao.insertTxRecord(Constant.TABLE_NEO_TRANSACTION_RECORD, cacheTx);
         }
         ApexListeners.getInstance().notifyTxStateUpdate(mTxId, Constant.TRANSACTION_STATE_FAIL, Constant.NO_NEED_MODIFY_TX_TIME);
-        apexWalletDbDao.delCacheByTxId(mTxId);
+        apexWalletDbDao.delCacheByTxId(Constant.TABLE_NEO_TX_CACHE, mTxId);
     }
 }

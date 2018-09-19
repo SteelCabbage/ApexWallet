@@ -59,14 +59,16 @@ public class Constant {
     public static final String WALLET_TYPE_NAME_ETH = "ETH";
     public static final String WALLET_TYPE_NAME_CPX = "CPX";
 
-    // 交易记录
-    public static final String URL_TRANSACTION_HISTORY = "https://tracker.chinapex.com" +
-            ".cn/tool/transaction-history/";
+    // neo交易记录
+    public static final String URL_NEO_TRANSACTION_HISTORY = "https://tracker.chinapex.com.cn/tool/transaction-history/";
     public static final long TX_POLLING_TIME = 20 * 1000;
     public static final long TX_CONFIRM_EXCEPTION = -1;
     public static final long TX_UN_CONFIRM = 0;
     public static final long TX_CONFIRM_OK = 6;
     public static final long NO_NEED_MODIFY_TX_TIME = -2;
+
+    // eth交易记录
+    public static final String URL_ETH_TRANSACTION_HISTORY = "https://tracker.chinapex.com.cn/tool/test/eth-transaction";
 
     // fragmentTag
     public static final String FRAGMENT_TAG_IMPORT_MNEMONIC = "ImportMnemonicFragment";
@@ -216,7 +218,7 @@ public class Constant {
 
 
     // table transaction record
-    public static final String TABLE_TRANSACTION_RECORD = "transaction_record";
+    public static final String TABLE_NEO_TRANSACTION_RECORD = "neo_transaction_record";
 
     public static final String FIELD_TX_TYPE = "tx_type";
     public static final String FIELD_TX_ID = "tx_id";
@@ -229,9 +231,11 @@ public class Constant {
     public static final String FIELD_ASSET_SYMBOL = "asset_symbol";
     public static final String FIELD_ASSET_LOGO_URL = "asset_logo_url";
     public static final String FIELD_ASSET_DECIMAL = "asset_decimal";
+    public static final String FIELD_GAS_PRICE = "gas_price";
+    public static final String FIELD_BLOCK_NUMBER = "block_number";
+    public static final String FIELD_GAS_FEE = "gas_fee";
 
-    public static final String SQL_CREATE_TRANSACTION_RECORD = "create table " +
-            TABLE_TRANSACTION_RECORD
+    public static final String SQL_CREATE_NEO_TRANSACTION_RECORD = "create table " + TABLE_NEO_TRANSACTION_RECORD
             + " (" + FIELD_ID + " integer primary key autoincrement, "
             + FIELD_WALLET_ADDRESS + " text, "
             + FIELD_TX_TYPE + " text, "
@@ -245,13 +249,15 @@ public class Constant {
             + FIELD_ASSET_SYMBOL + " text, "
             + FIELD_ASSET_LOGO_URL + " text, "
             + FIELD_ASSET_DECIMAL + " integer, "
+            + FIELD_GAS_PRICE + " text, "
+            + FIELD_BLOCK_NUMBER + " text, "
+            + FIELD_GAS_FEE + " text, "
             + FIELD_CREATE_TIME + " integer)";
 
     // table tx cache
-    public static final String TABLE_TX_CACHE = "txCache";
+    public static final String TABLE_NEO_TX_CACHE = "neo_txCache";
 
-    public static final String SQL_CREATE_TX_CACHE = "create table " +
-            TABLE_TX_CACHE
+    public static final String SQL_CREATE_NEO_TX_CACHE = "create table " + TABLE_NEO_TX_CACHE
             + " (" + FIELD_ID + " integer primary key autoincrement, "
             + FIELD_WALLET_ADDRESS + " text, "
             + FIELD_TX_TYPE + " text, "
@@ -265,6 +271,51 @@ public class Constant {
             + FIELD_ASSET_SYMBOL + " text, "
             + FIELD_ASSET_LOGO_URL + " text, "
             + FIELD_ASSET_DECIMAL + " integer, "
+            + FIELD_GAS_PRICE + " text, "
+            + FIELD_BLOCK_NUMBER + " text, "
+            + FIELD_GAS_FEE + " text, "
+            + FIELD_CREATE_TIME + " integer)";
+
+    public static final String TABLE_ETH_TRANSACTION_RECORD = "eth_transaction_record";
+
+    public static final String SQL_CREATE_ETH_TRANSACTION_RECORD = "create table " + TABLE_ETH_TRANSACTION_RECORD
+            + " (" + FIELD_ID + " integer primary key autoincrement, "
+            + FIELD_WALLET_ADDRESS + " text, "
+            + FIELD_TX_TYPE + " text, "
+            + FIELD_TX_ID + " text, "
+            + FIELD_TX_AMOUNT + " text, "
+            + FIELD_TX_STATE + " integer, "
+            + FIELD_TX_FROM + " text, "
+            + FIELD_TX_TO + " text, "
+            + FIELD_GAS_CONSUMED + " text, "
+            + FIELD_ASSET_ID + " text, "
+            + FIELD_ASSET_SYMBOL + " text, "
+            + FIELD_ASSET_LOGO_URL + " text, "
+            + FIELD_ASSET_DECIMAL + " integer, "
+            + FIELD_GAS_PRICE + " text, "
+            + FIELD_BLOCK_NUMBER + " text, "
+            + FIELD_GAS_FEE + " text, "
+            + FIELD_CREATE_TIME + " integer)";
+
+    public static final String TABLE_ETH_TX_CACHE = "eth_txCache";
+
+    public static final String SQL_CREATE_ETH_TX_CACHE = "create table " + TABLE_ETH_TX_CACHE
+            + " (" + FIELD_ID + " integer primary key autoincrement, "
+            + FIELD_WALLET_ADDRESS + " text, "
+            + FIELD_TX_TYPE + " text, "
+            + FIELD_TX_ID + " text, "
+            + FIELD_TX_AMOUNT + " text, "
+            + FIELD_TX_STATE + " integer, "
+            + FIELD_TX_FROM + " text, "
+            + FIELD_TX_TO + " text, "
+            + FIELD_GAS_CONSUMED + " text, "
+            + FIELD_ASSET_ID + " text, "
+            + FIELD_ASSET_SYMBOL + " text, "
+            + FIELD_ASSET_LOGO_URL + " text, "
+            + FIELD_ASSET_DECIMAL + " integer, "
+            + FIELD_GAS_PRICE + " text, "
+            + FIELD_BLOCK_NUMBER + " text, "
+            + FIELD_GAS_FEE + " text, "
             + FIELD_CREATE_TIME + " integer)";
 
     // table assets
