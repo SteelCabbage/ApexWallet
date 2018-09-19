@@ -24,15 +24,15 @@ import chinapex.com.wallet.utils.SharedPreferencesUtils;
  * E-Mail：liuyi_61@163.com
  */
 
-public class GetTransactionHistory implements Runnable, INetCallback {
+public class GetNeoTransactionHistory implements Runnable, INetCallback {
 
-    private static final String TAG = GetTransactionHistory.class.getSimpleName();
+    private static final String TAG = GetNeoTransactionHistory.class.getSimpleName();
 
     private String mAddress;
     private IGetTransactionHistoryCallback mIGetTransactionHistoryCallback;
     private long mRecentTime;
 
-    public GetTransactionHistory(String address, IGetTransactionHistoryCallback
+    public GetNeoTransactionHistory(String address, IGetTransactionHistoryCallback
             IGetTransactionHistoryCallback) {
         mAddress = address;
         mIGetTransactionHistoryCallback = IGetTransactionHistoryCallback;

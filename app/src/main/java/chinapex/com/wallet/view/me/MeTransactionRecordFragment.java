@@ -30,8 +30,10 @@ import chinapex.com.wallet.changelistener.OnTxStateUpdateListener;
 import chinapex.com.wallet.executor.TaskController;
 import chinapex.com.wallet.executor.callback.IGetTransactionHistoryCallback;
 import chinapex.com.wallet.executor.callback.ILoadTransactionRecordCallback;
-import chinapex.com.wallet.executor.runnable.GetTransactionHistory;
+import chinapex.com.wallet.executor.callback.eth.IGetEthTransactionHistoryCallback;
+import chinapex.com.wallet.executor.runnable.GetNeoTransactionHistory;
 import chinapex.com.wallet.executor.runnable.LoadTransacitonRecord;
+import chinapex.com.wallet.executor.runnable.eth.GetEthTransactionHistory;
 import chinapex.com.wallet.global.ApexWalletApplication;
 import chinapex.com.wallet.global.Constant;
 import chinapex.com.wallet.utils.CpLog;
@@ -47,7 +49,7 @@ public class MeTransactionRecordFragment extends BaseFragment implements View.On
         SwipeRefreshLayout.OnRefreshListener, TransactionRecordRecyclerViewAdapter
                 .OnItemClickListener, IGetTransactionHistoryCallback,
         ILoadTransactionRecordCallback, OnTxStateUpdateListener, TextWatcher, SwitchWallet2Dialog
-                .onSelectedWalletListener {
+                .onSelectedWalletListener, IGetEthTransactionHistoryCallback {
 
     private static final String TAG = MeTransactionRecordFragment.class.getSimpleName();
 
@@ -140,7 +142,8 @@ public class MeTransactionRecordFragment extends BaseFragment implements View.On
                 mEmptyAdapter.notifyDataSetChanged();
             }
         });
-        TaskController.getInstance().submit(new LoadTransacitonRecord(address, this));
+
+        TaskController.getInstance().submit(new LoadTransacitonRecord(mCurrentClickedWallet.getWalletType(), address, this));
     }
 
     @Override
@@ -176,8 +179,22 @@ public class MeTransactionRecordFragment extends BaseFragment implements View.On
     }
 
     private void incrementalUpdateTxDbFromNet() {
-        String walletAddr = mTv_me_transaction_record_address.getText().toString().trim();
-        TaskController.getInstance().submit(new GetTransactionHistory(walletAddr, this));
+        String address = mTv_me_transaction_record_address.getText().toString().trim();
+        int walletType = mCurrentClickedWallet.getWalletType();
+        switch (walletType) {
+            case Constant.WALLET_TYPE_NEO:
+                TaskController.getInstance().submit(new GetNeoTransactionHistory(address, this));
+                break;
+            case Constant.WALLET_TYPE_ETH:
+                TaskController.getInstance().submit(new GetEthTransactionHistory(address, this));
+                break;
+            case Constant.WALLET_TYPE_CPX:
+
+                break;
+            default:
+                CpLog.e(TAG, "Illegal wallet type!");
+                break;
+        }
     }
 
     @Override

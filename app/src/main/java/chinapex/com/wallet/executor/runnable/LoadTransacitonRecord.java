@@ -22,11 +22,12 @@ public class LoadTransacitonRecord implements Runnable {
 
     private static final String TAG = LoadTransacitonRecord.class.getSimpleName();
 
+    private int mWalletType;
     private String mAddress;
     private ILoadTransactionRecordCallback mILoadTransactionRecordCallback;
 
-    public LoadTransacitonRecord(String address, ILoadTransactionRecordCallback
-            ILoadTransactionRecordCallback) {
+    public LoadTransacitonRecord(int walletType, String address, ILoadTransactionRecordCallback ILoadTransactionRecordCallback) {
+        mWalletType = walletType;
         mAddress = address;
         mILoadTransactionRecordCallback = ILoadTransactionRecordCallback;
     }

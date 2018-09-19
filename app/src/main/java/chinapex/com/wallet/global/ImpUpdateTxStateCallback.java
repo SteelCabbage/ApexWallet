@@ -10,7 +10,7 @@ import chinapex.com.wallet.changelistener.ApexListeners;
 import chinapex.com.wallet.executor.TaskController;
 import chinapex.com.wallet.executor.callback.IGetTransactionHistoryCallback;
 import chinapex.com.wallet.executor.callback.IUpdateTxStateCallback;
-import chinapex.com.wallet.executor.runnable.GetTransactionHistory;
+import chinapex.com.wallet.executor.runnable.GetNeoTransactionHistory;
 import chinapex.com.wallet.model.ApexWalletDbDao;
 import chinapex.com.wallet.utils.CpLog;
 
@@ -60,7 +60,7 @@ public class ImpUpdateTxStateCallback implements IUpdateTxStateCallback, IGetTra
         }
 
         mConfirmations = confirmations;
-        TaskController.getInstance().submit(new GetTransactionHistory(walletAddress, this));
+        TaskController.getInstance().submit(new GetNeoTransactionHistory(walletAddress, this));
     }
 
     @Override

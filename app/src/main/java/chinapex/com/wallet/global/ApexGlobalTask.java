@@ -110,12 +110,12 @@ public class ApexGlobalTask implements ICheckIsUpdateNeoAssetsCallback, IGetNeoA
                 continue;
             }
 
-            startPolling(transactionRecord.getTxID(), transactionRecord.getWalletAddress());
+            startNeoPolling(transactionRecord.getTxID(), transactionRecord.getWalletAddress());
             CpLog.i(TAG, "restart polling for txId:" + transactionRecord.getTxID());
         }
     }
 
-    public void startPolling(String txId, String walletAddress) {
+    public void startNeoPolling(String txId, String walletAddress) {
         if (TextUtils.isEmpty(txId) || TextUtils.isEmpty(walletAddress)) {
             CpLog.e(TAG, "txId or walletAddress is null!");
             return;
@@ -125,6 +125,10 @@ public class ApexGlobalTask implements ICheckIsUpdateNeoAssetsCallback, IGetNeoA
         ScheduledFuture updateTxStateSF = TaskController.getInstance().schedule(new UpdateTxState
                 (txId, walletAddress, impUpdateTxStateCallback), 0, Constant.TX_POLLING_TIME);
         impUpdateTxStateCallback.setScheduledFuture(updateTxStateSF);
+    }
+
+    public void startEthPolling(String txId, String walletAddress) {
+        // TODO: 2018/9/19 0019
     }
 
 }

@@ -234,19 +234,15 @@ public class CreateNeoTxModel implements ICreateTxModel, IGetUtxosCallback, ICre
         } else {
             transactionRecord.setTxState(Constant.TRANSACTION_STATE_FAIL);
             apexWalletDbDao.insertTxRecord(Constant.TABLE_NEO_TRANSACTION_RECORD, transactionRecord);
+            mICreateTxModelCallback.CreateTxModel(ApexWalletApplication.getInstance().getResources().getString(R.string
+                    .transaction_broadcast_failed), true);
+            return;
         }
 
         // start polling
-        ApexGlobalTask.getInstance().startPolling(mOrder, mNeoTxBean.getFromAddress());
-
-        // prompt the user
-        if (isSuccess) {
-            mICreateTxModelCallback.CreateTxModel(ApexWalletApplication.getInstance().getResources().getString(R.string
-                    .transaction_broadcast_successful), true);
-        } else {
-            mICreateTxModelCallback.CreateTxModel(ApexWalletApplication.getInstance().getResources().getString(R.string
-                    .transaction_broadcast_failed), true);
-        }
+        ApexGlobalTask.getInstance().startNeoPolling(mOrder, mNeoTxBean.getFromAddress());
+        mICreateTxModelCallback.CreateTxModel(ApexWalletApplication.getInstance().getResources().getString(R.string
+                .transaction_broadcast_successful), true);
     }
 
 }
