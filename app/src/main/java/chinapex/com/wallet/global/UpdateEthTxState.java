@@ -49,7 +49,7 @@ public class UpdateEthTxState implements IGetEthTransactionReceiptCallback, IGet
         }
 
         if (TextUtils.isEmpty(blockNumber)) {
-            CpLog.e(TAG, "getEthTransactionReceipt()-> blockNumber is null,this tx is not in block!");
+            CpLog.w(TAG, "getEthTransactionReceipt()-> blockNumber is null,this tx is not in block!");
             return;
         }
 
@@ -61,14 +61,9 @@ public class UpdateEthTxState implements IGetEthTransactionReceiptCallback, IGet
         }
 
         mGetTxReceiptSF.cancel(true);
+        mGetBlockNumberSF = TaskController.getInstance().schedule(new GetEthBlockNumber(this), 0, Constant.TX_ETH_POLLING_TIME);
         mUpdateTxRecordsSF = TaskController.getInstance().schedule(new GetEthTransactionHistory(walletAddress, this), 0,
                 Constant.TX_ETH_POLLING_TIME);
-        mGetBlockNumberSF = TaskController.getInstance().schedule(new GetEthBlockNumber(this), 0, Constant.TX_ETH_POLLING_TIME);
-
-    }
-
-    @Override
-    public void getEthTransactionHistory(List<TransactionRecord> transactionRecords) {
 
     }
 
@@ -91,6 +86,43 @@ public class UpdateEthTxState implements IGetEthTransactionReceiptCallback, IGet
             mUpdateTxRecordsSF.cancel(false);
             mGetBlockNumberSF.cancel(false);
         }
+    }
+
+    @Override
+    public void getEthTransactionHistory(List<TransactionRecord> transactionRecords) {
+        if (Constant.TX_ETH_CONFIRM_OK > mCurrentBlockNum - mTxOfBlockNum) {
+            return;
+        }
+
+        handleTx();
+    }
+
+    private void handleTx() {
+        ApexWalletDbDao apexWalletDbDao = ApexWalletDbDao.getInstance(ApexWalletApplication.getInstance());
+        if (null == apexWalletDbDao) {
+            CpLog.e(TAG, "apexWalletDbDao is null!");
+            return;
+        }
+
+        List<TransactionRecord> cacheTxs = apexWalletDbDao.queryTxCacheByTxId(Constant.TABLE_ETH_TX_CACHE, mTxId);
+        if (null == cacheTxs || cacheTxs.isEmpty()) {
+            apexWalletDbDao.updateTxState(Constant.TABLE_ETH_TRANSACTION_RECORD, mTxId, Constant.TRANSACTION_STATE_SUCCESS);
+            ApexListeners.getInstance().notifyTxStateUpdate(mTxId, Constant.TRANSACTION_STATE_SUCCESS, Constant
+                    .NO_NEED_MODIFY_TX_TIME);
+            return;
+        }
+
+        for (TransactionRecord cacheTx : cacheTxs) {
+            if (null == cacheTx) {
+                CpLog.e(TAG, "cacheTx is null!");
+                continue;
+            }
+
+            cacheTx.setTxState(Constant.TRANSACTION_STATE_FAIL);
+            apexWalletDbDao.insertTxRecord(Constant.TABLE_ETH_TRANSACTION_RECORD, cacheTx);
+        }
+        ApexListeners.getInstance().notifyTxStateUpdate(mTxId, Constant.TRANSACTION_STATE_FAIL, Constant.NO_NEED_MODIFY_TX_TIME);
+        apexWalletDbDao.delCacheByTxId(Constant.TABLE_ETH_TX_CACHE, mTxId);
     }
 
 }

@@ -69,10 +69,10 @@ public class UpdateNeoTxState implements IGetRawTransactionCallback, IGetNeoTran
             return;
         }
 
-        handleFailedTx();
+        handleTx();
     }
 
-    private void handleFailedTx() {
+    private void handleTx() {
         ApexWalletDbDao apexWalletDbDao = ApexWalletDbDao.getInstance(ApexWalletApplication.getInstance());
         if (null == apexWalletDbDao) {
             CpLog.e(TAG, "apexWalletDbDao is null!");
