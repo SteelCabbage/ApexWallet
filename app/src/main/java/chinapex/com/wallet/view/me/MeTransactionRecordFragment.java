@@ -32,7 +32,7 @@ import chinapex.com.wallet.executor.callback.IGetTransactionHistoryCallback;
 import chinapex.com.wallet.executor.callback.ILoadTransactionRecordCallback;
 import chinapex.com.wallet.executor.callback.eth.IGetEthTransactionHistoryCallback;
 import chinapex.com.wallet.executor.runnable.GetNeoTransactionHistory;
-import chinapex.com.wallet.executor.runnable.LoadTransacitonRecord;
+import chinapex.com.wallet.executor.runnable.LoadTransactionRecord;
 import chinapex.com.wallet.executor.runnable.eth.GetEthTransactionHistory;
 import chinapex.com.wallet.global.ApexWalletApplication;
 import chinapex.com.wallet.global.Constant;
@@ -143,7 +143,7 @@ public class MeTransactionRecordFragment extends BaseFragment implements View.On
             }
         });
 
-        TaskController.getInstance().submit(new LoadTransacitonRecord(mCurrentClickedWallet.getWalletType(), address, this));
+        TaskController.getInstance().submit(new LoadTransactionRecord(mCurrentClickedWallet.getWalletType(), address, this));
     }
 
     @Override

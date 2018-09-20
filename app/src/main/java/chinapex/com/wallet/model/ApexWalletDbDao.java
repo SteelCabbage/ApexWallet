@@ -364,8 +364,7 @@ public class ApexWalletDbDao {
         List<TransactionRecord> transactionRecords = new ArrayList<>();
 
         if (TextUtils.isEmpty(tableName) || TextUtils.isEmpty(walletAddress)) {
-            CpLog.e(TAG, "queryTxByAddress() -> tableName or walletAddress " +
-                    "is null!");
+            CpLog.e(TAG, "queryTxByAddress() -> tableName or walletAddress is null!");
             return transactionRecords;
         }
 
