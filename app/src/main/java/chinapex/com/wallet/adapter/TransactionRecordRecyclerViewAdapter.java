@@ -96,26 +96,22 @@ public class TransactionRecordRecyclerViewAdapter extends RecyclerView
         switch (transactionRecord.getTxState()) {
             case Constant.TRANSACTION_STATE_FAIL:
                 holder.txState.setText(R.string.tx_failed);
-                holder.txState.setTextColor(ApexWalletApplication.getInstance().getResources()
-                        .getColor(R.color.c_E16A67));
+                holder.txState.setTextColor(ApexWalletApplication.getInstance().getResources().getColor(R.color.c_E16A67));
                 holder.txTime.setVisibility(View.INVISIBLE);
                 break;
             case Constant.TRANSACTION_STATE_SUCCESS:
                 holder.txState.setText(R.string.tx_successful);
-                holder.txState.setTextColor(ApexWalletApplication.getInstance().getResources()
-                        .getColor(R.color.c_54CA80));
+                holder.txState.setTextColor(ApexWalletApplication.getInstance().getResources().getColor(R.color.c_54CA80));
                 holder.txTime.setVisibility(View.VISIBLE);
                 break;
             case Constant.TRANSACTION_STATE_CONFIRMING:
                 holder.txState.setText(R.string.tx_confirming);
-                holder.txState.setTextColor(ApexWalletApplication.getInstance().getResources()
-                        .getColor(R.color.c_1253BF));
+                holder.txState.setTextColor(ApexWalletApplication.getInstance().getResources().getColor(R.color.c_1253BF));
                 holder.txTime.setVisibility(View.VISIBLE);
                 break;
             case Constant.TRANSACTION_STATE_PACKAGING:
                 holder.txState.setText(R.string.tx_blocking);
-                holder.txState.setTextColor(ApexWalletApplication.getInstance().getResources()
-                        .getColor(R.color.c_F5A623));
+                holder.txState.setTextColor(ApexWalletApplication.getInstance().getResources().getColor(R.color.c_F5A623));
                 holder.txTime.setVisibility(View.INVISIBLE);
                 break;
             default:
@@ -189,9 +185,29 @@ public class TransactionRecordRecyclerViewAdapter extends RecyclerView
                 GlideApp.with(ApexWalletApplication.getInstance()).load(R.drawable.logo_nep5_zpt)
                         .into(holder.txLogo);
                 break;
+            case Constant.ASSETS_ETH:
+                GlideApp.with(ApexWalletApplication.getInstance()).load(R.drawable.icon_wallet_type_eth)
+                        .into(holder.txLogo);
+                break;
             default:
-                GlideApp.with(ApexWalletApplication.getInstance()).load(transactionRecord
-                        .getAssetLogoUrl()).into(holder.txLogo);
+                switch (transactionRecord.getTxType()) {
+                    case Constant.ASSET_TYPE_NEP5:
+                        GlideApp.with(ApexWalletApplication.getInstance())
+                                .load(transactionRecord.getAssetLogoUrl())
+                                .placeholder(R.drawable.logo_global_neo)
+                                .error(R.drawable.logo_global_neo)
+                                .into(holder.txLogo);
+                        break;
+                    case Constant.ASSET_TYPE_ERC20:
+                        GlideApp.with(ApexWalletApplication.getInstance())
+                                .load(transactionRecord.getAssetLogoUrl())
+                                .placeholder(R.drawable.icon_wallet_type_eth)
+                                .error(R.drawable.icon_wallet_type_eth)
+                                .into(holder.txLogo);
+                        break;
+                    default:
+                        break;
+                }
                 break;
         }
 
