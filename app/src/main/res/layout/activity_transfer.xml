@@ -46,7 +46,7 @@
 
     <EditText
         android:id="@+id/et_transfer_to_wallet_addr"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/tv_transfer_from_margin_start"
         android:background="@null"

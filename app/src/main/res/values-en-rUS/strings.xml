@@ -93,6 +93,9 @@
     <string name="latest_activity">Latest Activity</string>
     <string name="current_gas_price">Current Gas Price:</string>
     <string name="gas_fee">Gas Fee ≈</string>
+    <string name="gas_consumed">Gas Used</string>
+    <string name="gas_price">Gas Price</string>
+    <string name="gas_total_fee">Gas Fee</string>
 
     <!--Me页面，功能菜单文字-->
     <string name="personal_portrait">Profile</string>
