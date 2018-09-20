@@ -291,12 +291,12 @@ public class CreateEthTxModel implements ICreateTxModel, ICreateEthTxCallback, I
         TransactionRecord transactionRecord = new TransactionRecord();
         transactionRecord.setWalletAddress(mEthTxBean.getFromAddress());
         transactionRecord.setTxType(mEthTxBean.getAssetType());
+        transactionRecord.setTxID(txId);
         String amountDec = WalletUtils.toDecString(mEthTxBean.getAmount(), String.valueOf(mEthTxBean.getAssetDecimal()));
         transactionRecord.setTxAmount("-" + amountDec);
         transactionRecord.setTxFrom(mEthTxBean.getFromAddress());
         transactionRecord.setTxTo(mEthTxBean.getToAddress());
         transactionRecord.setTxTime(0);
-        transactionRecord.setTxID(txId);
 
         AssetBean assetBean = apexWalletDbDao.queryAssetByHash(Constant.TABLE_ETH_ASSETS, mEthTxBean.getAssetID());
         if (null == assetBean) {

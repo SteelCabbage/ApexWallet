@@ -288,9 +288,11 @@ public class TransferActivity extends BaseActivity implements View.OnClickListen
 
         switch (assetType) {
             case Constant.ASSET_TYPE_GLOBAL:
+                neoTxBean.setAssetType(assetType);
                 mICreateTxPresenter.createGlobalTx(neoTxBean);
                 break;
             case Constant.ASSET_TYPE_NEP5:
+                neoTxBean.setAssetType(assetType);
                 mICreateTxPresenter.createColorTx(neoTxBean);
                 break;
             default:

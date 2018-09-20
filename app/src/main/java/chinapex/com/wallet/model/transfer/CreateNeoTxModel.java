@@ -212,6 +212,7 @@ public class CreateNeoTxModel implements ICreateTxModel, IGetUtxosCallback, ICre
 
         TransactionRecord transactionRecord = new TransactionRecord();
         transactionRecord.setWalletAddress(mNeoTxBean.getFromAddress());
+        transactionRecord.setTxType(mNeoTxBean.getAssetType());
         transactionRecord.setTxAmount("-" + mNeoTxBean.getAmount());
         transactionRecord.setTxFrom(mNeoTxBean.getFromAddress());
         transactionRecord.setTxTo(mNeoTxBean.getToAddress());
