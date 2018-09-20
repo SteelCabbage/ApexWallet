@@ -9,7 +9,7 @@ import chinapex.com.wallet.bean.TransactionRecord;
 import chinapex.com.wallet.changelistener.ApexListeners;
 import chinapex.com.wallet.executor.TaskController;
 import chinapex.com.wallet.executor.callback.IGetNeoTransactionHistoryCallback;
-import chinapex.com.wallet.executor.callback.IUpdateTxStateCallback;
+import chinapex.com.wallet.executor.callback.IGetRawTransactionCallback;
 import chinapex.com.wallet.executor.runnable.GetNeoTransactionHistory;
 import chinapex.com.wallet.model.ApexWalletDbDao;
 import chinapex.com.wallet.utils.CpLog;
@@ -19,15 +19,15 @@ import chinapex.com.wallet.utils.CpLog;
  * E-Mail：liuyi_61@163.com
  */
 
-public class ImpUpdateTxStateCallbackNeo implements IUpdateTxStateCallback, IGetNeoTransactionHistoryCallback {
+public class UpdateNeoTxState implements IGetRawTransactionCallback, IGetNeoTransactionHistoryCallback {
 
-    private static final String TAG = ImpUpdateTxStateCallbackNeo.class.getSimpleName();
+    private static final String TAG = UpdateNeoTxState.class.getSimpleName();
 
     private String mTxId;
     private ScheduledFuture mScheduledFuture;
     private long mConfirmations;
 
-    public ImpUpdateTxStateCallbackNeo(String txId) {
+    public UpdateNeoTxState(String txId) {
         mTxId = txId;
     }
 
@@ -36,7 +36,7 @@ public class ImpUpdateTxStateCallbackNeo implements IUpdateTxStateCallback, IGet
     }
 
     @Override
-    public void updateTxState(String txId, String walletAddress, long confirmations) {
+    public void getRawTransaction(String txId, String walletAddress, long confirmations) {
         if (null == mScheduledFuture
                 || TextUtils.isEmpty(txId)
                 || TextUtils.isEmpty(walletAddress)) {

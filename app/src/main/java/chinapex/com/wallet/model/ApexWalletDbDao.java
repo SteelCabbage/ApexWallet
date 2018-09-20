@@ -815,7 +815,7 @@ public class ApexWalletDbDao {
 
     public void updateTxState(String tableName, String txID, int txState) {
         if (TextUtils.isEmpty(tableName) || TextUtils.isEmpty(txID)) {
-            CpLog.e(TAG, "updateTxState() -> tableName or txID is null!");
+            CpLog.e(TAG, "getRawTransaction() -> tableName or txID is null!");
             return;
         }
 
@@ -828,9 +828,9 @@ public class ApexWalletDbDao {
             db.update(tableName, contentValues, WHERE_CLAUSE_TX_ID_EQ,
                     new String[]{txID});
             db.setTransactionSuccessful();
-            CpLog.i(TAG, "updateTxState -> update: " + txID + " ok!");
+            CpLog.i(TAG, "getRawTransaction -> update: " + txID + " ok!");
         } catch (SQLException e) {
-            CpLog.e(TAG, "updateTxState exception:" + e.getMessage());
+            CpLog.e(TAG, "getRawTransaction exception:" + e.getMessage());
         } finally {
             db.endTransaction();
         }

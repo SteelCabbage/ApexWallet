@@ -15,7 +15,7 @@ import chinapex.com.wallet.executor.callback.eth.IGetEthAssetsCallback;
 import chinapex.com.wallet.executor.runnable.CheckIsUpdateNeoAssets;
 import chinapex.com.wallet.executor.runnable.CheckIsUpdateTxState;
 import chinapex.com.wallet.executor.runnable.GetNeoAssets;
-import chinapex.com.wallet.executor.runnable.UpdateTxState;
+import chinapex.com.wallet.executor.runnable.GetRawTransaction;
 import chinapex.com.wallet.executor.runnable.eth.CheckIsUpdateEthAssets;
 import chinapex.com.wallet.executor.runnable.eth.GetEthAssets;
 import chinapex.com.wallet.utils.CpLog;
@@ -117,18 +117,27 @@ public class ApexGlobalTask implements ICheckIsUpdateNeoAssetsCallback, IGetNeoA
 
     public void startNeoPolling(String txId, String walletAddress) {
         if (TextUtils.isEmpty(txId) || TextUtils.isEmpty(walletAddress)) {
-            CpLog.e(TAG, "txId or walletAddress is null!");
+            CpLog.e(TAG, "startNeoPolling() -> txId or walletAddress is null!");
             return;
         }
 
-        ImpUpdateTxStateCallbackNeo impUpdateTxStateCallback = new ImpUpdateTxStateCallbackNeo(txId);
-        ScheduledFuture updateTxStateSF = TaskController.getInstance().schedule(new UpdateTxState
-                (txId, walletAddress, impUpdateTxStateCallback), 0, Constant.TX_POLLING_TIME);
-        impUpdateTxStateCallback.setScheduledFuture(updateTxStateSF);
+        UpdateNeoTxState updateNeoTxState = new UpdateNeoTxState(txId);
+        ScheduledFuture updateTxStateSF = TaskController.getInstance().schedule(new GetRawTransaction
+                (txId, walletAddress, updateNeoTxState), 0, Constant.TX_POLLING_TIME);
+        updateNeoTxState.setScheduledFuture(updateTxStateSF);
     }
 
     public void startEthPolling(String txId, String walletAddress) {
         // TODO: 2018/9/19 0019
+        if (TextUtils.isEmpty(txId) || TextUtils.isEmpty(walletAddress)) {
+            CpLog.e(TAG, "startEthPolling() -> txId or walletAddress is null!");
+            return;
+        }
+
+        UpdateNeoTxState UpdateNeoTxStateCallback = new UpdateNeoTxState(txId);
+        ScheduledFuture updateTxStateSF = TaskController.getInstance().schedule(new GetRawTransaction
+                (txId, walletAddress, UpdateNeoTxStateCallback), 0, Constant.TX_POLLING_TIME);
+        UpdateNeoTxStateCallback.setScheduledFuture(updateTxStateSF);
     }
 
 }
