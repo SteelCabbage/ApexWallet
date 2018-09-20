@@ -61,14 +61,16 @@ public class Constant {
 
     // neo交易记录
     public static final String URL_NEO_TRANSACTION_HISTORY = "https://tracker.chinapex.com.cn/tool/transaction-history/";
-    public static final long TX_POLLING_TIME = 20 * 1000;
+    public static final long TX_NEO_POLLING_TIME = 20 * 1000;
     public static final long TX_CONFIRM_EXCEPTION = -1;
     public static final long TX_UN_CONFIRM = 0;
-    public static final long TX_CONFIRM_OK = 6;
+    public static final long TX_NEO_CONFIRM_OK = 6;
     public static final long NO_NEED_MODIFY_TX_TIME = -2;
 
     // eth交易记录
     public static final String URL_ETH_TRANSACTION_HISTORY = "https://tracker.chinapex.com.cn/tool/test/eth-transaction";
+    public static final long TX_ETH_POLLING_TIME = 10 * 1000;
+    public static final long TX_ETH_CONFIRM_OK = 12;
 
     // fragmentTag
     public static final String FRAGMENT_TAG_IMPORT_MNEMONIC = "ImportMnemonicFragment";

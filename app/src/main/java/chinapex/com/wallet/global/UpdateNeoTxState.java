@@ -38,7 +38,7 @@ public class UpdateNeoTxState implements IGetRawTransactionCallback, IGetNeoTran
     @Override
     public void getRawTransaction(String txId, String walletAddress, long confirmations) {
         if (null == mScheduledFuture
-                || TextUtils.isEmpty(txId)
+                || TextUtils.isEmpty(mTxId)
                 || TextUtils.isEmpty(walletAddress)) {
             CpLog.e(TAG, "mUpdateTxStateSF or txId or walletAddress is null!");
             return;
@@ -54,8 +54,8 @@ public class UpdateNeoTxState implements IGetRawTransactionCallback, IGetNeoTran
             return;
         }
 
-        if (Constant.TX_CONFIRM_OK <= confirmations) {
-            CpLog.i(TAG, "TX_CONFIRM_OK");
+        if (Constant.TX_NEO_CONFIRM_OK <= confirmations) {
+            CpLog.i(TAG, "TX_NEO_CONFIRM_OK");
             mScheduledFuture.cancel(false);
         }
 
@@ -65,7 +65,7 @@ public class UpdateNeoTxState implements IGetRawTransactionCallback, IGetNeoTran
 
     @Override
     public void getNeoTransactionHistory(List<TransactionRecord> transactionRecords) {
-        if (Constant.TX_CONFIRM_OK > mConfirmations) {
+        if (Constant.TX_NEO_CONFIRM_OK > mConfirmations) {
             return;
         }
 

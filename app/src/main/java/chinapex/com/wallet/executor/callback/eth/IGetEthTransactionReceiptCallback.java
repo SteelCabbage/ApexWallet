@@ -5,5 +5,5 @@ package chinapex.com.wallet.executor.callback.eth;
  * E-Mail：liuyi_61@163.com
  */
 public interface IGetEthTransactionReceiptCallback {
-    void getEthTransactionReceipt(String blockNumber, boolean isSuccess);
+    void getEthTransactionReceipt(String walletAddress, String blockNumber, boolean isSuccess);
 }

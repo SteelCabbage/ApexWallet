@@ -18,6 +18,7 @@ import chinapex.com.wallet.executor.runnable.GetNeoAssets;
 import chinapex.com.wallet.executor.runnable.GetRawTransaction;
 import chinapex.com.wallet.executor.runnable.eth.CheckIsUpdateEthAssets;
 import chinapex.com.wallet.executor.runnable.eth.GetEthAssets;
+import chinapex.com.wallet.executor.runnable.eth.GetEthTransactionReceipt;
 import chinapex.com.wallet.utils.CpLog;
 
 /**
@@ -122,22 +123,21 @@ public class ApexGlobalTask implements ICheckIsUpdateNeoAssetsCallback, IGetNeoA
         }
 
         UpdateNeoTxState updateNeoTxState = new UpdateNeoTxState(txId);
-        ScheduledFuture updateTxStateSF = TaskController.getInstance().schedule(new GetRawTransaction
-                (txId, walletAddress, updateNeoTxState), 0, Constant.TX_POLLING_TIME);
-        updateNeoTxState.setScheduledFuture(updateTxStateSF);
+        ScheduledFuture updateNeoTxStateSF = TaskController.getInstance().schedule(
+                new GetRawTransaction(txId, walletAddress, updateNeoTxState), 0, Constant.TX_NEO_POLLING_TIME);
+        updateNeoTxState.setScheduledFuture(updateNeoTxStateSF);
     }
 
     public void startEthPolling(String txId, String walletAddress) {
-        // TODO: 2018/9/19 0019
         if (TextUtils.isEmpty(txId) || TextUtils.isEmpty(walletAddress)) {
             CpLog.e(TAG, "startEthPolling() -> txId or walletAddress is null!");
             return;
         }
 
-        UpdateNeoTxState UpdateNeoTxStateCallback = new UpdateNeoTxState(txId);
-        ScheduledFuture updateTxStateSF = TaskController.getInstance().schedule(new GetRawTransaction
-                (txId, walletAddress, UpdateNeoTxStateCallback), 0, Constant.TX_POLLING_TIME);
-        UpdateNeoTxStateCallback.setScheduledFuture(updateTxStateSF);
+        UpdateEthTxState updateEthTxState = new UpdateEthTxState(txId);
+        ScheduledFuture updateEthTxStateSF = TaskController.getInstance().schedule(
+                new GetEthTransactionReceipt(txId, walletAddress, updateEthTxState), 0, Constant.TX_ETH_POLLING_TIME);
+        updateEthTxState.setGetTxReceiptSF(updateEthTxStateSF);
     }
 
 }

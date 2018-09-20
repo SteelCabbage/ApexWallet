@@ -23,17 +23,20 @@ public class GetEthTransactionReceipt implements Runnable, INetCallback {
     private static final String TAG = GetEthTransactionReceipt.class.getSimpleName();
 
     private String mTxId;
+    private String mWalletAddress;
     private IGetEthTransactionReceiptCallback mIGetEthTransactionReceiptCallback;
 
-    public GetEthTransactionReceipt(String txId, IGetEthTransactionReceiptCallback IGetEthTransactionReceiptCallback) {
+    public GetEthTransactionReceipt(String txId, String walletAddress, IGetEthTransactionReceiptCallback
+            IGetEthTransactionReceiptCallback) {
         mTxId = txId;
+        mWalletAddress = walletAddress;
         mIGetEthTransactionReceiptCallback = IGetEthTransactionReceiptCallback;
     }
 
     @Override
     public void run() {
-        if (TextUtils.isEmpty(mTxId) || null == mIGetEthTransactionReceiptCallback) {
-            CpLog.e(TAG, "mTxId or mIGetEthTransactionReceiptCallback is null!");
+        if (TextUtils.isEmpty(mTxId) || TextUtils.isEmpty(mWalletAddress) || null == mIGetEthTransactionReceiptCallback) {
+            CpLog.e(TAG, "mTxId or mTxId or mIGetEthTransactionReceiptCallback is null!");
             return;
         }
 
@@ -53,21 +56,21 @@ public class GetEthTransactionReceipt implements Runnable, INetCallback {
         CpLog.i(TAG, "onSuccess,result:" + result);
         if (TextUtils.isEmpty(result)) {
             CpLog.e(TAG, "result is null!");
-            mIGetEthTransactionReceiptCallback.getEthTransactionReceipt(null, false);
+            mIGetEthTransactionReceiptCallback.getEthTransactionReceipt(mWalletAddress, null, false);
             return;
         }
 
         ResponseEthTxReceipt responseEthTxReceipt = GsonUtils.json2Bean(result, ResponseEthTxReceipt.class);
         if (null == responseEthTxReceipt) {
             CpLog.e(TAG, "responseEthTxReceipt is null!");
-            mIGetEthTransactionReceiptCallback.getEthTransactionReceipt(null, false);
+            mIGetEthTransactionReceiptCallback.getEthTransactionReceipt(mWalletAddress, null, false);
             return;
         }
 
         ResponseEthTxReceipt.ResultBean resultBean = responseEthTxReceipt.getResult();
         if (null == resultBean) {
             CpLog.e(TAG, "resultBean is null!");
-            mIGetEthTransactionReceiptCallback.getEthTransactionReceipt(null, false);
+            mIGetEthTransactionReceiptCallback.getEthTransactionReceipt(mWalletAddress, null, false);
             return;
         }
 
@@ -76,19 +79,19 @@ public class GetEthTransactionReceipt implements Runnable, INetCallback {
 
         if (TextUtils.isEmpty(blockNumber) || TextUtils.isEmpty(status)) {
             CpLog.e(TAG, "blockNumber or status is null!");
-            mIGetEthTransactionReceiptCallback.getEthTransactionReceipt(null, false);
+            mIGetEthTransactionReceiptCallback.getEthTransactionReceipt(mWalletAddress, null, false);
             return;
         }
 
         switch (status) {
             case "1":
-                mIGetEthTransactionReceiptCallback.getEthTransactionReceipt(blockNumber, true);
+                mIGetEthTransactionReceiptCallback.getEthTransactionReceipt(mWalletAddress, blockNumber, true);
                 break;
             case "0":
-                mIGetEthTransactionReceiptCallback.getEthTransactionReceipt(blockNumber, false);
+                mIGetEthTransactionReceiptCallback.getEthTransactionReceipt(mWalletAddress, blockNumber, false);
                 break;
             default:
-                mIGetEthTransactionReceiptCallback.getEthTransactionReceipt(null, false);
+                mIGetEthTransactionReceiptCallback.getEthTransactionReceipt(mWalletAddress, null, false);
                 break;
         }
     }
@@ -96,6 +99,6 @@ public class GetEthTransactionReceipt implements Runnable, INetCallback {
     @Override
     public void onFailed(int failedCode, String msg) {
         CpLog.i(TAG, "onFailed,msg:" + msg);
-        mIGetEthTransactionReceiptCallback.getEthTransactionReceipt(null, false);
+        mIGetEthTransactionReceiptCallback.getEthTransactionReceipt(mWalletAddress, null, false);
     }
 }
