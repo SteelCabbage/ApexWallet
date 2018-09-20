@@ -9,7 +9,7 @@ import java.util.List;
 import chinapex.com.wallet.bean.TransactionRecord;
 import chinapex.com.wallet.bean.response.ResponseGetTransactionHistory;
 import chinapex.com.wallet.changelistener.ApexListeners;
-import chinapex.com.wallet.executor.callback.IGetTransactionHistoryCallback;
+import chinapex.com.wallet.executor.callback.IGetNeoTransactionHistoryCallback;
 import chinapex.com.wallet.global.ApexWalletApplication;
 import chinapex.com.wallet.global.Constant;
 import chinapex.com.wallet.model.ApexWalletDbDao;
@@ -29,24 +29,23 @@ public class GetNeoTransactionHistory implements Runnable, INetCallback {
     private static final String TAG = GetNeoTransactionHistory.class.getSimpleName();
 
     private String mAddress;
-    private IGetTransactionHistoryCallback mIGetTransactionHistoryCallback;
+    private IGetNeoTransactionHistoryCallback mIGetNeoTransactionHistoryCallback;
     private long mRecentTime;
 
-    public GetNeoTransactionHistory(String address, IGetTransactionHistoryCallback
-            IGetTransactionHistoryCallback) {
+    public GetNeoTransactionHistory(String address, IGetNeoTransactionHistoryCallback
+            IGetNeoTransactionHistoryCallback) {
         mAddress = address;
-        mIGetTransactionHistoryCallback = IGetTransactionHistoryCallback;
+        mIGetNeoTransactionHistoryCallback = IGetNeoTransactionHistoryCallback;
     }
 
     @Override
     public void run() {
-        if (null == mIGetTransactionHistoryCallback || TextUtils.isEmpty(mAddress)) {
-            CpLog.e(TAG, "mIGetTransactionHistoryCallback or mAddress is null!");
+        if (null == mIGetNeoTransactionHistoryCallback || TextUtils.isEmpty(mAddress)) {
+            CpLog.e(TAG, "mIGetNeoTransactionHistoryCallback or mAddress is null!");
             return;
         }
 
-        mRecentTime = (long) SharedPreferencesUtils.getParam(ApexWalletApplication.getInstance(),
-                mAddress, 0L);
+        mRecentTime = (long) SharedPreferencesUtils.getParam(ApexWalletApplication.getInstance(), mAddress, 0L);
         CpLog.i(TAG, "mRecentTime:" + mRecentTime);
 
         String url = Constant.URL_NEO_TRANSACTION_HISTORY + mAddress + "?beginTime=" + mRecentTime;
@@ -57,7 +56,7 @@ public class GetNeoTransactionHistory implements Runnable, INetCallback {
     public void onSuccess(int statusCode, String msg, String result) {
         if (TextUtils.isEmpty(result)) {
             CpLog.e(TAG, "result is null!");
-            mIGetTransactionHistoryCallback.getTransactionHistory(null);
+            mIGetNeoTransactionHistoryCallback.getNeoTransactionHistory(null);
             return;
         }
 
@@ -65,15 +64,14 @@ public class GetNeoTransactionHistory implements Runnable, INetCallback {
                 ResponseGetTransactionHistory.class);
         if (null == responseGetTransactionHistory) {
             CpLog.e(TAG, "responseGetTransactionHistory is null!");
-            mIGetTransactionHistoryCallback.getTransactionHistory(null);
+            mIGetNeoTransactionHistoryCallback.getNeoTransactionHistory(null);
             return;
         }
 
-        List<ResponseGetTransactionHistory.ResultBean> resultBeans = responseGetTransactionHistory
-                .getResult();
+        List<ResponseGetTransactionHistory.ResultBean> resultBeans = responseGetTransactionHistory.getResult();
         if (null == resultBeans || resultBeans.isEmpty()) {
             CpLog.w(TAG, "resultBeans is null or empty!");
-            mIGetTransactionHistoryCallback.getTransactionHistory(null);
+            mIGetNeoTransactionHistoryCallback.getNeoTransactionHistory(null);
             return;
         }
 
@@ -81,7 +79,7 @@ public class GetNeoTransactionHistory implements Runnable, INetCallback {
                 .getInstance());
         if (null == apexWalletDbDao) {
             CpLog.e(TAG, "apexWalletDbDao is null!");
-            mIGetTransactionHistoryCallback.getTransactionHistory(null);
+            mIGetNeoTransactionHistoryCallback.getNeoTransactionHistory(null);
             return;
         }
 
@@ -90,7 +88,7 @@ public class GetNeoTransactionHistory implements Runnable, INetCallback {
 
         if (null == txCacheByAddress) {
             CpLog.e(TAG, "txCacheByAddress is null!");
-            mIGetTransactionHistoryCallback.getTransactionHistory(null);
+            mIGetNeoTransactionHistoryCallback.getNeoTransactionHistory(null);
             return;
         }
 
@@ -165,12 +163,12 @@ public class GetNeoTransactionHistory implements Runnable, INetCallback {
             }
         }
 
-        mIGetTransactionHistoryCallback.getTransactionHistory(transactionRecords);
+        mIGetNeoTransactionHistoryCallback.getNeoTransactionHistory(transactionRecords);
     }
 
     @Override
     public void onFailed(int failedCode, String msg) {
-        CpLog.e(TAG, "getTransactionHistory net onFailed!");
-        mIGetTransactionHistoryCallback.getTransactionHistory(null);
+        CpLog.e(TAG, "getNeoTransactionHistory net onFailed!");
+        mIGetNeoTransactionHistoryCallback.getNeoTransactionHistory(null);
     }
 }

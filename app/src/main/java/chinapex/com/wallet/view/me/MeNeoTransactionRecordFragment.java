@@ -28,7 +28,7 @@ import chinapex.com.wallet.bean.WalletBean;
 import chinapex.com.wallet.changelistener.ApexListeners;
 import chinapex.com.wallet.changelistener.OnTxStateUpdateListener;
 import chinapex.com.wallet.executor.TaskController;
-import chinapex.com.wallet.executor.callback.IGetTransactionHistoryCallback;
+import chinapex.com.wallet.executor.callback.IGetNeoTransactionHistoryCallback;
 import chinapex.com.wallet.executor.callback.ILoadTransactionRecordCallback;
 import chinapex.com.wallet.executor.callback.eth.IGetEthTransactionHistoryCallback;
 import chinapex.com.wallet.executor.runnable.GetNeoTransactionHistory;
@@ -45,13 +45,13 @@ import chinapex.com.wallet.view.dialog.SwitchWallet2Dialog;
  * Created by SteelCabbage on 2018/5/31 0031.
  */
 
-public class MeTransactionRecordFragment extends BaseFragment implements View.OnClickListener,
+public class MeNeoTransactionRecordFragment extends BaseFragment implements View.OnClickListener,
         SwipeRefreshLayout.OnRefreshListener, TransactionRecordRecyclerViewAdapter
-                .OnItemClickListener, IGetTransactionHistoryCallback,
+                .OnItemClickListener, IGetNeoTransactionHistoryCallback,
         ILoadTransactionRecordCallback, OnTxStateUpdateListener, TextWatcher, SwitchWallet2Dialog
                 .onSelectedWalletListener, IGetEthTransactionHistoryCallback {
 
-    private static final String TAG = MeTransactionRecordFragment.class.getSimpleName();
+    private static final String TAG = MeNeoTransactionRecordFragment.class.getSimpleName();
 
     private TextView mTv_me_transaction_record_title;
     private TextView mTv_me_transaction_record_address;
@@ -198,9 +198,27 @@ public class MeTransactionRecordFragment extends BaseFragment implements View.On
     }
 
     @Override
-    public void getTransactionHistory(List<TransactionRecord> transactionRecords) {
+    public void getNeoTransactionHistory(List<TransactionRecord> transactionRecords) {
         if (null == transactionRecords || transactionRecords.isEmpty()) {
-            CpLog.w(TAG, "getTransactionHistory() -> transactionRecords is null or empty!");
+            CpLog.w(TAG, "getNeoTransactionHistory() -> transactionRecords is null or empty!");
+            if (mSl_transaction_record.isRefreshing()) {
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        mSl_transaction_record.setRefreshing(false);
+                    }
+                });
+            }
+            return;
+        }
+
+        loadTxsFromDb();
+    }
+
+    @Override
+    public void getEthTransactionHistory(List<TransactionRecord> transactionRecords) {
+        if (null == transactionRecords || transactionRecords.isEmpty()) {
+            CpLog.w(TAG, "getEthTransactionHistory() -> transactionRecords is null or empty!");
             if (mSl_transaction_record.isRefreshing()) {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
@@ -360,4 +378,5 @@ public class MeTransactionRecordFragment extends BaseFragment implements View.On
     public void afterTextChanged(Editable s) {
 
     }
+
 }

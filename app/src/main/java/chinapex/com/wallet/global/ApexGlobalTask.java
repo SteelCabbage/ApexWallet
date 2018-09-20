@@ -121,7 +121,7 @@ public class ApexGlobalTask implements ICheckIsUpdateNeoAssetsCallback, IGetNeoA
             return;
         }
 
-        ImpUpdateTxStateCallback impUpdateTxStateCallback = new ImpUpdateTxStateCallback(txId);
+        ImpUpdateTxStateCallbackNeo impUpdateTxStateCallback = new ImpUpdateTxStateCallbackNeo(txId);
         ScheduledFuture updateTxStateSF = TaskController.getInstance().schedule(new UpdateTxState
                 (txId, walletAddress, impUpdateTxStateCallback), 0, Constant.TX_POLLING_TIME);
         impUpdateTxStateCallback.setScheduledFuture(updateTxStateSF);

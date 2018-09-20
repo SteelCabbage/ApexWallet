@@ -9,5 +9,5 @@ import chinapex.com.wallet.bean.TransactionRecord;
  * E-Mail：liuyi_61@163.com
  */
 public interface IGetEthTransactionHistoryCallback {
-    void getTransactionHistory(List<TransactionRecord> transactionRecords);
+    void getEthTransactionHistory(List<TransactionRecord> transactionRecords);
 }

@@ -8,7 +8,7 @@ import java.util.concurrent.ScheduledFuture;
 import chinapex.com.wallet.bean.TransactionRecord;
 import chinapex.com.wallet.changelistener.ApexListeners;
 import chinapex.com.wallet.executor.TaskController;
-import chinapex.com.wallet.executor.callback.IGetTransactionHistoryCallback;
+import chinapex.com.wallet.executor.callback.IGetNeoTransactionHistoryCallback;
 import chinapex.com.wallet.executor.callback.IUpdateTxStateCallback;
 import chinapex.com.wallet.executor.runnable.GetNeoTransactionHistory;
 import chinapex.com.wallet.model.ApexWalletDbDao;
@@ -19,15 +19,15 @@ import chinapex.com.wallet.utils.CpLog;
  * E-Mail：liuyi_61@163.com
  */
 
-public class ImpUpdateTxStateCallback implements IUpdateTxStateCallback, IGetTransactionHistoryCallback {
+public class ImpUpdateTxStateCallbackNeo implements IUpdateTxStateCallback, IGetNeoTransactionHistoryCallback {
 
-    private static final String TAG = ImpUpdateTxStateCallback.class.getSimpleName();
+    private static final String TAG = ImpUpdateTxStateCallbackNeo.class.getSimpleName();
 
     private String mTxId;
     private ScheduledFuture mScheduledFuture;
     private long mConfirmations;
 
-    public ImpUpdateTxStateCallback(String txId) {
+    public ImpUpdateTxStateCallbackNeo(String txId) {
         mTxId = txId;
     }
 
@@ -64,7 +64,7 @@ public class ImpUpdateTxStateCallback implements IUpdateTxStateCallback, IGetTra
     }
 
     @Override
-    public void getTransactionHistory(List<TransactionRecord> transactionRecords) {
+    public void getNeoTransactionHistory(List<TransactionRecord> transactionRecords) {
         if (Constant.TX_CONFIRM_OK > mConfirmations) {
             return;
         }

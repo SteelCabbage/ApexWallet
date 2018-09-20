@@ -30,7 +30,6 @@ public class GetEthTransactionHistory implements Runnable, INetCallback {
 
     private String mAddress;
     private IGetEthTransactionHistoryCallback mIGetEthTransactionHistoryCallback;
-    private long mStartblock;
 
     public GetEthTransactionHistory(String address, IGetEthTransactionHistoryCallback IGetEthTransactionHistoryCallback) {
         mAddress = address;
@@ -44,21 +43,21 @@ public class GetEthTransactionHistory implements Runnable, INetCallback {
             return;
         }
 
-        mStartblock = (long) SharedPreferencesUtils.getParam(ApexWalletApplication.getInstance(), mAddress, 0L);
-        CpLog.i(TAG, "mStartblock:" + mStartblock);
+        long startBlock;
+        try {
+            String startBlockSP = (String) SharedPreferencesUtils.getParam(ApexWalletApplication.getInstance(), mAddress, "0");
+            startBlock = Long.valueOf(startBlockSP);
+        } catch (NumberFormatException e) {
+            CpLog.e(TAG, "GetEthTransactionHistory NumberFormatException:" + e.getMessage());
+            return;
+        }
 
-        /**
-         * https://tracker.chinapex.com.cn/tool/test/eth-transaction
-         * ?address=0xde0b295669a9fd93d5f28d9ec85e40f4cb697bae
-         * &startblock=100
-         * &endblock=9999999
-         */
+        CpLog.i(TAG, "startBlock:" + startBlock);
 
         String url = Constant.URL_ETH_TRANSACTION_HISTORY
                 + "?address=" + mAddress
-                + "&startblock=" + (mStartblock + 1)
+                + "&startblock=" + (startBlock + 1)
                 + "&endblock=99999999";
-        CpLog.i(TAG, "eth history url:" + url);
         OkHttpClientManager.getInstance().get(url, this);
     }
 
@@ -66,7 +65,7 @@ public class GetEthTransactionHistory implements Runnable, INetCallback {
     public void onSuccess(int statusCode, String msg, String result) {
         if (TextUtils.isEmpty(result)) {
             CpLog.e(TAG, "result is null!");
-            mIGetEthTransactionHistoryCallback.getTransactionHistory(null);
+            mIGetEthTransactionHistoryCallback.getEthTransactionHistory(null);
             return;
         }
 
@@ -74,21 +73,21 @@ public class GetEthTransactionHistory implements Runnable, INetCallback {
                 ResponseGetEthTransactionHistory.class);
         if (null == responseGetEthTransactionHistory) {
             CpLog.e(TAG, "responseGetEthTransactionHistory is null!");
-            mIGetEthTransactionHistoryCallback.getTransactionHistory(null);
+            mIGetEthTransactionHistoryCallback.getEthTransactionHistory(null);
             return;
         }
 
         List<ResponseGetEthTransactionHistory.DataBean> dataBeans = responseGetEthTransactionHistory.getData();
         if (null == dataBeans || dataBeans.isEmpty()) {
             CpLog.w(TAG, "dataBeans is null or empty!");
-            mIGetEthTransactionHistoryCallback.getTransactionHistory(null);
+            mIGetEthTransactionHistoryCallback.getEthTransactionHistory(null);
             return;
         }
 
         ApexWalletDbDao apexWalletDbDao = ApexWalletDbDao.getInstance(ApexWalletApplication.getInstance());
         if (null == apexWalletDbDao) {
             CpLog.e(TAG, "apexWalletDbDao is null!");
-            mIGetEthTransactionHistoryCallback.getTransactionHistory(null);
+            mIGetEthTransactionHistoryCallback.getEthTransactionHistory(null);
             return;
         }
 
@@ -97,7 +96,7 @@ public class GetEthTransactionHistory implements Runnable, INetCallback {
 
         if (null == txCacheByAddress) {
             CpLog.e(TAG, "txCacheByAddress is null!");
-            mIGetEthTransactionHistoryCallback.getTransactionHistory(null);
+            mIGetEthTransactionHistoryCallback.getEthTransactionHistory(null);
             return;
         }
 
@@ -165,12 +164,12 @@ public class GetEthTransactionHistory implements Runnable, INetCallback {
             }
         }
 
-        mIGetEthTransactionHistoryCallback.getTransactionHistory(transactionRecords);
+        mIGetEthTransactionHistoryCallback.getEthTransactionHistory(transactionRecords);
     }
 
     @Override
     public void onFailed(int failedCode, String msg) {
         CpLog.e(TAG, "GetEthTransactionHistory net onFailed!");
-        mIGetEthTransactionHistoryCallback.getTransactionHistory(null);
+        mIGetEthTransactionHistoryCallback.getEthTransactionHistory(null);
     }
 }
