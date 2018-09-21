@@ -140,6 +140,7 @@
     <string name="no_this_type_asset">No asset of this type!</string>
     <string name="insufficient_gas">Insufficient gas</string>
     <string name="has_blocking_tx">There is still a transaction in Blocking, Please wait a moment</string>
+    <string name="illegal_address">Please enter the correct wallet address</string>
 
     <!--语言-->
     <string name="language_zh_cn">简体中文</string>

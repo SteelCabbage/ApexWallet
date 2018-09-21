@@ -14,6 +14,8 @@ import android.widget.TextView;
 import com.google.zxing.activity.CaptureActivity;
 
 import java.math.BigDecimal;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import chinapex.com.wallet.R;
 import chinapex.com.wallet.base.BaseActivity;
@@ -204,6 +206,13 @@ public class TransferActivity extends BaseActivity implements View.OnClickListen
                 }
 
                 int walletType = mWalletBean.getWalletType();
+                if (!checkAddressIsLegal(walletType, addressTo)) {
+                    CpLog.e(TAG, "this address is Illegal!");
+                    ToastUtils.getInstance().showToast(ApexWalletApplication.getInstance().getResources().getString(R.string
+                            .illegal_address));
+                    return;
+                }
+
                 switch (walletType) {
                     case Constant.WALLET_TYPE_NEO:
                         NeoTxFee neoTxFee = new NeoTxFee();
@@ -238,6 +247,34 @@ public class TransferActivity extends BaseActivity implements View.OnClickListen
             default:
                 break;
         }
+    }
+
+    private boolean checkAddressIsLegal(int walletType, String walletAddress) {
+        if (TextUtils.isEmpty(walletAddress)) {
+            CpLog.e(TAG, "walletAddress is null!");
+            return false;
+        }
+
+        String regex = null;
+        switch (walletType) {
+            case Constant.WALLET_TYPE_NEO:
+                regex = Constant.NEO_ADDRESS_REGEX;
+                break;
+            case Constant.WALLET_TYPE_ETH:
+                regex = Constant.ETH_ADDRESS_REGEX;
+                break;
+            case Constant.WALLET_TYPE_CPX:
+                break;
+            default:
+                break;
+        }
+
+        if (TextUtils.isEmpty(regex)) {
+            CpLog.e(TAG, "regex is null!");
+            return false;
+        }
+
+        return Pattern.matches(regex, walletAddress);
     }
 
     @Override
