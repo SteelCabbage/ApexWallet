@@ -2,21 +2,26 @@ package chinapex.com.wallet.adapter;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.concurrent.locks.ReentrantLock;
 
 import chinapex.com.wallet.R;
+import chinapex.com.wallet.bean.BalanceBean;
 import chinapex.com.wallet.bean.TransactionRecord;
 import chinapex.com.wallet.global.ApexWalletApplication;
 import chinapex.com.wallet.global.Constant;
 import chinapex.com.wallet.global.GlideApp;
 import chinapex.com.wallet.utils.CpLog;
 import chinapex.com.wallet.utils.PhoneUtils;
+import chinapex.com.wallet.utils.WalletUtils;
 
 public class TransactionRecordRecyclerViewAdapter extends RecyclerView
         .Adapter<TransactionRecordRecyclerViewAdapter.TransactionRecordAdapterHolder> implements
@@ -88,7 +93,6 @@ public class TransactionRecordRecyclerViewAdapter extends RecyclerView
             return;
         }
 
-        // TODO: 2018/6/21 0021 logoUrl
         holder.txID.setText(transactionRecord.getTxID());
         holder.txAmount.setText(transactionRecord.getTxAmount());
         holder.txTime.setText(PhoneUtils.getFormatTime(transactionRecord.getTxTime()));
@@ -195,6 +199,30 @@ public class TransactionRecordRecyclerViewAdapter extends RecyclerView
                         break;
                 }
                 break;
+        }
+
+        String txAmount = transactionRecord.getTxAmount();
+        if (TextUtils.isEmpty(txAmount)) {
+            CpLog.e(TAG, "txAmount is null!");
+            return;
+        }
+
+        String sign;
+        String value;
+        try {
+            sign = txAmount.substring(0, 1);
+            String amount = txAmount.substring(1);
+            value = new BigDecimal(amount).setScale(8, BigDecimal.ROUND_HALF_UP).stripTrailingZeros().toPlainString();
+        } catch (Exception e) {
+            CpLog.e(TAG, "TransactionRecordRecyclerViewAdapter Exception:" + e.getMessage());
+            return;
+        }
+
+        if ("0".equals(value)
+                || "0.00000000".equals(value)) {
+            holder.txAmount.setText(String.valueOf(sign + "0"));
+        } else {
+            holder.txAmount.setText(String.valueOf(sign + value));
         }
 
         holder.itemView.setTag(position);

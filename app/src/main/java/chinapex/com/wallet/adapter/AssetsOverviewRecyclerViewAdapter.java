@@ -205,17 +205,19 @@ public class AssetsOverviewRecyclerViewAdapter extends RecyclerView
         holder.assetsName.setText(balanceBean.getAssetSymbol());
 
         String assetsValue = balanceBean.getAssetsValue();
-        if (TextUtils.isEmpty(assetsValue)) {
+        String showValue;
+        try {
+            showValue = new BigDecimal(assetsValue).setScale(8, BigDecimal.ROUND_HALF_UP).stripTrailingZeros().toPlainString();
+        } catch (Exception e) {
+            CpLog.e(TAG, "AssetsOverviewRecyclerViewAdapter Exception:" + e.getMessage());
+            return;
+        }
+
+        if ("0".equals(showValue)
+                || "0.00000000".equals(showValue)) {
             holder.assetsValue.setText("0");
         } else {
-            if ("0".equals(assetsValue)
-                    || "0000000000000000000000000000000000000000000000000000000000000000".equals(assetsValue)) {
-                holder.assetsValue.setText("0");
-            } else {
-                String value = new BigDecimal(assetsValue).setScale(8, BigDecimal.ROUND_HALF_UP).stripTrailingZeros()
-                        .toPlainString();
-                holder.assetsValue.setText(value);
-            }
+            holder.assetsValue.setText(showValue);
         }
 
         holder.itemView.setTag(position);
