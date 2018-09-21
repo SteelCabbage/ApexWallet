@@ -14,7 +14,7 @@ import android.widget.TextView;
 import com.google.zxing.activity.CaptureActivity;
 
 import java.math.BigDecimal;
-import java.util.regex.Matcher;
+import java.math.BigInteger;
 import java.util.regex.Pattern;
 
 import chinapex.com.wallet.R;
@@ -22,7 +22,6 @@ import chinapex.com.wallet.base.BaseActivity;
 import chinapex.com.wallet.bean.BalanceBean;
 import chinapex.com.wallet.bean.WalletBean;
 import chinapex.com.wallet.bean.gasfee.EthTxFee;
-import chinapex.com.wallet.bean.gasfee.ITxFee;
 import chinapex.com.wallet.bean.gasfee.NeoTxFee;
 import chinapex.com.wallet.bean.tx.EthTxBean;
 import chinapex.com.wallet.bean.tx.NeoTxBean;
@@ -66,6 +65,8 @@ public class TransferActivity extends BaseActivity implements View.OnClickListen
 
     private WalletBean mWalletBean;
     private BalanceBean mBalanceBean;
+
+    private int mMinProgress;
 
     @Override
     protected void setContentView() {
@@ -162,20 +163,28 @@ public class TransferActivity extends BaseActivity implements View.OnClickListen
     }
 
     @Override
-    public void getEthGasPrice(final String gasPrice) {
+    public void getEthGasPrice(String gasPrice) {
         if (TextUtils.isEmpty(gasPrice)) {
             CpLog.e(TAG, "gasPrice is null!");
             return;
         }
 
+        final String legalGasPrice = WalletUtils.toLegalGasPrice(gasPrice, 2);
+        try {
+            mMinProgress = Integer.valueOf(new BigDecimal(legalGasPrice).multiply(new BigDecimal(10).pow(2))
+                    .stripTrailingZeros().toPlainString());
+        } catch (NumberFormatException e) {
+            CpLog.e(TAG, "mMinProgress NumberFormatException:" + e.getMessage());
+        }
+
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                mTv_transfer_gas_price.setText(gasPrice);
-                mSb_transfer.setProgress(Integer.valueOf(gasPrice) * 10);
+                mTv_transfer_gas_price.setText(legalGasPrice);
+                mTv_transfer_user_set_gas_price.setText(legalGasPrice);
                 String gasFee = "0";
                 try {
-                    gasFee = new BigDecimal(gasPrice).divide(new BigDecimal(10).pow(5)).multiply(new BigDecimal(9))
+                    gasFee = new BigDecimal(legalGasPrice).divide(new BigDecimal(10).pow(5)).multiply(new BigDecimal(9))
                             .setScale(8, BigDecimal.ROUND_UP).stripTrailingZeros().toPlainString();
                 } catch (Exception e) {
                     CpLog.e(TAG, "gasFee Exception:" + e.getMessage());
@@ -360,7 +369,7 @@ public class TransferActivity extends BaseActivity implements View.OnClickListen
         ethTxBean.setAmount(amountOxHex);
 
         // gasPrice 0xHex
-        String gasPriceDec = String.valueOf(mSb_transfer.getProgress() / 10);
+        String gasPriceDec = mTv_transfer_user_set_gas_price.getText().toString().trim();
         String gasPriceOxHex = WalletUtils.toHexString(gasPriceDec, String.valueOf(9));
         ethTxBean.setGasPrice(gasPriceOxHex);
 
@@ -414,11 +423,11 @@ public class TransferActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-        mTv_transfer_user_set_gas_price.setText(String.valueOf(progress / 10.0));
+        mTv_transfer_user_set_gas_price.setText(String.valueOf((progress + mMinProgress) / 100.0));
         String gasFee = "0";
         try {
-            gasFee = new BigDecimal(progress / 10.0).divide(new BigDecimal(10).pow(5)).multiply(new BigDecimal(9))
-                    .setScale(8, BigDecimal.ROUND_UP).stripTrailingZeros().toPlainString();
+            gasFee = new BigDecimal((progress + mMinProgress) / 100.0).divide(new BigDecimal(10).pow(5))
+                    .multiply(new BigDecimal(9)).setScale(8, BigDecimal.ROUND_UP).stripTrailingZeros().toPlainString();
         } catch (Exception e) {
             CpLog.e(TAG, "gasFee Exception:" + e.getMessage());
         }

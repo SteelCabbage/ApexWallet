@@ -80,6 +80,24 @@ public class WalletUtils {
         return legalDecString;
     }
 
+    public static String toLegalGasPrice(String decString, int decimal) {
+        if (TextUtils.isEmpty(decString)) {
+            CpLog.e(TAG, "decString or decimal is null!");
+            return "0";
+        }
+
+        String legalGasPrice;
+        try {
+            legalGasPrice = new BigDecimal(decString).setScale(decimal, BigDecimal.ROUND_HALF_UP).stripTrailingZeros()
+                    .toPlainString();
+        } catch (Exception e) {
+            CpLog.e(TAG, "toLegalGasPrice Exception:" + e.getMessage());
+            return "0";
+        }
+
+        return legalGasPrice;
+    }
+
     public static byte[] reverseArray(String string) {
         if ("0".equals(string)) {
             byte[] zero = new byte[1];
