@@ -122,72 +122,58 @@ public class TransactionRecordRecyclerViewAdapter extends RecyclerView
         String assetID = transactionRecord.getAssetID();
         switch (assetID) {
             case Constant.ASSETS_NEO:
-                GlideApp.with(ApexWalletApplication.getInstance()).load(R.drawable.logo_global_neo)
-                        .into(holder.txLogo);
+                GlideApp.with(ApexWalletApplication.getInstance()).load(R.drawable.logo_global_neo).into(holder.txLogo);
                 break;
             case Constant.ASSETS_NEO_GAS:
-                GlideApp.with(ApexWalletApplication.getInstance()).load(R.drawable.logo_global_gas)
-                        .into(holder.txLogo);
+                GlideApp.with(ApexWalletApplication.getInstance()).load(R.drawable.logo_global_gas).into(holder.txLogo);
                 break;
             case Constant.ASSETS_CPX:
-                GlideApp.with(ApexWalletApplication.getInstance()).load(R.drawable.logo_nep5_cpx)
-                        .into(holder.txLogo);
+                GlideApp.with(ApexWalletApplication.getInstance()).load(R.drawable.logo_nep5_cpx).into(holder.txLogo);
                 break;
             case Constant.ASSETS_APH:
-                GlideApp.with(ApexWalletApplication.getInstance()).load(R.drawable.logo_nep5_aph)
-                        .into(holder.txLogo);
+                GlideApp.with(ApexWalletApplication.getInstance()).load(R.drawable.logo_nep5_aph).into(holder.txLogo);
                 break;
             case Constant.ASSETS_AVA:
-                GlideApp.with(ApexWalletApplication.getInstance()).load(R.drawable.logo_nep5_ava)
-                        .into(holder.txLogo);
+                GlideApp.with(ApexWalletApplication.getInstance()).load(R.drawable.logo_nep5_ava).into(holder.txLogo);
                 break;
             case Constant.ASSETS_DBC:
-                GlideApp.with(ApexWalletApplication.getInstance()).load(R.drawable.logo_nep5_dbc)
-                        .into(holder.txLogo);
+                GlideApp.with(ApexWalletApplication.getInstance()).load(R.drawable.logo_nep5_dbc).into(holder.txLogo);
                 break;
             case Constant.ASSETS_EXT:
-                GlideApp.with(ApexWalletApplication.getInstance()).load(R.drawable.logo_nep5_ext)
-                        .into(holder.txLogo);
+                GlideApp.with(ApexWalletApplication.getInstance()).load(R.drawable.logo_nep5_ext).into(holder.txLogo);
                 break;
             case Constant.ASSETS_LRN:
-                GlideApp.with(ApexWalletApplication.getInstance()).load(R.drawable.logo_nep5_lrn)
-                        .into(holder.txLogo);
+                GlideApp.with(ApexWalletApplication.getInstance()).load(R.drawable.logo_nep5_lrn).into(holder.txLogo);
                 break;
             case Constant.ASSETS_NKN:
-                GlideApp.with(ApexWalletApplication.getInstance()).load(R.drawable.logo_nep5_nkn)
-                        .into(holder.txLogo);
+                GlideApp.with(ApexWalletApplication.getInstance()).load(R.drawable.logo_nep5_nkn).into(holder.txLogo);
                 break;
             case Constant.ASSETS_ONT:
-                GlideApp.with(ApexWalletApplication.getInstance()).load(R.drawable.logo_nep5_ont)
-                        .into(holder.txLogo);
+                GlideApp.with(ApexWalletApplication.getInstance()).load(R.drawable.logo_nep5_ont).into(holder.txLogo);
                 break;
             case Constant.ASSETS_PKC:
-                GlideApp.with(ApexWalletApplication.getInstance()).load(R.drawable.logo_nep5_pkc)
-                        .into(holder.txLogo);
+                GlideApp.with(ApexWalletApplication.getInstance()).load(R.drawable.logo_nep5_pkc).into(holder.txLogo);
                 break;
             case Constant.ASSETS_RPX:
-                GlideApp.with(ApexWalletApplication.getInstance()).load(R.drawable.logo_nep5_rpx)
-                        .into(holder.txLogo);
+                GlideApp.with(ApexWalletApplication.getInstance()).load(R.drawable.logo_nep5_rpx).into(holder.txLogo);
                 break;
             case Constant.ASSETS_SOUL:
-                GlideApp.with(ApexWalletApplication.getInstance()).load(R.drawable.logo_nep5_soul)
-                        .into(holder.txLogo);
+                GlideApp.with(ApexWalletApplication.getInstance()).load(R.drawable.logo_nep5_soul).into(holder.txLogo);
                 break;
             case Constant.ASSETS_SWTH:
-                GlideApp.with(ApexWalletApplication.getInstance()).load(R.drawable.logo_nep5_swth)
-                        .into(holder.txLogo);
+                GlideApp.with(ApexWalletApplication.getInstance()).load(R.drawable.logo_nep5_swth).into(holder.txLogo);
                 break;
             case Constant.ASSETS_TKY:
-                GlideApp.with(ApexWalletApplication.getInstance()).load(R.drawable.logo_nep5_tky)
-                        .into(holder.txLogo);
+                GlideApp.with(ApexWalletApplication.getInstance()).load(R.drawable.logo_nep5_tky).into(holder.txLogo);
                 break;
             case Constant.ASSETS_ZPT:
-                GlideApp.with(ApexWalletApplication.getInstance()).load(R.drawable.logo_nep5_zpt)
-                        .into(holder.txLogo);
+                GlideApp.with(ApexWalletApplication.getInstance()).load(R.drawable.logo_nep5_zpt).into(holder.txLogo);
+                break;
+            case Constant.ASSETS_PHX:
+                GlideApp.with(ApexWalletApplication.getInstance()).load(R.drawable.logo_nep5_phx).into(holder.txLogo);
                 break;
             case Constant.ASSETS_ETH:
-                GlideApp.with(ApexWalletApplication.getInstance()).load(R.drawable.icon_wallet_type_eth)
-                        .into(holder.txLogo);
+                GlideApp.with(ApexWalletApplication.getInstance()).load(R.drawable.icon_wallet_type_eth).into(holder.txLogo);
                 break;
             default:
                 switch (transactionRecord.getTxType()) {

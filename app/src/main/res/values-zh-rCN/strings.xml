@@ -136,6 +136,7 @@
     <string name="eth_data_null">交易内容生成失败！</string>
     <string name="no_this_type_asset">无此种类型的资产!</string>
     <string name="insufficient_gas">ETH的余额不足以支付Gas</string>
+    <string name="has_blocking_tx">您目前仍有一笔交易在打包中，请稍后</string>
 
     <!--语言-->
     <string name="language_zh_cn">简体中文</string>

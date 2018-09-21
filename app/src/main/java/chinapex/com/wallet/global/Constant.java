@@ -171,6 +171,7 @@ public class Constant {
     public static final String ASSETS_SWTH = "0xab38352559b8b203bde5fddfa0b07d8b2525e132";
     public static final String ASSETS_TKY = "0x132947096727c84c7f9e076c90f08fec3bc17f18";
     public static final String ASSETS_ZPT = "0xac116d4b8d4ca55e6b6d4ecce2192039b51cccc5";
+    public static final String ASSETS_PHX = "0x1578103c13e39df15d0d29826d957e85d770d8c9";
 
 
     // neo asset type

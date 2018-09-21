@@ -168,6 +168,10 @@ public class AssetsOverviewRecyclerViewAdapter extends RecyclerView
                 holder.mapState.setVisibility(View.GONE);
                 GlideApp.with(ApexWalletApplication.getInstance()).load(R.drawable.logo_nep5_zpt).into(holder.assetLogo);
                 break;
+            case Constant.ASSETS_PHX:
+                holder.mapState.setVisibility(View.GONE);
+                GlideApp.with(ApexWalletApplication.getInstance()).load(R.drawable.logo_nep5_phx).into(holder.assetLogo);
+                break;
             // eth
             case Constant.ASSETS_ETH:
                 holder.mapState.setVisibility(View.GONE);

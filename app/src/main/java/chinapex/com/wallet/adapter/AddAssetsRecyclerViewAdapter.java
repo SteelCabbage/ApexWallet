@@ -168,6 +168,9 @@ public class AddAssetsRecyclerViewAdapter extends RecyclerView.Adapter<AddAssets
             case Constant.ASSETS_ZPT:
                 Glide.with(ApexWalletApplication.getInstance()).load(R.drawable.logo_nep5_zpt).into(holder.assetLogo);
                 break;
+            case Constant.ASSETS_PHX:
+                Glide.with(ApexWalletApplication.getInstance()).load(R.drawable.logo_nep5_phx).into(holder.assetLogo);
+                break;
             case Constant.ASSETS_ETH:
                 Glide.with(ApexWalletApplication.getInstance()).load(R.drawable.icon_wallet_type_eth).into(holder.assetLogo);
                 break;
