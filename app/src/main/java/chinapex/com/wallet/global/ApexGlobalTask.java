@@ -8,15 +8,17 @@ import java.util.concurrent.ScheduledFuture;
 import chinapex.com.wallet.bean.TransactionRecord;
 import chinapex.com.wallet.executor.TaskController;
 import chinapex.com.wallet.executor.callback.ICheckIsUpdateNeoAssetsCallback;
-import chinapex.com.wallet.executor.callback.ICheckIsUpdateTxStateCallback;
+import chinapex.com.wallet.executor.callback.ICheckIsUpdateNeoTxStateCallback;
 import chinapex.com.wallet.executor.callback.IGetNeoAssetsCallback;
 import chinapex.com.wallet.executor.callback.eth.ICheckIsUpdateEthAssetsCallback;
+import chinapex.com.wallet.executor.callback.eth.ICheckIsUpdateEthTxStateCallback;
 import chinapex.com.wallet.executor.callback.eth.IGetEthAssetsCallback;
 import chinapex.com.wallet.executor.runnable.CheckIsUpdateNeoAssets;
-import chinapex.com.wallet.executor.runnable.CheckIsUpdateTxState;
+import chinapex.com.wallet.executor.runnable.CheckIsUpdateNeoTxState;
 import chinapex.com.wallet.executor.runnable.GetNeoAssets;
 import chinapex.com.wallet.executor.runnable.GetRawTransaction;
 import chinapex.com.wallet.executor.runnable.eth.CheckIsUpdateEthAssets;
+import chinapex.com.wallet.executor.runnable.eth.CheckIsUpdateEthTxState;
 import chinapex.com.wallet.executor.runnable.eth.GetEthAssets;
 import chinapex.com.wallet.executor.runnable.eth.GetEthTransactionReceipt;
 import chinapex.com.wallet.utils.CpLog;
@@ -26,7 +28,8 @@ import chinapex.com.wallet.utils.CpLog;
  * E-Mail：liuyi_61@163.com
  */
 public class ApexGlobalTask implements ICheckIsUpdateNeoAssetsCallback, IGetNeoAssetsCallback,
-        ICheckIsUpdateTxStateCallback, ICheckIsUpdateEthAssetsCallback, IGetEthAssetsCallback {
+        ICheckIsUpdateNeoTxStateCallback, ICheckIsUpdateEthAssetsCallback, IGetEthAssetsCallback,
+        ICheckIsUpdateEthTxStateCallback {
 
     private static final String TAG = ApexGlobalTask.class.getSimpleName();
 
@@ -51,7 +54,8 @@ public class ApexGlobalTask implements ICheckIsUpdateNeoAssetsCallback, IGetNeoA
         TaskController.getInstance().submit(new CheckIsUpdateEthAssets(this));
 
         // check tx state
-        TaskController.getInstance().submit(new CheckIsUpdateTxState(this));
+        TaskController.getInstance().submit(new CheckIsUpdateNeoTxState(this));
+        TaskController.getInstance().submit(new CheckIsUpdateEthTxState(this));
     }
 
     @Override
@@ -99,20 +103,38 @@ public class ApexGlobalTask implements ICheckIsUpdateNeoAssetsCallback, IGetNeoA
     }
 
     @Override
-    public void checkIsUpdateTxState(List<TransactionRecord> transactionRecords) {
+    public void checkIsUpdateNeoTxState(List<TransactionRecord> transactionRecords) {
         if (null == transactionRecords || transactionRecords.isEmpty()) {
-            CpLog.i(TAG, "no need to update tx state!");
+            CpLog.i(TAG, "checkIsUpdateNeoTxState() -> no need to update neo tx state!");
             return;
         }
 
         for (TransactionRecord transactionRecord : transactionRecords) {
             if (null == transactionRecord) {
-                CpLog.e(TAG, "transactionRecord is null!");
+                CpLog.e(TAG, "checkIsUpdateNeoTxState() -> transactionRecord is null!");
                 continue;
             }
 
             startNeoPolling(transactionRecord.getTxID(), transactionRecord.getWalletAddress());
-            CpLog.i(TAG, "restart polling for txId:" + transactionRecord.getTxID());
+            CpLog.i(TAG, "checkIsUpdateNeoTxState() -> restart neo polling for txId:" + transactionRecord.getTxID());
+        }
+    }
+
+    @Override
+    public void checkIsUpdateEthTxState(List<TransactionRecord> transactionRecords) {
+        if (null == transactionRecords || transactionRecords.isEmpty()) {
+            CpLog.i(TAG, "checkIsUpdateEthTxState() -> no need to update eth tx state!");
+            return;
+        }
+
+        for (TransactionRecord transactionRecord : transactionRecords) {
+            if (null == transactionRecord) {
+                CpLog.e(TAG, "checkIsUpdateEthTxState() -> transactionRecord is null!");
+                continue;
+            }
+
+            startEthPolling(transactionRecord.getTxID(), transactionRecord.getWalletAddress());
+            CpLog.i(TAG, "checkIsUpdateEthTxState() -> restart eth polling for txId:" + transactionRecord.getTxID());
         }
     }
 
