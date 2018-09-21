@@ -48,8 +48,8 @@ public class WalletUtils {
 
         String hexString;
         try {
-            String bigDecString = new BigDecimal(decString).multiply(new BigDecimal(10).pow(Integer.valueOf(decimal))).setScale(0,
-                    BigDecimal.ROUND_DOWN).toPlainString();
+            String bigDecString = new BigDecimal(decString).multiply(new BigDecimal(10).pow(Integer.valueOf(decimal)))
+                    .setScale(0, BigDecimal.ROUND_DOWN).toPlainString();
             CpLog.i(TAG, "bigDecString:" + bigDecString);
             hexString = new BigInteger(bigDecString, 10).toString(16);
         } catch (Exception e) {
@@ -58,6 +58,26 @@ public class WalletUtils {
         }
 
         return "0x" + hexString;
+    }
+
+    public static String toLegalDecString(String decString, int decimal) {
+        CpLog.i(TAG, "toLegalDecString, decString:" + decString);
+        if (TextUtils.isEmpty(decString)) {
+            CpLog.e(TAG, "decString or decimal is null!");
+            return "";
+        }
+
+        String legalDecString;
+        try {
+            legalDecString = new BigDecimal(decString).setScale(decimal, BigDecimal.ROUND_DOWN).stripTrailingZeros()
+                    .toPlainString();
+        } catch (Exception e) {
+            CpLog.e(TAG, "toLegalDecString Exception:" + e.getMessage());
+            return "";
+        }
+
+        CpLog.i(TAG, "toLegalDecString, legalDecString:" + legalDecString);
+        return legalDecString;
     }
 
     public static byte[] reverseArray(String string) {

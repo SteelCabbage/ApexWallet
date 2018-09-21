@@ -297,7 +297,9 @@ public class TransferActivity extends BaseActivity implements View.OnClickListen
         TransferPwdDialog transferPwdDialog = TransferPwdDialog.newInstance();
         transferPwdDialog.setCurrentWallet(mWalletBean);
         transferPwdDialog.setOnCheckPwdListener(this);
-        transferPwdDialog.setTransferAmount(mEt_transfer_amount.getText().toString().trim());
+        String actualAmount = WalletUtils.toLegalDecString(mEt_transfer_amount.getText().toString().trim()
+                , mBalanceBean.getAssetDecimal());
+        transferPwdDialog.setTransferAmount(actualAmount);
         transferPwdDialog.setTransferUnit(mBalanceBean.getAssetSymbol().toUpperCase());
         transferPwdDialog.show(getFragmentManager(), "TransferPwdDialog");
     }
