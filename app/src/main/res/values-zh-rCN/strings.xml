@@ -90,7 +90,7 @@
     <string name="seek_bar_fast">快</string>
     <string name="excitation">激励</string>
     <string name="latest_activity">最新活动</string>
-    <string name="current_gas_price">当前Gas单价:</string>
+    <string name="current_gas_price">最新Gas单价:</string>
     <string name="gas_fee">总计Gas价格 ≈</string>
     <string name="gas_consumed">Gas数量</string>
     <string name="gas_price">Gas单价(Gwei)</string>

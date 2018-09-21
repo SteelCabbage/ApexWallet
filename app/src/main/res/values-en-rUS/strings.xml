@@ -91,7 +91,7 @@
     <string name="seek_bar_fast">Fast</string>
     <string name="excitation">Reward</string>
     <string name="latest_activity">Latest Activity</string>
-    <string name="current_gas_price">Current Gas Price:</string>
+    <string name="current_gas_price">Last Gas Price:</string>
     <string name="gas_fee">Gas Fee ≈</string>
     <string name="gas_consumed">Gas Used</string>
     <string name="gas_price">Gas Price</string>
