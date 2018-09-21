@@ -45,13 +45,13 @@ import chinapex.com.wallet.view.dialog.SwitchWallet2Dialog;
  * Created by SteelCabbage on 2018/5/31 0031.
  */
 
-public class MeNeoTransactionRecordFragment extends BaseFragment implements View.OnClickListener,
+public class MeTransactionRecordFragment extends BaseFragment implements View.OnClickListener,
         SwipeRefreshLayout.OnRefreshListener, TransactionRecordRecyclerViewAdapter
                 .OnItemClickListener, IGetNeoTransactionHistoryCallback,
         ILoadTransactionRecordCallback, OnTxStateUpdateListener, TextWatcher, SwitchWallet2Dialog
                 .onSelectedWalletListener, IGetEthTransactionHistoryCallback {
 
-    private static final String TAG = MeNeoTransactionRecordFragment.class.getSimpleName();
+    private static final String TAG = MeTransactionRecordFragment.class.getSimpleName();
 
     private TextView mTv_me_transaction_record_title;
     private TextView mTv_me_transaction_record_address;

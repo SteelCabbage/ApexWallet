@@ -6,7 +6,7 @@ import chinapex.com.wallet.view.assets.AssetsFragment;
 import chinapex.com.wallet.view.excitation.ExcitationFragment;
 import chinapex.com.wallet.view.me.MeFragment;
 import chinapex.com.wallet.view.me.MeManageDetailFragment;
-import chinapex.com.wallet.view.me.MeNeoTransactionRecordFragment;
+import chinapex.com.wallet.view.me.MeTransactionRecordFragment;
 import chinapex.com.wallet.view.me.portrait.MeCommonPortraitFragment;
 import chinapex.com.wallet.view.me.portrait.MeEnterpriseKeyFragment;
 import chinapex.com.wallet.view.me.portrait.MeEnterprisePortraitFragment;
@@ -27,7 +27,7 @@ public class FragmentFactory {
     private static ConfirmMnemonicFragment sConfirmMnemonicFragment;
 
     private static MeManageDetailFragment sMeManageDetailFragment;
-    private static MeNeoTransactionRecordFragment sMeTransactionRecordFragment;
+    private static MeTransactionRecordFragment sMeTransactionRecordFragment;
     private static MeCommonPortraitFragment sMeCommonPortraitFragment;
     private static MeEnterprisePortraitFragment sMeEnterprisePortraitFragment;
     private static MeEnterpriseKeyFragment sMeEnterpriseKeyFragment;
@@ -91,7 +91,7 @@ public class FragmentFactory {
                 break;
             case Constant.FRAGMENT_TAG_ME_TRANSACTION_RECORD:
                 if (null == sMeTransactionRecordFragment) {
-                    sMeTransactionRecordFragment = new MeNeoTransactionRecordFragment();
+                    sMeTransactionRecordFragment = new MeTransactionRecordFragment();
                 }
                 baseFragment = sMeTransactionRecordFragment;
                 break;
