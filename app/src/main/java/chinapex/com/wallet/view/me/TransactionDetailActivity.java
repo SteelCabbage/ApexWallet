@@ -33,6 +33,9 @@ public class TransactionDetailActivity extends BaseActivity implements View.OnCl
     private TextView mTv_transaction_detail_gas_consumed;
     private TextView mTv_transaction_detail_gas_price;
     private TextView mTv_transaction_detail_gas_total_fee;
+    private TextView mTv_transaction_detail_gas_consumed_title;
+    private TextView mTv_transaction_detail_gas_price_title;
+    private TextView mTv_transaction_detail_gas_total_fee_title;
 
     @Override
     protected void setContentView() {
@@ -66,6 +69,10 @@ public class TransactionDetailActivity extends BaseActivity implements View.OnCl
         mTv_transaction_detail_gas_consumed = (TextView) findViewById(R.id.tv_transaction_detail_gas_consumed);
         mTv_transaction_detail_gas_price = (TextView) findViewById(R.id.tv_transaction_detail_gas_price);
         mTv_transaction_detail_gas_total_fee = (TextView) findViewById(R.id.tv_transaction_detail_gas_total_fee);
+
+        mTv_transaction_detail_gas_consumed_title = (TextView) findViewById(R.id.tv_transaction_detail_gas_consumed_title);
+        mTv_transaction_detail_gas_price_title = (TextView) findViewById(R.id.tv_transaction_detail_gas_price_title);
+        mTv_transaction_detail_gas_total_fee_title = (TextView) findViewById(R.id.tv_transaction_detail_gas_total_fee_title);
 
         mTv_transaction_detail_from.setOnClickListener(this);
         mTv_transaction_detail_to.setOnClickListener(this);
@@ -130,6 +137,9 @@ public class TransactionDetailActivity extends BaseActivity implements View.OnCl
                 mTv_transaction_detail_gas_consumed.setVisibility(View.INVISIBLE);
                 mTv_transaction_detail_gas_price.setVisibility(View.INVISIBLE);
                 mTv_transaction_detail_gas_total_fee.setVisibility(View.INVISIBLE);
+                mTv_transaction_detail_gas_consumed_title.setVisibility(View.INVISIBLE);
+                mTv_transaction_detail_gas_price_title.setVisibility(View.INVISIBLE);
+                mTv_transaction_detail_gas_total_fee_title.setVisibility(View.INVISIBLE);
                 break;
         }
     }

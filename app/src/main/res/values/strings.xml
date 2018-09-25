@@ -151,8 +151,8 @@
     <string name="portrait_type_enterprise">Enterprise</string>
 
     <!--钱包类型-->
-    <string name="create_wallet_type_neo">NEO</string>
-    <string name="create_wallet_type_eth">ETH</string>
+    <string name="create_wallet_type_neo" translatable="false">NEO</string>
+    <string name="create_wallet_type_eth" translatable="false">ETH</string>
 
 
     <!--激励界面-->
@@ -165,6 +165,7 @@
     <string name="excitation_detail_eth_address">ETH Address</string>
     <string name="excitation_detail_submit">Submit</string>
     <string name="excitation_detail_condition_chinese_tip_part_one">Please be sure you have local NEO wallet, and the total amount of CPX should be equal or more than </string>
+    <string name="excitation_detail_condition_chinese_tip_part_two">""</string>
     <string name="excitation_detail_copyright">The final interpretation of this activity belongs to APEX TECHNOLOGIES</string>
     <string name="excitation_detail_save_successfully">Save successfully</string>
     <string name="excitation_save_ok">Submitted successfully</string>
@@ -180,7 +181,6 @@
     <string name="excitation_cpx_address_empty_toast">CPX address can not be empty!</string>
     <string name="excitation_eth_address_wrong_format_toast">Please input the correct format ETH address!</string>
     <string name="excitation_eth_address_empty_toast">ETH address can not be empty!</string>
-
 
 
 </resources>
