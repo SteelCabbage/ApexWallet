@@ -20,6 +20,8 @@ public class Constant {
     public static final int NET_ERROR = -1;
     public static final int NET_SUCCESS = 1;
     public static final int NET_BODY_NULL = 0;
+    public static final String HEADER_KEY = "Authorization";
+    public static final String HEADER_VALUE = "Basic d2FsbEBDUFg6Q0BwIyowMQ==";
 
     // neo node
     public static final String HOSTNAME_VERIFIER_NEO = "tracker.chinapex.com.cn";
@@ -29,7 +31,7 @@ public class Constant {
 
     // eth node
     public static final String HOSTNAME_VERIFIER_ETH = "42.159.95.191";
-    public static final String URL_CLI_ETH = "http://42.159.95.191:8545";
+    public static final String URL_CLI_ETH = "http://42.159.95.191:8540";
     public static final String URL_ASSETS_ETH = "https://tracker.chinapex.com.cn/tool/test/eth-assets";
 
     // ApexGlobalTask
