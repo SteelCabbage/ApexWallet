@@ -175,7 +175,7 @@ public class AssetsOverviewRecyclerViewAdapter extends RecyclerView
             // eth
             case Constant.ASSETS_ETH:
                 holder.mapState.setVisibility(View.GONE);
-                GlideApp.with(ApexWalletApplication.getInstance()).load(R.drawable.icon_wallet_type_eth).into(holder.assetLogo);
+                GlideApp.with(ApexWalletApplication.getInstance()).load(R.drawable.logo_global_eth).into(holder.assetLogo);
                 break;
             default:
                 holder.mapState.setVisibility(View.GONE);
@@ -191,8 +191,8 @@ public class AssetsOverviewRecyclerViewAdapter extends RecyclerView
                     case Constant.ASSET_TYPE_ERC20:
                         GlideApp.with(ApexWalletApplication.getInstance())
                                 .load(assetBean.getImageUrl())
-                                .placeholder(R.drawable.icon_wallet_type_eth)
-                                .error(R.drawable.icon_wallet_type_eth)
+                                .placeholder(R.drawable.logo_global_eth)
+                                .error(R.drawable.logo_global_eth)
                                 .into(holder.assetLogo);
                         break;
                     default:
