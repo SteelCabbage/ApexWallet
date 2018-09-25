@@ -79,7 +79,7 @@
     <string name="place_of_residence">Place Of Residence</string>
     <string name="enterprise_key">Enterprise Key</string>
     <string name="to_dht_cloud">Saving Data To DHT Cloud</string>
-    <string name="available_amount">Amount ( Available: </string>
+    <string name="available_amount">Amount (Available: </string>
     <string name="amount_all">All</string>
     <string name="dialog_amount">Amount : </string>
     <string name="change_wallet">Change Wallet</string>
