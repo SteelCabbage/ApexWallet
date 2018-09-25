@@ -19,7 +19,6 @@ public class WalletUtils {
             return null;
         }
 
-        CpLog.w(TAG, "oxHexString:" + oxHexString);
         int length = oxHexString.length();
         if (length < 3) {
             CpLog.w(TAG, "oxHexString.length < 3!");

@@ -14,7 +14,6 @@ import android.widget.TextView;
 import com.google.zxing.activity.CaptureActivity;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.regex.Pattern;
 
 import chinapex.com.wallet.R;

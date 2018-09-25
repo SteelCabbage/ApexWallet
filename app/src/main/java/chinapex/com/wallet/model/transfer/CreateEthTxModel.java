@@ -29,6 +29,7 @@ import chinapex.com.wallet.global.ApexWalletApplication;
 import chinapex.com.wallet.global.Constant;
 import chinapex.com.wallet.model.ApexWalletDbDao;
 import chinapex.com.wallet.utils.CpLog;
+import chinapex.com.wallet.utils.SharedPreferencesUtils;
 import chinapex.com.wallet.utils.WalletUtils;
 
 /**
@@ -319,6 +320,9 @@ public class CreateEthTxModel implements ICreateTxModel, ICreateEthTxCallback, I
         }
 
         // start polling
+        SharedPreferencesUtils.putParam(ApexWalletApplication.getInstance(), txId, System.currentTimeMillis());
+        SharedPreferencesUtils.putParam(ApexWalletApplication.getInstance(), Constant.TX_ETH_NONCE + txId,
+                mEthTxBean.getNonce());
         ApexGlobalTask.getInstance().startEthPolling(txId, mEthTxBean.getFromAddress());
         mICreateTxModelCallback.CreateTxModel(ApexWalletApplication.getInstance().getResources().getString(R.string
                 .transaction_broadcast_successful), true);
