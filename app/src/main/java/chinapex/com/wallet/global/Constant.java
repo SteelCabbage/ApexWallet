@@ -73,7 +73,7 @@ public class Constant {
     public static final String URL_ETH_TRANSACTION_HISTORY = "https://tracker.chinapex.com.cn/tool/test/eth-transaction";
     public static final long TX_ETH_POLLING_TIME = 10 * 1000;
     public static final long TX_ETH_CONFIRM_OK = 12;
-    public static final long TX_ETH_EXCEPTION_TIME = 3 * 60 * 1000;
+    public static final long TX_ETH_EXCEPTION_TIME = 5 * 60 * 1000;
     public static final String TX_ETH_NONCE = "Nonce";
 
 

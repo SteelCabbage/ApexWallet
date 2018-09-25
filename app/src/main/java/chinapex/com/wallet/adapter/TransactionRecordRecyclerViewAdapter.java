@@ -177,7 +177,7 @@ public class TransactionRecordRecyclerViewAdapter extends RecyclerView
                 GlideApp.with(ApexWalletApplication.getInstance()).load(R.drawable.logo_nep5_phx).into(holder.txLogo);
                 break;
             case Constant.ASSETS_ETH:
-                GlideApp.with(ApexWalletApplication.getInstance()).load(R.drawable.icon_wallet_type_eth).into(holder.txLogo);
+                GlideApp.with(ApexWalletApplication.getInstance()).load(R.drawable.logo_global_eth).into(holder.txLogo);
                 break;
             default:
                 switch (transactionRecord.getTxType()) {
@@ -191,8 +191,8 @@ public class TransactionRecordRecyclerViewAdapter extends RecyclerView
                     case Constant.ASSET_TYPE_ERC20:
                         GlideApp.with(ApexWalletApplication.getInstance())
                                 .load(transactionRecord.getAssetLogoUrl())
-                                .placeholder(R.drawable.icon_wallet_type_eth)
-                                .error(R.drawable.icon_wallet_type_eth)
+                                .placeholder(R.drawable.logo_global_eth)
+                                .error(R.drawable.logo_global_eth)
                                 .into(holder.txLogo);
                         break;
                     default:

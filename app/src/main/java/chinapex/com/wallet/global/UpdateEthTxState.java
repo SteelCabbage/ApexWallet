@@ -63,7 +63,7 @@ public class UpdateEthTxState implements IGetEthTransactionReceiptCallback, IGet
         mBlockNumber = blockNumber;
 
         if (System.currentTimeMillis() - mStartPollingTime > Constant.TX_ETH_EXCEPTION_TIME) {
-            CpLog.w(TAG, "over 10 minutes,handle failed tx");
+            CpLog.w(TAG, "over 5 minutes,handle failed tx");
             mHexNonce = (String) SharedPreferencesUtils.getParam(ApexWalletApplication.getInstance(), Constant.TX_ETH_NONCE
                     + mTxId, "");
             TaskController.getInstance().submit(new GetEthNonce(walletAddress, this));
@@ -176,6 +176,7 @@ public class UpdateEthTxState implements IGetEthTransactionReceiptCallback, IGet
         }
 
         mGetTxReceiptSF.cancel(true);
+        handleTx();
         SharedPreferencesUtils.remove(ApexWalletApplication.getInstance(), mTxId);
         SharedPreferencesUtils.remove(ApexWalletApplication.getInstance(), Constant.TX_ETH_NONCE + mTxId);
     }
