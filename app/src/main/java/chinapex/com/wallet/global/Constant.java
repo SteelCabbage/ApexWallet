@@ -30,8 +30,8 @@ public class Constant {
     public static final String URL_ASSETS_NEO = "https://tracker.chinapex.com.cn/tool/assets";
 
     // eth node
-    public static final String HOSTNAME_VERIFIER_ETH = "42.159.95.191";
-    public static final String URL_CLI_ETH = "http://42.159.95.191:8540";
+    public static final String HOSTNAME_VERIFIER_ETH = "tracker.chinapex.com.cn";
+    public static final String URL_CLI_ETH = "https://tracker.chinapex.com.cn/eth-parity-cli/";
     public static final String URL_ASSETS_ETH = "https://tracker.chinapex.com.cn/tool/test/eth-assets";
 
     // ApexGlobalTask

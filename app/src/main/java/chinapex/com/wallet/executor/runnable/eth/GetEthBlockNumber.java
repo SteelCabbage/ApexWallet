@@ -39,7 +39,7 @@ public class GetEthBlockNumber implements Runnable, INetCallback {
         requestGetEthRpc.setId(83);
         requestGetEthRpc.setParams(new ArrayList<String>());
 
-        OkHttpClientManager.getInstance().postJson(Constant.URL_CLI_ETH, GsonUtils.toJsonStr(requestGetEthRpc), this);
+        OkHttpClientManager.getInstance().postJsonByAuth(Constant.URL_CLI_ETH, GsonUtils.toJsonStr(requestGetEthRpc), this);
     }
 
     @Override

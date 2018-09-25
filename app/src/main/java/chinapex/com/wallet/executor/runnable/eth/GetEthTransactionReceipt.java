@@ -48,7 +48,7 @@ public class GetEthTransactionReceipt implements Runnable, INetCallback {
         txHash.add(mTxId);
         requestGetEthRpc.setParams(txHash);
 
-        OkHttpClientManager.getInstance().postJson(Constant.URL_CLI_ETH, GsonUtils.toJsonStr(requestGetEthRpc), this);
+        OkHttpClientManager.getInstance().postJsonByAuth(Constant.URL_CLI_ETH, GsonUtils.toJsonStr(requestGetEthRpc), this);
     }
 
     @Override
