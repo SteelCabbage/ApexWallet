@@ -27,15 +27,14 @@ public class Constant {
     public static final String HOSTNAME_VERIFIER_NEO = "tracker.chinapex.com.cn";
     public static final String HOSTNAME_VERIFIER_NEO2 = "tmp.chinapex.com.cn";
     public static final String URL_CLI_NEO = "https://tracker.chinapex.com.cn/neo-cli/";
-//    public static final String URL_UTXOS_NEO = "https://tracker.chinapex.com.cn/tool/utxos/";
     public static final String URL_UTXOS_NEO = "http://tmp.chinapex.com.cn/wallets-java-version/tool/utxos?address=";
-//    public static final String URL_ASSETS_NEO = "https://tracker.chinapex.com.cn/tool/assets";
     public static final String URL_ASSETS_NEO = "http://tmp.chinapex.com.cn/wallets-java-version/tool/assets";
 
     // eth node
     public static final String HOSTNAME_VERIFIER_ETH = "tracker.chinapex.com.cn";
     public static final String URL_CLI_ETH = "https://tracker.chinapex.com.cn/eth-parity-cli/";
-    public static final String URL_ASSETS_ETH = "https://tracker.chinapex.com.cn/tool/test/eth-assets";
+//    public static final String URL_ASSETS_ETH = "https://tracker.chinapex.com.cn/tool/test/eth-assets";
+    public static final String URL_ASSETS_ETH = "http://tmp.chinapex.com.cn/wallets-java-version/tool/eth-assets";
 
     // ApexGlobalTask
     public static final long ASSETS_POLLING_TIME = 10 * 1000;
@@ -65,7 +64,9 @@ public class Constant {
     public static final String WALLET_TYPE_NAME_CPX = "CPX";
 
     // neo交易记录
-    public static final String URL_NEO_TRANSACTION_HISTORY = "https://tracker.chinapex.com.cn/tool/transaction-history/";
+//    public static final String URL_NEO_TRANSACTION_HISTORY = "https://tracker.chinapex.com.cn/tool/transaction-history/";
+    public static final String URL_NEO_TRANSACTION_HISTORY = "http://tmp.chinapex.com" +
+            ".cn/wallets-java-version/tool/transaction-history?address=";
     public static final long TX_NEO_POLLING_TIME = 20 * 1000;
     public static final long TX_CONFIRM_EXCEPTION = -1;
     public static final long TX_UN_CONFIRM = 0;

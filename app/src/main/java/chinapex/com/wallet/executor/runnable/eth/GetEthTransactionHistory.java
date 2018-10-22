@@ -150,7 +150,8 @@ public class GetEthTransactionHistory implements Runnable, INetCallback {
             transactionRecord.setAssetID(assetId);
             transactionRecord.setAssetSymbol(dataBean.getSymbol());
             transactionRecord.setAssetLogoUrl(dataBean.getImageURL());
-            transactionRecord.setAssetDecimal(null == dataBean.getDecimal() ? 0 : Integer.valueOf(dataBean.getDecimal()));
+            transactionRecord.setAssetDecimal(TextUtils.isEmpty(dataBean.getDecimal()) ?
+                    0 : Integer.valueOf(dataBean.getDecimal()));
             transactionRecord.setGasPrice(dataBean.getGas_price());
             transactionRecord.setBlockNumber(dataBean.getBlock_number());
             transactionRecord.setGasFee(dataBean.getGas_fee());
