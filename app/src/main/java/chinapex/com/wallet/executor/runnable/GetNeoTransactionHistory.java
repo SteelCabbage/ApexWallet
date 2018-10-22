@@ -45,6 +45,7 @@ public class GetNeoTransactionHistory implements Runnable, INetCallback {
         }
 
         mRecentTime = (long) SharedPreferencesUtils.getParam(ApexWalletApplication.getInstance(), mAddress, 0L);
+        CpLog.i(TAG, "mRecentTime:" + mRecentTime);
 
         String url = Constant.URL_NEO_TRANSACTION_HISTORY + mAddress + "&beginTime=" + mRecentTime;
         OkHttpClientManager.getInstance().get(url, this);
