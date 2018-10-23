@@ -37,7 +37,7 @@ public class Constant {
     public static final String URL_ASSETS_ETH = "http://tmp.chinapex.com.cn/wallets-java-version/tool/eth-assets";
 
     // ApexGlobalTask
-    public static final long ASSETS_POLLING_TIME = 10 * 1000;
+    public static final long ASSETS_POLLING_TIME = 60 * 1000;
     public static final String UPDATE_ASSETS_OK = "updateAssetsOk";
 
     // Portrait type
