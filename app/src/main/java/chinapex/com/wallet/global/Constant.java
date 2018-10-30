@@ -27,10 +27,10 @@ public class Constant {
     public static final String HOSTNAME_VERIFIER = "tracker.chinapex.com.cn";
 
     // java server root path
-    public static final String SERVER_ROOT_PATH_JAVA = "http://tracker.chinapex.com.cn/tool/jar-serv/";
+    public static final String SERVER_ROOT_PATH_JAVA = "https://tracker.chinapex.com.cn/tool/jar-serv/";
 
     // neo node
-    public static final String URL_CLI_NEO = "http://tracker.chinapex.com.cn/neo-cli-2-9/";
+    public static final String URL_CLI_NEO = "https://tracker.chinapex.com.cn/neo-cli-2-9/";
     public static final String URL_UTXOS_NEO = SERVER_ROOT_PATH_JAVA + "utxos?address=";
     public static final String URL_ASSETS_NEO = SERVER_ROOT_PATH_JAVA + "assets";
 
