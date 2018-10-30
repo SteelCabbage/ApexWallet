@@ -3,6 +3,7 @@ package chinapex.com.wallet.adapter;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -86,7 +87,7 @@ public class ExcitationAdapter extends RecyclerView.Adapter<ExcitationAdapter.Ex
             CpLog.e(TAG, "ExcitationBean is null!");
             return;
         }
-
+        Log.e(TAG, "onBindViewHolder:position: "+position+" isEventNew: "+bean.isEventNew());
         if (bean.isEventNew()) {
             if (PhoneUtils.getAppLanguage().contains(Locale.CHINA.toString())) {
                 holder.newEventTagCN.setVisibility(View.VISIBLE);

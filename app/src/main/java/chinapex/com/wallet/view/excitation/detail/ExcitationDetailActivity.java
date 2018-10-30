@@ -11,6 +11,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.math.BigDecimal;
+import java.util.Locale;
 
 import chinapex.com.wallet.R;
 import chinapex.com.wallet.base.BaseActivity;
@@ -21,6 +22,7 @@ import chinapex.com.wallet.executor.callback.IGetLocalCpxSumCallback;
 import chinapex.com.wallet.executor.runnable.GetLocalCpxSum;
 import chinapex.com.wallet.global.Constant;
 import chinapex.com.wallet.utils.CpLog;
+import chinapex.com.wallet.utils.PhoneUtils;
 import chinapex.com.wallet.utils.ToastUtils;
 import chinapex.com.wallet.view.dialog.ExcitationDialog;
 
@@ -57,6 +59,15 @@ public class ExcitationDetailActivity extends BaseActivity implements View.OnCli
     }
 
     private void initView() {
+        Intent intent = getIntent();
+        if (null == intent) {
+            CpLog.e(TAG, "intent is null!");
+            return;
+        }
+
+        mGasLimit = intent.getIntExtra(Constant.EXCITATION_GAS_LIMIT, 0);
+        mExcitationId = intent.getIntExtra(Constant.EXCITATION_ACTIVITY_ID, 0);
+
         mCpxAddressInput = findViewById(R.id.cpx_address_input);
         mEthAddressInput = findViewById(R.id.eth_address_input);
         mWrongAddressNote = findViewById(R.id.tv_excitation_detail_wrong_address_note);
@@ -64,6 +75,18 @@ public class ExcitationDetailActivity extends BaseActivity implements View.OnCli
         mEthAddressInputCancel = findViewById(R.id.eth_address_input_cancel);
         mWrongAddressNote = findViewById(R.id.tv_excitation_detail_wrong_address_note);
         mExcitationCommit = findViewById(R.id.btn_excitation_submit);
+
+        TextView sumNote = findViewById(R.id.excitation_note_text);
+        String sumText = getResources().getString(R.string.excitation_detail_sum_dialog_note);
+        if (PhoneUtils.getAppLanguage().contains(Locale.CHINA.toString())) {
+            String chineseTip = sumText + mGasLimit + "(≥" + mGasLimit + ")";
+            sumNote.setText(chineseTip);
+            CpLog.i(TAG, "chineseTip: " + chineseTip);
+        } else {
+            String englishTip = sumText + " " + mGasLimit + "(≥" + mGasLimit + ")";
+            sumNote.setText(englishTip);
+            CpLog.i(TAG, "EnglishTip: " + englishTip);
+        }
 
 
         mCpxAddressInput.addTextChangedListener(new DetailTextWatcher(mCpxAddressInput));
@@ -75,14 +98,6 @@ public class ExcitationDetailActivity extends BaseActivity implements View.OnCli
     }
 
     private void initData() {
-        Intent intent = getIntent();
-        if (null == intent) {
-            CpLog.e(TAG, "intent is null!");
-            return;
-        }
-
-        mGasLimit = intent.getIntExtra(Constant.EXCITATION_GAS_LIMIT, 0);
-        mExcitationId = intent.getIntExtra(Constant.EXCITATION_ACTIVITY_ID, 0);
         cpxCondition();
         mGetAddressResultPresenter = new GetDetailCodePresenter(this);
     }
