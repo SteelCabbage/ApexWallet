@@ -156,8 +156,8 @@ public class Constant {
     public static final String ASSETS_ERC20_NMB = "0xc7773e07adb2642a1eb03c5e340430b6cedc2aa9";
 
     //Excitation
-    public static final String EXCITATION_SHOW_LIST = SERVER_ROOT_PATH_JAVA + "activitys/list/";
-    public static final String EXCITATION_DETAIL_UPLOAD_ADDRESS = SERVER_ROOT_PATH_JAVA + "activitys/save/";
+    public static final String EXCITATION_SHOW_LIST = SERVER_ROOT_PATH_JAVA + "activities/list/";
+    public static final String EXCITATION_DETAIL_UPLOAD_ADDRESS = SERVER_ROOT_PATH_JAVA + "activities/save/";
     public static final String EXCITATION_GAS_LIMIT = "excitationGasLimit";
     public static final String EXCITATION_ACTIVITY_ID = "excitationActivityId";
 
