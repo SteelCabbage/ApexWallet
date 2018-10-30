@@ -55,9 +55,8 @@ public class GetEthTransactionHistory implements Runnable, INetCallback {
         CpLog.i(TAG, "startBlock:" + startBlock);
 
         String url = Constant.URL_ETH_TRANSACTION_HISTORY
-                + "?address=" + mAddress
-                + "&startblock=" + (startBlock + 1)
-                + "&endblock=99999999";
+                + mAddress
+                + "&startblock=" + (startBlock + 1);
         OkHttpClientManager.getInstance().get(url, this);
     }
 
