@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -36,7 +35,7 @@ public class ExcitationAdapter extends RecyclerView.Adapter<ExcitationAdapter.Ex
 
     private View mHeaderView;
 
-    private List<ExcitationBean> mExcitationBeans = new ArrayList<>();
+    private List<ExcitationBean> mExcitationBeans;
     private OnItemClickListener mOnItemClickListener = null;
 
     public ExcitationAdapter(List<ExcitationBean> list) {
@@ -83,7 +82,7 @@ public class ExcitationAdapter extends RecyclerView.Adapter<ExcitationAdapter.Ex
         }
         int realPos = getRealItemPosition(position);
         ExcitationBean bean = mExcitationBeans.get(realPos);
-        if (bean == null) {
+        if (null == bean) {
             CpLog.e(TAG, "ExcitationBean is null!");
             return;
         }
@@ -128,9 +127,6 @@ public class ExcitationAdapter extends RecyclerView.Adapter<ExcitationAdapter.Ex
             holder.newEventStatus.setBackground(ApexWalletApplication.getInstance().getResources().getDrawable
                     (new_event_status_end));
             holder.newEventStatus.setTextColor(ApexWalletApplication.getInstance().getResources().getColor(R.color.c_ff666666));
-        }
-        if (null != mOnItemClickListener) {
-
         }
         holder.itemView.setTag(realPos);
     }
