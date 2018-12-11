@@ -26,3 +26,6 @@
 -keep class * implements com.google.gson.TypeAdapterFactory
 -keep class * implements com.google.gson.JsonSerializer
 -keep class * implements com.google.gson.JsonDeserializer
+
+# bean
+-keep class chinapex.com.wallet.bean.** {*;}
